@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+
+import { ViroARSceneNavigator } from "@viro-community/react-viro/components/AR/ViroARSceneNavigator";
+import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScene";
+import { ViroText } from "@viro-community/react-viro/components/ViroText";
+import { ViroTrackingStateConstants } from "@viro-community/react-viro/components/ViroConstants";
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ViroARSceneNavigator initialScene={{scene: HelloWorldScene}}/>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+const HelloWorldScene = (_props) => {
+  const [text, setText] = useState("Loading...");
+
+  const onTrackingUpdated = (state, _reason) => {
+    if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE)
+      setText("Tracking unavailable");
+    else if (state === ViroTrackingStateConstants.TRACKING_NORMAL)
+      setText("Hello world!");
+  }
+
+  return (
+    <ViroARScene onTrackingUpdated={onTrackingUpdated}>
+      <ViroText
+        text={text}
+        position={[0,0,-2]}
+        style={{fontSize: 20, color:"white"}}
+      />
+    </ViroARScene>
+  );
+}
