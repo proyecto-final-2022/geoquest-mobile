@@ -14,7 +14,7 @@ const SignUpScreen = () => {
     const navigation = useNavigation()
 
     const onRegisterPressed = () => {
-        console.warn('Register');
+        navigation.navigate('Home')
     }
 
     const onForgotPasswordPressed = () => {
