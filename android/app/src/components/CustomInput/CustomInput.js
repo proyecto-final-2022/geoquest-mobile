@@ -1,21 +1,46 @@
-import React from 'react'
-import {View, Text, TextInput, StyleSheet, TouchableOpacity} from 'react-native'
+import React from 'react';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {Controller} from 'react-hook-form';
 import {AntDesign} from '@expo/vector-icons'
 
-const CustomInput = ({value, setValue, placeholder, icon, secureTextEntry}) => {
-    return (
-        <View style = {styles.container}>
-            <TextInput 
-                value = {value}
-                onChangeText={setValue}
-                placeholder={placeholder}
-                style={styles.input}
-                secureTextEntry={secureTextEntry}>
-            </TextInput>
+const CustomInput = ({
+  control,
+  name,
+  rules = {},
+  placeholder,
+  secureTextEntry,
+  icon,
+}) => {
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={rules}
+      render={({field: {value, onChange, onBlur}, fieldState: {error}}) => (
+        <>
+          <View
+            style={[
+              styles.container,
+              {borderColor: error ? 'red' : '#e8e8e8'},
+            ]}>
+            <TextInput
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              placeholder={placeholder}
+              style={styles.input}
+              secureTextEntry={secureTextEntry}
+            />
             <AntDesign name ={icon} style = {styles.leftIcon} size={30}/>
-        </View>
-    )
-}
+          </View>
+          {error && (
+            <Text style={{color: 'red', right: 70}}>{error.message || 'Error'}</Text>
+          )}
+        </>
+      )}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -40,4 +65,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default CustomInput
+
+export default CustomInput;

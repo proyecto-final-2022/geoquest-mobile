@@ -1,20 +1,24 @@
 import React, {useState} from 'react'
-import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
+import {View, Text, TextInput, Image, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
 import Logo from '../../../../../assets/GeoQuestLogo.png'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
+import {useForm} from 'react-hook-form'
 
 const SignInScreen = () => {
     const {height} = useWindowDimensions();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('')
+
+    const {control, 
+        handleSubmit,
+        formState: {errors}
+    } = useForm();
 
     const navigation = useNavigation()
 
-    const onSignInPressed = () => {
-      console.warn('Sign in');
+    const onSignInPressed = (data) => {
+      console.log(data) 
     }
 
     const onForgotPasswordPressed = () => {
@@ -33,33 +37,36 @@ const SignInScreen = () => {
               style={[styles.logo, {height: height * 0.3}]}
               resizeMode="contain"
         />
+        
         <CustomInput 
-                placeholder="Email" 
-                icon = "mail"
-                value={email} 
-                setValue={setEmail}
-            />
-            <CustomInput 
-                placeholder="Password" 
-                icon = "lock"
-                value={password} 
-                setValue={setPassword}
-                secureTextEntry
-            />
-            <CustomButton 
-                text='Sign In' 
-                onPress={onSignInPressed}/>
-            <CustomButton 
-                text='Forgot password?' 
-                onPress={onForgotPasswordPressed}
-                type="TERTIARY"/>
-            <SocialSignInButtons/>
-            <CustomButton 
-                text ="Don't have an account? Create one"
-                onPress = {onSignUpPress}
-                type="TERTIARY"
-            />
+            name = "email"
+            placeholder ="Email" 
+            control = {control}
+            rules = {{required: 'Email is required'}}
+            icon = "mail"
+        />
+        <CustomInput
+            name = "password" 
+            placeholder ="Password" 
+            icon = "lock"
+            control = {control} 
+            rules = {{required: 'Password is required'}}
+            secureTextEntry
+        /> 
 
+        <CustomButton 
+            text='Sign In' 
+            onPress={handleSubmit(onSignInPressed)}/>
+        <CustomButton 
+            text='Forgot password?' 
+            onPress={onForgotPasswordPressed}
+            type="TERTIARY"/>
+        <SocialSignInButtons/>
+        <CustomButton 
+            text ="Don't have an account? Create one"
+            onPress = {onSignUpPress}
+            type="TERTIARY"
+        />
         </View>
         </ScrollView>
     )
