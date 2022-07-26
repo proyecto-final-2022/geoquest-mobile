@@ -13,7 +13,7 @@ export const GetData = async () => {
     try {
       const value = await AsyncStorage.getItem('@storage_Key')
       if(value !== null) {
-        console.warn(value)
+        console.warn('Token : ' + value)
         // value previously stored
       }
     } catch(e) {

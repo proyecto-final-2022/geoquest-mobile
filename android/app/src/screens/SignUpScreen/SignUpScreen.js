@@ -16,10 +16,32 @@ const SignUpScreen = () => {
 
 
     const navigation = useNavigation()
+  
+    const postExample = async (email, username, password) => {
+        try {
+            await fetch(
+                'http://192.168.0.193:8080/users/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email: email, 
+                        username: username, 
+                        password: password})
+                })
+                .then(response => {
+                    response.json()
+                        .then(data => {
+                            StoreData(data)
+                        });
+                })
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
 
     const onRegisterPressed = (data) => {
-        console.log(data)
-        StoreData("Token here")
+        postExample(data.email, data.username, data.password)
         GetData()
     }
 
