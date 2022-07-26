@@ -5,6 +5,7 @@ import CustomButton from '../../components/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
+import { StoreData, GetData } from '../../storage/storage'
 
 const SignUpScreen = () => {
 
@@ -18,6 +19,8 @@ const SignUpScreen = () => {
 
     const onRegisterPressed = (data) => {
         console.log(data)
+        StoreData("Token here")
+        GetData()
     }
 
     const onSignInPress = () => {
