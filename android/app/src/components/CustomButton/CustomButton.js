@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Text, StyleSheet, Pressable} from 'react-native'
-import {Entypo} from '@expo/vector-icons'
+import {FontAwesome} from '@expo/vector-icons'
 
 const CustomButton = ({onPress, text, type = "PRIMARY", bgColor, fgColor, icon}) => {
     return (
@@ -19,7 +19,7 @@ const CustomButton = ({onPress, text, type = "PRIMARY", bgColor, fgColor, icon})
                 fgColor ? {color: fgColor} : {}
             ]}>{text}</Text>
 
-            <Entypo name ={icon} style = {styles.leftIcon} size={30}/>
+            <FontAwesome name ={icon} style = {styles.leftIcon} size={30}/>
 
         </Pressable>
     )

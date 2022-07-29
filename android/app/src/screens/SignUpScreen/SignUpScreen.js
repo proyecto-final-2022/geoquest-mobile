@@ -5,8 +5,8 @@ import CustomButton from '../../components/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
-import { StoreData, GetData } from '../../storage/storage'
-
+import  {GetData}  from '../../storage/storage'
+import PostExample from '../../apicalls/ApiCalls'
 const SignUpScreen = () => {
 
     const {control, 
@@ -17,31 +17,8 @@ const SignUpScreen = () => {
 
     const navigation = useNavigation()
   
-    const postExample = async (email, username, password) => {
-        try {
-            await fetch(
-                'http://192.168.0.193:8080/users/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        email: email, 
-                        username: username, 
-                        password: password})
-                })
-                .then(response => {
-                    response.json()
-                        .then(data => {
-                            StoreData(data)
-                        });
-                })
-        }
-        catch (error) {
-            console.error(error);
-        }
-    }
-
     const onRegisterPressed = (data) => {
-        postExample(data.email, data.username, data.password)
+        PostExample(data.email, data.username, data.password)
         GetData()
     }
 
