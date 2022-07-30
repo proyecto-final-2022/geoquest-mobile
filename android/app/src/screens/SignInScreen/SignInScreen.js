@@ -6,19 +6,33 @@ import CustomButton from '../../components/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
+import {LoginManual} from '../../apicalls/ApiCalls'
+import { GetData } from '../../storage/storage';
+import { Alert } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SignInScreen = () => {
+
+    const [isSession, setIsSession] = useState(false);
+
+    const getStorage = async () => {
+        if (await AsyncStorage.getItem('@storage_Key')){
+            setIsSession(true)
+        }else {
+            setIsSession(false)
+        }
+    }
+
     const {height} = useWindowDimensions();
 
-    const {control, 
-        handleSubmit,
-        formState: {errors}
-    } = useForm();
+    const {control, handleSubmit} = useForm();
 
     const navigation = useNavigation()
 
     const onSignInPressed = (data) => {
-      console.log(data) 
+        LoginManual(data.email, data.password)
+        getStorage()
+        {isSession ? navigation.navigate('Home') : Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}])}
     }
 
     const onForgotPasswordPressed = () => {

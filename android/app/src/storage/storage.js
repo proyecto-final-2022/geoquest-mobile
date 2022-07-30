@@ -9,14 +9,6 @@ export const StoreData = async (value) => {
     }
   }
 
-export const GetData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@storage_Key')
-      if(value !== null) {
-        console.warn('Token : ' + value)
-        // value previously stored
-      }
-    } catch(e) {
-      // error reading value
-    }
-  }
+export const GetData = async () => { await AsyncStorage.getItem('@storage_Key') }
+
+export const CloseSession = async () => { await AsyncStorage.removeItem('@storage_Key')}

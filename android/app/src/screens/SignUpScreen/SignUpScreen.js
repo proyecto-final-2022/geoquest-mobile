@@ -5,21 +5,19 @@ import CustomButton from '../../components/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
-import  {GetData}  from '../../storage/storage'
-import PostExample from '../../apicalls/ApiCalls'
+import {PostExample} from '../../apicalls/ApiCalls'
+
 const SignUpScreen = () => {
 
-    const {control, 
-        handleSubmit,
-        formState: {errors}
-    } = useForm();
+    const {control, handleSubmit, watch} = useForm();
 
+    const pass = watch('password')
 
     const navigation = useNavigation()
   
     const onRegisterPressed = (data) => {
         PostExample(data.email, data.username, data.password)
-        GetData()
+        navigation.navigate('Home')
     }
 
     const onSignInPress = () => {
@@ -69,15 +67,7 @@ const SignUpScreen = () => {
                 icon = "lock"
                 control = {control}
                 rules = {{
-                    required: 'Password is required',
-                    minLength: {
-                        value: 8,
-                        message: 'Minimum 8 characters',
-                    },
-                    maxLength: {
-                        value: 32,
-                        message: 'Maximum 32 characters',
-                    }
+                  validate: value => value == pass || 'Password do not match',
                 }}
                 secureTextEntry
             />
@@ -110,7 +100,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#051C60',
+        color: '#CA955C',
         margin: 10,
     }, 
     view: {
