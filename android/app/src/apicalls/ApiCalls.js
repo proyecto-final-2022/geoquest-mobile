@@ -1,10 +1,10 @@
 import { StoreData } from '../storage/storage'
-
+import Config from '../../../../config.json'
 export const LoginManual = async (email, password) => {
 
     try {
         await fetch(
-            'http://192.168.0.193:8080/users/sessions/', {
+            Config.appUrl+'users/sessions/', {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json'},
@@ -30,7 +30,7 @@ export const LoginManual = async (email, password) => {
 export const PostExample = async (email, username, password) => {
     try {
         await fetch(
-            'http://192.168.0.193:8080/users/', {
+            Config.appUrl+'users/', {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json'},
@@ -58,7 +58,7 @@ export const PostLoginGoogle = async (email, username, token) => {
 
     try {
         await fetch(
-            'http://192.168.0.193:8080/users/sessions/google', {
+            Config.appUrl+'users/sessions/google', {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
