@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image} from 'react-native';
+import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, TouchableOpacity} from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native'
 import { CloseSession, GetData } from '../../storage/storage';
@@ -33,7 +33,9 @@ const QuestNavigator = () => {
             data.map( (client, index) => 
             <View  style={styles.optionCard} key = {index}>
                 <Image style={styles.optionCardImage} source={{uri: client.image}} />
+                <TouchableOpacity onPress={() => console.warn('Touched' + client.name)}>
                 <Text style={{textAlign: 'center', marginTop:10, fontSize:18, fontWeight: 'bold'}}>{client.name}</Text>
+                </TouchableOpacity>
             </View>        
             )
          )
