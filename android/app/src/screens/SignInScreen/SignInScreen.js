@@ -16,11 +16,10 @@ const SignInScreen = () => {
     const [isSession, setIsSession] = useState(false);
 
     const getStorage = async () => {
-        if (await AsyncStorage.getItem('@storage_Key')){
-            setIsSession(true)
-        }else {
-            setIsSession(false)
-        }
+        console.warn("before"+token)
+        const token = await AsyncStorage.getItem('@storage_Key')
+        console.warn("after"+token)
+        token ? setIsSession(true) : setIsSession(false)
     }
 
     const {height} = useWindowDimensions();
@@ -29,10 +28,16 @@ const SignInScreen = () => {
 
     const navigation = useNavigation()
 
-    const onSignInPressed = (data) => {
-        LoginManual(data.email, data.password)
-        getStorage()
-        {isSession ? navigation.navigate('Home') : Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}])}
+    const onSignInPressed = async (data) => {
+        try{
+            await LoginManual(data.email, data.password);
+            await getStorage();
+        }
+        catch (error) {
+            console.error(error);
+        }
+
+        isSession ? navigation.navigate('Home') : Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}]);
     }
 
     const onForgotPasswordPressed = () => {

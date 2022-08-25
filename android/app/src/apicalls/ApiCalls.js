@@ -14,8 +14,8 @@ export const LoginManual = async (email, password) => {
             })
             .then(response => {
                 if(!response.ok) throw new Error(response.status) ;
-                else response.json().then(data => {
-                        StoreData(data)
+                else response.json().then(async (data) => {
+                        await StoreData(data)
                     }).catch((error) => {
                         console.log('error: ' + error);
                         this.setState({ requestFailed: true });

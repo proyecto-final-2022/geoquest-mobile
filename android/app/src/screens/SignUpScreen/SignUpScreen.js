@@ -17,7 +17,7 @@ const SignUpScreen = () => {
   
     const onRegisterPressed = (data) => {
         PostExample(data.email, data.username, data.password)
-        navigation.navigate('Home')
+        navigation.navigate('Quest Navigator')
     }
 
     const onSignInPress = () => {
