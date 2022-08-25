@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions} from 'react-native';
+import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image} from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native'
 import { CloseSession, GetData } from '../../storage/storage';
@@ -30,9 +30,10 @@ const QuestNavigator = () => {
             return <ActivityIndicator size="large" />
          }
          return (
-            data.map( (client) => 
-            <View style={styles.optionCard}>
-
+            data.map( (client, index) => 
+            <View  style={styles.optionCard} key = {index}>
+                <Image style={styles.optionCardImage} source={{uri: client.image}} />
+                <Text style={{textAlign: 'center', marginTop:10, fontSize:18, fontWeight: 'bold'}}>{client.name}</Text>
             </View>        
             )
          )
@@ -78,12 +79,22 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     optionCard: {
-        height: 210,
+        height: 240,
         marginRight: 20,
         width: width/2 - 30,
         elevation: 15,
-        backgroundColor: '#ffffff'
-    }
+        backgroundColor: '#ffffff',
+        alignItems: 'center',
+        borderRadius: 20,
+        paddingTop: 10,
+        paddingHorizontal: 10
+    },
+    optionCardImage: {
+        height: 140,
+        borderRadius: 10,
+        width: '100%'
+    },
+
 });
 
 
