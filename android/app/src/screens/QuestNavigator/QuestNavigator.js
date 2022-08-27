@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, TouchableOpacity} from 'react-native';
+import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, TouchableOpacity, Pressable} from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native'
 import { CloseSession, GetData } from '../../storage/storage';
@@ -11,6 +11,22 @@ const {width} = Dimensions.get('screen')
 
 const QuestNavigator = () => {
     const navigation = useNavigation()
+
+    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0)
+
+
+    const ListCategories = () => {
+        const categoryList = ['Popular', 'Recommended', 'Nearest']
+        return <View style={styles.categoryListContainer}>
+            {categoryList.map((category, index) => (
+                <Pressable
+                    key={index}
+                    onPress={() => setSelectedCategoryIndex(index)}>
+                <Text style={[styles.categoryListText, (index == selectedCategoryIndex && styles.activeCategoryListText)]}>{category}</Text>
+                </Pressable>
+            ))}
+        </View>
+    }
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -57,6 +73,8 @@ const QuestNavigator = () => {
 
         </ScrollView> 
 
+        {ListCategories()}
+
 
         </ScrollView> 
     )
@@ -96,6 +114,24 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: '100%'
     },
+    categoryListContainer: {
+        marginTop: 40,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 40,
+    },
+    categoryListText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        paddingBottom: 5,
+        color: '#cd853f',
+    },
+    activeCategoryListText: {
+        color: '#a52a2a',
+        borderBottomWidth: 1,
+        paddingBottom: 5,
+    }
+
 
 });
 
