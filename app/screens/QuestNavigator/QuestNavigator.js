@@ -77,13 +77,12 @@ const QuestNavigator = () => {
          }
          return (
             data.map( (client, index) => 
-            <View  style={styles.optionCard} key = {index}>
+            <Pressable key={index} onPress={() => console.warn('Touched' + client.name)}>
+                <View  style={styles.optionCard} key = {index}>
                 <Image style={styles.optionCardImage} source={{uri: client.image}} />
-                <Pressable onPress={() => console.warn('Touched' + client.name)}>
                 <Text style={{textAlign: 'center', marginTop:10, fontSize:18, fontWeight: 'bold'}}>{client.name}</Text>
-                </Pressable>
-
-            </View>        
+                </View>        
+            </Pressable>
             )
          )
     
