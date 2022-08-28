@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, TouchableOpacity, Pressable, FlatList} from 'react-native';
+import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo} from '@expo/vector-icons'
 import Config from '../../../config.json'
@@ -79,9 +79,10 @@ const QuestNavigator = () => {
             data.map( (client, index) => 
             <View  style={styles.optionCard} key = {index}>
                 <Image style={styles.optionCardImage} source={{uri: client.image}} />
-                <TouchableOpacity onPress={() => console.warn('Touched' + client.name)}>
+                <Pressable onPress={() => console.warn('Touched' + client.name)}>
                 <Text style={{textAlign: 'center', marginTop:10, fontSize:18, fontWeight: 'bold'}}>{client.name}</Text>
-                </TouchableOpacity>
+                </Pressable>
+
             </View>        
             )
          )
