@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, TouchableOpacity, Pressable, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native'
+import {FontAwesome, Entypo} from '@expo/vector-icons'
 import Config from '../../../config.json'
 
 const {width} = Dimensions.get('screen')
@@ -10,6 +11,12 @@ const QuestNavigator = () => {
 
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0)
 
+    const [data, setData] = useState([])
+    const [quests, setDataQuests] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    const url = Config.appUrl + "clients/"
+    const urlQuests = Config.appUrl + "clients/quests"
 
     const ListCategories = () => {
         const categoryList = ['Populares', 'Más jugadas']
@@ -37,16 +44,17 @@ const QuestNavigator = () => {
                 <Text style={{fontSize: 16, fontWeight: 'bold'}}>{quest.name}</Text>
             </View>
                 <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
-            
-        </View>)
-    }
-
-    const [data, setData] = useState([])
-    const [quests, setDataQuests] = useState([])
-    const [loading, setLoading] = useState(true)
-
-    const url = Config.appUrl + "clients/"
-    const urlQuests = Config.appUrl + "clients/quests"
+            <View style={{marginTop: 10, flexDirection: 'row'}}>
+                <View style={styles.questInfo}>
+                    <FontAwesome name ='clock-o' size={18}/>
+                    <Text style={styles.questInfoText}>{quest.duration}</Text>
+                </View>
+                <View style={styles.questInfo}>
+                    <Entypo name ='gauge' size={18}/>
+                    <Text style={styles.questInfoText}>{quest.difficulty}</Text>
+                </View>
+        </View>
+        </View>)}
 
     useEffect(() => {
         fetch(url)
@@ -154,7 +162,7 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     card:{
-        height: 300,
+        height: 320,
         backgroundColor: '#ffffff',
         elevation: 10,
         width: width - 65,
@@ -166,8 +174,15 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 120,
         borderRadius: 15,
+    },
+    questInfo: {
+        flexDirection: 'row',
+        marginRight: 15
+    },
+    questInfoText: {
+        marginLeft: 5,
+        color: '#696969',
     }
-
 });
 
 
