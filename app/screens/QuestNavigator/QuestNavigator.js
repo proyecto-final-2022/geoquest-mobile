@@ -24,8 +24,9 @@ const QuestNavigator = () => {
             {categoryList.map((category, index) => (
                 <Pressable
                     key={index}
-                    onPress={() => setSelectedCategoryIndex(index)}>
-                <Text style={[styles.categoryListText, (index == selectedCategoryIndex && styles.activeCategoryListText)]}>{category}</Text>
+                    onPress={
+                        () => {setSelectedCategoryIndex(index)}}>
+                <Text style={[styles.categoryListText, (index == selectedCategoryIndex && styles.activeCategoryListText)]}>{category}</Text>        
                 </Pressable>
             ))}
         </View>
@@ -100,14 +101,24 @@ const QuestNavigator = () => {
         </ScrollView> 
 
         {ListCategories()}
+
+        { 
+         selectedCategoryIndex == 0 ?           
+         <FlatList
+            horizontal
+            contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+            showsHorizontalScrollIndicator = {false}
+            data={quests.sort((a, b) => a.qualification < b.qualification)}
+            renderItem={({item}) => <Card quest={item}/>
+        }></FlatList> :           
         <FlatList
             horizontal
             contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
             showsHorizontalScrollIndicator = {false}
-            data={quests}
+            data={quests.sort((a, b) => a.completions < b.completions)}
             renderItem={({item}) => <Card quest={item}/>
         }></FlatList>
-
+        }
 
         </ScrollView> 
     )
