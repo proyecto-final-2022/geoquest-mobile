@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, TouchableOpacity, Pressable, FlatList} from 'react-native';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native'
-import { CloseSession, GetData } from '../../storage/storage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Config from '../../../../../config.json'
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Config from '../../../config.json'
 
 const {width} = Dimensions.get('screen')
 

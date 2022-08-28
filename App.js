@@ -4,9 +4,7 @@ import { ViroARSceneNavigator } from "@viro-community/react-viro/components/AR/V
 import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScene";
 import { ViroText } from "@viro-community/react-viro/components/ViroText";
 import { ViroTrackingStateConstants } from "@viro-community/react-viro/components/ViroConstants";
-import SignInScreen from "./android/app/src/screens/SignInScreen";
-import SignUpScreen from "./android/app/src/screens/SignUpScreen";
-import Navigation from './android/app/src/navigation'
+import Navigation from './app/navigation'
 
 export default function App() {
   return (

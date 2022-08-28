@@ -1,5 +1,5 @@
 import { StoreData } from '../storage/storage'
-import Config from '../../../../config.json'
+import Config from '../../config.json'
 export const LoginManual = async (email, password) => {
 
     try {

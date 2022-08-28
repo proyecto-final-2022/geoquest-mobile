@@ -3,7 +3,7 @@ import { ActivityIndicator, FlatList, StyleSheet, ScrollView, Text, Alert, View 
 import CustomButton from '../../components/CustomButton'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native'
-import { CloseSession, GetData } from '../../storage/storage';
+import { CloseSession} from '../../storage/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {

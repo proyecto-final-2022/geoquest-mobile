@@ -1,13 +1,12 @@
 import React, {useState} from 'react'
 import {View, Button, Text, TextInput, Image, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
-import Logo from '../../../../../assets/GeoQuestLogo.png'
+import Logo from '../../../assets/GeoQuestLogo.png'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
 import {LoginManual} from '../../apicalls/ApiCalls'
-import { GetData } from '../../storage/storage';
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
