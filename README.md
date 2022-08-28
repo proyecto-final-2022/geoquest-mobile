@@ -34,3 +34,9 @@ yarn run web
 ```
 - Para iniciar la aplicacion en el navegador.
 - Esta opcion no deberia funcionar correctamente para realidad aumentada. Pero puede ser util para el desarrollo de la interfaz grafica.
+
+```
+yarn start --lan
+```
+- Para inicial la aplicacion en la red local.
+
