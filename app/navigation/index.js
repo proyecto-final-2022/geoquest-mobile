@@ -8,6 +8,7 @@ import SignUpScreen from '../screens/SignUpScreen'
 import QuestNavigator from '../screens/QuestNavigator'
 import HomeScreen from '../screens/HomeScreen'
 import Scene from '../scenes/HelloUser'
+import ClientQuests from '../screens/ClientQuests/ClientQuests'
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContent } from '../screens/DrawerContent/DrawerContent';
@@ -25,6 +26,7 @@ const Navigation = () => {
                 <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>
                 <Drawer.Screen name="Home" component={HomeScreen} options={{ headerShown: true }}/>
                 <Drawer.Screen name="Quest Navigator" component={QuestNavigator} options={{ headerShown: true }}/>
+                <Drawer.Screen name="Client Quests" component={ClientQuests} options={{ headerShown: true }}/>
                 <Drawer.Screen name="Scene" component={Scene} options={{ headerShown: true }}/>
             </Drawer.Navigator>
         </NavigationContainer>

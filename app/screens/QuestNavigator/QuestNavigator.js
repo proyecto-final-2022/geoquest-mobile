@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, TouchableOpacity, Pressable, FlatList} from 'react-native';
+import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native'
+import {FontAwesome, Entypo} from '@expo/vector-icons'
 import Config from '../../../config.json'
 
 const {width} = Dimensions.get('screen')
@@ -10,6 +11,12 @@ const QuestNavigator = () => {
 
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0)
 
+    const [data, setData] = useState([])
+    const [quests, setDataQuests] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    const url = Config.appUrl + "clients/"
+    const urlQuests = Config.appUrl + "clients/quests"
 
     const ListCategories = () => {
         const categoryList = ['Populares', 'Más jugadas']
@@ -17,8 +24,9 @@ const QuestNavigator = () => {
             {categoryList.map((category, index) => (
                 <Pressable
                     key={index}
-                    onPress={() => setSelectedCategoryIndex(index)}>
-                <Text style={[styles.categoryListText, (index == selectedCategoryIndex && styles.activeCategoryListText)]}>{category}</Text>
+                    onPress={
+                        () => {setSelectedCategoryIndex(index)}}>
+                <Text style={[styles.categoryListText, (index == selectedCategoryIndex && styles.activeCategoryListText)]}>{category}</Text>        
                 </Pressable>
             ))}
         </View>
@@ -37,16 +45,17 @@ const QuestNavigator = () => {
                 <Text style={{fontSize: 16, fontWeight: 'bold'}}>{quest.name}</Text>
             </View>
                 <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
-            
-        </View>)
-    }
-
-    const [data, setData] = useState([])
-    const [quests, setDataQuests] = useState([])
-    const [loading, setLoading] = useState(true)
-
-    const url = Config.appUrl + "clients/"
-    const urlQuests = Config.appUrl + "clients/quests"
+            <View style={{marginTop: 10, flexDirection: 'row'}}>
+                <View style={styles.questInfo}>
+                    <FontAwesome name ='clock-o' size={18}/>
+                    <Text style={styles.questInfoText}>{quest.duration}</Text>
+                </View>
+                <View style={styles.questInfo}>
+                    <Entypo name ='gauge' size={18}/>
+                    <Text style={styles.questInfoText}>{quest.difficulty}</Text>
+                </View>
+        </View>
+        </View>)}
 
     useEffect(() => {
         fetch(url)
@@ -68,12 +77,12 @@ const QuestNavigator = () => {
          }
          return (
             data.map( (client, index) => 
-            <View  style={styles.optionCard} key = {index}>
+            <Pressable key={index} onPress={() => navigation.navigate('Client Quests', {...client})}>
+                <View  style={styles.optionCard} key = {index}>
                 <Image style={styles.optionCardImage} source={{uri: client.image}} />
-                <TouchableOpacity onPress={() => console.warn('Touched' + client.name)}>
                 <Text style={{textAlign: 'center', marginTop:10, fontSize:18, fontWeight: 'bold'}}>{client.name}</Text>
-                </TouchableOpacity>
-            </View>        
+                </View>        
+            </Pressable>
             )
          )
     
@@ -92,14 +101,24 @@ const QuestNavigator = () => {
         </ScrollView> 
 
         {ListCategories()}
+
+        { 
+         selectedCategoryIndex == 0 ?           
+         <FlatList
+            horizontal
+            contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+            showsHorizontalScrollIndicator = {false}
+            data={quests.sort((a, b) => a.qualification < b.qualification)}
+            renderItem={({item}) => <Card quest={item}/>
+        }></FlatList> :           
         <FlatList
             horizontal
             contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
             showsHorizontalScrollIndicator = {false}
-            data={quests}
+            data={quests.sort((a, b) => a.completions < b.completions)}
             renderItem={({item}) => <Card quest={item}/>
         }></FlatList>
-
+        }
 
         </ScrollView> 
     )
@@ -154,7 +173,7 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     card:{
-        height: 300,
+        height: 320,
         backgroundColor: '#ffffff',
         elevation: 10,
         width: width - 65,
@@ -166,8 +185,15 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 120,
         borderRadius: 15,
+    },
+    questInfo: {
+        flexDirection: 'row',
+        marginRight: 15
+    },
+    questInfoText: {
+        marginLeft: 5,
+        color: '#696969',
     }
-
 });
 
 
