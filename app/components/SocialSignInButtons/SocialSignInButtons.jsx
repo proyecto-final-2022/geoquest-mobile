@@ -1,12 +1,11 @@
 import {React} from 'react';
-import Button from 'react-native';
-import CustomButton from '../CustomButton'
+import CustomButton from '../CustomButton/CustomButton'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useEffect } from 'react';
 import {PostLoginGoogle} from '../../apicalls/ApiCalls'
 import {useNavigation} from '@react-navigation/native'
 
-const SocialSignInButtons = () => {
+export default SocialSignInButtons = () => {
     
     const onSignInFacebook = () => {
         console.warn('facebook');
@@ -61,4 +60,4 @@ const SocialSignInButtons = () => {
     )
 }
 
-export default SocialSignInButtons
+

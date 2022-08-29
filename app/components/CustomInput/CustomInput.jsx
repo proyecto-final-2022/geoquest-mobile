@@ -3,7 +3,7 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {Controller} from 'react-hook-form';
 import {AntDesign} from '@expo/vector-icons'
 
-const CustomInput = ({
+export default CustomInput = ({
   control,
   name,
   rules = {},
@@ -64,6 +64,3 @@ const styles = StyleSheet.create({
         position: 'absolute',
     }
 })
-
-
-export default CustomInput;

@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Text, StyleSheet, Pressable} from 'react-native'
 import {FontAwesome} from '@expo/vector-icons'
 
-const CustomButton = ({onPress, text, type = "PRIMARY", bgColor, fgColor, icon}) => {
+export default CustomButton = ({onPress, text, type = "PRIMARY", bgColor, fgColor, icon}) => {
     return (
         <Pressable 
             onPress={onPress} 
@@ -60,5 +60,3 @@ const styles = StyleSheet.create({
         position: 'absolute',
     }
 })
-
-export default CustomButton

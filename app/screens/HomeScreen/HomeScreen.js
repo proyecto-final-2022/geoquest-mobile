@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, ScrollView, Text, Alert, View } from 'react-native';
-import CustomButton from '../../components/CustomButton'
+import CustomButton from '../../components/CustomButton/CustomButton'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native'
 import { CloseSession} from '../../storage/storage';
