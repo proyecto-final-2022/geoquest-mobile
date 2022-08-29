@@ -15,7 +15,7 @@ import {
     TouchableRipple,
     Switch
 } from 'react-native-paper';
-import {CloseSession} from '../../storage/storage';
+import {CloseSession} from '../../utils/storage/storage';
 import {useNavigation} from '@react-navigation/native'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

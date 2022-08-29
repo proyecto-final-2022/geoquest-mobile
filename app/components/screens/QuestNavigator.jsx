@@ -89,7 +89,6 @@ const QuestNavigator = () => {
     }
     return (
         <ScrollView style={styles.view}> 
-        <Text style = {styles.title}>Elige tu lugar de búsqueda</Text>
         <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}

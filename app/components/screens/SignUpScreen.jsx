@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
 import {View, Text, StyleSheet, ScrollView} from 'react-native'
-import CustomInput from '../../components/CustomInput/CustomInput'
-import CustomButton from '../../components/CustomButton/CustomButton'
-import SocialSignInButtons from '../../components/SocialSignInButtons/SocialSignInButtons'
+import CustomInput from '../commons/CustomInput'
+import CustomButton from '../commons/CustomButton'
+import SocialSignInButtons from '../commons/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
-import {PostExample} from '../../apicalls/ApiCalls'
+import {PostExample} from '../../utils/apicalls/ApiCalls'
 
-const SignUpScreen = () => {
+export default SignUpScreen = () => {
 
     const {control, handleSubmit, watch} = useForm();
 
@@ -108,6 +108,3 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF9CA'
     },
 });
-
-
-export default SignUpScreen

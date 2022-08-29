@@ -1,8 +1,8 @@
 import {React} from 'react';
-import CustomButton from '../CustomButton/CustomButton'
+import CustomButton from './CustomButton'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useEffect } from 'react';
-import {PostLoginGoogle} from '../../apicalls/ApiCalls'
+import {PostLoginGoogle} from '../../utils/apicalls/ApiCalls'
 import {useNavigation} from '@react-navigation/native'
 
 export default SocialSignInButtons = () => {

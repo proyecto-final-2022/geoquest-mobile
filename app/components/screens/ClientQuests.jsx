@@ -6,7 +6,7 @@ import Config from '../../../config.json'
 
 const {width} = Dimensions.get('screen')
 
-const ClientQuests = ({route, navigation}) => {
+export default ClientQuests = ({route, navigation}) => {
   //  const navigation = useNavigation()
 
     const {ID, name, image} = route.params
@@ -41,6 +41,3 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF9CA',
     }
 });
-
-
-export default ClientQuests

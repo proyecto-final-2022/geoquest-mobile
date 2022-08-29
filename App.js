@@ -4,7 +4,7 @@ import { ViroARSceneNavigator } from "@viro-community/react-viro/components/AR/V
 import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScene";
 import { ViroText } from "@viro-community/react-viro/components/ViroText";
 import { ViroTrackingStateConstants } from "@viro-community/react-viro/components/ViroConstants";
-import Navigation from './app/navigation'
+import Navigation from './app/components/navigation'
 
 export default function App() {
   return (
