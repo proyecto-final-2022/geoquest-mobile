@@ -17,7 +17,7 @@ const Drawer = createDrawerNavigator();
 
 const Stack = createNativeStackNavigator()
 
-const Navigation = () => {
+export default Navigation = () => {
     return(
         <NavigationContainer>
                 
@@ -32,5 +32,3 @@ const Navigation = () => {
         </NavigationContainer>
     )
 }
-
-export default Navigation
