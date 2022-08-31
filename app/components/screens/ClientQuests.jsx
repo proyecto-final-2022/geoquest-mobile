@@ -10,32 +10,28 @@ const {width} = Dimensions.get('screen')
 export default ClientQuests = ({route, navigation}) => {
   //  const navigation = useNavigation()
 
-    const {ID, name, image} = route.params
+  const {ID, name, image} = route.params
+  const [data, setData] = useState([])
+  const [tags, setTags] = useState([])
+  const [loading, setLoading] = useState(true)
 
-    const [data, setData] = useState([])
-    const [tags, setTags] = useState([])
-    const [loading, setLoading] = useState(true)
+  const url = Config.appUrl + "clients/" + ID + "/quests"
 
-    const url = Config.appUrl + "clients/" + ID + "/quests"
-
-    const getData = () => {
-        if (loading) {
-            return <ActivityIndicator size="large" />
-         }
-         return (
-            data.map( (quest, index) => 
-            <Pressable key={index}>
-                <View  style={styles.optionCard} key = {index}>
-                <Text style={{textAlign: 'center', marginTop:10, fontSize:18, fontWeight: 'bold'}}>{quest.name}</Text>
-                </View>        
-            </Pressable>
-            )
-         )
-    
+  const getData = () => {
+    if (loading) {
+      return <ActivityIndicator size="large" />
+    }
+  return (
+    data.map( (quest, index) => 
+      <Pressable key={index}>
+        <View  style={styles.optionCard} key = {index}>
+          <Text style={{textAlign: 'center', marginTop:10, fontSize:18, fontWeight: 'bold'}}>{quest.name}</Text>
+        </View>        
+      </Pressable>))
     }
 
     useEffect(() => {
-        fetch(url)
+      fetch(url)
         .then((response) => response.json())
         .then((json) => setData(json))
         .catch((error) => console.error(error))
@@ -43,118 +39,115 @@ export default ClientQuests = ({route, navigation}) => {
     }, [])
 
     const Card = ({quest}) => {
-        return (
+      return (
         <View style={styles.card}>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: 10,
-                }}>
-                <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 10,
+            }}>
+            <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
+          </View>
+          <View style={{marginTop: 10, flexDirection: 'row'}}>
+            <View style={styles.questInfo}>
+              <FontAwesome name ='clock-o' size={25}/>
+              <Text style={styles.questInfoText}>{quest.duration}</Text>
             </View>
-            <View style={{marginTop: 10, flexDirection: 'row'}}>
-                <View style={styles.questInfo}>
-                    <FontAwesome name ='clock-o' size={25}/>
-                    <Text style={styles.questInfoText}>{quest.duration}</Text>
-                </View>
-                <View style={styles.questInfo} marginLeft={18}>
-                    <Entypo name ='gauge' size={25}/>
-                    <Text style={styles.questInfoText}>{quest.difficulty}</Text>
-                </View>
-
-                <View style={styles.questInfo} marginTop={-50} marginLeft={18}>
-                    <Entypo name ='star' size={30}/>
-                    <Text style={styles.questInfoText}>4.5</Text>
-                </View>
-                
-                <View style={styles.tag} marginRight={10} marginLeft={-340}>
-                    <View style={{marginTop: -38, marginLeft: 15}}>
-                        <Text style={styles.tagInfoText}>{quest.tags[0]}</Text>
-                    </View>
-                </View>
-                
-                <View style={styles.tag}>
-                    <View style={{marginTop: -38, marginLeft: 15}}>
-                        <Text style={styles.tagInfoText}>{quest.tags[1]}</Text>
-                    </View>
-                </View>
-
-                <View style={styles.tag} marginLeft={10}>
-                    <View style={{marginTop: -38, marginLeft: 15}}>
-                        <Text style={styles.tagInfoText}>{quest.tags[2]}</Text>
-                    </View>
-                </View>
-
-                <View style={styles.tag} marginLeft={10}>
-                    <View style={{marginTop: -38, marginLeft: 15}}>
-                        <Text style={styles.tagInfoText}>{quest.tags[3]}</Text>
-                    </View>
-                </View>
-
+            <View style={styles.questInfo} marginLeft={18}>
+              <Entypo name ='gauge' size={25}/>
+                <Text style={styles.questInfoText}>{quest.difficulty}</Text>
             </View>
+
+            <View style={styles.questInfo} marginTop={-50} marginLeft={18}>
+              <Entypo name ='star' size={30}/>
+                <Text style={styles.questInfoText}>4.5</Text>
+            </View>
+              
+            <View style={styles.tag} marginRight={10} marginLeft={-340}>
+              <View style={{marginTop: -38, marginLeft: 15}}>
+                <Text style={styles.tagInfoText}>{quest.tags[0]}</Text>
+              </View>
+            </View>
+                
+            <View style={styles.tag}>
+              <View style={{marginTop: -38, marginLeft: 15}}>
+                <Text style={styles.tagInfoText}>{quest.tags[1]}</Text>
+              </View>
+            </View>
+
+            <View style={styles.tag} marginLeft={10}>
+              <View style={{marginTop: -38, marginLeft: 15}}>
+                <Text style={styles.tagInfoText}>{quest.tags[2]}</Text>
+              </View>
+            </View>
+
+            <View style={styles.tag} marginLeft={10}>
+              <View style={{marginTop: -38, marginLeft: 15}}>
+                <Text style={styles.tagInfoText}>{quest.tags[3]}</Text>
+              </View>
+            </View>
+          </View>
         </View>)}
-
-
-    return (
-        <ScrollView style={styles.view}>
-        <Text style = {styles.title}>{name}</Text>
-        <FlatList
-            horizontal= {false}
-            contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
-            showsHorizontalScrollIndicator = {false}
-            data={data}
-            renderItem={({item}) => <Card quest={item}/>
-        }>      
-        </FlatList> 
+  
+  return (
+    <ScrollView style={styles.view}>
+    <Text style = {styles.title}>{name}</Text>
+    <FlatList
+      horizontal= {false}
+      contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+      showsHorizontalScrollIndicator = {false}
+      data={data}
+      renderItem={({item}) => <Card quest={item}/>}>      
+    </FlatList> 
     
-        </ScrollView> 
+    </ScrollView> 
     )
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#a52a2a',
-        textAlign: 'center'
-    },
-    view: {
-        flex: 1,
-        backgroundColor: '#FFF9CA',
-    },
-    card:{
-        height: 120,
-        backgroundColor: '#ffefd5',
-        elevation: 10,
-        width: width - 40,
-        marginTop:20,
-        padding: 15,
-        borderRadius: 20,
-    },
-    tag:{
-        height: 10,
-        marginTop: 15,
-        backgroundColor: 'mintcream',
-        width: 78,
-        padding: 15,
-        borderRadius: 20,
-    },
-    questInfo: {
-        flexDirection: 'row',
-        marginTop: -50, 
-        marginLeft: 200,
-    },
-    questInfoText: {
-        marginTop: 28,
-        marginLeft: -25,
-        color: '#696969',
-    },
-    tagInfoText: {
-        fontSize: 11,
-        marginTop: 25,
-        marginLeft: -20,
-        color: '#696969',
-    }
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#a52a2a',
+    textAlign: 'center'
+  },
+  view: {
+    flex: 1,
+    backgroundColor: '#FFF9CA',
+  },
+  card:{
+    height: 120,
+    backgroundColor: '#ffefd5',
+    elevation: 10,
+    width: width - 40,
+    marginTop:20,
+    padding: 15,
+    borderRadius: 20,
+  },
+  tag:{
+    height: 10,
+    marginTop: 15,
+    backgroundColor: 'mintcream',
+    width: 78,
+    padding: 15,
+    borderRadius: 20,
+  },
+  questInfo: {
+    flexDirection: 'row',
+    marginTop: -50, 
+    marginLeft: 200,
+  },
+  questInfoText: {
+    marginTop: 28,
+    marginLeft: -25,
+    color: '#696969',
+  },
+  tagInfoText: {
+    fontSize: 11,
+    marginTop: 25,
+    marginLeft: -20,
+    color: '#696969',
+  }
 });
 

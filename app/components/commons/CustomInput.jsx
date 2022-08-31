@@ -43,24 +43,24 @@ export default CustomInput = ({
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'white',
-        width: '80%',
+  container: {
+    backgroundColor: 'white',
+    width: '80%',
 
-        borderColor: '#e8e8e8',
-        borderWidth: 1,
-        borderRadius: 5, 
+    borderColor: '#e8e8e8',
+    borderWidth: 1,
+    borderRadius: 5, 
 
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        marginVertical: 10,
-    },
-    input: {
-        left: 35,
-    },
-    leftIcon: {
-        left: 5,
-        top: 10,
-        position: 'absolute',
-    }
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginVertical: 10,
+  },
+  input: {
+    left: 35,
+  },
+  leftIcon: {
+    left: 5,
+    top: 10,
+    position: 'absolute',
+  }
 })

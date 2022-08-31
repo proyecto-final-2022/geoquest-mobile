@@ -12,104 +12,104 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SignInScreen = () => {
 
-    const [isSession, setIsSession] = useState(false);
+  const [isSession, setIsSession] = useState(false);
 
-    const getStorage = async () => {
-        console.warn("before"+token)
-        const token = await AsyncStorage.getItem('@storage_Key')
-        console.warn("after"+token)
-        token ? setIsSession(true) : setIsSession(false)
+  const getStorage = async () => {
+    console.warn("before"+token)
+    const token = await AsyncStorage.getItem('@storage_Key')
+    console.warn("after"+token)
+    token ? setIsSession(true) : setIsSession(false)
+  }
+
+  const {height} = useWindowDimensions();
+
+  const {control, handleSubmit} = useForm();
+
+  const navigation = useNavigation()
+
+  const onSignInPressed = async (data) => {
+    try{
+      await LoginManual(data.email, data.password);
+      await getStorage();
+    }
+    catch (error) {
+      console.error(error);
     }
 
-    const {height} = useWindowDimensions();
+    isSession ? navigation.navigate('Home') : Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}]);
+  }
 
-    const {control, handleSubmit} = useForm();
+  const onForgotPasswordPressed = () => {
+    console.warn('Forgot Password');
+  }
 
-    const navigation = useNavigation()
+  const onSignUpPress = () => {
+    navigation.navigate('Sign Up')
+  }
 
-    const onSignInPressed = async (data) => {
-        try{
-            await LoginManual(data.email, data.password);
-            await getStorage();
-        }
-        catch (error) {
-            console.error(error);
-        }
-
-        isSession ? navigation.navigate('Home') : Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}]);
-    }
-
-    const onForgotPasswordPressed = () => {
-      console.warn('Forgot Password');
-    }
-
-    const onSignUpPress = () => {
-      navigation.navigate('Sign Up')
-    }
-
-    return (
-        <ScrollView style={styles.view}>
-        <View style={styles.root}>
+  return (
+    <ScrollView style={styles.view}>
+      <View style={styles.root}>
         <Image
-              source = {Logo}
-              style={[styles.logo, {height: height * 0.3}]}
-              resizeMode="contain"
+          source = {Logo}
+          style={[styles.logo, {height: height * 0.3}]}
+          resizeMode="contain"
         />
-        
+    
         <CustomInput 
-            name = "email"
-            placeholder ="Email" 
-            control = {control}
-            rules = {{required: 'Email is required'}}
-            icon = "mail"
+          name = "email"
+          placeholder ="Email" 
+          control = {control}
+          rules = {{required: 'Email is required'}}
+          icon = "mail"
         />
         <CustomInput
-            name = "password" 
-            placeholder ="Password" 
-            icon = "lock"
-            control = {control} 
-            rules = {{required: 'Password is required'}}
-            secureTextEntry
+          name = "password" 
+          placeholder ="Password" 
+          icon = "lock"
+          control = {control} 
+          rules = {{required: 'Password is required'}}
+          secureTextEntry
         /> 
 
         <CustomButton 
-            text='Sign In' 
-            onPress={handleSubmit(onSignInPressed)}/>
+          text='Sign In' 
+          onPress={handleSubmit(onSignInPressed)}/>
         <CustomButton 
-            text='Forgot password?' 
-            onPress={onForgotPasswordPressed}
-            type="TERTIARY"/>
+          text='Forgot password?' 
+          onPress={onForgotPasswordPressed}
+          type="TERTIARY"/>
         <SocialSignInButtons/>
         <CustomButton 
-            text ="Don't have an account? Create one"
-            onPress = {onSignUpPress}
-            type="TERTIARY"
+          text ="Don't have an account? Create one"
+          onPress = {onSignUpPress}
+          type="TERTIARY"
         />
-        </View>
-        </ScrollView>
+      </View>
+    </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    root: {
-        alignItems: 'center',
-        padding: 20,
-    },
-    logo: {
-        width: '70%',
-        maxWidth: 300,
-        maxHeight: 200,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#051C60',
-        margin: 10,
-    }, 
-    view: {
-        flex: 1,
-        backgroundColor: '#FFF9CA'
-    },
+  root: {
+    alignItems: 'center',
+    padding: 20,
+  },
+  logo: {
+    width: '70%',
+    maxWidth: 300,
+    maxHeight: 200,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#051C60',
+    margin: 10,
+  }, 
+  view: {
+    flex: 1,
+    backgroundColor: '#FFF9CA'
+  },
 });
 
 

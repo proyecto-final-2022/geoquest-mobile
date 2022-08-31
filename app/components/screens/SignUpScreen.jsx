@@ -9,102 +9,102 @@ import {PostExample} from '../../utils/apicalls/ApiCalls'
 
 export default SignUpScreen = () => {
 
-    const {control, handleSubmit, watch} = useForm();
+  const {control, handleSubmit, watch} = useForm();
 
-    const pass = watch('password')
+  const pass = watch('password')
 
-    const navigation = useNavigation()
+  const navigation = useNavigation()
   
-    const onRegisterPressed = (data) => {
-        PostExample(data.email, data.username, data.password)
-        navigation.navigate('Quest Navigator')
-    }
+  const onRegisterPressed = (data) => {
+    PostExample(data.email, data.username, data.password)
+    navigation.navigate('Quest Navigator')
+  }
 
-    const onSignInPress = () => {
-        navigation.navigate('Sign In')
-    }
+  const onSignInPress = () => {
+    navigation.navigate('Sign In')
+  }
 
-    return (
-        <ScrollView style={styles.view}>
-        <View style={styles.root}>
-            <Text style = {styles.title}>Create an account
-            </Text>
+  return (
+    <ScrollView style={styles.view}>
+      <View style={styles.root}>
+        <Text style = {styles.title}>Create an account
+          </Text>
             <CustomInput 
-                name = "username"
-                placeholder="Username" 
-                control = {control}
-                rules = {{required: 'Username is required'}}    
-                icon = "user"
+              name = "username"
+              placeholder="Username" 
+              control = {control}
+              rules = {{required: 'Username is required'}}    
+              icon = "user"
             />
             <CustomInput 
-                name = "email"
-                placeholder="Email" 
-                icon = "mail"
-                control = {control}
-                rules = {{required: 'Email is required'}}    
+              name = "email"
+              placeholder="Email" 
+              icon = "mail"
+              control = {control}
+              rules = {{required: 'Email is required'}}    
             />
             <CustomInput
-                name = "password" 
-                placeholder="Password" 
-                icon = "lock"
-                control = {control}
-                rules = {{
-                    required: 'Password is required',
-                    minLength: {
-                        value: 8,
-                        message: 'Minimum 8 characters',
+              name = "password" 
+              placeholder="Password" 
+              icon = "lock"
+              control = {control}
+              rules = {{
+                  required: 'Password is required',
+                  minLength: {
+                    value: 8,
+                      message: 'Minimum 8 characters',
                     },
                     maxLength: {
-                        value: 32,
-                        message: 'Maximum 32 characters',
+                      value: 32,
+                      message: 'Maximum 32 characters',
                     }
                 }}   
                 secureTextEntry
             />
             <CustomInput 
-                name = "password-repeat"
-                placeholder="Repeat Password" 
-                icon = "lock"
-                control = {control}
-                rules = {{
-                  validate: value => value == pass || 'Password do not match',
-                }}
-                secureTextEntry
+              name = "password-repeat"
+              placeholder="Repeat Password" 
+              icon = "lock"
+              control = {control}
+              rules = {{
+                validate: value => value == pass || 'Password do not match',
+              }}
+              secureTextEntry
             />
             <CustomButton 
-                text='Register' 
-                onPress={handleSubmit(onRegisterPressed)}
+              text='Register' 
+              onPress={handleSubmit(onRegisterPressed)}
             />
             <SocialSignInButtons/>
             <CustomButton 
-                text ="Have an account? Sign in"
-                onPress = {onSignInPress}
-                type="TERTIARY"
+              text ="Have an account? Sign in"
+              onPress = {onSignInPress}
+              type="TERTIARY"
             />
 
-        </View>
-        </ScrollView>
-    )
+      </View>
+    </ScrollView>
+  )
 }
 
 const styles = StyleSheet.create({
-    root: {
-        alignItems: 'center',
-        padding: 20,
-    },
-    logo: {
-        width: '70%',
-        maxWidth: 300,
-        maxHeight: 200,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#CA955C',
-        margin: 10,
-    }, 
-    view: {
-        flex: 1,
-        backgroundColor: '#FFF9CA'
-    },
+  root: {
+    alignItems: 'center',
+    padding: 20,
+  },
+  logo: {
+    width: '70%',
+    maxWidth: 300,
+    maxHeight: 200,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#CA955C',
+    margin: 10,
+  }, 
+  view: {
+    flex: 1,
+    backgroundColor: '#FFF9CA'
+  },
 });
