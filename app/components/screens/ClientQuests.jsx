@@ -13,7 +13,7 @@ export default ClientQuests = ({route, navigation}) => {
     const {ID, name, image} = route.params
 
     const [data, setData] = useState([])
-    const [tags, setTags] = useState(['hola'])
+    const [tags, setTags] = useState([])
     const [loading, setLoading] = useState(true)
 
     const url = Config.appUrl + "clients/" + ID + "/quests"
@@ -70,25 +70,25 @@ export default ClientQuests = ({route, navigation}) => {
                 
                 <View style={styles.tag} marginRight={10} marginLeft={-340}>
                     <View style={{marginTop: -38, marginLeft: 15}}>
-                        <Text style={styles.tagInfoText}>educativo</Text>
+                        <Text style={styles.tagInfoText}>{quest.tags[0]}</Text>
                     </View>
                 </View>
                 
                 <View style={styles.tag}>
                     <View style={{marginTop: -38, marginLeft: 15}}>
-                        <Text style={styles.tagInfoText}>facultad</Text>
+                        <Text style={styles.tagInfoText}>{quest.tags[1]}</Text>
                     </View>
                 </View>
 
                 <View style={styles.tag} marginLeft={10}>
                     <View style={{marginTop: -38, marginLeft: 15}}>
-                        <Text style={styles.tagInfoText}>indoor</Text>
+                        <Text style={styles.tagInfoText}>{quest.tags[2]}</Text>
                     </View>
                 </View>
 
                 <View style={styles.tag} marginLeft={10}>
                     <View style={{marginTop: -38, marginLeft: 15}}>
-                        <Text style={styles.tagInfoText}>TP</Text>
+                        <Text style={styles.tagInfoText}>{quest.tags[3]}</Text>
                     </View>
                 </View>
 
