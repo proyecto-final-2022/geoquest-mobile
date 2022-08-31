@@ -4,6 +4,7 @@ import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-si
 import { useEffect } from 'react';
 import {PostLoginGoogle} from '../../utils/apicalls/ApiCalls'
 import {useNavigation} from '@react-navigation/native'
+import Config from '../../../config.json'
 
 export default SocialSignInButtons = () => {
     
@@ -15,7 +16,7 @@ export default SocialSignInButtons = () => {
 
     useEffect( () => {
         GoogleSignin.configure({
-            androidClientId: '310650990221-v7rjbq7joe78ebbcs47v5ur28m8o37q1.apps.googleusercontent.com'
+            androidClientId: Config.clientIdGoogle
         })
     })
 
