@@ -37,7 +37,16 @@ export default ClientQuests = ({route, navigation}) => {
         .catch((error) => console.error(error))
         .finally(()=>setLoading(false))
     }, [])
-
+    
+    const Tags = ({tag}) => {
+      return (
+        <View style={styles.tag}>
+        <View style={{marginTop: -38, marginLeft:10}}>
+          <Text style={styles.tagInfoText}>{tag}</Text>
+        </View>
+      </View>
+      )
+    }
     const Card = ({quest}) => {
       return (
         <View style={styles.card}>
@@ -63,30 +72,7 @@ export default ClientQuests = ({route, navigation}) => {
               <Entypo name ='star' size={30}/>
                 <Text style={styles.questInfoText}>4.5</Text>
             </View>
-              
-            <View style={styles.tag} marginRight={10} marginLeft={-340}>
-              <View style={{marginTop: -38, marginLeft: 15}}>
-                <Text style={styles.tagInfoText}>{quest.tags[0]}</Text>
-              </View>
-            </View>
-                
-            <View style={styles.tag}>
-              <View style={{marginTop: -38, marginLeft: 15}}>
-                <Text style={styles.tagInfoText}>{quest.tags[1]}</Text>
-              </View>
-            </View>
-
-            <View style={styles.tag} marginLeft={10}>
-              <View style={{marginTop: -38, marginLeft: 15}}>
-                <Text style={styles.tagInfoText}>{quest.tags[2]}</Text>
-              </View>
-            </View>
-
-            <View style={styles.tag} marginLeft={10}>
-              <View style={{marginTop: -38, marginLeft: 15}}>
-                <Text style={styles.tagInfoText}>{quest.tags[3]}</Text>
-              </View>
-            </View>
+            {quest.tags.map((tag) => <Tags tag={tag}/>)}  
           </View>
         </View>)}
   
@@ -127,6 +113,8 @@ const styles = StyleSheet.create({
   },
   tag:{
     height: 10,
+    marginRight: 360,
+    marginLeft: -345,
     marginTop: 15,
     backgroundColor: 'mintcream',
     width: 78,
