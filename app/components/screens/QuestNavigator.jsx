@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: width/2 - 40,
     elevation: 15,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffefd5',
     alignItems: 'center',
     borderRadius: 20,
     paddingTop: 5,
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     },
     card:{
       height: 320,
-      backgroundColor: '#ffffff',
+      backgroundColor: '#ffefd5',
       elevation: 10,
       width: width - 65,
       marginRight:20,

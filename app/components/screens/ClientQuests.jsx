@@ -8,7 +8,8 @@ import Tags from "react-native-tags"
 const {width} = Dimensions.get('screen')
 
 export default ClientQuests = ({route, navigation}) => {
-  //  const navigation = useNavigation()
+  
+ // const navigation = useNavigation()
 
   const {ID, name, image} = route.params
   const [data, setData] = useState([])
@@ -16,6 +17,16 @@ export default ClientQuests = ({route, navigation}) => {
   const [loading, setLoading] = useState(true)
 
   const url = Config.appUrl + "clients/" + ID + "/quests"
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: route.params.name,
+      headerTintColor: '#a52a2a',
+      headerSearchBarOptions: {
+        placeholder: "Search",
+      }
+    })
+  })
 
   useEffect(() => {
     fetch(url)
@@ -66,7 +77,6 @@ export default ClientQuests = ({route, navigation}) => {
   
   return (
     <ScrollView style={styles.view}>
-    <Text style = {styles.title}>{name}</Text>
     <FlatList
       horizontal= {false}
       contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
