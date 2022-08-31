@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   tagInfoText: {
     fontSize: 11,
     marginTop: 25,
-    marginLeft: -20,
+    marginLeft: -15,
     color: '#696969',
   }
 });
