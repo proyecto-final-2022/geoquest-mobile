@@ -5,13 +5,14 @@ import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
 //import PopUpWindow from '../commons/PopUpWindow'
 import Tags from "react-native-tags"
+import CustomButton from '../commons/CustomButton'
 
 const {width} = Dimensions.get('screen')
 
 export default QuestVisualizer = ({route, navigation}) => {
 
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
-  
+
   const Tags = ({tag}) => {
     return (
       <View style={styles.tag}>
@@ -19,6 +20,17 @@ export default QuestVisualizer = ({route, navigation}) => {
         <Text style={styles.tagInfoText}>{tag}</Text>
       </View>
       </View>
+    )
+  }
+  //Por que no reutilizar CustomButton? Porque me pone el boton donde se le canta la verga basicamente y no me deja moverlo
+  const Button = ({text, onPress}) => {
+    return (
+      <Pressable 
+        onPress={onPress} 
+        style={styles.container}>  
+      <Text 
+        style={styles.text}>{text}</Text>
+      </Pressable>
     )
   }
 
@@ -56,6 +68,10 @@ export default QuestVisualizer = ({route, navigation}) => {
             {tags.map((tag) => <Tags tag={tag}/>)}  
           </View>
         </View>
+
+      <Button onPress={() => console.log('Comenzar')} text="Comenzar"/>
+      <Button onPress={() => console.log('Armar Grupo')} text="Armar Grupo"/>
+      <Button onPress={() => console.log('Rankings')} text="Ver Rankings"/>
     
     </ScrollView>
 
@@ -77,7 +93,7 @@ const styles = StyleSheet.create({
   questInfo: {
     flexDirection: 'row',
     marginTop: -150, 
-    marginLeft: 195,
+    marginLeft: 200,
   },
   questInfoText: {
     marginTop: 28,
@@ -104,6 +120,22 @@ const styles = StyleSheet.create({
     height: 140,
     borderRadius: 10,
     width: '100%'
+  },
+  container: {
+    width: '50%',
+
+    padding: 15,
+    marginVertical: 5,
+    marginLeft: 100,
+    marginTop: 20,
+
+    alignItems: 'center',
+    borderRadius: 5,
+    backgroundColor: '#CA955C'
+  },
+  text: {
+    fontWeight: 'bold',
+    color: 'white',
   },  
 });
 
