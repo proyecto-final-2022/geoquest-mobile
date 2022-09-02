@@ -96,32 +96,35 @@ export default ClientQuests = ({route, navigation}) => {
   
   const Card = ({quest}) => {
     return (
-      <View style={styles.card}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 10,
-          }}>
-          <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
-        </View>
-        <View style={{marginTop: 10, flexDirection: 'row'}}>
-          <View style={styles.questInfo}>
-            <FontAwesome name ='clock-o' size={25}/>
-            <Text style={styles.questInfoText}>{quest.duration}</Text>
+      <Pressable onPress={() => navigation.navigate('Quest Visualizer', {...quest})}>
+        <View style={styles.card}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 10,
+            }}>
+            <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
           </View>
-        <View style={styles.questInfo} marginLeft={18}>
-          <Entypo name ='gauge' size={25}/>
-            <Text style={styles.questInfoText}>{quest.difficulty}</Text>
-        </View>
+          <View style={{marginTop: 10, flexDirection: 'row'}}>
+            <View style={styles.questInfo}>
+              <FontAwesome name ='clock-o' size={25}/>
+                <Text style={styles.questInfoText}>{quest.duration}</Text>
+            </View>
+          <View style={styles.questInfo} marginLeft={18}>
+            <Entypo name ='gauge' size={25}/>
+              <Text style={styles.questInfoText}>{quest.difficulty}</Text>
+          </View>
 
-        <View style={styles.questInfo} marginTop={-50} marginLeft={18}>
-          <Entypo name ='star' size={30}/>
-          <Text style={styles.questInfoText}>{quest.qualification}</Text>
+          <View style={styles.questInfo} marginTop={-50} marginLeft={18}>
+            <Entypo name ='star' size={30}/>
+            <Text style={styles.questInfoText}>{quest.qualification}</Text>
+          </View>
+            {quest.tags.map((tag) => <Tags tag={tag}/>)}  
+          </View>
         </View>
-        {quest.tags.map((tag) => <Tags tag={tag}/>)}  
-        </View>
-      </View>)}
+      </Pressable>) 
+    }
   
   return (
 
