@@ -10,6 +10,7 @@ import HomeScreen from '../screens/HomeScreen'
 import QuestVisualizer from '../screens/QuestVisualizer'
 import Scene from '../scenes/HelloUser'
 import ClientQuests from '../screens/ClientQuests'
+import Ranking from '../screens/Ranking'
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContent } from '../screens/DrawerContent';
@@ -30,6 +31,7 @@ export default Navigation = () => {
         <Drawer.Screen name="Client Quests" component={ClientQuests} options={{ headerShown: true, headerTitle: "", headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Scene" component={Scene} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Quest Visualizer" component={QuestVisualizer} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Ranking" component={Ranking} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
       </Drawer.Navigator>
     </NavigationContainer>
   )

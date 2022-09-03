@@ -30,7 +30,7 @@ const QuestNavigator = () => {
         </Pressable>
       ))}
     </View>
-    }
+  }
 
   const Card = ({quest}) => {
     return (
@@ -166,31 +166,31 @@ const styles = StyleSheet.create({
   },
   activeCategoryListText: {
     color: '#a52a2a',
-      borderBottomWidth: 1,
-      paddingBottom: 5,
-    },
-    card:{
-      height: 320,
-      backgroundColor: '#ffefd5',
-      elevation: 10,
-      width: width - 65,
-      marginRight:20,
-      padding: 15,
-      borderRadius: 20,
-    },
-    cardImage:{
-      width: '100%',
-      height: 120,
-      borderRadius: 15,
-    },
-    questInfo: {
-      flexDirection: 'row',
-      marginRight: 15
-    },
-    questInfoText: {
-      marginLeft: 5,
-      color: '#696969',
-    }
+    borderBottomWidth: 1,
+    paddingBottom: 5,
+  },
+  card:{
+    height: 320,
+    backgroundColor: '#ffefd5',
+    elevation: 10,
+    width: width - 65,
+    marginRight:20,
+    padding: 15,
+    borderRadius: 20,
+  },
+  cardImage:{
+    width: '100%',
+    height: 120,
+    borderRadius: 15,
+  },
+  questInfo: {
+    flexDirection: 'row',
+    marginRight: 15
+  },
+  questInfoText: {
+    marginLeft: 5,
+    color: '#696969',
+  }
 });
 
 

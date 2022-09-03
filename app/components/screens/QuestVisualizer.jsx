@@ -3,7 +3,6 @@ import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimension
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
-//import PopUpWindow from '../commons/PopUpWindow'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
 
@@ -47,7 +46,6 @@ export default QuestVisualizer = ({route, navigation}) => {
   return (
 
     <ScrollView style={styles.view}> 
-      {console.log(id)}
       <Image style={styles.image} source={{uri: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"}} />
       <View style={styles.card}>
           <Text style={{marginTop: 50, fontSize: 20, fontWeight: 'bold'}}>{description}</Text>
@@ -71,7 +69,7 @@ export default QuestVisualizer = ({route, navigation}) => {
 
       <Button onPress={() => console.log('Comenzar')} text="Comenzar"/>
       <Button onPress={() => console.log('Armar Grupo')} text="Armar Grupo"/>
-      <Button onPress={() => console.log('Rankings')} text="Ver Rankings"/>
+      <Button onPress={() => navigation.navigate('Ranking', {...{id}})} text="Ver Rankings"/>
     
     </ScrollView>
 
