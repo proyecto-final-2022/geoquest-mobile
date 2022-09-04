@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import {Button} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
-//import PopUpWindow from '../commons/PopUpWindow'
 import Tags from "react-native-tags"
 
 const {width} = Dimensions.get('screen')
@@ -12,7 +12,7 @@ export default ClientQuests = ({route, navigation}) => {
   
  // const navigation = useNavigation()
 
-  const {ID, name, image} = route.params
+  const {ID} = route.params
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [view, setView] = useState(false)
@@ -24,13 +24,15 @@ export default ClientQuests = ({route, navigation}) => {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: route.params.name,
+      headerRight: () => (
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Navigator')}/>
+      ),
       headerTintColor: '#a52a2a',
       headerSearchBarOptions: {
         placeholder: "Search",
       }
     })
   })
-
   useEffect(() => {
     fetch(url)
     .then((response) => response.json())
@@ -128,7 +130,7 @@ export default ClientQuests = ({route, navigation}) => {
   
   return (
 
-    <ScrollView style={styles.view}> 
+    <ScrollView style={styles.view}>
       <TextInput 
         style={styles.textInput}
         onChangeText={(text) => filterSearch(text)}

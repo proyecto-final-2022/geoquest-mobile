@@ -37,6 +37,9 @@ export default QuestVisualizer = ({route, navigation}) => {
     navigation.setOptions({
       headerTitle: route.params.name,
       headerTintColor: '#a52a2a',
+      headerRight: () => (
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Client Quests',{id})}/>
+      ),
       headerSearchBarOptions: {
         placeholder: "Search",
       }
@@ -69,7 +72,7 @@ export default QuestVisualizer = ({route, navigation}) => {
 
       <Button onPress={() => console.log('Comenzar')} text="Comenzar"/>
       <Button onPress={() => console.log('Armar Grupo')} text="Armar Grupo"/>
-      <Button onPress={() => navigation.navigate('Ranking', {...{id}})} text="Ver Rankings"/>
+      <Button onPress={() => navigation.navigate('Ranking', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags}})} text="Ver Rankings"/>
     
     </ScrollView>
 

@@ -28,7 +28,7 @@ export default Navigation = () => {
         <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>
         <Drawer.Screen name="Home" component={HomeScreen} options={{ headerShown: true, headerTitle: "" }}/>
         <Drawer.Screen name="Quest Navigator" component={QuestNavigator} options={{ headerShown: true, headerTitle: "Elige tu lugar de búsqueda", headerTintColor: '#a52a2a', headerStyle: {backgroundColor: '#FFF9CA'}}}/>
-        <Drawer.Screen name="Client Quests" component={ClientQuests} options={{ headerShown: true, headerTitle: "", headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Client Quests" component={ClientQuests} options={{headerShown: true, headerTitle: "", headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Scene" component={Scene} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Quest Visualizer" component={QuestVisualizer} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Ranking" component={Ranking} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>

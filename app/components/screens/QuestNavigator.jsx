@@ -18,7 +18,7 @@ const QuestNavigator = () => {
   const url = Config.appUrl + "clients/"
   const urlQuests = Config.appUrl + "clients/quests"
 
-  const ListCategories = () => {
+  const listCategories = () => {
     const categoryList = ['Populares', 'Más jugadas']
     return <View style={styles.categoryListContainer}>
       {categoryList.map((category, index) => (
@@ -98,7 +98,7 @@ const QuestNavigator = () => {
         </View>
       </ScrollView> 
 
-      {ListCategories()}
+      {listCategories()}
       { 
         selectedCategoryIndex == 0 ?           
         <FlatList
