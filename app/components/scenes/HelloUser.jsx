@@ -17,7 +17,7 @@ const HelloUserScene = (_props) => {
     const [name, setName] = useState("");
  
     useEffect(() => {
-        const onGetData = async () =>  {
+        const ongetData = async () =>  {
             try {
                 const value = await AsyncStorage.getItem('@storage_Key')
                 const decoded = jwt_decode(value);
@@ -31,7 +31,7 @@ const HelloUserScene = (_props) => {
                 // error reading value
               }
           }      
-        onGetData();
+        ongetData();
     }, []);
 
     const onTrackingUpdated = (state, _reason) => {

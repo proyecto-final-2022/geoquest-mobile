@@ -2,7 +2,7 @@ import {React} from 'react';
 import CustomButton from './CustomButton'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useEffect } from 'react';
-import {PostLoginGoogle} from '../../utils/apicalls/ApiCalls'
+import {postLoginGoogle} from '../../utils/apicalls/ApiCalls'
 import {useNavigation} from '@react-navigation/native'
 import Config from '../../../config.json'
 
@@ -25,7 +25,7 @@ export default SocialSignInButtons = () => {
       const userInfo = await GoogleSignin.signIn();
       const user = userInfo.user
       token = GoogleSignin.getTokens()
-      PostLoginGoogle(user.email, user.givenName, token.idToken)
+      postLoginGoogle(user.email, user.givenName, token.idToken)
       navigation.navigate('Home')
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

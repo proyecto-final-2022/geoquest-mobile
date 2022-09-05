@@ -6,7 +6,7 @@ import CustomButton from '../commons/CustomButton'
 import SocialSignInButtons from '../commons/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
-import {LoginManual} from '../../utils/apicalls/ApiCalls'
+import {loginManual} from '../../utils/apicalls/ApiCalls'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -29,7 +29,7 @@ const SignInScreen = () => {
 
   const onSignInPressed = async (data) => {
     try{
-      await LoginManual(data.email, data.password);
+      await loginManual(data.email, data.password);
       await getStorage();
     }
     catch (error) {

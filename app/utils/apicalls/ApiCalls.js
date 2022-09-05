@@ -1,6 +1,6 @@
-import { StoreData } from '../storage/storage'
+import { storeData } from '../storage/storage'
 import Config from '../../../config.json'
-export const LoginManual = async (email, password) => {
+export const loginManual = async (email, password) => {
 
   try {
     await fetch(
@@ -15,7 +15,7 @@ export const LoginManual = async (email, password) => {
     .then(response => {
       if(!response.ok) throw new Error(response.status) ;
       else response.json().then(async (data) => {
-        await StoreData(data)
+        await storeData(data)
       }).catch((error) => {
       console.log('error: ' + error);
       this.setState({ requestFailed: true });
@@ -26,7 +26,7 @@ export const LoginManual = async (email, password) => {
     }
 }
 
-export const PostExample = async (email, username, password) => {
+export const postExample = async (email, username, password) => {
   try {
     await fetch(
       Config.appUrl+'users/', {
@@ -40,7 +40,7 @@ export const PostExample = async (email, username, password) => {
       .then(response => {
         if(!response.ok) throw new Error(response.status);
         else response.json().then(data => {
-        StoreData(data)
+        storeData(data)
         }).catch((error) => {
         console.log('error: ' + error);
         this.setState({ requestFailed: true });
@@ -51,7 +51,7 @@ export const PostExample = async (email, username, password) => {
   }
 }
 
-export const PostLoginGoogle = async (email, username, token) => {
+export const postLoginGoogle = async (email, username, token) => {
 
   try {
     await fetch(
@@ -67,7 +67,7 @@ export const PostLoginGoogle = async (email, username, token) => {
           .then(response => {
             if(!response.ok) throw new Error(response.status);
               else response.json().then(data => {
-                StoreData(data)
+                storeData(data)
               }).catch((error) => {
             console.log('error: ' + error);
               this.setState({ requestFailed: true });

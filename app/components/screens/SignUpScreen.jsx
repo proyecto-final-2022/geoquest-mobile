@@ -5,7 +5,7 @@ import CustomButton from '../commons/CustomButton'
 import SocialSignInButtons from '../commons/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
-import {PostExample} from '../../utils/apicalls/ApiCalls'
+import {postExample} from '../../utils/apicalls/ApiCalls'
 
 export default SignUpScreen = () => {
 
@@ -16,7 +16,7 @@ export default SignUpScreen = () => {
   const navigation = useNavigation()
   
   const onRegisterPressed = (data) => {
-    PostExample(data.email, data.username, data.password)
+    postExample(data.email, data.username, data.password)
     navigation.navigate('Quest Navigator')
   }
 
