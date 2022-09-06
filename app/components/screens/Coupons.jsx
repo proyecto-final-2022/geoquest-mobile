@@ -38,7 +38,13 @@ export default Coupons = ({route, navigation}) => {
       <Pressable onPress={() => {
         setView(true)
         setDescription(coupon.description)
-        setQrValue(coupon.description)
+        setQrValue(JSON.stringify(
+          {clientId: 1, 
+            userId: 1, 
+            description: "Medialunas Buffet 1", 
+            expirationDate: '22/11/2022', 
+            used: false
+          }))
         }}>
         <View style={styles.card}>
           <View
