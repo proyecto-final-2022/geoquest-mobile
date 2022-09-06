@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import QRCode from 'react-native-qrcode-svg'
 import {Button} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
@@ -9,6 +10,10 @@ import Tags from "react-native-tags"
 const {width} = Dimensions.get('screen')
 
 export default Coupons = ({route, navigation}) => {
+
+  const [view, setView] = useState(false)
+  const [description, setDescription] = useState("")
+  const [qrValue, setQrValue] = useState("")
 
   const coupons = [
     {clientId: 1, userId: 1, description: "Medialunas Buffet 1", expirationDate: '22/11/2022', used: false, image: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"},
@@ -30,6 +35,11 @@ export default Coupons = ({route, navigation}) => {
 
   const Card = ({coupon}) => {
     return (
+      <Pressable onPress={() => {
+        setView(true)
+        setDescription(coupon.description)
+        setQrValue(coupon.description)
+        }}>
         <View style={styles.card}>
           <View
             style={{
@@ -41,7 +51,8 @@ export default Coupons = ({route, navigation}) => {
           </View>
           <Image source={{uri: coupon.image}} style={styles.image} />
         </View>
-        ) 
+      </Pressable>
+      ) 
     }
 
   return (
@@ -52,10 +63,51 @@ export default Coupons = ({route, navigation}) => {
       showsHorizontalScrollIndicator = {false}
       data={coupons}
       renderItem={({item}) => <Card coupon={item}/>}>      
-    </FlatList>     
-  </ScrollView>
+    </FlatList>
 
-    )
+    <Modal
+      animationType="slide"
+      transparent
+      visible={view}
+    >
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <View
+          style={{
+            height:'50%', 
+            width: '80%',
+            backgroundColor: 'aliceblue',
+            borderWidth: 10,
+            borderColor: '#a52a2a', 
+            }}  
+        >
+          <View
+            style={{
+              alignItems:'center'
+            }}
+          >
+            <Pressable onPress={() => {setView(false)}}>
+              <Ionicons name='close' size={35} style={{marginLeft:270}}/>
+            </Pressable>
+            <QRCode
+              value={qrValue ? qrValue : 'NA'}
+              size={290}
+              color='white'
+              backgroundColor='black'
+            />
+          </View>
+          <Text style={{marginTop: 15, marginLeft: 50, fontSize: 20, fontWeight: 'bold'}}>{description}</Text>  
+        </View>
+      </View>
+    </Modal>
+
+  </ScrollView>
+  )
 }
 
 const styles = StyleSheet.create({
