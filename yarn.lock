@@ -1736,7 +1736,7 @@
     "sudo-prompt" "^9.0.0"
     "wcwidth" "^1.0.1"
 
-"@react-native-firebase/app@^15.4.0":
+"@react-native-firebase/app@^15.4.0", "@react-native-firebase/app@15.4.0":
   "integrity" "sha512-1Xf1Q0x6x6dZamRjIpDLCvj4CUwozr1mvH3sc3A4J1avjGUwgqD0RR58DGd7r9akU+JmEXLHB84EZ9Aa68AHDg=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-15.4.0.tgz"
   "version" "15.4.0"
@@ -1744,6 +1744,11 @@
     "@expo/config-plugins" "^5.0.1"
     "opencollective-postinstall" "^2.0.1"
     "superstruct" "^0.6.2"
+
+"@react-native-firebase/messaging@^15.4.0":
+  "integrity" "sha512-irmmkAWwD0PqZc3Nua4vdDS5liPfJzis5/zC1XxZw/AS4AfoEj2yv3+r273bqx/E9aZ2Udl1GBPV2nWBDDR/yA=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-15.4.0.tgz"
+  "version" "15.4.0"
 
 "@react-native-google-signin/google-signin@^8.0.0":
   "integrity" "sha512-GV0EGXUfiqk9Kav74zOq4ww0rAhMUlwmIGEf94X2ptnxfKu9TufeTig1zuDQGasgFlziWju/Ya2WeC+7TYSbxw=="
