@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import {Avatar} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native'
-import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
+import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
@@ -39,15 +39,15 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   const Player = ({player}) => {
     return (
-      <View>
+      <View style={{marginTop: 5, height: 50, backgroundColor:'antiquewhite'}}>
         <Avatar.Image 
           source={{
             uri: 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki'}}
             size={40}
-            marginTop={15}
-
+            marginTop={5}
           />
-        <Text style={{marginLeft: 60, fontSize: 20, marginTop: -40, color:'#a52a2a'}}>{player.name}</Text>
+        <AntDesign style={{color:'black', marginLeft: 320, marginTop:-30}} size={25} name ='closecircle' onPress={() => console.log('cerrar')}/>
+        <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
 
       </View>
     ) 
