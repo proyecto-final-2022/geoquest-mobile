@@ -78,7 +78,7 @@ export default QuestVisualizer = ({route, navigation}) => {
 
     )
 }
-
+   
 const styles = StyleSheet.create({
   view: {
     flex: 1,
