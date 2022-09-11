@@ -44,6 +44,20 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     )
   }
 
+  const StartButton = ({text, onPress}) => {
+    return (
+      <Pressable 
+        onPress={onPress} 
+        style={[
+          styles.startButtonContainer, 
+          (invited.length == accepted.length && invited.length != 0) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
+        ]}>  
+        <Text 
+          style={styles.buttonText}>{text}</Text>
+      </Pressable>
+    )
+  }
+
   const Player = ({player}) => {
     return (
       <View style={{marginTop: 5, height: 50, backgroundColor:'antiquewhite'}}>
@@ -100,8 +114,9 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       </ScrollView>
 
       <Button onPress={() => {addInvited({id: 1, name: "string", username: "string", email: "string"})}} text="Invitar"/>
+      <Button onPress={() => {addAccepted({id: 1, name: "string", username: "string", email: "string"})}} text="Aceptar"/>      
 
-      <Button onPress={() => {addAccepted({id: 1, name: "string", username: "string", email: "string"})}} text="Aceptar"/>
+      <StartButton text="Comenzar"/>
 
       <Button onPress={() => {
         setInvited([])
@@ -135,6 +150,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     backgroundColor: '#CA955C'
+  },
+  startButtonContainer: {
+    width: '50%',
+
+    padding: 15,
+    marginVertical: 5,
+    marginLeft: 100,
+    marginTop: 20,
+
+    alignItems: 'center',
+    borderRadius: 5,
   },
   buttonText: {
     fontWeight: 'bold',
