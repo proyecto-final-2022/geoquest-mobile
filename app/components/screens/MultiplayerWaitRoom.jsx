@@ -14,6 +14,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
 
   const [view, setView] = useState(false)
+  const [cancel, setCancel] = useState("")
   const [invited, setInvited] = useState([])
   const [accepted, setAccepted] = useState([])
 
@@ -43,7 +44,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const StartButton = ({text, onPress}) => {
     return (
       <Pressable 
-        onPress={onPress} 
+        onPress={() => {console.log(invited.length == accepted.length && invited.length != 0)}} 
         style={[
           styles.startButtonContainer, 
           (invited.length == accepted.length && invited.length != 0) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
@@ -63,7 +64,12 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             size={40}
             marginTop={5}
           />
-        <Pressable onPress={() => Alert.alert("cerrar?")}>
+        <Pressable onPress={() => 
+          {
+            setView(true)
+            setCancel(player.name)}
+          }
+        >
         <AntDesign style={{color:'black', marginLeft: 320, marginTop:-30}} size={25} name ='closecircle'/> 
         <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
         </Pressable>       
@@ -103,6 +109,44 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   return (
     <ScrollView style={styles.view}> 
+      <Modal
+        animationType="slide"
+        transparent
+        visible={view}
+      >
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <View
+          style={{
+            height:'30%', 
+            width: '80%',
+            backgroundColor: 'aliceblue',
+            borderWidth: 10,
+            borderColor: '#a52a2a', 
+            }}  
+        >
+          <Pressable onPress={() => {setView(false)}}>
+            <Ionicons name='close' size={35} style={{marginLeft:270}}/>
+          </Pressable>
+
+          <Text style={{marginLeft: 60, fontSize: 20, fontWeight: 'bold'}}>{"   Desea cancelar invitación de " + cancel + "?"}</Text>  
+
+          <Pressable onPress={() => {setView(false)}}>
+            <Text style={{marginTop: 50, marginLeft: 60, fontSize: 20}}>Aceptar</Text>  
+          </Pressable>
+          <Pressable onPress={() => {setView(false)}}>
+            <Text style={{fontSize: 20, marginLeft: 200, marginTop: -30}}>Volver</Text>     
+          </Pressable>
+
+        </View>
+      </View>
+    </Modal>
+
       <ScrollView style={styles.containerWaitRoom}>
         <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores invitados</Text>
         <FlatList
