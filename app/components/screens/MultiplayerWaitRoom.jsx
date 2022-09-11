@@ -14,6 +14,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
 
   const [invited, setInvited] = useState([])
+  const [accepted, setAccepted] = useState([])
 
   const users = [
     {id: 1, name: "string", username: "string", email: "string"},
@@ -23,6 +24,12 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const addInvited = (newInvited) => {
     return (      
       setInvited([...invited, newInvited])
+    )
+  }
+
+  const addAccepted = (newAccepted) => {
+    return (      
+      setAccepted([...accepted, newAccepted])
     )
   }
 
@@ -86,7 +93,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           horizontal= {false}
           contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
-          data={invited}
+          data={accepted}
           keyExtractor={(item, index) => item.key}
           renderItem={({item}) => <Player player={item}/>}>      
         </FlatList> 
@@ -94,9 +101,12 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
       <Button onPress={() => {addInvited({id: 1, name: "string", username: "string", email: "string"})}} text="Invitar"/>
 
-      <Button onPress={() => {console.log(invited)}} text="a ver"/>
+      <Button onPress={() => {addAccepted({id: 1, name: "string", username: "string", email: "string"})}} text="Aceptar"/>
 
-      <Button onPress={() => {setInvited([])}} text="limpiar"/>
+      <Button onPress={() => {
+        setInvited([])
+        setAccepted([])
+        }} text="Limpiar"/>
 
     </ScrollView>
   )
