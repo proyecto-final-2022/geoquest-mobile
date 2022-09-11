@@ -14,9 +14,25 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
 
   const [view, setView] = useState(false)
+  const [inviteView, setInviteView] = useState(false)
   const [cancel, setCancel] = useState([])
   const [invited, setInvited] = useState([])
   const [accepted, setAccepted] = useState([])
+
+  const friends = [
+    {id: 1, name: "string", username: "string", email: "string"},
+    {id: 2, name: "string2", username: "string2", email: "string2"},
+    {id: 3, name: "string3", username: "string3", email: "string3"},
+    {id: 4, name: "string4", username: "string4", email: "string4"},
+    {id: 5, name: "string5", username: "string5", email: "string5"},
+    {id: 6, name: "string6", username: "string6", email: "string6"},
+    {id: 7, name: "string7", username: "string7", email: "string7"},
+    {id: 8, name: "string8", username: "string8", email: "string8"},
+    {id: 9, name: "string9", username: "string9", email: "string9"},
+    {id: 10, name: "string10", username: "string10", email: "string10"},
+    {id: 11, name: "string11", username: "string11", email: "string11"},
+    {id: 12, name: "string12", username: "string12", email: "string12"},
+  ]
 
   const addInvited = (newInvited) => {
     return (      
@@ -74,7 +90,27 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
         </Pressable>       
       </View>
+    ) 
+  }
 
+  const Friend = ({player}) => {
+    return (
+      <View style={{marginTop: 5, height: 50, backgroundColor:'azure'}}>
+        <Avatar.Image 
+          source={{
+            uri: 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki'}}
+            size={40}
+            marginTop={5}
+          />
+        <Pressable onPress={() => 
+        { 
+          Alert.alert("Jugador invitado")
+          setInvited([...invited, player])
+        }}>
+          <AntDesign style={{color:'black', marginLeft: 250, marginTop: -30}} size={25} name ='adduser'/>       
+          <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
+        </Pressable> 
+      </View>
     ) 
   }
 
@@ -153,6 +189,46 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       </View>
     </Modal>
 
+    <Modal
+        animationType="slide"
+        transparent
+        visible={inviteView}
+      >
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <View
+          style={{
+            height:'70%', 
+            width: '80%',
+            backgroundColor: 'aliceblue',
+            borderWidth: 10,
+            borderColor: '#a52a2a', 
+            }}  
+        >
+          <Pressable onPress={() => {setInviteView(false)}}>
+            <Ionicons name='close' size={35} style={{marginLeft:270}}/>
+          </Pressable>
+
+          <Text style={{marginLeft: 60, fontSize: 20, fontWeight: 'bold'}}>Tenes amigos?</Text>  
+          
+          <FlatList
+            horizontal= {false}
+            contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+            showsHorizontalScrollIndicator = {false}
+            data={friends}
+            keyExtractor={(item, index) => item.id}
+            renderItem={({item}) => <Friend player={item}/>}>      
+          </FlatList> 
+
+        </View>
+      </View>
+    </Modal>
+
       <ScrollView style={styles.containerWaitRoom}>
         <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores invitados</Text>
         <FlatList
@@ -174,7 +250,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         </FlatList> 
       </ScrollView>
 
-      <Button onPress={() => {addInvited({id: 1, name: "string", username: "string", email: "string"})}} text="Invitar"/>
+      <Button onPress={() => {setInviteView(true)}} text="Invitar"/>
       <Button onPress={() => {addAccepted({id: 1, name: "string", username: "string", email: "string"})}} text="Aceptar"/>      
 
       <StartButton text="Comenzar"/>
