@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, ScrollView, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import {Avatar} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
@@ -46,10 +46,12 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             size={40}
             marginTop={5}
           />
-        <AntDesign style={{color:'black', marginLeft: 320, marginTop:-30}} size={25} name ='closecircle' onPress={() => console.log('cerrar')}/>
+        <Pressable onPress={() => Alert.alert("cerrar?")}>
+        <AntDesign style={{color:'black', marginLeft: 320, marginTop:-30}} size={25} name ='closecircle'/> 
         <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
-
+        </Pressable>       
       </View>
+
     ) 
   }
 
