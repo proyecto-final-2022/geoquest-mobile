@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import {Avatar} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
@@ -39,9 +40,15 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const Player = ({player}) => {
     return (
       <View>
-      <Text
-        style={{marginTop: 10, marginLeft: 15, fontSize: 20, color:'#a52a2a'}}
-      >{player.name}</Text>
+        <Avatar.Image 
+          source={{
+            uri: 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki'}}
+            size={40}
+            marginTop={15}
+
+          />
+        <Text style={{marginLeft: 60, fontSize: 20, marginTop: -40, color:'#a52a2a'}}>{player.name}</Text>
+
       </View>
     ) 
   }
@@ -72,7 +79,15 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           keyExtractor={(item, index) => item.key}
           renderItem={({item}) => <Player player={item}/>}>      
         </FlatList> 
-
+        <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores aceptados</Text>
+        <FlatList
+          horizontal= {false}
+          contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+          showsHorizontalScrollIndicator = {false}
+          data={invited}
+          keyExtractor={(item, index) => item.key}
+          renderItem={({item}) => <Player player={item}/>}>      
+        </FlatList> 
       </ScrollView>
 
       <Button onPress={() => {addInvited({id: 1, name: "string", username: "string", email: "string"})}} text="Invitar"/>
