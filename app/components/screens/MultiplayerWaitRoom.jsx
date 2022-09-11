@@ -83,6 +83,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         <Pressable onPress={() => 
           {
             setView(true)
+            console.log(player.id)
             setCancel(player)}
           }
         >
@@ -175,8 +176,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           <Pressable onPress={() => {
             {
             setView(false)
-            setAccepted(accepted.filter((player) => {player != cancel.id}))
-            setInvited(invited.filter((player) => {player != cancel.id}))
+            setAccepted(accepted.filter((player) => player.id != cancel.id))
+            setInvited(invited.filter((player) => player.id != cancel.id))
             }
           }}>
             <Text style={{marginTop: 50, marginLeft: 60, fontSize: 20}}>Aceptar</Text>  
