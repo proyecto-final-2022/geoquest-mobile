@@ -13,13 +13,9 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
 
+  const [view, setView] = useState(false)
   const [invited, setInvited] = useState([])
   const [accepted, setAccepted] = useState([])
-
-  const users = [
-    {id: 1, name: "string", username: "string", email: "string"},
-  //  {id: 2, name: "string2", username: "string2", email: "string2"}
-  ]
 
   const addInvited = (newInvited) => {
     return (      
@@ -76,6 +72,21 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     ) 
   }
 
+  const AcceptedPlayers = ({player}) => {
+    return (
+      <View style={{marginTop: 5, height: 50, backgroundColor:'antiquewhite'}}>
+        <Avatar.Image 
+          source={{
+            uri: 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki'}}
+            size={40}
+            marginTop={5}
+          />
+          <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
+      </View>
+
+    ) 
+  }
+
   
   useEffect(() => {
     navigation.setOptions({
@@ -109,7 +120,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           showsHorizontalScrollIndicator = {false}
           data={accepted}
           keyExtractor={(item, index) => item.key}
-          renderItem={({item}) => <Player player={item}/>}>      
+          renderItem={({item}) => <AcceptedPlayers player={item}/>}>      
         </FlatList> 
       </ScrollView>
 
