@@ -17,7 +17,7 @@ export default function App() {
     })
 
     const topicSubscriber = messaging()
-    .subscribeToTopic('geoquest')
+    .subscribeToTopic('geoquest3')
     .then(() => console.log('suscrito a geoquest'))
 
     const backgroundSubscriber = messaging()

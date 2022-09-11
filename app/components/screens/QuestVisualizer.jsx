@@ -71,7 +71,7 @@ export default QuestVisualizer = ({route, navigation}) => {
         </View>
 
       <Button onPress={() => console.log('Comenzar')} text="Comenzar"/>
-      <Button onPress={() => console.log('Armar Grupo')} text="Armar Grupo"/>
+      <Button onPress={() => navigation.navigate('Multiplayer WaitRoom', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags}})} text="Armar Grupo"/>
       <Button onPress={() => navigation.navigate('Ranking', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags}})} text="Ver Rankings"/>
     
     </ScrollView>
