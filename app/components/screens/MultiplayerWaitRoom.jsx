@@ -14,7 +14,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
 
   const [view, setView] = useState(false)
-  const [cancel, setCancel] = useState("")
+  const [cancel, setCancel] = useState([])
   const [invited, setInvited] = useState([])
   const [accepted, setAccepted] = useState([])
 
@@ -67,7 +67,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         <Pressable onPress={() => 
           {
             setView(true)
-            setCancel(player.name)}
+            setCancel(player)}
           }
         >
         <AntDesign style={{color:'black', marginLeft: 320, marginTop:-30}} size={25} name ='closecircle'/> 
@@ -134,9 +134,15 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             <Ionicons name='close' size={35} style={{marginLeft:270}}/>
           </Pressable>
 
-          <Text style={{marginLeft: 60, fontSize: 20, fontWeight: 'bold'}}>{"   Desea cancelar invitación de " + cancel + "?"}</Text>  
+          <Text style={{marginLeft: 60, fontSize: 20, fontWeight: 'bold'}}>{"   Desea cancelar invitación de " + cancel.name + "?"}</Text>  
 
-          <Pressable onPress={() => {setView(false)}}>
+          <Pressable onPress={() => {
+            {
+            setView(false)
+            setAccepted(accepted.filter((player) => {player != cancel.id}))
+            setInvited(invited.filter((player) => {player != cancel.id}))
+            }
+          }}>
             <Text style={{marginTop: 50, marginLeft: 60, fontSize: 20}}>Aceptar</Text>  
           </Pressable>
           <Pressable onPress={() => {setView(false)}}>
@@ -154,7 +160,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
           data={invited}
-          keyExtractor={(item, index) => item.key}
+          keyExtractor={(item, index) => item.id}
           renderItem={({item}) => <Player player={item}/>}>      
         </FlatList> 
         <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores aceptados</Text>
@@ -163,7 +169,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
           data={accepted}
-          keyExtractor={(item, index) => item.key}
+          keyExtractor={(item, index) => item.id}
           renderItem={({item}) => <AcceptedPlayers player={item}/>}>      
         </FlatList> 
       </ScrollView>
