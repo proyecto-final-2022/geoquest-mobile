@@ -16,7 +16,7 @@ const SignInScreen = () => {
 
   const getStorage = async () => {
     console.warn("before"+token)
-    const token = await AsyncStorage.getItem('@storage_Key')
+    const token = await AsyncStorage.getItem('@auth.token')
     console.warn("after"+token)
     token ? setIsSession(true) : setIsSession(false)
   }
