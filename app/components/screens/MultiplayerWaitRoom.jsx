@@ -13,12 +13,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
 
-  const [view, setView] = useState(false)
-  const [inviteView, setInviteView] = useState(false)
-  const [cancel, setCancel] = useState([])
-  const [invited, setInvited] = useState([])
-  const [accepted, setAccepted] = useState([])
-
   const friends = [
     {id: 1, name: "string", username: "string", email: "string"},
     {id: 2, name: "string2", username: "string2", email: "string2"},
@@ -33,6 +27,13 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     {id: 11, name: "string11", username: "string11", email: "string11"},
     {id: 12, name: "string12", username: "string12", email: "string12"},
   ]
+
+  const [view, setView] = useState(false)
+  const [inviteView, setInviteView] = useState(false)
+  const [cancel, setCancel] = useState([])
+  const [invited, setInvited] = useState([])
+  const [accepted, setAccepted] = useState([])
+  const [playerFriends, setplayerFriends] = useState(friends)
 
   const addInvited = (newInvited) => {
     return (      
@@ -106,6 +107,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         <Pressable onPress={() => 
         { 
           Alert.alert("Jugador invitado")
+          setplayerFriends(playerFriends.filter((friend) => friend.id != player.id))
           setInvited([...invited, player])
         }}>
           <AntDesign style={{color:'black', marginLeft: 250, marginTop: -30}} size={25} name ='adduser'/>       
@@ -176,6 +178,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           <Pressable onPress={() => {
             {
             setView(false)
+            setplayerFriends([...playerFriends, cancel])
             setAccepted(accepted.filter((player) => player.id != cancel.id))
             setInvited(invited.filter((player) => player.id != cancel.id))
             }
@@ -221,7 +224,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             horizontal= {false}
             contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
             showsHorizontalScrollIndicator = {false}
-            data={friends}
+            data={playerFriends}
             keyExtractor={(item, index) => item.id}
             renderItem={({item}) => <Friend player={item}/>}>      
           </FlatList> 
