@@ -27,11 +27,12 @@ export default Notifications = ({route, navigation}) => {
     return (
     
         <View style={styles.notificationContainer}>
+          <Text style={{fontWeight: 'bold', fontSize: 18, marginTop:20}}>{sender + ' te ha invitado a: '+ 'Sarlanga'}</Text>
           <Pressable onPress={() => console.log("ffffff")}>
-            <Text style={{marginLeft: 230, color: 'green', fontWeight: 'bold', fontSize: 20, marginTop:20}}>Aceptar</Text>
+            <Text style={{marginLeft: 180, color: 'green', fontWeight: 'bold', fontSize: 20, marginTop:30}}>Aceptar</Text>
           </Pressable>
           <Pressable onPress={() => console.log("aaaaaaa")}>
-            <Text style={{marginLeft: 230, color: 'red', fontWeight: 'bold', fontSize: 20, marginTop:20}}>Rechazar</Text>
+            <Text style={{marginLeft: 270, color: 'red', fontWeight: 'bold', fontSize: 20, marginTop:-30}}>Rechazar</Text>
           </Pressable>
 
               
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF9CA',
   },
   notificationContainer:{
-    height: 150,
+    height: 130,
     width: '100%',
     backgroundColor: 'aliceblue',
     elevation: 5,
