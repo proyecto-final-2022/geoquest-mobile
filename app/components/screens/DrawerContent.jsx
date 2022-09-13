@@ -25,6 +25,8 @@ export function DrawerContent(props) {
 
   const navigation = useNavigation()
 
+  const notification = {type: "quest_invitation", sender: "stringggg"}
+
   return(
     <View style={{flex:1,backgroundColor: '#FFF9CA'}}>
       <DrawerContentScrollView {...props}>
@@ -109,7 +111,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Notificaciones"
-                            onPress={() => {console.log('Notificaciones')}}
+                            onPress={() => {navigation.navigate('Notifications', notification)}}
                         />
                     </Drawer.Section>
                 </View>

@@ -8,7 +8,6 @@ import Navigation from './app/components/navigation'
 import messaging from '@react-native-firebase/messaging'
 
 export default function App() {
-
   useEffect(() => {
     const foregroundSubscriber = messaging().onMessage(
       async (remoteMessage) => {
@@ -16,14 +15,26 @@ export default function App() {
       console.log("push notification recibida", remoteMessage)
     })
 
-    const topicSubscriber = messaging()
-    .subscribeToTopic('geoquest3')
-    .then(() => console.log('suscrito a geoquest'))
-
     const backgroundSubscriber = messaging()
     .setBackgroundMessageHandler(async (remoteMessage) => {
       console.log('Push notification en background', remoteMessage)
     })
+
+    const onNotificationOpen = messaging()
+    .onNotificationOpenedApp(remoteMessage => {
+      console.log('Notification caused app to open from background state:', 
+      remoteMessage)
+    })
+
+    const getInitialNotification = messaging()
+    .getInitialNotification()
+    .then(remoteMessage => {
+        console.log('Notification caused app to open from quit state: ', remoteMessage)
+    })
+
+    const topicSubscriber = messaging()
+    .subscribeToTopic('geoquest3')
+    .then(() => console.log('suscrito a geoquest'))
 
 
     const getToken = messaging()
@@ -44,6 +55,9 @@ export default function App() {
       backgroundSubscriber();
       getToken();
       tokenRefresh();
+      onNotificationOpen();
+      getInitialNotification();
+
     }
   }, [])
 
