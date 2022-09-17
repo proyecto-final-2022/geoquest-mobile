@@ -8,6 +8,7 @@ import Config from '../../../config.json'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
 
+
 const {width} = Dimensions.get('screen')
 
 export default Notifications = ({route, navigation}) => {
@@ -24,6 +25,7 @@ export default Notifications = ({route, navigation}) => {
   const url = Config.appUrl + "users/" + userID + "/notifications"
 
   useEffect(() => {
+    console.log(isFocused)
     fetch(url)
     .then((response) => response.json())
     .then((json) => {
@@ -31,7 +33,7 @@ export default Notifications = ({route, navigation}) => {
       console.log(userID)})
     .catch((error) => console.error(error))
     .finally(()=>setLoading(false))
-  } , [isFocused])
+    }, [route])    
 
   useEffect(() => {
     navigation.setOptions({
@@ -65,8 +67,7 @@ export default Notifications = ({route, navigation}) => {
 
   return (
     <ScrollView style={styles.view}>
-
-     <FlatList
+      <FlatList
         horizontal= {false}
         contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
