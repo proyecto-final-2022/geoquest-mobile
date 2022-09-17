@@ -77,13 +77,14 @@ export default function App() {
       processNotification(remoteMessage, false)
     })
     
-    const backgroundSubscriber = () => 
-    {messaging()
+    const backgroundSubscriber = () =>
+    {
+    messaging()
     .setBackgroundMessageHandler(async (remoteMessage) => {
       console.log('Push notification en background', remoteMessage)
       processNotification(remoteMessage, true)
     })
-    }
+    } 
 
     const getInitialNotification = () => 
     {messaging()
