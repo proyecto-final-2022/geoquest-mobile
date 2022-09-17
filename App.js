@@ -34,7 +34,7 @@ export default function App() {
         if (fromBackground && remoteMessage.data.msgType){
           switch(remoteMessage.data.msgType) {
             case "Quest Invitation":
-              navigationRef.current?.navigate('Notifications', {userID})
+              forwardToNotifications(userID)
           }
         }
 
@@ -49,7 +49,7 @@ export default function App() {
                     text: "Cancel",
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () => {navigationRef.current?.navigate('Notifications', {userID})} }
+                  { text: "OK", onPress: () => {forwardToNotifications(userID)} }
                 ]
               );
 
