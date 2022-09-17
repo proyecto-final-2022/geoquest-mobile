@@ -26,6 +26,8 @@ export function DrawerContent(props) {
   const navigation = useNavigation()
 
   const notification = {type: "quest_invitation", sender: "stringggg"}
+  //usar el token
+  const userID = 1
 
   return(
     <View style={{flex:1,backgroundColor: '#FFF9CA'}}>
@@ -111,7 +113,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Notificaciones"
-                            onPress={() => {navigation.navigate('Notifications', notification)}}
+                            onPress={() => {navigation.navigate('Notifications', {userID})}}
                         />
                     </Drawer.Section>
                 </View>
