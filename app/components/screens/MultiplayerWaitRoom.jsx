@@ -47,6 +47,29 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     )
   }
 
+  const sendNotification = async (receiverID, senderID, senderName) => {
+        fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json'},
+          body: JSON.stringify({ 
+            sender_name: senderName
+          }) 
+        })
+        .then(
+          fetch(Config.appUrl + "users/" + receiverID  + '/notifications', {
+            method: 'POST',
+            body: JSON.stringify({ 
+              sender_id: senderID,
+              type: 'quest_invite'
+            })
+          })
+          .catch((error) => console.error(error))
+        )
+        .catch((error) => console.error(error))
+    }
+    
+
   const Button = ({text, onPress}) => {
     return (
       <Pressable 
@@ -106,6 +129,9 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           />
         <Pressable onPress={() => 
         { 
+          //!!!! poner el ID y el nombre del jugador sacandolo del token
+          //Dejo esto para probar mandarmelo a mi mismo
+          sendNotification(1, 1, player.name)
           Alert.alert("Jugador invitado")
           setplayerFriends(playerFriends.filter((friend) => friend.id != player.id))
           setInvited([...invited, player])
