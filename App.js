@@ -49,7 +49,7 @@ export default function App() {
                     text: "Cancel",
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () => forwardToNotifications(userID) }
+                  { text: "OK", onPress: () => {navigationRef.current?.navigate('Notifications', {userID})} }
                 ]
               );
 
@@ -60,33 +60,39 @@ export default function App() {
 
     }
     
-    const onNotificationOpen = messaging()
+    const onNotificationOpen = () => 
+    {
+      messaging()
       .onNotificationOpenedApp(remoteMessage => {
         console.log('Notification caused app to open from background state:', 
         remoteMessage)
         processNotification(remoteMessage, true)
     })
-
+   }
+    
     const foregroundSubscriber = messaging().onMessage(
       async (remoteMessage) => {
 //      Alert.alert(remoteMessage.notification.title)
       console.log("push notification recibida", remoteMessage)
       processNotification(remoteMessage, false)
     })
-
-    const backgroundSubscriber = messaging()
+    
+    const backgroundSubscriber = () => 
+    {messaging()
     .setBackgroundMessageHandler(async (remoteMessage) => {
       console.log('Push notification en background', remoteMessage)
       processNotification(remoteMessage, true)
     })
+    }
 
-    const getInitialNotification = messaging()
+    const getInitialNotification = () => 
+    {messaging()
     .getInitialNotification()
     .then(remoteMessage => {
         console.log('Notification caused app to open from quit state: ', remoteMessage)
         processNotification(remoteMessage, true)
     })
-
+    }
     /*
     const topicSubscriber = messaging()
     .subscribeToTopic('geoquest3')
