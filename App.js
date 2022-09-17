@@ -34,7 +34,7 @@ export default function App() {
         if (fromBackground && remoteMessage.data.msgType){
           switch(remoteMessage.data.msgType) {
             case "Quest Invitation":
-              forwardToNotifications({userID})
+              navigationRef.current?.navigate('Notifications', {userID})
           }
         }
 
@@ -77,14 +77,13 @@ export default function App() {
       processNotification(remoteMessage, false)
     })
     
-    const backgroundSubscriber = () =>
-    {
-    messaging()
-    .setBackgroundMessageHandler(async (remoteMessage) => {
+    const backgroundSubscriber = messaging()
+    .setBackgroundMessageHandler(
+      async (remoteMessage) => {
       console.log('Push notification en background', remoteMessage)
       processNotification(remoteMessage, true)
     })
-    } 
+ 
 
     const getInitialNotification = () => 
     {messaging()
@@ -114,7 +113,7 @@ export default function App() {
   */
     return () => {
       foregroundSubscriber();
-      backgroundSubscriber();
+      backgroundSubscriber;
       onNotificationOpen();
       getInitialNotification();
 //      topicSubscriber();

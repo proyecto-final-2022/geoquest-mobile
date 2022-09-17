@@ -18,6 +18,8 @@ export default Notifications = ({route, navigation}) => {
 
   const [notifications, setNotifications] = useState([])
   const [loading, setLoading] = useState(true)
+
+  const [call, setCall] = useState(false);
   
   const url = Config.appUrl + "users/" + userID + "/notifications"
 
