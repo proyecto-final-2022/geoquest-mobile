@@ -13,8 +13,6 @@ import ClientQuests from '../screens/ClientQuests'
 import Ranking from '../screens/Ranking'
 import MultiplayerWaitRoom from '../screens/MultiplayerWaitRoom'
 import Notifications from '../screens/Notifications'
-
-
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContent } from '../screens/DrawerContent';
 
@@ -23,9 +21,7 @@ const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator()
 
 export default Navigation = () => {
-  return(
-    <NavigationContainer>
-                
+  return(                
       <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
         <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>
         <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>
@@ -38,6 +34,5 @@ export default Navigation = () => {
         <Drawer.Screen name="Multiplayer WaitRoom" component={MultiplayerWaitRoom} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Notifications" component={Notifications} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
       </Drawer.Navigator>
-    </NavigationContainer>
   )
 }

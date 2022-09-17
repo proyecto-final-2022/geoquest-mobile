@@ -5,33 +5,89 @@ import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScen
 import { ViroText } from "@viro-community/react-viro/components/ViroText";
 import { ViroTrackingStateConstants } from "@viro-community/react-viro/components/ViroConstants";
 import Navigation from './app/components/navigation'
+import {
+  NavigationContainer
+} from '@react-navigation/native'
+
 import messaging from '@react-native-firebase/messaging'
 
 export default function App() {
+  
+  const navigationRef = React.createRef()
+
+  const userID = 1
+
   useEffect(() => {
+
+    const forwardToNotifications = (userID) => {
+      navigationRef.current?.navigate('Notifications', {userID})
+    }
+
+    const processNotification = (remoteMessage, fromBackground) => {
+      let title = ''
+
+      if (remoteMessage.notification) {
+        title = remoteMessage.notification.title
+      }
+
+      if (remoteMessage.data){
+        if (fromBackground && remoteMessage.data.msgType){
+          switch(remoteMessage.data.msgType) {
+            case "Quest Invitation":
+              forwardToNotifications({userID})
+          }
+        }
+
+        if (!fromBackground && remoteMessage.data.msgType) {
+          switch(remoteMessage.data.msgType) {
+            case "Quest Invitation":
+              Alert.alert(
+                title,
+                "",
+                [
+                  {
+                    text: "Cancel",
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => forwardToNotifications(userID) }
+                ]
+              );
+
+          }
+        }
+
+      }
+
+    }
+    
+    const onNotificationOpen = messaging()
+      .onNotificationOpenedApp(remoteMessage => {
+        console.log('Notification caused app to open from background state:', 
+        remoteMessage)
+        processNotification(remoteMessage, true)
+    })
+
     const foregroundSubscriber = messaging().onMessage(
       async (remoteMessage) => {
-      Alert.alert(remoteMessage.notification.title)
+//      Alert.alert(remoteMessage.notification.title)
       console.log("push notification recibida", remoteMessage)
+      processNotification(remoteMessage, false)
     })
 
     const backgroundSubscriber = messaging()
     .setBackgroundMessageHandler(async (remoteMessage) => {
       console.log('Push notification en background', remoteMessage)
-    })
-
-    const onNotificationOpen = messaging()
-    .onNotificationOpenedApp(remoteMessage => {
-      console.log('Notification caused app to open from background state:', 
-      remoteMessage)
+      processNotification(remoteMessage, true)
     })
 
     const getInitialNotification = messaging()
     .getInitialNotification()
     .then(remoteMessage => {
         console.log('Notification caused app to open from quit state: ', remoteMessage)
+        processNotification(remoteMessage, true)
     })
 
+    /*
     const topicSubscriber = messaging()
     .subscribeToTopic('geoquest3')
     .then(() => console.log('suscrito a geoquest'))
@@ -48,23 +104,21 @@ export default function App() {
     .then((token) => {
       console.log("token refresh:", token)
     })
-
+  */
     return () => {
       foregroundSubscriber();
-      topicSubscriber();
       backgroundSubscriber();
-      getToken();
-      tokenRefresh();
       onNotificationOpen();
       getInitialNotification();
-
-    }
-  }, [])
-
+//      topicSubscriber();
+//      getToken();
+//      tokenRefresh();
+    }}, [])
+  
   return (
-    <SafeAreaView style={styles.root}>
-      <Navigation />
-    </SafeAreaView>
+    <NavigationContainer ref={navigationRef}>
+      <Navigation/>
+    </NavigationContainer>
 
  //   <ViroARSceneNavigator initialScene={{scene: HelloWorldScene}}/>
   );
