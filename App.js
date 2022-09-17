@@ -60,15 +60,14 @@ export default function App() {
 
     }
     
-    const onNotificationOpen = () => 
-    {
+    const onNotificationOpen = 
       messaging()
       .onNotificationOpenedApp(remoteMessage => {
         console.log('Notification caused app to open from background state:', 
         remoteMessage)
         processNotification(remoteMessage, true)
     })
-   }
+   
     
     const foregroundSubscriber = messaging().onMessage(
       async (remoteMessage) => {
@@ -85,14 +84,14 @@ export default function App() {
     })
  
 
-    const getInitialNotification = () => 
-    {messaging()
+    const getInitialNotification = 
+    messaging()
     .getInitialNotification()
     .then(remoteMessage => {
         console.log('Notification caused app to open from quit state: ', remoteMessage)
         processNotification(remoteMessage, true)
     })
-    }
+    
     /*
     const topicSubscriber = messaging()
     .subscribeToTopic('geoquest3')
@@ -114,8 +113,8 @@ export default function App() {
     return () => {
       foregroundSubscriber();
       backgroundSubscriber;
-      onNotificationOpen();
-      getInitialNotification();
+      onNotificationOpen;
+      getInitialNotification;
 //      topicSubscriber();
 //      getToken();
 //      tokenRefresh();
