@@ -26,7 +26,7 @@ export default SocialSignInButtons = () => {
       const user = userInfo.user
       token = GoogleSignin.getTokens()
       postLoginGoogle(user.email, user.givenName, token.idToken)
-      navigation.navigate('Home')
+      navigation.navigate('Quest Navigator')
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       // user cancelled the login flow

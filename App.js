@@ -15,12 +15,12 @@ export default function App() {
   
   const navigationRef = React.createRef()
 
-  const userID = 1
+  const propsUpdate = 1
 
   useEffect(() => {
 
-    const forwardToNotifications = (userID) => {
-      navigationRef.current?.navigate('Notifications', {userID})
+    const forwardToNotifications = () => {
+      navigationRef.current?.navigate('Notifications', {propsUpdate})
     }
 
     const processNotification = (remoteMessage, fromBackground) => {
@@ -34,7 +34,7 @@ export default function App() {
         if (fromBackground && remoteMessage.data.msgType){
           switch(remoteMessage.data.msgType) {
             case "Quest Invitation":
-              forwardToNotifications(userID)
+              forwardToNotifications()
           }
         }
 
@@ -49,7 +49,7 @@ export default function App() {
                     text: "Cancel",
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () => {forwardToNotifications(userID)} }
+                  { text: "OK", onPress: () => {forwardToNotifications()} }
                 ]
               );
 
