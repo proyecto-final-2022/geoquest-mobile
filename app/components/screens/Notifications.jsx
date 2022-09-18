@@ -7,7 +7,7 @@ import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
-import Storage from '../../utils/storage/storage'
+
 
 const {width} = Dimensions.get('screen')
 
@@ -15,29 +15,29 @@ export default Notifications = ({route, navigation}) => {
   
   const isFocused = useIsFocused()
 
+  const id = route.params
+
   const [notifications, setNotifications] = useState([])
-  const [userID, setUserID] = useState("")
 
   const [loading, setLoading] = useState(true)
 
   const [call, setCall] = useState(false);
   
-  const url = Config.appUrl + "users/" + userID + "/notifications"
+  const url = Config.appUrl + "users/" + id + "/notifications"
 
-  useEffect(() => {
+  useEffect(() => {    
     fetch(url)
     .then((response) => response.json())
     .then((json) => {
       setNotifications(json)
-      console.log(userID)})
+      console.log(id)})
     .catch((error) => console.error(error))
     .finally(()=>setLoading(false))
     }, [route])    
 
     useEffect(() => {
       console.log("hola")
-      Storage.getObject('user').
-      then(user => setUserID(String(user.id)))
+
     }, [route])    
 
   useEffect(() => {

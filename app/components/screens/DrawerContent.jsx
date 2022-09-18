@@ -128,7 +128,10 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Notificaciones"
-                            onPress={() => {navigation.navigate('Notifications', {propsUpdate})}}
+                            onPress={() => {
+                              Storage.getObject('user').
+                              then(user => navigation.navigate('Notifications', user.id))
+                              }}
                         />
                     </Drawer.Section>
                 </View>

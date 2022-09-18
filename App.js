@@ -5,6 +5,8 @@ import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScen
 import { ViroText } from "@viro-community/react-viro/components/ViroText";
 import { ViroTrackingStateConstants } from "@viro-community/react-viro/components/ViroConstants";
 import Navigation from './app/components/navigation'
+import Storage from './app/utils/storage/storage'
+
 import {
   NavigationContainer
 } from '@react-navigation/native'
@@ -20,7 +22,10 @@ export default function App() {
   useEffect(() => {
 
     const forwardToNotifications = () => {
-      navigationRef.current?.navigate('Notifications', {propsUpdate})
+      Storage.getObject('user')
+      .then(user => 
+        {console.log(user.id)
+        navigationRef.current?.navigate('Notifications', user.id)})
     }
 
     const processNotification = (remoteMessage, fromBackground) => {

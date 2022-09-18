@@ -11,7 +11,7 @@ import QuestVisualizer from '../screens/QuestVisualizer'
 import Scene from '../scenes/HelloUser'
 import ClientQuests from '../screens/ClientQuests'
 import Ranking from '../screens/Ranking'
-import MultiplayerWaitRoom from '../screens/MultiplayerWaitRoom'
+import QuestTeam from '../screens/QuestTeam'
 import Notifications from '../screens/Notifications'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContent } from '../screens/DrawerContent';
@@ -31,7 +31,7 @@ export default Navigation = () => {
         <Drawer.Screen name="Scene" component={Scene} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Quest Visualizer" component={QuestVisualizer} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Ranking" component={Ranking} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
-        <Drawer.Screen name="Multiplayer WaitRoom" component={MultiplayerWaitRoom} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Quest Team" component={QuestTeam} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Notifications" component={Notifications} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
       </Drawer.Navigator>
   )
