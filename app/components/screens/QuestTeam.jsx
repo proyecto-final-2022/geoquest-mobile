@@ -6,6 +6,7 @@ import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
+import Storage from '../../../app/utils/storage/storage'
 
 const {width} = Dimensions.get('screen')
 
@@ -47,26 +48,29 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     )
   }
 
-  const sendNotification = async (receiverID, senderID, senderName) => {
-        fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json'},
-          body: JSON.stringify({ 
-            sender_name: senderName
-          }) 
-        })
-        .then(
-          fetch(Config.appUrl + "users/" + receiverID  + '/notifications', {
-            method: 'POST',
-            body: JSON.stringify({ 
-              sender_id: senderID,
-              type: 'quest_invite'
-            })
-          })
-          .catch((error) => console.error(error))
-        )
-        .catch((error) => console.error(error))
+  const sendNotification = async (receiverID, senderID, senderName, questName) => {
+    console.log(receiverID)
+    console.log(senderID)
+    console.log(senderName)
+    console.log(questName)
+    fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'},
+      body: JSON.stringify({ 
+        sender_name: senderName
+      }) 
+    })
+    .then(fetch(Config.appUrl + "users/" + receiverID  + '/notifications', {
+      method: 'POST',
+      body: JSON.stringify({ 
+      sender_id: senderID,
+      type: 'quest_invite'
+    })
+    })
+    .catch((error) => console.error(error))
+    )
+    .catch((error) => console.error(error))
     }
     
 
@@ -87,7 +91,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         onPress={() => {console.log(invited.length == accepted.length && invited.length != 0)}} 
         style={[
           styles.startButtonContainer, 
-          (invited.length == accepted.length && invited.length != 0) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
+          (invited.length > 1) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
         ]}>  
         <Text 
           style={styles.buttonText}>{text}</Text>
@@ -129,9 +133,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           />
         <Pressable onPress={() => 
         { 
-          //!!!! poner el ID y el nombre del jugador sacandolo del token
-          //Dejo esto para probar mandarmelo a mi mismo
-          sendNotification(1, 1, player.name)
           Alert.alert("Jugador invitado")
           setplayerFriends(playerFriends.filter((friend) => friend.id != player.id))
           setInvited([...invited, player])
@@ -204,7 +205,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           <Pressable onPress={() => {
             {
             setView(false)
-            setplayerFriends([...playerFriends, cancel])
+            setplayerFriends([cancel, ...playerFriends])
             setAccepted(accepted.filter((player) => player.id != cancel.id))
             setInvited(invited.filter((player) => player.id != cancel.id))
             }
@@ -244,7 +245,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             <Ionicons name='close' size={35} style={{marginLeft:270}}/>
           </Pressable>
 
-          <Text style={{marginLeft: 60, fontSize: 20, fontWeight: 'bold'}}>Tenes amigos?</Text>  
+          <Text style={{marginLeft: 60, fontSize: 20, fontWeight: 'bold'}}>Sumar amigo</Text>  
           
           <FlatList
             horizontal= {false}
@@ -260,7 +261,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     </Modal>
 
       <ScrollView style={styles.containerWaitRoom}>
-        <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores invitados</Text>
+        <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores</Text>
         <FlatList
           horizontal= {false}
           contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
@@ -280,8 +281,11 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         </FlatList> 
       </ScrollView>
 
-      <Button onPress={() => {setInviteView(true)}} text="Invitar"/>
-      <Button onPress={() => {addAccepted({id: 1, name: "string", username: "string", email: "string"})}} text="Aceptar"/>      
+      <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
+      <StartButton onPress={() => {
+        Storage.getObject('user')
+        .then(user => sendNotification(user.id, user.id, user.name, name))
+      }} text="Formar Grupo"/>      
 
       <StartButton text="Comenzar"/>
 

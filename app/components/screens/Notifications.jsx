@@ -30,7 +30,7 @@ export default Notifications = ({route, navigation}) => {
     .then((response) => response.json())
     .then((json) => {
       setNotifications(json)
-      console.log(id)})
+      })
     .catch((error) => console.error(error))
     .finally(()=>setLoading(false))
     }, [route])    
@@ -50,14 +50,13 @@ export default Notifications = ({route, navigation}) => {
     })
   })
 
-  const Notification = ({type, sender}) => {
+  const Notification = ({notification}) => {
     return (
-
       <View style={styles.notificationContainer}>
         {
-          type == 'quest_invite' ?
-          <Text style={{fontWeight: 'bold', fontSize: 18, marginTop:20}}>{sender + ' te ha invitado a: '+ 'Sarlanga'}</Text> : 
-          <Text style={{fontWeight: 'bold', fontSize: 18, marginTop:20}}>{sender + ' te ha enviado una solicitud de amistad'}</Text>
+          notification.type == 'quest_invite' ?
+          <Text style={{fontWeight: 'bold', fontSize: 18, marginTop:20}}>{notification.sender_name + ' te ha invitado a: '+ notification.quest_name}</Text> : 
+          <Text style={{fontWeight: 'bold', fontSize: 18, marginTop:20}}>{notification.sender_name + ' te ha enviado una solicitud de amistad'}</Text>
         }                         
         <Pressable onPress={() => console.log("ffffff")}>
           <Text style={{marginLeft: 180, color: 'green', fontWeight: 'bold', fontSize: 18, marginTop:30}}>Aceptar</Text>
@@ -77,7 +76,9 @@ export default Notifications = ({route, navigation}) => {
         contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
         data={notifications}
-        renderItem={({item}) => <Notification type={item.type} sender={item.sender_name}/>}>      
+        renderItem={({item}) => <Notification notification={item}/>
+        
+        }>      
       </FlatList>
 
       
