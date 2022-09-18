@@ -9,16 +9,17 @@ import {useForm} from 'react-hook-form'
 import {loginManual} from '../../utils/apicalls/ApiCalls'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Storage from '../../utils/storage/storage';
+import Config from '../../../config.json'
 
 const SignInScreen = () => {
 
   const [isSession, setIsSession] = useState(false);
 
   const getStorage = async () => {
-    console.warn("before"+token)
-    const token = await AsyncStorage.getItem('@storage_Key')
-    console.warn("after"+token)
-    token ? setIsSession(true) : setIsSession(false)
+    const user = Storage.getObject('user')
+
+    user ? setIsSession(true) : setIsSession(false)
   }
 
   const {height} = useWindowDimensions();
@@ -29,15 +30,33 @@ const SignInScreen = () => {
 
   const onSignInPressed = async (data) => {
     try{
-      await loginManual(data.email, data.password);
-      await getStorage();
-    }
-    catch (error) {
+      fetch(
+        Config.appUrl+'users/sessions/', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json'},
+      body: JSON.stringify({ 
+        email: data.email,  
+        password: data.password})
+      })
+      .then(response => {
+        if(!response.ok) Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}]) ;
+        else response.json().then(async (data) => {
+          Storage.setObject('user', data)
+          navigation.navigate('Quest Navigator')
+        }).catch((error) => {
+        console.log('error: ' + error);
+        this.setState({ requestFailed: true });
+        });})
+      }  
+    
+     catch (error) {
       console.error(error);
     }
+}
 
-    isSession ? navigation.navigate('Home') : Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}]);
-  }
+//    isSession ? navigation.navigate('Home') : Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}]);
+  
 
   const onForgotPasswordPressed = () => {
     console.warn('Forgot Password');

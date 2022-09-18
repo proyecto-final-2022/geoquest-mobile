@@ -18,12 +18,15 @@ export async function getObject(key) {
 }
 
 export async function setObject(key, object) {
-  console.log(JSON.stringify(object))
-  console.log(key)
   return AsyncStorage.setItem(key, JSON.stringify(object))
+}
+
+export async function removeObject(key) {
+  return AsyncStorage.removeItem(key)
 }
 
 export default {
   setObject,
-  getObject
+  getObject,
+  removeObject
 }

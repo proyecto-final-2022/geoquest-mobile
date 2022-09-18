@@ -16,6 +16,7 @@ import {
   Switch
 } from 'react-native-paper';
 import {closeSession} from '../../utils/storage/storage';
+import Storage from '../../utils/storage/storage';
 import {useNavigation} from '@react-navigation/native'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -129,7 +130,7 @@ export function DrawerContent(props) {
                     )}
                     label="Sign Out"
                     onPress={() => {
-                        closeSession()
+                        Storage.removeObject('user')
                         navigation.navigate('Sign In')
                     }}
                 />
