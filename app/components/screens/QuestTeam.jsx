@@ -49,26 +49,46 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   }
 
   const sendNotification = async (receiverID, senderID, senderName, questName) => {
-    fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
+    fetch(
+      Config.appUrl+'teams/', {
       method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ 
-        sender_name: senderName
-      }) 
-    })
-    .then(fetch(Config.appUrl + "users/" + receiverID  + '/notifications', {
-      method: 'POST',
-      body: JSON.stringify({ 
-      team_id: 64,
-      quest_name: questName,
-      sender_id: senderID,
-      type: 'quest_invite'
-    })
-    })
-    .catch((error) => console.error(error))
-    )
-    .catch((error) => console.error(error))
+        user_ids: [1,2,3]})
+      })
+      .then(response => {
+        if(!response.ok) throw new Error(response.status);
+        else 
+        response.json().then(id => 
+          {
+       
+            fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json'},
+              body: JSON.stringify({ 
+                sender_name: senderName
+              }) 
+            })
+            .then(fetch(Config.appUrl + "users/" + receiverID  + '/notifications', {
+              method: 'POST',
+              body: JSON.stringify({ 
+              team_id: 64,
+              quest_name: questName,
+              sender_id: senderID,
+              team_id: id,
+              type: 'quest_invite'
+            })
+            })
+            .catch((error) => console.error(error))
+            )
+            .catch((error) => console.error(error))
+          
+          }).catch((error) => {
+        console.log('error: ' + error);
+        this.setState({ requestFailed: true });
+        });})
+
     }
     
 
