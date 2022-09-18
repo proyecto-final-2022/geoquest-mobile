@@ -14,81 +14,73 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
 
+  //sendID field is for test if you wanna try invite yourself to make a group 
   const friends = [
-    {id: 1, name: "string", username: "string", email: "string"},
-    {id: 2, name: "string2", username: "string2", email: "string2"},
-    {id: 3, name: "string3", username: "string3", email: "string3"},
-    {id: 4, name: "string4", username: "string4", email: "string4"},
-    {id: 5, name: "string5", username: "string5", email: "string5"},
-    {id: 6, name: "string6", username: "string6", email: "string6"},
-    {id: 7, name: "string7", username: "string7", email: "string7"},
-    {id: 8, name: "string8", username: "string8", email: "string8"},
-    {id: 9, name: "string9", username: "string9", email: "string9"},
-    {id: 10, name: "string10", username: "string10", email: "string10"},
-    {id: 11, name: "string11", username: "string11", email: "string11"},
-    {id: 12, name: "string12", username: "string12", email: "string12"},
+    {id: 1, sendID:72, name: "string", username: "string", email: "string"},
+    {id: 2, sendID:2, name: "string2", username: "string2", email: "string2"},
+    {id: 3, sendID:72, name: "string3", username: "string3", email: "string3"},
+    {id: 4, sendID:4, name: "string4", username: "string4", email: "string4"},
+    {id: 5, sendID:5, name: "string5", username: "string5", email: "string5"},
+    {id: 6, sendID:6, name: "string6", username: "string6", email: "string6"},
+    {id: 7, sendID:7, name: "string7", username: "string7", email: "string7"},
+    {id: 8, sendID: 8, name: "string8", username: "string8", email: "string8"},
+    {id: 9, sendID: 9, name: "string9", username: "string9", email: "string9"},
+    {id: 10, sendID:10, name: "string10", username: "string10", email: "string10"},
+    {id: 11, sendID:11, name: "string11", username: "string11", email: "string11"},
+    {id: 12, sendID:12, name: "string12", username: "string12", email: "string12"},
   ]
 
   const [view, setView] = useState(false)
   const [inviteView, setInviteView] = useState(false)
   const [cancel, setCancel] = useState([])
   const [invited, setInvited] = useState([])
+  const [invitedIDs, setInvitedIDs] = useState([])
   const [accepted, setAccepted] = useState([])
   const [playerFriends, setplayerFriends] = useState(friends)
 
-  const addInvited = (newInvited) => {
-    return (      
-      setInvited([...invited, newInvited])
-    )
-  }
-
-  const addAccepted = (newAccepted) => {
-    return (      
-      setAccepted([...accepted, newAccepted])
-    )
-  }
-
-  const sendNotification = async (receiverID, senderID, senderName, questName) => {
+  const sendNotification = async (senderID, senderName, questName) => {
+  
     fetch(
       Config.appUrl+'teams/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ 
-        user_ids: [1,2,3]})
+        user_ids: invitedIDs})
       })
       .then(response => {
         if(!response.ok) throw new Error(response.status);
         else 
         response.json().then(id => 
           {
-       
-            fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
-              method: 'POST',
-              headers: { 
-                'Content-Type': 'application/json'},
-              body: JSON.stringify({ 
-                sender_name: senderName
-              }) 
+      
+            invited.map((user) => {
+              console.log(user)
+              fetch(Config.appUrl + "users/" + user.sendID  + '/notifications', {
+                method: 'POST',
+                body: JSON.stringify({ 
+                quest_name: questName,
+                sender_id: senderID,
+                team_id: id,
+                type: 'quest_invite'
+              })
+              })
+              .then(
+                fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
+                  method: 'POST',
+                  headers: { 
+                    'Content-Type': 'application/json'},
+                  body: JSON.stringify({ 
+                    sender_name: senderName
+                  }) 
+                })
+              )
+              .catch((error) => console.error(error))
+              
             })
-            .then(fetch(Config.appUrl + "users/" + receiverID  + '/notifications', {
-              method: 'POST',
-              body: JSON.stringify({ 
-              team_id: 64,
-              quest_name: questName,
-              sender_id: senderID,
-              team_id: id,
-              type: 'quest_invite'
-            })
-            })
-            .catch((error) => console.error(error))
-            )
-            .catch((error) => console.error(error))
-          
-          }).catch((error) => {
-        console.log('error: ' + error);
-        this.setState({ requestFailed: true });
-        });})
-
+        })
+        .catch((error) => {console.log('error: ' + error)});
+        })
+        .catch((error) => {console.log('error: ' + error)});
     }
     
 
@@ -154,6 +146,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           Alert.alert("Jugador invitado")
           setplayerFriends(playerFriends.filter((friend) => friend.id != player.id))
           setInvited([...invited, player])
+          setInvitedIDs([...invitedIDs, player.id])
         }}>
           <AntDesign style={{color:'black', marginLeft: 250, marginTop: -30}} size={25} name ='adduser'/>       
           <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
@@ -226,6 +219,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             setplayerFriends([cancel, ...playerFriends])
             setAccepted(accepted.filter((player) => player.id != cancel.id))
             setInvited(invited.filter((player) => player.id != cancel.id))
+            setInvitedIDs(invitedIDs.filter((player) => player.id != cancel.id))
             }
           }}>
             <Text style={{marginTop: 50, marginLeft: 60, fontSize: 20}}>Aceptar</Text>  
@@ -304,7 +298,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         Storage.getObject('user')
         .then(user => 
           {
-          sendNotification(user.id, user.id, user.name, name)}
+          sendNotification(user.id, user.name, name)}
           )
 
       }} text="Formar Grupo"/>      
@@ -312,7 +306,9 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       <StartButton text="Comenzar"/>
 
       <Button onPress={() => {
+        console.log(invitedIDs)
         setInvited([])
+        setInvitedIDs([])
         setAccepted([])
         }} text="Limpiar"/>
 
