@@ -23,9 +23,7 @@ export default function App() {
 
     const forwardToNotifications = () => {
       Storage.getObject('user')
-      .then(user => 
-        {console.log(user.id)
-        navigationRef.current?.navigate('Notifications', user.id)})
+      .then(user => navigationRef.current?.navigate('Notifications', user))
     }
 
     const processNotification = (remoteMessage, fromBackground) => {

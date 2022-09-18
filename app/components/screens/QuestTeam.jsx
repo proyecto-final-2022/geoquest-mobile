@@ -49,10 +49,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   }
 
   const sendNotification = async (receiverID, senderID, senderName, questName) => {
-    console.log(receiverID)
-    console.log(senderID)
-    console.log(senderName)
-    console.log(questName)
     fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
       method: 'POST',
       headers: { 
@@ -64,6 +60,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     .then(fetch(Config.appUrl + "users/" + receiverID  + '/notifications', {
       method: 'POST',
       body: JSON.stringify({ 
+      team_id: 64,
+      quest_name: questName,
       sender_id: senderID,
       type: 'quest_invite'
     })
@@ -88,7 +86,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const StartButton = ({text, onPress}) => {
     return (
       <Pressable 
-        onPress={() => {console.log(invited.length == accepted.length && invited.length != 0)}} 
+        onPress={onPress} 
         style={[
           styles.startButtonContainer, 
           (invited.length > 1) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
@@ -284,7 +282,11 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
       <StartButton onPress={() => {
         Storage.getObject('user')
-        .then(user => sendNotification(user.id, user.id, user.name, name))
+        .then(user => 
+          {
+          sendNotification(user.id, user.id, user.name, name)}
+          )
+
       }} text="Formar Grupo"/>      
 
       <StartButton text="Comenzar"/>

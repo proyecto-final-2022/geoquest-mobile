@@ -15,7 +15,7 @@ export default Notifications = ({route, navigation}) => {
   
   const isFocused = useIsFocused()
 
-  const id = route.params
+  const user = route.params
 
   const [notifications, setNotifications] = useState([])
 
@@ -23,9 +23,10 @@ export default Notifications = ({route, navigation}) => {
 
   const [call, setCall] = useState(false);
   
-  const url = Config.appUrl + "users/" + id + "/notifications"
+  const url = Config.appUrl + "users/" + user.id + "/notifications"
 
   useEffect(() => {    
+    console.log(user.id)
     fetch(url)
     .then((response) => response.json())
     .then((json) => {
@@ -35,10 +36,6 @@ export default Notifications = ({route, navigation}) => {
     .finally(()=>setLoading(false))
     }, [route])    
 
-    useEffect(() => {
-      console.log("hola")
-
-    }, [route])    
 
   useEffect(() => {
     navigation.setOptions({

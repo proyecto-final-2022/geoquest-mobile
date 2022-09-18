@@ -130,7 +130,7 @@ export function DrawerContent(props) {
                             label="Notificaciones"
                             onPress={() => {
                               Storage.getObject('user').
-                              then(user => navigation.navigate('Notifications', user.id))
+                              then(user => navigation.navigate('Notifications', user))
                               }}
                         />
                     </Drawer.Section>
