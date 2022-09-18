@@ -1,4 +1,5 @@
 import { storeData } from '../storage/storage'
+import Storage from '../storage/storage'
 import Config from '../../../config.json'
 export const loginManual = async (email, password) => {
 
@@ -67,7 +68,7 @@ export const postLoginGoogle = async (email, username, token) => {
           .then(response => {
             if(!response.ok) throw new Error(response.status);
               else response.json().then(data => {
-                storeData(data)
+                Storage.setObject('user', data)
               }).catch((error) => {
             console.log('error: ' + error);
               this.setState({ requestFailed: true });

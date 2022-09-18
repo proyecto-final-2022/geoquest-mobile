@@ -12,3 +12,18 @@ export const storeData = async (value) => {
 export const getData = async () => { await AsyncStorage.getItem('@storage_Key') }
 
 export const closeSession = async () => { await AsyncStorage.removeItem('@storage_Key')}
+
+export async function getObject(key) {
+  return AsyncStorage.getItem(key).then(json => JSON.parse(json))
+}
+
+export async function setObject(key, object) {
+  console.log(JSON.stringify(object))
+  console.log(key)
+  return AsyncStorage.setItem(key, JSON.stringify(object))
+}
+
+export default {
+  setObject,
+  getObject
+}

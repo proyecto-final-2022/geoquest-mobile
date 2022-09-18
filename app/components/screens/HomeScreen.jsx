@@ -4,6 +4,7 @@ import CustomButton from '../commons/CustomButton'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native'
 import { closeSession} from '../../utils/storage/storage';
+import Storage from '../../utils/storage/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
@@ -26,9 +27,9 @@ const HomeScreen = () => {
 
   const ongetData = async () =>  {
     try {
-      const value = await AsyncStorage.getItem('@storage_Key')
+      Storage.getObject('user').then(user => console.log(user.token))
         if(value !== null) {
-          console.warn('Token : ' + value)
+          console.log(value)
               // value previously stored
         }
         } catch(e) {
