@@ -40,27 +40,24 @@ export default Notifications = ({route, navigation}) => {
         headers: { 'Content-Type': 'application/json'}
         })
       )
+      .then(
+        fetch(Config.appNotificationsUrl + "notifications/quest_accept", {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json'},
+          body: JSON.stringify({ 
+            sender_name: user.username,
+            quest_id: questID,
+            team_id: teamID,
+          }) 
+        })
+        )
+
     .then(
       navigation.navigate('Wait Room', {questID, teamID})
     )
-    /*
-
-    .then(
-      fetch(Config.appNotificationsUrl + "notifications/quest_accept", {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'},
-        body: JSON.stringify({ 
-          sender_name: user.username,
-          quest_id: questID,
-          team_id: teamID,
-        }) 
-      })
-
-    )
-
     .catch((error) => console.error(error))
-    */
+    
   }
   
   const url = Config.appUrl + "users/" + user.id + "/notifications"
