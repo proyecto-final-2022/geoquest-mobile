@@ -39,6 +39,10 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const [accepted, setAccepted] = useState([])
   const [playerFriends, setplayerFriends] = useState(friends)
 
+  const forwardToWaitRoom = (questID, teamID) => {
+    navigation.navigate('Wait Room', {questID, teamID})
+  }
+
   const sendNotification = async (senderID, senderName, questName) => {
   
     fetch(
@@ -54,9 +58,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         else 
         response.json().then(teamId => 
           {
-            const teamID = teamId
-            const questID = id
- 
             invited.map((user) => {
               console.log(user)
               fetch(Config.appUrl + "users/" + user.sendID  + '/notifications', {
@@ -79,7 +80,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
                   }) 
                 })
               )
-              .then(navigation.navigate('Wait Room', {questID, teamID}))
+              .then(forwardToWaitRoom(id, teamId))
               .catch((error) => console.error(error))
             })
         })

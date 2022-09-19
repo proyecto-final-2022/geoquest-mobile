@@ -24,9 +24,6 @@ export default Notifications = ({route, navigation}) => {
   const [call, setCall] = useState(false);
 
   const handleAcceptQuest = (teamID, notificationID, questID) => {
-    console.log(teamID)
-    console.log(notificationID)
-    console.log(questID)
     
     fetch(
       Config.appUrl+'teams/waitrooms/'+ teamID + '/users/' + user.id, {
