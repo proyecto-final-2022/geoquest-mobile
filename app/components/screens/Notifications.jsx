@@ -40,6 +40,9 @@ export default Notifications = ({route, navigation}) => {
         headers: { 'Content-Type': 'application/json'}
         })
       )
+    .then(
+      navigation.navigate('Wait Room', {questID, teamID})
+    )
     /*
 
     .then(
@@ -55,9 +58,7 @@ export default Notifications = ({route, navigation}) => {
       })
 
     )
-    .then(
-      navigation.navigate('Wait Room', questID, teamID)
-    )
+
     .catch((error) => console.error(error))
     */
   }

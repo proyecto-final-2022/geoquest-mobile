@@ -54,7 +54,9 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         else 
         response.json().then(teamId => 
           {
-      
+            const teamID = teamId
+            const questID = id
+ 
             invited.map((user) => {
               console.log(user)
               fetch(Config.appUrl + "users/" + user.sendID  + '/notifications', {
@@ -77,14 +79,9 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
                   }) 
                 })
               )
+              .then(navigation.navigate('Wait Room', {questID, teamID}))
               .catch((error) => console.error(error))
-              
             })
-            /*
-            .then(
-              navigation.navigate('Wait Room', id, teamId)
-            )
-            */
         })
         .catch((error) => {console.log('error: ' + error)});
         })
@@ -308,7 +305,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           Storage.getObject('user')
           .then(user => 
             {
-            sendNotification(user.id, user.username, name)}
+            sendNotification(user.id, user.username, name)
+          }
             )
         }
       }} text="Formar Grupo"/>      

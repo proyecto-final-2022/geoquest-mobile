@@ -12,12 +12,18 @@ const {width} = Dimensions.get('screen')
 
 export default WaitRoom = ({route, navigation}) => {
 
-  const {quest_id, team_id} = route.params
+  const {questID, teamID} = route.params
 
   return (
     <ScrollView style={styles.view}> 
-			<Text>{quest_id}</Text>
-			<Text>{team_id}</Text>
+			{
+			console.log(questID)
+			}
+
+{
+			console.log(teamID)
+			}
+
     </ScrollView>
   )
 }
