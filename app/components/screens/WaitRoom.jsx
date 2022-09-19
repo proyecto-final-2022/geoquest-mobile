@@ -31,10 +31,34 @@ export default WaitRoom = ({route, navigation}) => {
             size={40}
             marginTop={5}
           />
-        <AntDesign style={{color:'black', marginLeft: 320, marginTop:-30}} size={25} name ='closecircle'/> 
-        <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
+        <Text style={{marginLeft: 60, fontSize: 20, marginTop: -35, color:'#a52a2a'}}>{player.name}</Text>
       </View>
     ) 
+  }
+
+  const Button = ({text, onPress}) => {
+    return (
+      <Pressable 
+        onPress={onPress} 
+        style={styles.buttonContainer}>  
+        <Text 
+          style={styles.buttonText}>{text}</Text>
+      </Pressable>
+    )
+  }
+
+  const StartButton = ({text, onPress}) => {
+    return (
+      <Pressable 
+        onPress={onPress} 
+        style={[
+          styles.startButtonContainer, 
+          (playersAccepted.length == playersTeam.length) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
+        ]}>  
+        <Text 
+          style={styles.buttonText}>{text}</Text>
+      </Pressable>
+    )
   }
 
   useEffect(() => {    
@@ -88,6 +112,14 @@ export default WaitRoom = ({route, navigation}) => {
         </FlatList> 
       </ScrollView>
 
+      <StartButton onPress={() => {
+        if (playersAccepted.length == playersTeam.length ) {
+          
+        }
+      }} text="Formar Grupo"/>   
+
+      <Button text="Cancelar"/>
+
     </ScrollView>
   )
 }
@@ -103,6 +135,33 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginTop:20,
     padding: 15, 
+  },
+  buttonContainer: {
+    width: '50%',
+
+    padding: 15,
+    marginVertical: 5,
+    marginLeft: 100,
+    marginTop: 20,
+
+    alignItems: 'center',
+    borderRadius: 5,
+    backgroundColor: '#CA955C'
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    color: 'white',
+  },  
+  startButtonContainer: {
+    width: '50%',
+
+    padding: 15,
+    marginVertical: 5,
+    marginLeft: 100,
+    marginTop: 20,
+
+    alignItems: 'center',
+    borderRadius: 5,
   },
 });
 
