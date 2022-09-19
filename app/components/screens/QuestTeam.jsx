@@ -14,7 +14,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
 
-  //sendID field is for test if you wanna try invite yourself to make a group 
+  //sendID field is for test if you wanna try invite yourself to make a group
+  const sendID = 72 
   const friends = [
     {id: 1, sendID:72, name: "string", username: "string", email: "string"},
     {id: 2, sendID:2, name: "string2", username: "string2", email: "string2"},
@@ -45,12 +46,13 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ 
-        user_ids: invitedIDs})
+        user_ids: invitedIDs,
+        quest_id: id})
       })
       .then(response => {
         if(!response.ok) throw new Error(response.status);
         else 
-        response.json().then(id => 
+        response.json().then(teamId => 
           {
       
             invited.map((user) => {
@@ -60,7 +62,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
                 body: JSON.stringify({ 
                 quest_name: questName,
                 sender_id: senderID,
-                team_id: id,
+                quest_id: id,
+                team_id: teamId,
                 type: 'quest_invite'
               })
               })
@@ -77,6 +80,11 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
               .catch((error) => console.error(error))
               
             })
+            /*
+            .then(
+              navigation.navigate('Wait Room', id, teamId)
+            )
+            */
         })
         .catch((error) => {console.log('error: ' + error)});
         })
@@ -146,7 +154,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           Alert.alert("Jugador invitado")
           setplayerFriends(playerFriends.filter((friend) => friend.id != player.id))
           setInvited([...invited, player])
-          setInvitedIDs([...invitedIDs, player.id])
+          //cambiarlo por player.id
+          setInvitedIDs([...invitedIDs, sendID])
         }}>
           <AntDesign style={{color:'black', marginLeft: 250, marginTop: -30}} size={25} name ='adduser'/>       
           <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
@@ -295,12 +304,13 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
       <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
       <StartButton onPress={() => {
-        Storage.getObject('user')
-        .then(user => 
-          {
-          sendNotification(user.id, user.name, name)}
-          )
-
+        if (invited.length > 1) {
+          Storage.getObject('user')
+          .then(user => 
+            {
+            sendNotification(user.id, user.username, name)}
+            )
+        }
       }} text="Formar Grupo"/>      
 
       <StartButton text="Comenzar"/>
