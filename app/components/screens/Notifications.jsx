@@ -28,8 +28,32 @@ export default Notifications = ({route, navigation}) => {
     navigation.navigate('Wait Room', {questID, teamID, userID})
   }
 
+  const HandleCancel = (teamID, userID, notificationID) => {
+    fetch(
+      Config.appUrl+'teams/' + teamID + '/users/' + userID, {
+      method: 'DELETE',      
+      headers: { 'Content-Type': 'application/json'}
+      })
+    .then(
+      fetch(
+        Config.appUrl+'users/' + userID + '/notifications/'+ notificationID, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json'}
+        })
+      )
+    .then(
+      fetch(url)
+      .then((response) => response.json())
+      .then((json) => {
+        setNotifications(json)
+        })
+      .catch((error) => console.error(error))
+      .finally(()=>setLoading(false))
+    )
+  }
+
   const handleAcceptQuest = (teamID, notificationID, questID) => {
-    
+    Alert.alert("Invitacion aceptada")
     fetch(
       Config.appUrl+'teams/waitrooms/'+ teamID + '/users/' + user.id, {
       method: 'PUT',
@@ -93,10 +117,13 @@ export default Notifications = ({route, navigation}) => {
           <Text style={{fontWeight: 'bold', fontSize: 18, marginTop:20}}>{notification.sender_name + ' te ha invitado a: '+ notification.quest_name}</Text> : 
           <Text style={{fontWeight: 'bold', fontSize: 18, marginTop:20}}>{notification.sender_name + ' te ha enviado una solicitud de amistad'}</Text>
         }                         
-        <Pressable onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : console.log("friend") }>
+        <Pressable onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : console.log("amigos")}>
           <Text style={{marginLeft: 180, color: 'green', fontWeight: 'bold', fontSize: 18, marginTop:30}}>Aceptar</Text>
         </Pressable>
-        <Pressable onPress={() => console.log("aaaaaaa")}>
+        <Pressable onPress={() => notification.type == "quest_invite" ? Storage.getObject('user').then(user => 
+          {Alert.alert("Invitacion rechazada")
+          HandleCancel(notification.team_id, user.id, notification.id)}
+          ) : console.log("cancelar friend") }>
           <Text style={{marginLeft: 270, color: 'red', fontWeight: 'bold', fontSize: 18, marginTop:-26}}>Rechazar</Text>
         </Pressable>
       </View>
