@@ -26,9 +26,8 @@ export default function App() {
       .then(user => navigationRef.current?.navigate('Notifications', user))
     }
 
-    const forwardToWaitRoom = (questID, teamID) => {
-      Storage.getObject('user')
-      .then(user => navigationRef.current?.navigate('Wait Room', {questID, teamID}))
+    const forwardToWaitRoom = (questID, teamID, userID) => {
+      navigationRef.current?.navigate('Wait Room', {questID, teamID, userID})
     }
 
     const processNotification = (remoteMessage, fromBackground) => {
@@ -70,7 +69,8 @@ export default function App() {
                     text: "Cancel",
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () => { forwardToWaitRoom(remoteMessage.data.questID, remoteMessage.data.teamID)} }
+                  { text: "OK", onPress: () => { 
+                    Storage.getObject('user').then(user => forwardToWaitRoom(remoteMessage.data.questID, remoteMessage.data.teamID, user.id))} }
                 ]
               );
             break;

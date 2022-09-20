@@ -7,6 +7,7 @@ import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
+import Storage from '../../utils/storage/storage'
 
 
 const {width} = Dimensions.get('screen')
@@ -22,6 +23,10 @@ export default Notifications = ({route, navigation}) => {
   const [loading, setLoading] = useState(true)
 
   const [call, setCall] = useState(false);
+
+  const forwardToWaitRoom = (questID, teamID, userID) => {
+    navigation.navigate('Wait Room', {questID, teamID, userID})
+  }
 
   const handleAcceptQuest = (teamID, notificationID, questID) => {
     
@@ -51,7 +56,7 @@ export default Notifications = ({route, navigation}) => {
         )
 
     .then(
-      navigation.navigate('Wait Room', {questID, teamID})
+      Storage.getObject('user').then(user => forwardToWaitRoom(questID, teamID, user.id))      
     )
     .catch((error) => console.error(error))
     

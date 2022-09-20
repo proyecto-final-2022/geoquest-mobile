@@ -39,8 +39,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const [accepted, setAccepted] = useState([])
   const [playerFriends, setplayerFriends] = useState(friends)
 
-  const forwardToWaitRoom = (questID, teamID) => {
-    navigation.navigate('Wait Room', {questID, teamID})
+  const forwardToWaitRoom = (questID, teamID, userID) => {
+    navigation.navigate('Wait Room', {questID, teamID, userID})
   }
 
   const sendNotification = async (senderID, senderName, questName) => {
@@ -80,7 +80,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
                   }) 
                 })
               )
-              .then(forwardToWaitRoom(id, teamId))
+              .then(
+                Storage.getObject('user').then(user => forwardToWaitRoom(id, teamId, user.id)))
               .catch((error) => console.error(error))
             })
         })

@@ -12,7 +12,7 @@ const {width} = Dimensions.get('screen')
 
 export default WaitRoom = ({route, navigation}) => {
 
-  const {questID, teamID} = route.params
+  const {questID, teamID, userID} = route.params
 
   const url = Config.appUrl + "teams/waitrooms/" + teamID + "/quests/" + questID
 
@@ -45,6 +45,10 @@ export default WaitRoom = ({route, navigation}) => {
           style={styles.buttonText}>{text}</Text>
       </Pressable>
     )
+  }
+
+  const HandleCancel = () => {
+    
   }
 
   const StartButton = ({text, onPress}) => {
@@ -116,7 +120,21 @@ export default WaitRoom = ({route, navigation}) => {
         }
       }} text="Comenzar"/>   
 
-      <CancelButton text="Cancelar"/>
+      <CancelButton 
+        onPress={() => {
+          Alert.alert(
+            "Abandonar grupo de busqueda?",
+            "",
+            [
+              {
+                text: "Cancelar",
+                style: "Cancelar"
+              },
+              { text: "OK", onPress: () => {console.log(userID)} }
+            ]
+          );
+      }}
+        text="Cancelar"/>
 
     </ScrollView>
   )
