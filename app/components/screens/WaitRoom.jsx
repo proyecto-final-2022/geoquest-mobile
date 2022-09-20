@@ -48,7 +48,12 @@ export default WaitRoom = ({route, navigation}) => {
   }
 
   const HandleCancel = () => {
-    
+    fetch(
+      Config.appUrl+'teams/' + teamID + '/users/' + userID, {
+      method: 'DELETE',      
+      headers: { 'Content-Type': 'application/json'}
+      })
+    .then(navigation.navigate('Quest Navigator'))
   }
 
   const StartButton = ({text, onPress}) => {
@@ -130,7 +135,7 @@ export default WaitRoom = ({route, navigation}) => {
                 text: "Cancelar",
                 style: "Cancelar"
               },
-              { text: "OK", onPress: () => {console.log(userID)} }
+              { text: "OK", onPress: () => {HandleCancel()} }
             ]
           );
       }}
