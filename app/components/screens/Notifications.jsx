@@ -28,7 +28,7 @@ export default Notifications = ({route, navigation}) => {
     navigation.navigate('Wait Room', {questID, teamID, userID})
   }
 
-  const HandleCancel = (teamID, userID, notificationID) => {
+  const HandleCancel = (teamID, userID, notificationID, questID) => {
     fetch(
       Config.appUrl+'teams/' + teamID + '/users/' + userID, {
       method: 'DELETE',      
@@ -40,6 +40,18 @@ export default Notifications = ({route, navigation}) => {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json'}
         })
+      )
+    .then(
+      fetch(Config.appNotificationsUrl + "notifications/quest_accept", {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+          sender_name: user.username,
+          quest_id: questID,
+          team_id: teamID,
+        }) 
+      })
       )
     .then(
       fetch(url)
@@ -122,7 +134,19 @@ export default Notifications = ({route, navigation}) => {
         </Pressable>
         <Pressable onPress={() => notification.type == "quest_invite" ? Storage.getObject('user').then(user => 
           {Alert.alert("Invitacion rechazada")
-          HandleCancel(notification.team_id, user.id, notification.id)}
+          HandleCancel(notification.team_id, user.id, notification.id, notification.quest_id)
+        .then(
+          fetch(Config.appNotificationsUrl + "notifications/quest_deny", {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json'},
+            body: JSON.stringify({ 
+              sender_name: user.username,
+              quest_id: notification.quest_id,
+              team_id: notification.team_id,
+            }) 
+          })
+        )}
           ) : console.log("cancelar friend") }>
           <Text style={{marginLeft: 270, color: 'red', fontWeight: 'bold', fontSize: 18, marginTop:-26}}>Rechazar</Text>
         </Pressable>

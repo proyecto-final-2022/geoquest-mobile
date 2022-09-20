@@ -74,6 +74,21 @@ export default function App() {
                 ]
               );
             break;
+          
+          case "Quest Deny":
+            Alert.alert(
+              title,
+              "",
+              [
+                {
+                  text: "Cancel",
+                  style: "cancel"
+                },
+                { text: "OK", onPress: () => { 
+                  Storage.getObject('user').then(user => forwardToWaitRoom(remoteMessage.data.questID, remoteMessage.data.teamID, user.id))} }
+              ]
+            );
+          break;
           }
         }
 
