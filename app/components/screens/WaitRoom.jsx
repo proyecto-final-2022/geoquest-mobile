@@ -36,7 +36,7 @@ export default WaitRoom = ({route, navigation}) => {
     ) 
   }
 
-  const Button = ({text, onPress}) => {
+  const CancelButton = ({text, onPress}) => {
     return (
       <Pressable 
         onPress={onPress} 
@@ -65,8 +65,7 @@ export default WaitRoom = ({route, navigation}) => {
     fetch(url)
     .then((response) => response.json())
     .then((json) => {
-      setPlayersAccepted(json.users_accepted)
-      console.log(playersAccepted)
+      setPlayersAccepted(json)
       })
     .catch((error) => console.error(error))
     .finally(()=>setLoading(false))
@@ -76,8 +75,7 @@ export default WaitRoom = ({route, navigation}) => {
       fetch(urlTeam)
       .then((response) => response.json())
       .then((json) => {
-        setPlayersTeam(json.players)
-        console.log(playersTeam)
+        setPlayersTeam(json)
         })
       .catch((error) => console.error(error))
       .finally(()=>setLoading(false))
@@ -101,7 +99,7 @@ export default WaitRoom = ({route, navigation}) => {
     <ScrollView style={styles.view}> 
 
       <ScrollView style={styles.containerWaitRoom}>
-        <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{'En espera (' + playersAccepted.length + '/' + playersTeam.length +')'}</Text>
+        <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{'En espera (' + (playersAccepted.length > 0 ? playersAccepted.length: 0) + '/' + playersTeam.length +')'}</Text>
         <FlatList
           horizontal= {false}
           contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
@@ -116,9 +114,9 @@ export default WaitRoom = ({route, navigation}) => {
         if (playersAccepted.length == playersTeam.length ) {
           
         }
-      }} text="Formar Grupo"/>   
+      }} text="Comenzar"/>   
 
-      <Button text="Cancelar"/>
+      <CancelButton text="Cancelar"/>
 
     </ScrollView>
   )
@@ -138,7 +136,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '50%',
-
     padding: 15,
     marginVertical: 5,
     marginLeft: 100,
@@ -146,7 +143,7 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
     borderRadius: 5,
-    backgroundColor: '#CA955C'
+    backgroundColor: '#a52a2a'
   },
   buttonText: {
     fontWeight: 'bold',
