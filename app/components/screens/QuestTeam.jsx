@@ -36,10 +36,10 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const [cancel, setCancel] = useState([])
   const [invited, setInvited] = useState([])
   const [invitedIDs, setInvitedIDs] = useState([])
-  const [accepted, setAccepted] = useState([])
   const [playerFriends, setplayerFriends] = useState(friends)
 
   const forwardToWaitRoom = (questID, teamID, userID) => {
+    console.log(invitedIDs)
     navigation.navigate('Wait Room', {questID, teamID, userID})
   }
 
@@ -155,6 +155,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           setInvited([...invited, player])
           //cambiarlo por player.id
           setInvitedIDs([...invitedIDs, sendID])
+          console.log(invitedIDs)
         }}>
           <AntDesign style={{color:'black', marginLeft: 250, marginTop: -30}} size={25} name ='adduser'/>       
           <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
@@ -163,22 +164,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     ) 
   }
 
-  const AcceptedPlayers = ({player}) => {
-    return (
-      <View style={{marginTop: 5, height: 50, backgroundColor:'antiquewhite'}}>
-        <Avatar.Image 
-          source={{
-            uri: 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki'}}
-            size={40}
-            marginTop={5}
-          />
-          <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
-      </View>
 
-    ) 
-  }
-
-  
   useEffect(() => {
     navigation.setOptions({
       headerTitle: 'Armar Grupo',
@@ -225,9 +211,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             {
             setView(false)
             setplayerFriends([cancel, ...playerFriends])
-            setAccepted(accepted.filter((player) => player.id != cancel.id))
             setInvited(invited.filter((player) => player.id != cancel.id))
-            setInvitedIDs(invitedIDs.filter((player) => player.id != cancel.id))
+            setInvitedIDs(invitedIDs.filter((id) => id != cancel.id))
             }
           }}>
             <Text style={{marginTop: 50, marginLeft: 60, fontSize: 20}}>Aceptar</Text>  
@@ -265,8 +250,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             <Ionicons name='close' size={35} style={{marginLeft:270}}/>
           </Pressable>
 
-          <Text style={{marginLeft: 60, fontSize: 20, fontWeight: 'bold'}}>Sumar amigo</Text>  
-          
           <FlatList
             horizontal= {false}
             contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
@@ -290,15 +273,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           keyExtractor={(item, index) => item.id}
           renderItem={({item}) => <Player player={item}/>}>      
         </FlatList> 
-        <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores aceptados</Text>
-        <FlatList
-          horizontal= {false}
-          contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
-          showsHorizontalScrollIndicator = {false}
-          data={accepted}
-          keyExtractor={(item, index) => item.id}
-          renderItem={({item}) => <AcceptedPlayers player={item}/>}>      
-        </FlatList> 
       </ScrollView>
 
       <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
@@ -312,15 +286,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             )
         }
       }} text="Formar Grupo"/>      
-
-      <StartButton text="Comenzar"/>
-
-      <Button onPress={() => {
-        console.log(invitedIDs)
-        setInvited([])
-        setInvitedIDs([])
-        setAccepted([])
-        }} text="Limpiar"/>
 
     </ScrollView>
   )

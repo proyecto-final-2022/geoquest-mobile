@@ -62,7 +62,7 @@ export default WaitRoom = ({route, navigation}) => {
         onPress={onPress} 
         style={[
           styles.startButtonContainer, 
-          (playersAccepted.length == playersTeam.length) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
+          (playersAccepted.length == playersTeam.length && playersTeam.length != 0) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
         ]}>  
         <Text 
           style={styles.buttonText}>{text}</Text>
@@ -119,11 +119,7 @@ export default WaitRoom = ({route, navigation}) => {
         </FlatList> 
       </ScrollView>
 
-      <StartButton onPress={() => {
-        if (playersAccepted.length == playersTeam.length ) {
-          
-        }
-      }} text="Comenzar"/>   
+      <StartButton text="Comenzar"/>   
 
       <CancelButton 
         onPress={() => {
