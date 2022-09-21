@@ -8,19 +8,19 @@ export const getData = async () => { await AsyncStorage.getItem('auth.token') }
 export const closeSession = async () => { await AsyncStorage.removeItem('auth.token')}
 
 export async function getObject(key) {
-    return AsyncStorage.getItem(key).then(json => JSON.parse(json))
-  }
+  return AsyncStorage.getItem(key).then(json => JSON.parse(json))
+}
   
-  export async function setObject(key, object) {
-    return AsyncStorage.setItem(key, JSON.stringify(object))
-  }
+export async function setObject(key, object) {
+  return AsyncStorage.setItem(key, JSON.stringify(object))
+}
   
-  export async function removeObject(key) {
-    return AsyncStorage.removeItem(key)
-  }
+export async function removeObject(key) {
+  return AsyncStorage.removeItem(key)
+}
   
-  export default {
-    setObject,
-    getObject,
-    removeObject
-  }
+export default {
+  setObject,
+  getObject,
+  removeObject
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, StyleSheet } from 'react-native';
 import {
   DrawerContentScrollView,
@@ -16,6 +16,7 @@ import {
   Switch
 } from 'react-native-paper';
 import {closeSession} from '../../utils/storage/storage';
+import Storage from '../../utils/storage/storage';
 import {useNavigation} from '@react-navigation/native'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,6 +25,19 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 export function DrawerContent(props) {
 
   const navigation = useNavigation()
+  
+  const [name, setName] = useState("")
+  const [username, setUsername] = useState("")
+
+  useEffect(() => {
+    Storage.getObject('user').
+    then(user => setName(user.username))
+    }, [props])
+
+    useEffect(() => {
+      Storage.getObject('user').
+      then(user => setUsername(user.username))
+    }, [props])
 
   return(
     <View style={{flex:1,backgroundColor: '#FFF9CA'}}>
@@ -37,8 +51,8 @@ export function DrawerContent(props) {
                 size={50}
               />
               <View style={{marginLeft:15, flexDirection:'column'}}>
-                <Title style={styles.title}>Lionel Messi</Title>
-                <Caption style={styles.caption}>@messirve10</Caption>
+                <Title style={styles.title}>{name}</Title>
+                <Caption style={styles.caption}>{username}</Caption>
               </View>
             </View>
 
