@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { useIsFocused } from '@react-navigation/native'
 import {Button} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
@@ -20,6 +21,18 @@ export default ClientQuests = ({route, navigation}) => {
    const [loading, setLoading] = useState(true)
 
   const url = Config.appUrl + "clients/" + ID + "/quests"
+  
+  const isFocused = useIsFocused()
+  
+  useEffect(() => {
+    fetch(url)
+    .then((response) => response.json())
+    .then((json) => {
+      setData(json) 
+      setFilteredData(json)})
+    .catch((error) => console.error(error))
+    .finally(()=>setLoading(false))
+  } , [isFocused])
 
   useEffect(() => {
     navigation.setOptions({
