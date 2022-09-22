@@ -19,6 +19,16 @@ import {closeSession} from '../../utils/storage/storage';
 import Storage from '../../utils/storage/storage';
 import {useNavigation} from '@react-navigation/native'
 
+import userImage_1 from '../../../assets/userImages/userImage_1.png'
+import userImage_2 from '../../../assets/userImages/userImage_2.png'
+import userImage_3 from '../../../assets/userImages/userImage_3.png'
+import userImage_4 from '../../../assets/userImages/userImage_4.png'
+import userImage_5 from '../../../assets/userImages/userImage_5.png'
+import userImage_6 from '../../../assets/userImages/userImage_6.png'
+import userImage_7 from '../../../assets/userImages/userImage_7.png'
+import userImage_8 from '../../../assets/userImages/userImage_8.png'
+import userImage_9 from '../../../assets/userImages/userImage_9.png'
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
@@ -28,16 +38,27 @@ export function DrawerContent(props) {
   
   const [name, setName] = useState("")
   const [username, setUsername] = useState("")
+  const [image, setImage] = useState(1)
+
+  const getUserImage = (imageNumber) => { 
+    const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
+    return userImages[imageNumber-1];
+   }
 
   useEffect(() => {
     Storage.getObject('user').
-    then(user => setName(user.username))
-    }, [props])
+    then(user => setName(user.name))
+  }, [props])
 
-    useEffect(() => {
-      Storage.getObject('user').
-      then(user => setUsername(user.username))
-    }, [props])
+  useEffect(() => {
+    Storage.getObject('user').
+    then(user => setUsername(user.username))
+  }, [props])
+
+  useEffect(() => {
+    Storage.getObject('user').
+    then(user => setImage(user.image))
+  }, [props])
 
   return(
     <View style={{flex:1,backgroundColor: '#FFF9CA'}}>
@@ -46,13 +67,12 @@ export function DrawerContent(props) {
           <View style={styles.userInfoSection}>
             <View style={{flexDirection:'row',marginTop: 15}}>
               <Avatar.Image 
-                source={{
-                  uri: 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki'}}
+                source={getUserImage(image)}
                 size={50}
               />
               <View style={{marginLeft:15, flexDirection:'column'}}>
-                <Title style={styles.title}>{name}</Title>
-                <Caption style={styles.caption}>{username}</Caption>
+                <Title style={styles.title}>{username}</Title>
+                <Caption style={styles.caption}>{name}</Caption>
               </View>
             </View>
 
