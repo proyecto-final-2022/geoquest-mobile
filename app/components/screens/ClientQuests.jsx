@@ -13,7 +13,7 @@ export default ClientQuests = ({route, navigation}) => {
   
  // const navigation = useNavigation()
 
-  const clientID = route.params
+  const {clientID, clientName} = route.params
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [view, setView] = useState(false)
@@ -25,7 +25,6 @@ export default ClientQuests = ({route, navigation}) => {
   const isFocused = useIsFocused()
   
   useEffect(() => {
-    console.log(clientID)
     fetch(url)
     .then((response) => response.json())
     .then((json) => {
@@ -37,7 +36,7 @@ export default ClientQuests = ({route, navigation}) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: route.params.name,
+      headerTitle: clientName,
       headerRight: () => (
         <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Navigator')}/>
       ),
@@ -110,7 +109,7 @@ export default ClientQuests = ({route, navigation}) => {
 
   const Card = ({quest}) => {
     return (
-      <Pressable onPress={() => navigation.navigate('Quest Visualizer', {...quest, clientID})}>
+      <Pressable onPress={() => navigation.navigate('Quest Visualizer', {...quest, clientID, clientName})}>
         <View style={styles.card}>
           <View style={styles.infoDisplay}>
             <View style={styles.questName}>

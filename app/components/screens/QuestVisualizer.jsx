@@ -10,7 +10,7 @@ const {width} = Dimensions.get('screen')
 
 export default QuestVisualizer = ({route, navigation}) => {
 
-  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID} = route.params
+  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
 
   const Tag = ({tag}) => {
     return (
@@ -36,7 +36,7 @@ export default QuestVisualizer = ({route, navigation}) => {
       headerTitle: route.params.name,
       headerTintColor: '#a52a2a',
       headerRight: () => (
-        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Client Quests',clientID)}/>
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Client Quests', {clientID, clientName})}/>
       ),
       headerSearchBarOptions: {
         placeholder: "Search",
@@ -76,7 +76,7 @@ export default QuestVisualizer = ({route, navigation}) => {
 
       <Button onPress={() => console.log('Comenzar')} text="Comenzar"/>
       <Button onPress={() => console.log('Armar Grupo')} text="Armar Grupo"/>
-      <Button onPress={() => navigation.navigate('Ranking', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags}})} text="Ver Rankings"/>
+      <Button onPress={() => navigation.navigate('Ranking', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})} text="Ver Rankings"/>
     
     </ScrollView>
 
