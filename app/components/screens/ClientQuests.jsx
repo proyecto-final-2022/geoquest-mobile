@@ -140,6 +140,44 @@ export default ClientQuests = ({route, navigation}) => {
         </View>
       </Pressable>) 
     }
+
+  const TagsFlex = ({tag}) => {
+    return (
+      <View style={styles.tag}>
+        <Text>{tag}</Text>
+      </View>
+    )
+  }
+
+  const CardFlex = ({quest}) => {
+    return (
+      <Pressable onPress={() => navigation.navigate('Quest Visualizer', {...quest})}>
+        <View style={styles.card}>
+          <View style={styles.infoDisplay}>
+            <View style={styles.questName}>
+              <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
+            </View>
+            <View style={styles.questInfo}>
+              <FontAwesome name ='clock-o' size={25}/>
+              <Text style={styles.questInfoText}>{quest.duration}</Text>
+            </View>
+            <View style={styles.questInfo}>
+              <Entypo name ='gauge' size={25}/>
+              <Text style={styles.questInfoText}>{quest.difficulty}</Text>
+            </View>
+            <View style={styles.questInfo}>
+              <Entypo name ='star' size={25}/>
+              <Text style={styles.questInfoText}>{quest.qualification}</Text>
+            </View>
+          </View>
+          <View style={styles.tagContainer}>
+            {quest.tags.map((tag) => <TagsFlex tag={tag}/>)}
+          </View>
+
+        </View>
+      </Pressable>
+    ) 
+  }
   
   return (
 
@@ -193,10 +231,11 @@ export default ClientQuests = ({route, navigation}) => {
 
       <FlatList
         horizontal= {false}
-        contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+        contentContainerStyle={{
+          paddingLeft: 20, paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
         data={filteredData}
-        renderItem={({item}) => <Card quest={item}/>}>      
+        renderItem={({item}) => <CardFlex quest={item}/>}>      
       </FlatList> 
     </ScrollView>
 
@@ -219,38 +258,47 @@ const styles = StyleSheet.create({
   },
   card:{
     height: 120,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    marginTop: 10,
     backgroundColor: '#ffefd5',
-    elevation: 10,
-    width: width - 40,
-    marginTop:20,
-    padding: 15,
-    borderRadius: 20,
+  },
+  infoDisplay:{
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 10,
+  },
+  questInfo:{
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexBasis: 45,
+    flexShrink: 0,
+    flexGrow: 0,
+  },
+  questName:{
+    flexBasis: 220,
+    flexShrink: 0,
+    flexGrow: 0,
+  },
+  tagContainer:{
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   tag:{
-    height: 10,
-    marginRight: 360,
-    marginLeft: -345,
-    marginTop: 15,
-    backgroundColor: 'mintcream',
-    width: 78,
-    padding: 15,
-    borderRadius: 20,
-  },
-  questInfo: {
     flexDirection: 'row',
-    marginTop: -50, 
-    marginLeft: 200,
+    justifyContent: 'center',
+    backgroundColor: 'mintcream',
+    width: 90,
+    padding: 5,
+    borderRadius: 20,
+    marginLeft: 5
   },
   questInfoText: {
-    marginTop: 28,
-    marginLeft: -25,
     color: '#696969',
   },
   tagInfoText: {
-    fontSize: 11,
-    marginTop: 25,
-    marginLeft: -15,
-    color: '#696969',
+    fontSize: 5,
+    color: 'black',
   },
   sortBtn: {
     backgroundColor: 'bisque',
