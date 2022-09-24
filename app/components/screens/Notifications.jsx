@@ -121,7 +121,7 @@ export default Notifications = ({route, navigation}) => {
     })
   })
 
-  const NotificationFlex = ({notification}) => {
+  const Notification = ({notification}) => {
     return (
       <View style={styles.notificationContainer}>
         <View style={styles.description}>
@@ -176,7 +176,7 @@ export default Notifications = ({route, navigation}) => {
         contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
         data={notifications}
-        renderItem={({item}) => <NotificationFlex notification={item}/>
+        renderItem={({item}) => <Notification notification={item}/>
         
         }>      
       </FlatList>
@@ -190,9 +190,6 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     backgroundColor: '#FFF9CA',
-  },
-  notificationText: {
-    height: 20,
   },
   options: {
     justifyContent: 'flex-end',
