@@ -12,12 +12,10 @@ export default QuestVisualizer = ({route, navigation}) => {
 
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID} = route.params
 
-  const Tags = ({tag}) => {
+  const Tag = ({tag}) => {
     return (
       <View style={styles.tag}>
-      <View style={{marginTop: -38, marginLeft:10}}>
-        <Text style={styles.tagInfoText}>{tag}</Text>
-      </View>
+        <Text>{tag}</Text>
       </View>
     )
   }
@@ -50,25 +48,31 @@ export default QuestVisualizer = ({route, navigation}) => {
 
     <ScrollView style={styles.view}> 
       <Image style={styles.image} source={{uri: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"}} />
-      <View style={styles.card}>
-          <Text style={{marginTop: 50, fontSize: 20, fontWeight: 'bold'}}>{description}</Text>
-          <View style={{marginTop: 10, flexDirection: 'row'}}>
-            <View style={styles.questInfo}>
-              <FontAwesome name ='clock-o' size={25}/>
-                <Text style={styles.questInfoText}>{duration}</Text>
-            </View>
-            <View style={styles.questInfo} marginLeft={18}>
-              <Entypo name ='gauge' size={25}/>
-                <Text style={styles.questInfoText}>{difficulty}</Text>
-            </View>
 
-            <View style={styles.questInfo} marginTop={-150} marginLeft={18}>
-              <Entypo name ='star' size={30}/>
-              <Text style={styles.questInfoText}>{qualification}</Text>
-            </View>
-            {tags.map((tag) => <Tags tag={tag}/>)}  
+      <View style={styles.card}>
+        <View style={styles.questInfoContainer}>
+          <View style={styles.questInfo}>
+            <Entypo name ='star' size={25}/>
+            <Text>{qualification}</Text>
+          </View>
+          <View style={styles.questInfo}>
+            <Entypo name ='gauge' size={25}/>
+            <Text>{difficulty}</Text>
+          </View>
+          <View style={styles.questInfo}>
+            <FontAwesome name ='clock-o' size={25}/>
+            <Text>{duration}</Text>
           </View>
         </View>
+        <View style={styles.description}>
+          <Text style={{fontSize: 20}}>{description}</Text>
+        </View>
+  
+        <View style={styles.tagContainer}>
+          {tags.map((tag) => <Tag tag={tag}/>)}
+        </View>
+
+      </View>
 
       <Button onPress={() => console.log(clientID)} text="Comenzar"/>
       <Button onPress={() => console.log('Armar Grupo')} text="Armar Grupo"/>
@@ -86,30 +90,39 @@ const styles = StyleSheet.create({
   },
   card:{
     height: 250,
+    flexDirection: 'column',
     backgroundColor: '#ffefd5',
     elevation: 5,
     marginTop:20,
     padding: 15, 
   },
-  questInfo: {
-    flexDirection: 'row',
-    marginTop: -150, 
-    marginLeft: 200,
+  questInfoContainer: {
+    flex: 1,
+    flexDirection: 'row-reverse',
   },
-  questInfoText: {
-    marginTop: 28,
-    marginLeft: -25,
-    color: '#696969',
+  questInfo: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexBasis: 45,
+    flexShrink: 0,
+    flexGrow: 0,
+  },
+  description: {
+    flex: 2  
+  },
+  tagContainer:{
+    flex: 0.5,
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   tag:{
-    height: 10,
-    marginRight: 360,
-    marginLeft: -340,
-    marginTop: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
     backgroundColor: 'mintcream',
-    width: 78,
-    padding: 15,
+    width: 90,
+    padding: 5,
     borderRadius: 20,
+    marginLeft: 5
   },
   tagInfoText: {
     fontSize: 11,
