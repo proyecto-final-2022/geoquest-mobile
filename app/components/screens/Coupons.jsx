@@ -46,12 +46,9 @@ export default Coupons = ({route, navigation}) => {
             used: false
           }))
         }}>
-        <View style={styles.card}>
+        <View style={styles.cardContainer}>
           <View
-            style={{
-              justifyContent: 'space-between',
-              marginTop: 10,
-            }}>
+            style={styles.couponInfo}>
               <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{coupon.description}</Text>
               <Text style={{marginTop: 20, fontSize: 15}}>{'Válido hasta: ' + coupon.expirationDate}</Text>
           </View>
@@ -121,17 +118,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF9CA',
   },
-  card:{
+  cardContainer:{
     height: 150,
     width: '95%',
     backgroundColor: '#ffefd5',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     elevation: 5,
     marginTop:10,
     padding: 15, 
   },
+  couponInfo:{
+    flexDirection: 'column',
+    justifyContent: 'space-around' 
+  },
   image:{
-    marginTop: -75,
-    marginLeft: 235,
     width: 100,
     height: 100,
     borderRadius: 100/2
