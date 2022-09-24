@@ -83,16 +83,6 @@ export default ClientQuests = ({route, navigation}) => {
     )
   })
 
-  const Tags = ({tag}) => {
-    return (
-      <View style={styles.tag}>
-      <View style={{marginTop: -38, marginLeft:10}}>
-        <Text style={styles.tagInfoText}>{tag}</Text>
-      </View>
-      </View>
-    )
-  }
-
   const filterSearch = (text) => {
 
     if (text) {
@@ -109,39 +99,7 @@ export default ClientQuests = ({route, navigation}) => {
     } 
   }
   
-  const Card = ({quest}) => {
-    return (
-      <Pressable onPress={() => navigation.navigate('Quest Visualizer', {...quest})}>
-        <View style={styles.card}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: 10,
-            }}>
-            <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
-          </View>
-          <View style={{marginTop: 10, flexDirection: 'row'}}>
-            <View style={styles.questInfo}>
-              <FontAwesome name ='clock-o' size={25}/>
-                <Text style={styles.questInfoText}>{quest.duration}</Text>
-            </View>
-          <View style={styles.questInfo} marginLeft={18}>
-            <Entypo name ='gauge' size={25}/>
-              <Text style={styles.questInfoText}>{quest.difficulty}</Text>
-          </View>
-
-          <View style={styles.questInfo} marginTop={-50} marginLeft={18}>
-            <Entypo name ='star' size={30}/>
-            <Text style={styles.questInfoText}>{quest.qualification}</Text>
-          </View>
-            {quest.tags.map((tag) => <Tags tag={tag}/>)}  
-          </View>
-        </View>
-      </Pressable>) 
-    }
-
-  const TagsFlex = ({tag}) => {
+  const Tags = ({tag}) => {
     return (
       <View style={styles.tag}>
         <Text>{tag}</Text>
@@ -149,7 +107,7 @@ export default ClientQuests = ({route, navigation}) => {
     )
   }
 
-  const CardFlex = ({quest}) => {
+  const Card = ({quest}) => {
     return (
       <Pressable onPress={() => navigation.navigate('Quest Visualizer', {...quest})}>
         <View style={styles.card}>
@@ -171,7 +129,7 @@ export default ClientQuests = ({route, navigation}) => {
             </View>
           </View>
           <View style={styles.tagContainer}>
-            {quest.tags.map((tag) => <TagsFlex tag={tag}/>)}
+            {quest.tags.map((tag) => <Tags tag={tag}/>)}
           </View>
 
         </View>
@@ -235,7 +193,7 @@ export default ClientQuests = ({route, navigation}) => {
           paddingLeft: 20, paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
         data={filteredData}
-        renderItem={({item}) => <CardFlex quest={item}/>}>      
+        renderItem={({item}) => <Card quest={item}/>}>      
       </FlatList> 
     </ScrollView>
 
@@ -295,10 +253,6 @@ const styles = StyleSheet.create({
   },
   questInfoText: {
     color: '#696969',
-  },
-  tagInfoText: {
-    fontSize: 5,
-    color: 'black',
   },
   sortBtn: {
     backgroundColor: 'bisque',
