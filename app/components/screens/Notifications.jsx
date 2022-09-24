@@ -121,17 +121,20 @@ export default Notifications = ({route, navigation}) => {
     })
   })
 
-  const Notification = ({notification}) => {
+  const NotificationFlex = ({notification}) => {
     return (
       <View style={styles.notificationContainer}>
-        {
-          notification.type == 'quest_invite' ?
-          <Text style={{fontWeight: 'bold', fontSize: 18, marginTop:20}}>{notification.sender_name + ' te ha invitado a: '+ notification.quest_name}</Text> : 
-          <Text style={{fontWeight: 'bold', fontSize: 18, marginTop:20}}>{notification.sender_name + ' te ha enviado una solicitud de amistad'}</Text>
-        }                         
-        <Pressable onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : console.log("amigos")}>
-          <Text style={{marginLeft: 180, color: 'green', fontWeight: 'bold', fontSize: 18, marginTop:30}}>Aceptar</Text>
-        </Pressable>
+        <View style={styles.description}>
+          {notification.type == 'quest_invite' ? 
+          <Text style={{fontWeight: 'bold', fontSize: 18}}>{notification.sender_name + ' te ha invitado a: '+ notification.quest_name}</Text>
+          : 
+          <Text style={{fontWeight: 'bold', fontSize: 18}}>{notification.sender_name + ' te ha enviado una solicitud de amistad'}</Text>
+          }
+        </View>
+
+        <View style={styles.optionsContainer}>          
+        
+        <View style={styles.options}>
         <Pressable onPress={() => notification.type == "quest_invite" ? Storage.getObject('user').then(user => 
           {Alert.alert("Invitacion rechazada")
           HandleCancel(notification.team_id, user.id, notification.id, notification.quest_id)
@@ -148,12 +151,23 @@ export default Notifications = ({route, navigation}) => {
           })
         )}
           ) : console.log("cancelar friend") }>
-          <Text style={{marginLeft: 270, color: 'red', fontWeight: 'bold', fontSize: 18, marginTop:-26}}>Rechazar</Text>
+          <Text style={{fontWeight: 'bold', color: 'red', fontSize: 15}}>Rechazar</Text> 
         </Pressable>
+
+        </View>
+
+        <View style={styles.options}>
+          <Pressable onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : console.log("amigos")}>
+            <Text style={{fontWeight: 'bold', color: 'green', fontSize: 15}}>Aceptar</Text>
+          </Pressable>
+        </View>
+          
+        </View>
+
       </View>
     )
-
-    }
+  
+      }
 
   return (
     <ScrollView style={styles.view}>
@@ -162,7 +176,7 @@ export default Notifications = ({route, navigation}) => {
         contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
         data={notifications}
-        renderItem={({item}) => <Notification notification={item}/>
+        renderItem={({item}) => <NotificationFlex notification={item}/>
         
         }>      
       </FlatList>
@@ -177,8 +191,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF9CA',
   },
+  notificationText: {
+    height: 20,
+  },
+  options: {
+    justifyContent: 'flex-end',
+    flexBasis: 80,
+    flexShrink: 1,
+    flexGrow: 0
+  },
+  optionsContainer: {
+    flexDirection: 'row-reverse'
+  },
+  description: {
+    flexBasis: 60,
+    flexShrink: 1,
+    flexGrow: 1,
+  },
   notificationContainer:{
-    height: 150,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 140,
     width: '100%',
     backgroundColor: 'aliceblue',
     elevation: 5,
