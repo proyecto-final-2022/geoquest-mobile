@@ -77,7 +77,10 @@ const QuestNavigator = () => {
     }
     return (
       data.map( (client, index) => 
-        <Pressable key={index} onPress={() => navigation.navigate('Client Quests', {...client})}>
+        <Pressable key={index} onPress={() => {
+          var clientID = client.ID
+          navigation.navigate('Client Quests', clientID)
+        }}>
           <View  style={styles.optionCard} key = {index}>
             <Image style={styles.optionCardImage} source={{uri: client.image}} />
               <Text style={{textAlign: 'center', marginTop:10, fontSize:18, fontWeight: 'bold'}}>{client.name}</Text>
