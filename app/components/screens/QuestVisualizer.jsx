@@ -124,12 +124,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginLeft: 5
   },
-  tagInfoText: {
-    fontSize: 11,
-    marginTop: 25,
-    marginLeft: -15,
-    color: '#696969',
-  },
   image: {
     height: 140,
     borderRadius: 10,
