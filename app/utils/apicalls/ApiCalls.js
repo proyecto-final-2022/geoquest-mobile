@@ -41,7 +41,7 @@ export const postExample = async (email, username, password) => {
       .then(response => {
         if(!response.ok) throw new Error(response.status);
         else response.json().then(data => {
-        Storage.setObject('user', data)
+          Storage.setObject('user', data)
         }).catch((error) => {
         console.log('error: ' + error);
         this.setState({ requestFailed: true });

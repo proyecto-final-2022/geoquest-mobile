@@ -14,14 +14,6 @@ import Config from '../../../config.json'
 
 const SignInScreen = () => {
 
-  const [isSession, setIsSession] = useState(false);
-
-  const getStorage = async () => {
-    const user = Storage.getObject('user')
-
-    user ? setIsSession(true) : setIsSession(false)
-  }
-
   const {height} = useWindowDimensions();
 
   const {control, handleSubmit} = useForm();
@@ -54,9 +46,6 @@ const SignInScreen = () => {
       console.error(error);
     }
 }
-
-//    isSession ? navigation.navigate('Home') : Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}]);
-  
 
   const onForgotPasswordPressed = () => {
     console.warn('Forgot Password');
