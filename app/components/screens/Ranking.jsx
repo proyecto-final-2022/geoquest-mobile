@@ -10,7 +10,7 @@ import CustomButton from '../commons/CustomButton'
 const {width} = Dimensions.get('screen')
 
 export default Ranking = ({route, navigation}) => {
-  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
+  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0)
   
   const url = Config.appUrl + "quests/" + id + "/rankings"
@@ -46,7 +46,7 @@ export default Ranking = ({route, navigation}) => {
     navigation.setOptions({
       headerTitle: 'Ranking',
       headerRight: () => (
-        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Visualizer', {id, name, qualification, description, difficulty, duration, completions, image_url, tags})}/>
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Visualizer', {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName})}/>
       ),
       headerTintColor: '#a52a2a',
     })
