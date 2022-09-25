@@ -141,26 +141,31 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   const Friend = ({player}) => {
     return (
-      <View style={{marginTop: 5, height: 50, backgroundColor:'azure'}}>
-        <Avatar.Image 
-          source={{
+      <View style={{marginTop: 5, height: 50, backgroundColor:'azure', alignItems: 'center', flexDirection: 'row'}}>
+        <View style={styles.addUserImage}>
+          <Avatar.Image 
+            source={{
             uri: 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki'}}
             size={40}
-            marginTop={5}
           />
-        <Pressable onPress={() => 
-        { 
-          Alert.alert("Jugador invitado")
-          setplayerFriends(playerFriends.filter((friend) => friend.id != player.id))
-          setInvited([...invited, player])
+        </View>
+
+        <View style={styles.addUserText}>
+          <Text style={{fontSize: 20, color:'#a52a2a'}}>{player.name}</Text>
+        </View>
+
+        <View style={styles.addUserIcon}>
+          <Pressable onPress={() => { 
+           Alert.alert("Jugador invitado")
+            setplayerFriends(playerFriends.filter((friend) => friend.id != player.id))
+            setInvited([...invited, player])
           //cambiarlo por player.id
-          setInvitedIDs([...invitedIDs, sendID])
-          console.log(invitedIDs)
-        }}>
-          <AntDesign style={{color:'black', marginLeft: 250, marginTop: -30}} size={25} name ='adduser'/>       
-          <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
-        </Pressable> 
-      </View>
+           setInvitedIDs([...invitedIDs, sendID])
+         }}>
+         <AntDesign style={{color:'black'}} size={35} name ='adduser'/>       
+        </Pressable>
+        </View> 
+    </View>
     ) 
   }
 
@@ -194,32 +199,49 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       >
         <View
           style={{
-            height:'30%', 
+            height:'25%', 
             width: '80%',
             backgroundColor: 'aliceblue',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
             borderWidth: 10,
             borderColor: '#a52a2a', 
             }}  
         >
-          <Pressable onPress={() => {setView(false)}}>
-            <Ionicons name='close' size={35} style={{marginLeft:270}}/>
-          </Pressable>
+          <View style={styles.closeButtonContainer}>
+            <Pressable onPress={() => {setView(false)}}>
+              <Ionicons name='close' color={'darkred'} size={35}/>
+            </Pressable>
+          </View>
+          
+          <View style={styles.textModal}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>{"Desea cancelar invitación"}</Text>  
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>{"de " + cancel.name + '?'}</Text>
+          </View>
 
-          <Text style={{marginLeft: 60, fontSize: 20, fontWeight: 'bold'}}>{"   Desea cancelar invitación de " + cancel.name + "?"}</Text>  
+          <View style={styles.optionsContainer}>
 
-          <Pressable onPress={() => {
-            {
-            setView(false)
-            setplayerFriends([cancel, ...playerFriends])
-            setInvited(invited.filter((player) => player.id != cancel.id))
-            setInvitedIDs(invitedIDs.filter((id) => id != cancel.id))
-            }
-          }}>
-            <Text style={{marginTop: 50, marginLeft: 60, fontSize: 20}}>Aceptar</Text>  
-          </Pressable>
-          <Pressable onPress={() => {setView(false)}}>
-            <Text style={{fontSize: 20, marginLeft: 200, marginTop: -30}}>Volver</Text>     
-          </Pressable>
+
+          <View style={styles.options}>
+            <Pressable onPress={() => {
+              {
+              setView(false)
+              setplayerFriends([cancel, ...playerFriends])
+              setInvited(invited.filter((player) => player.id != cancel.id))
+              setInvitedIDs(invitedIDs.filter((id) => id != cancel.id))
+              }
+            }}>
+              <Text style={{fontSize: 20, color: 'green', fontWeight: 'bold'}}>Aceptar</Text>  
+            </Pressable>
+            </View>
+
+            <View style={styles.options}>
+            <Pressable onPress={() => {setView(false)}}>
+              <Text style={{fontSize: 20, color: 'darkred', fontWeight: 'bold'}}>Volver</Text>     
+            </Pressable>
+            </View>
+
+          </View>
 
         </View>
       </View>
@@ -242,17 +264,21 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             height:'70%', 
             width: '80%',
             backgroundColor: 'aliceblue',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
             borderWidth: 10,
             borderColor: '#a52a2a', 
             }}  
         >
-          <Pressable onPress={() => {setInviteView(false)}}>
-            <Ionicons name='close' size={35} style={{marginLeft:270}}/>
-          </Pressable>
-
+          <View style={styles.closeButtonContainer}>
+            <Pressable onPress={() => {setInviteView(false)}}>
+              <Ionicons name='close' color={'darkred'} size={35}/>
+            </Pressable>
+          </View>
+          
           <FlatList
             horizontal= {false}
-            contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+            contentContainerStyle={{paddingLeft: 10}}
             showsHorizontalScrollIndicator = {false}
             data={playerFriends}
             keyExtractor={(item, index) => item.id}
@@ -302,6 +328,39 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginTop:20,
     padding: 15, 
+  },
+  closeButtonContainer: {
+    flexDirection: 'row-reverse'
+  },
+  optionsContainer: {
+    flexDirection: 'row-reverse'
+  },
+  options: {
+    justifyContent: 'flex-end',
+    flexBasis: 80,
+    flexShrink: 1,
+    flexGrow: 0
+  },
+  textModal: {
+    alignItems: 'center',
+    flexBasis: 60,
+    flexShrink: 0,
+    flexGrow: 0
+  },
+  addUserIcon: {
+    flexBasis: 50,
+    flexShrink: 0,
+    flexGrow: 0
+  },
+  addUserImage: {
+    flexBasis: 50,
+    flexShrink: 0,
+    flexGrow: 0
+  },
+  addUserText: {
+    flexBasis: 200,
+    flexShrink: 0,
+    flexGrow: 0
   },
   buttonContainer: {
     width: '50%',

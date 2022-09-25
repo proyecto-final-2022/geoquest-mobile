@@ -173,7 +173,7 @@ export default ClientQuests = ({route, navigation}) => {
           >
             <View style={styles.orderByContainer}>
               <Pressable onPress={() => {setView(false)}}>
-                <Ionicons name='close' size={35}/>
+                <Ionicons name='close' color='darkred' size={35}/>
               </Pressable>
             </View>
             <ScrollView>
