@@ -95,7 +95,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     return (
       <Pressable 
         onPress={onPress} 
-        style={styles.buttonContainer}>  
+        style={styles.button}>  
         <Text 
           style={styles.buttonText}>{text}</Text>
       </Pressable>
@@ -107,7 +107,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       <Pressable 
         onPress={onPress} 
         style={[
-          styles.startButtonContainer, 
+          styles.button, 
           (invited.length > 1) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
         ]}>  
         <Text 
@@ -308,7 +308,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       </FlatList> 
     </ScrollView>
 
-    <View>
+    <View style={styles.teamButtonsContainer}>
       <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
       <StartButton onPress={() => {
         if (invited.length > 1) {
@@ -386,32 +386,21 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     flexGrow: 0
   },
-  buttonContainer: {
-    width: '50%',
-
-    padding: 15,
-    marginVertical: 5,
-    marginLeft: 100,
-    marginTop: 20,
-
-    alignItems: 'center',
-    borderRadius: 5,
-    backgroundColor: '#CA955C'
-  },
-  startButtonContainer: {
-    width: '50%',
-
-    padding: 15,
-    marginVertical: 5,
-    marginLeft: 100,
-    marginTop: 20,
-
-    alignItems: 'center',
-    borderRadius: 5,
+  teamButtonsContainer: {
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   buttonText: {
     fontWeight: 'bold',
     color: 'white',
-  },  
+  },
+  button: {
+    width: '50%',
+    padding: 15,
+    marginTop: 20,
+    alignItems: 'center',
+    borderRadius: 5,
+    backgroundColor: '#CA955C'
+  }  
 });
 
