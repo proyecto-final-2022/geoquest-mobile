@@ -308,19 +308,21 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       </FlatList> 
     </ScrollView>
 
-    <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
-    <StartButton onPress={() => {
-      if (invited.length > 1) {
-        Storage.getObject('user')
-        .then(user => 
-        {
-        sendNotification(user.id, user.username, name)
+    <View>
+      <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
+      <StartButton onPress={() => {
+        if (invited.length > 1) {
+          Storage.getObject('user')
+          .then(user => 
+          {
+          sendNotification(user.id, user.username, name)
+          }
+          )
         }
-      )
-    }
-    }} text="Formar Grupo"/>      
-
-    </ScrollView>
+      }} text="Formar Grupo"/>      
+    </View>
+    
+  </ScrollView>
   )
 }
 
