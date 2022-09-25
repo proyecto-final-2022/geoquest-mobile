@@ -118,23 +118,30 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   const Player = ({player}) => {
     return (
-      <View style={{marginTop: 5, height: 50, backgroundColor:'antiquewhite'}}>
-        <Avatar.Image 
-          source={{
+      <View style={{marginTop: 5, height: 50, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
+        <View style={styles.invitedUserImage}>
+          <Avatar.Image 
+            source={{
             uri: 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki'}}
             size={40}
             marginTop={5}
           />
-        <Pressable onPress={() => 
-          {
+        </View>
+        <View style={styles.invitedUserText}>
+          <Text style={{fontSize: 20, color:'#a52a2a'}}>{player.name}</Text>
+        </View>
+        
+        <View style={styles.invitedUserCloseIcon}>
+          <Pressable onPress={() => 
+            {
             setView(true)
-            console.log(player.id)
             setCancel(player)}
-          }
-        >
-        <AntDesign style={{color:'black', marginLeft: 320, marginTop:-30}} size={25} name ='closecircle'/> 
-        <Text style={{marginLeft: 60, fontSize: 20, marginTop: -30, color:'#a52a2a'}}>{player.name}</Text>
-        </Pressable>       
+            }
+          >
+            <AntDesign style={{color:'black'}} size={25} name ='closecircle'/> 
+          </Pressable>
+        </View>              
+
       </View>
     ) 
   }
@@ -233,7 +240,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             }}>
               <Text style={{fontSize: 20, color: 'green', fontWeight: 'bold'}}>Aceptar</Text>  
             </Pressable>
-            </View>
+          </View>
 
             <View style={styles.options}>
             <Pressable onPress={() => {setView(false)}}>
@@ -289,29 +296,29 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       </View>
     </Modal>
 
-      <ScrollView style={styles.containerWaitRoom}>
-        <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores</Text>
-        <FlatList
-          horizontal= {false}
-          contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
-          showsHorizontalScrollIndicator = {false}
-          data={invited}
-          keyExtractor={(item, index) => item.id}
-          renderItem={({item}) => <Player player={item}/>}>      
-        </FlatList> 
-      </ScrollView>
+    <ScrollView style={styles.containerWaitRoom}>
+      <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores</Text>
+      <FlatList
+        horizontal= {false}
+        contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+        showsHorizontalScrollIndicator = {false}
+        data={invited}
+        keyExtractor={(item, index) => item.id}
+        renderItem={({item}) => <Player player={item}/>}>      
+      </FlatList> 
+    </ScrollView>
 
-      <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
-      <StartButton onPress={() => {
-        if (invited.length > 1) {
-          Storage.getObject('user')
-          .then(user => 
-            {
-            sendNotification(user.id, user.username, name)
-          }
-            )
+    <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
+    <StartButton onPress={() => {
+      if (invited.length > 1) {
+        Storage.getObject('user')
+        .then(user => 
+        {
+        sendNotification(user.id, user.username, name)
         }
-      }} text="Formar Grupo"/>      
+      )
+    }
+    }} text="Formar Grupo"/>      
 
     </ScrollView>
   )
@@ -359,6 +366,21 @@ const styles = StyleSheet.create({
   },
   addUserText: {
     flexBasis: 200,
+    flexShrink: 0,
+    flexGrow: 0
+  },
+  invitedUserImage: {
+    flexBasis: 50,
+    flexShrink: 0,
+    flexGrow: 0
+  },
+  invitedUserText: {
+    flexBasis: 280,
+    flexShrink: 0,
+    flexGrow: 0
+  },
+  invitedUserCloseIcon: {
+    flexBasis: 50,
     flexShrink: 0,
     flexGrow: 0
   },
