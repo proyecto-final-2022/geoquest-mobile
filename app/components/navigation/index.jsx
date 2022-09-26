@@ -11,9 +11,11 @@ import QuestVisualizer from '../screens/QuestVisualizer'
 import Scene from '../scenes/HelloUser'
 import ClientQuests from '../screens/ClientQuests'
 import Ranking from '../screens/Ranking'
+import Game from "../screens/Game";
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContent } from '../screens/DrawerContent';
+
 
 const Drawer = createDrawerNavigator();
 
@@ -22,8 +24,8 @@ const Stack = createNativeStackNavigator()
 export default Navigation = () => {
   return(
     <NavigationContainer>
-                
       <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
+        <Drawer.Screen name="Game" component={Game} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>
         <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>
         <Drawer.Screen name="Home" component={HomeScreen} options={{ headerShown: true, headerTitle: "" }}/>
