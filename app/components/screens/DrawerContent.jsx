@@ -121,7 +121,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Amigos"
-                            onPress={() => {console.log('Amigos')}}
+                            onPress={() => {navigation.navigate('Friends List')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
