@@ -40,7 +40,7 @@ export default WaitRoom = ({route, navigation}) => {
     return (
       <Pressable 
         onPress={onPress} 
-        style={styles.buttonContainer}>  
+        style={styles.buttonCancel}>  
         <Text 
           style={styles.buttonText}>{text}</Text>
       </Pressable>
@@ -61,7 +61,7 @@ export default WaitRoom = ({route, navigation}) => {
       <Pressable 
         onPress={onPress} 
         style={[
-          styles.startButtonContainer, 
+          styles.button, 
           (playersAccepted.length == playersTeam.length && playersTeam.length != 0) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
         ]}>  
         <Text 
@@ -119,13 +119,15 @@ export default WaitRoom = ({route, navigation}) => {
         </FlatList> 
       </ScrollView>
 
-      <StartButton text="Comenzar"/>   
+      <View style={styles.teamButtonsContainer}> 
 
-      <CancelButton 
-        onPress={() => {
-          Alert.alert(
-            "Abandonar grupo de busqueda?",
-            "",
+        <StartButton text="Comenzar"/>   
+
+        <CancelButton 
+          onPress={() => {
+            Alert.alert(
+              "Abandonar grupo de busqueda?",
+              "",
             [
               {
                 text: "Cancelar",
@@ -134,9 +136,10 @@ export default WaitRoom = ({route, navigation}) => {
               { text: "OK", onPress: () => {HandleCancel()} }
             ]
           );
-      }}
+        }}
         text="Cancelar"/>
-
+      
+      </View>
     </ScrollView>
   )
 }
@@ -167,17 +170,26 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: 'bold',
     color: 'white',
-  },  
-  startButtonContainer: {
+  },
+  teamButtonsContainer: {
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  button: {
     width: '50%',
-
     padding: 15,
-    marginVertical: 5,
-    marginLeft: 100,
     marginTop: 20,
-
     alignItems: 'center',
     borderRadius: 5,
+    backgroundColor: '#CA955C'
   },
+  buttonCancel: {
+    width: '50%',
+    padding: 15,
+    marginTop: 20,
+    alignItems: 'center',
+    borderRadius: 5,
+    backgroundColor: 'darkred'
+  }    
 });
 
