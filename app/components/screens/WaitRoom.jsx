@@ -111,7 +111,7 @@ export default WaitRoom = ({route, navigation}) => {
         <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{'En espera (' + (playersAccepted.length > 0 ? playersAccepted.length: 0) + '/' + playersTeam.length +')'}</Text>
         <FlatList
           horizontal= {false}
-          contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+          contentContainerStyle={{paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
           data={playersAccepted}
           keyExtractor={(item, index) => item.id}

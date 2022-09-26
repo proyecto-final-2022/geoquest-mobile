@@ -35,13 +35,18 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const [inviteView, setInviteView] = useState(false)
   const [cancel, setCancel] = useState([])
   const [invited, setInvited] = useState([])
+  const [data, setData] = useState([])
+  const [filteredData, setFilteredData] = useState([])
   const [invitedIDs, setInvitedIDs] = useState([])
   const [playerFriends, setplayerFriends] = useState(friends)
 
   const forwardToWaitRoom = (questID, teamID, userID) => {
-    console.log(invitedIDs)
     navigation.navigate('Wait Room', {questID, teamID, userID})
   }
+
+  useEffect(() => {
+    setData(friends)
+    setFilteredData(friends)}, [route])
 
   const sendNotification = async (senderID, senderName, questName) => {
   
@@ -59,7 +64,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         response.json().then(teamId => 
           {
             invited.map((user) => {
-              console.log(user)
               fetch(Config.appUrl + "users/" + user.sendID  + '/notifications', {
                 method: 'POST',
                 body: JSON.stringify({ 
@@ -138,7 +142,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             setCancel(player)}
             }
           >
-            <AntDesign style={{color:'black'}} size={25} name ='closecircle'/> 
+            <AntDesign style={{color:'darkred'}} size={25} name ='closecircle'/> 
           </Pressable>
         </View>              
 
@@ -174,6 +178,20 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         </View> 
     </View>
     ) 
+  }
+
+  const filterSearch = (text) => {
+
+    if (text) {
+    const newData = data.filter((user) => {
+      const userData = user.name ? user.name.toUpperCase() : ''.toUpperCase()
+      const textData = text.toUpperCase()
+      return userData.indexOf(textData) > -1
+    })
+    setFilteredData(newData)
+    } else {
+    setFilteredData(data)
+    } 
   }
 
 
@@ -279,15 +297,23 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         >
           <View style={styles.closeButtonContainer}>
             <Pressable onPress={() => {setInviteView(false)}}>
-              <Ionicons name='close' color={'darkred'} size={35}/>
+              <Ionicons name='close' color={'darkred'} size={30}/>
             </Pressable>
           </View>
-          
+
+          <View style={styles.searchContainer}>    
+            <TextInput
+              defaultValue={'negerrr'} 
+              style={styles.textInput}
+              onChangeText={(text) => filterSearch(text)}/>
+              <Ionicons name='search' color={'darkred'} size={30}/>
+          </View>
+         
           <FlatList
             horizontal= {false}
             contentContainerStyle={{paddingLeft: 10}}
             showsHorizontalScrollIndicator = {false}
-            data={playerFriends}
+            data={filteredData}
             keyExtractor={(item, index) => item.id}
             renderItem={({item}) => <Friend player={item}/>}>      
           </FlatList> 
@@ -297,10 +323,13 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     </Modal>
 
     <ScrollView style={styles.containerWaitRoom}>
-      <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores</Text>
+      <View style={styles.containerWaitRoomHeader}>
+        <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Equipo</Text>
+        <FontAwesome name='users' size={35} style={{marginLeft: 10, color:'darkred'}} />
+      </View>
       <FlatList
         horizontal= {false}
-        contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+        contentContainerStyle={{paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
         data={invited}
         keyExtractor={(item, index) => item.id}
@@ -334,9 +363,23 @@ const styles = StyleSheet.create({
   containerWaitRoom:{
     height: 600,
     backgroundColor: '#ffefd5',
-    elevation: 5,
     marginTop:20,
     padding: 15, 
+  },
+  searchContainer: {
+    marginTop: 5,
+    flexDirection: 'row'
+  },
+  textInput: {
+    flexBasis: 275,
+    flexShrink: 0,
+    flexGrow: 0,
+    borderWidth: 1,
+    borderColor: '#a52a2a',
+    backgroundColor: 'white',
+  },
+  containerWaitRoomHeader:{
+    flexDirection: 'row'
   },
   closeButtonContainer: {
     flexDirection: 'row-reverse'
@@ -377,7 +420,7 @@ const styles = StyleSheet.create({
     flexGrow: 0
   },
   invitedUserText: {
-    flexBasis: 280,
+    flexBasis: 300,
     flexShrink: 0,
     flexGrow: 0
   },
