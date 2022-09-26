@@ -168,7 +168,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         <View style={styles.addUserIcon}>
           <Pressable onPress={() => { 
            Alert.alert("Jugador invitado")
-            setplayerFriends(playerFriends.filter((friend) => friend.id != player.id))
+            setFilteredData(filteredData.filter((friend) => friend.id != player.id))
+            setData(data.filter((friend) => friend.id != player.id))
             setInvited([...invited, player])
           //cambiarlo por player.id
            setInvitedIDs([...invitedIDs, sendID])
@@ -251,7 +252,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             <Pressable onPress={() => {
               {
               setView(false)
-              setplayerFriends([cancel, ...playerFriends])
+              setFilteredData([cancel, ...filteredData])
+              setData([cancel, ...data])
               setInvited(invited.filter((player) => player.id != cancel.id))
               setInvitedIDs(invitedIDs.filter((id) => id != cancel.id))
               }
@@ -303,7 +305,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
           <View style={styles.searchContainer}>    
             <TextInput
-              defaultValue={'negerrr'} 
               style={styles.textInput}
               onChangeText={(text) => filterSearch(text)}/>
               <Ionicons name='search' color={'darkred'} size={30}/>
