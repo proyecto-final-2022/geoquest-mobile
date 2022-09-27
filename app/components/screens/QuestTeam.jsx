@@ -353,7 +353,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           }
           )
         }
-      }} text="Seguir"/>      
+      }}/>      
     </View>
     
   </ScrollView>
