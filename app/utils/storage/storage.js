@@ -14,6 +14,10 @@ export async function getObject(key) {
 export async function setObject(key, object) {
   return AsyncStorage.setItem(key, JSON.stringify(object))
 }
+
+export async function setObjectField(key, field, value) {
+  return AsyncStorage.mergeItem(key, '{"'+field+'":'+value+'}')
+}
   
 export async function removeObject(key) {
   return AsyncStorage.removeItem(key)
@@ -21,6 +25,7 @@ export async function removeObject(key) {
   
 export default {
   setObject,
+  setObjectField,
   getObject,
   removeObject
 }

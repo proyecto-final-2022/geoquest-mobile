@@ -79,3 +79,24 @@ export const postLoginGoogle = async (email, username, token) => {
     console.error(error);
   }
 }
+
+export const avatarChange = async (userId, image) => {
+  try {
+    await fetch(
+      Config.appUrl+'users/'+userId, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ 
+        image: image})
+      })
+      .then(response => {
+        if(!response.ok) throw new Error(response.status);
+        else response.json().catch((error) => {
+          console.log('error: ' + error);
+          this.setState({ requestFailed: true });
+        });})
+    }
+  catch (error) {
+    console.error(error);
+  }
+}
