@@ -21,6 +21,8 @@ export default ClientQuests = ({route, navigation}) => {
    const [loading, setLoading] = useState(true)
 
   const url = Config.appUrl + "clients/" + clientID + "/quests"
+
+  const colors = ['darkslateblue','darkgoldenrod', 'darkred', 'darkgreen']
   
   const isFocused = useIsFocused()
   
@@ -91,10 +93,13 @@ export default ClientQuests = ({route, navigation}) => {
     } 
   }
   
-  const Tags = ({tag}) => {
+  const Tags = ({tag, index}) => {
     return (
-      <View style={styles.tag}>
-        <Text>{tag}</Text>
+      <View style={[
+        styles.tag,
+        {backgroundColor: colors[index]}
+        ]}>
+        <Text style={{fontWeight: 'bold', color: 'white'}}>{tag}</Text>
       </View>
     )
   }
@@ -108,20 +113,20 @@ export default ClientQuests = ({route, navigation}) => {
               <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
             </View>
             <View style={styles.questInfo}>
-              <FontAwesome name ='clock-o' size={25}/>
+              <FontAwesome name ='clock-o' color={'darkslateblue'} size={25}/>
               <Text style={styles.questInfoText}>{quest.duration}</Text>
             </View>
             <View style={styles.questInfo}>
-              <Entypo name ='gauge' size={25}/>
+              <Entypo name ='gauge' color={'firebrick'} size={25}/>
               <Text style={styles.questInfoText}>{quest.difficulty}</Text>
             </View>
             <View style={styles.questInfo}>
-              <Entypo name ='star' size={25}/>
+              <Entypo name ='star' color={'goldenrod'} size={25}/>
               <Text style={styles.questInfoText}>{quest.qualification}</Text>
             </View>
           </View>
           <View style={styles.tagContainer}>
-            {quest.tags.map((tag) => <Tags tag={tag}/>)}
+            {quest.tags.map((tag, index) => <Tags tag={tag} index={index}/>)}
           </View>
 
         </View>
@@ -268,6 +273,7 @@ const styles = StyleSheet.create({
   },
   questInfoText: {
     color: '#696969',
+    fontWeight: 'bold'
   },
   orderByContainer: {
     flexDirection: 'row-reverse'

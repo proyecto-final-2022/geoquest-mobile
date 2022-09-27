@@ -6,6 +6,8 @@ import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
+import IconButton from '../commons/IconButton'
+import CustomButton2 from '../commons/CustomButton2'
 import Storage from '../../../app/utils/storage/storage'
 
 const {width} = Dimensions.get('screen')
@@ -35,13 +37,18 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const [inviteView, setInviteView] = useState(false)
   const [cancel, setCancel] = useState([])
   const [invited, setInvited] = useState([])
+  const [data, setData] = useState([])
+  const [filteredData, setFilteredData] = useState([])
   const [invitedIDs, setInvitedIDs] = useState([])
   const [playerFriends, setplayerFriends] = useState(friends)
 
   const forwardToWaitRoom = (questID, teamID, userID) => {
-    console.log(invitedIDs)
     navigation.navigate('Wait Room', {questID, teamID, userID})
   }
+
+  useEffect(() => {
+    setData(friends)
+    setFilteredData(friends)}, [route])
 
   const sendNotification = async (senderID, senderName, questName) => {
   
@@ -59,7 +66,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         response.json().then(teamId => 
           {
             invited.map((user) => {
-              console.log(user)
               fetch(Config.appUrl + "users/" + user.sendID  + '/notifications', {
                 method: 'POST',
                 body: JSON.stringify({ 
@@ -104,15 +110,11 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   const StartButton = ({text, onPress}) => {
     return (
-      <Pressable 
-        onPress={onPress} 
-        style={[
-          styles.button, 
-          (invited.length > 1) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
-        ]}>  
-        <Text 
-          style={styles.buttonText}>{text}</Text>
-      </Pressable>
+      <IconButton
+        onPress={onPress}
+        icon={'arrow-forward-circle'}
+        bgColor={(invited.length > 1) ? 'darkseagreen' : 'lightgreen'}>
+      </IconButton>
     )
   }
 
@@ -138,7 +140,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             setCancel(player)}
             }
           >
-            <AntDesign style={{color:'black'}} size={25} name ='closecircle'/> 
+            <AntDesign style={{color:'darkred'}} size={25} name ='closecircle'/> 
           </Pressable>
         </View>              
 
@@ -164,7 +166,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         <View style={styles.addUserIcon}>
           <Pressable onPress={() => { 
            Alert.alert("Jugador invitado")
-            setplayerFriends(playerFriends.filter((friend) => friend.id != player.id))
+            setFilteredData(filteredData.filter((friend) => friend.id != player.id))
+            setData(data.filter((friend) => friend.id != player.id))
             setInvited([...invited, player])
           //cambiarlo por player.id
            setInvitedIDs([...invitedIDs, sendID])
@@ -176,10 +179,24 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     ) 
   }
 
+  const filterSearch = (text) => {
+
+    if (text) {
+    const newData = data.filter((user) => {
+      const userData = user.name ? user.name.toUpperCase() : ''.toUpperCase()
+      const textData = text.toUpperCase()
+      return userData.indexOf(textData) > -1
+    })
+    setFilteredData(newData)
+    } else {
+    setFilteredData(data)
+    } 
+  }
+
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Armar Grupo',
+      headerTitle: 'Formar Equipo',
       headerTintColor: '#a52a2a',
       headerRight: () => (
         <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Visualizer', {id, name, qualification, description, difficulty, duration, completions, image_url, tags})}/>
@@ -233,7 +250,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             <Pressable onPress={() => {
               {
               setView(false)
-              setplayerFriends([cancel, ...playerFriends])
+              setFilteredData([cancel, ...filteredData])
+              setData([cancel, ...data])
               setInvited(invited.filter((player) => player.id != cancel.id))
               setInvitedIDs(invitedIDs.filter((id) => id != cancel.id))
               }
@@ -279,15 +297,21 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         >
           <View style={styles.closeButtonContainer}>
             <Pressable onPress={() => {setInviteView(false)}}>
-              <Ionicons name='close' color={'darkred'} size={35}/>
+              <Ionicons name='close' color={'darkred'} size={30}/>
             </Pressable>
           </View>
-          
+
+          <View style={styles.searchContainer}>    
+            <TextInput
+              style={styles.textInput}
+              onChangeText={(text) => filterSearch(text)}/>
+          </View>
+         
           <FlatList
             horizontal= {false}
             contentContainerStyle={{paddingLeft: 10}}
             showsHorizontalScrollIndicator = {false}
-            data={playerFriends}
+            data={filteredData}
             keyExtractor={(item, index) => item.id}
             renderItem={({item}) => <Friend player={item}/>}>      
           </FlatList> 
@@ -297,10 +321,13 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     </Modal>
 
     <ScrollView style={styles.containerWaitRoom}>
-      <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Jugadores</Text>
+      <View style={styles.containerWaitRoomHeader}>
+        <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Equipo</Text>
+        <FontAwesome name='users' size={35} style={{marginLeft: 10, color:'darkred'}} />
+      </View>
       <FlatList
         horizontal= {false}
-        contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+        contentContainerStyle={{paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
         data={invited}
         keyExtractor={(item, index) => item.id}
@@ -309,7 +336,14 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     </ScrollView>
 
     <View style={styles.teamButtonsContainer}>
-      <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
+      <CustomButton2 
+        text ="Añadir"
+        onPress = {() => setInviteView(true)}
+        icon = "person-add"
+        bgColor= '#CA955C'
+        fgColor='white'
+      />
+
       <StartButton onPress={() => {
         if (invited.length > 1) {
           Storage.getObject('user')
@@ -319,7 +353,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           }
           )
         }
-      }} text="Formar Grupo"/>      
+      }}/>      
     </View>
     
   </ScrollView>
@@ -334,9 +368,23 @@ const styles = StyleSheet.create({
   containerWaitRoom:{
     height: 600,
     backgroundColor: '#ffefd5',
-    elevation: 5,
     marginTop:20,
     padding: 15, 
+  },
+  searchContainer: {
+    marginTop: 5,
+    flexDirection: 'row'
+  },
+  textInput: {
+    flexBasis: 275,
+    flexShrink: 0,
+    flexGrow: 0,
+    borderWidth: 1,
+    borderColor: '#a52a2a',
+    backgroundColor: 'white',
+  },
+  containerWaitRoomHeader:{
+    flexDirection: 'row'
   },
   closeButtonContainer: {
     flexDirection: 'row-reverse'
@@ -377,7 +425,7 @@ const styles = StyleSheet.create({
     flexGrow: 0
   },
   invitedUserText: {
-    flexBasis: 280,
+    flexBasis: 300,
     flexShrink: 0,
     flexGrow: 0
   },
