@@ -6,6 +6,8 @@ import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
+import IconButton from '../commons/IconButton'
+import CustomButton2 from '../commons/CustomButton2'
 import Storage from '../../../app/utils/storage/storage'
 
 const {width} = Dimensions.get('screen')
@@ -108,15 +110,11 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   const StartButton = ({text, onPress}) => {
     return (
-      <Pressable 
-        onPress={onPress} 
-        style={[
-          styles.button, 
-          (invited.length > 1) ? {backgroundColor: '#CA955C'} : {backgroundColor: 'wheat'}
-        ]}>  
-        <Text 
-          style={styles.buttonText}>{text}</Text>
-      </Pressable>
+      <IconButton
+        onPress={onPress}
+        icon={'arrow-forward-circle'}
+        bgColor={(invited.length > 1) ? 'darkseagreen' : 'lightgreen'}>
+      </IconButton>
     )
   }
 
@@ -198,7 +196,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Armar Grupo',
+      headerTitle: 'Formar Equipo',
       headerTintColor: '#a52a2a',
       headerRight: () => (
         <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Visualizer', {id, name, qualification, description, difficulty, duration, completions, image_url, tags})}/>
@@ -307,7 +305,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             <TextInput
               style={styles.textInput}
               onChangeText={(text) => filterSearch(text)}/>
-              <Ionicons name='search' color={'darkred'} size={30}/>
           </View>
          
           <FlatList
@@ -339,7 +336,14 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     </ScrollView>
 
     <View style={styles.teamButtonsContainer}>
-      <Button onPress={() => {setInviteView(true)}} text="Sumar jugador"/>
+      <CustomButton2 
+        text ="Añadir"
+        onPress = {() => setInviteView(true)}
+        icon = "person-add"
+        bgColor= '#CA955C'
+        fgColor='white'
+      />
+
       <StartButton onPress={() => {
         if (invited.length > 1) {
           Storage.getObject('user')
@@ -349,7 +353,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           }
           )
         }
-      }} text="Formar Grupo"/>      
+      }} text="Seguir"/>      
     </View>
     
   </ScrollView>
