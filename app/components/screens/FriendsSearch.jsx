@@ -33,7 +33,7 @@ export default FriendsSearch = ({route, navigation}) => {
       headerTitle: 'Buscar Amigos',
       headerTintColor: '#a52a2a',
       headerRight: () => (
-        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Navigator')}/>
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Friends List')}/>
       ),
       headerSearchBarOptions: {
         placeholder: "Search",
@@ -47,16 +47,16 @@ export default FriendsSearch = ({route, navigation}) => {
 
   const sendID = 72 
   const friends = [
-    {id: 1, name: "string", username: "string", email: "string", image:1},
-    {id: 2, name: "string2", username: "string2", email: "string2", image:2},
-    {id: 3, name: "string3", username: "string3", email: "string3", image:3},
-    {id: 4, name: "string4", username: "string4", email: "string4", image:4},
-    {id: 5, name: "string5", username: "string5", email: "string5", image:5},
-    {id: 6, name: "string6", username: "string6", email: "string6", image:6},
-    {id: 7, name: "string7", username: "string7", email: "string7", image:7},
-    {id: 8, name: "string8", username: "string8", email: "string8", image:8},
-    {id: 9, name: "string9", username: "string9", email: "string9", image:9},
-    {id: 10, name: "string10", username: "string", email: "string", image:1}
+    {id: 1, name: "string", username: "string", email: "string@gmail.com", image:1},
+    {id: 2, name: "string2", username: "string2", email: "string2@gmail.com", image:2},
+    {id: 3, name: "string3", username: "string3", email: "string3@gmail.com", image:3},
+    {id: 4, name: "string4", username: "string4", email: "string4@gmail.com", image:4},
+    {id: 5, name: "string5", username: "string5", email: "string5@gmail.com", image:5},
+    {id: 6, name: "string6", username: "string6", email: "string6@gmail.com", image:6},
+    {id: 7, name: "string7", username: "string7", email: "string7@gmail.com", image:7},
+    {id: 8, name: "string8", username: "string8", email: "string8@gmail.com", image:8},
+    {id: 9, name: "string9", username: "string9", email: "string9@gmail.com", image:9},
+    {id: 10, name: "string10", username: "string", email: "string@gmail.com", image:1}
   ]
 
   const getUserImage = (imageNumber) => { 
@@ -66,25 +66,26 @@ export default FriendsSearch = ({route, navigation}) => {
 
   const Friend = ({friend}) => {
     return (
-      <View style={{marginTop: 5, height: 50, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
+      <View style={{marginTop: 5, height: 70, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
         <View style={styles.friendProfilePicture}>
           <Avatar.Image 
             source={getUserImage(friend.image)}
-            size={40}
+            size={50}
             marginTop={5}
           />
         </View>
-        <View style={styles.friendUsernameText}>
-          <Text style={{fontSize: 20, color:'#a52a2a'}}>{friend.name}</Text>
+				<View style={styles.userInfoContainer}>
+					<Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{friend.name}</Text>
+					<Text style={{fontSize: 15, color:'#a52a2a'}}>{friend.email}</Text>
         </View>
-        
-        <View style={styles.friendDeleteIcon}>
+        <View style={styles.friendAddIcon}>
           <Pressable onPress={() => 
             {
             setView(true)
             setCancel(friend)}
             }
           >
+						<AntDesign style={{color:'darkgreen'}} size={35} name ='adduser'/>  
           </Pressable>
         </View>              
 
@@ -180,8 +181,8 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     flexGrow: 0
   },
-  friendDeleteIcon: {
-    flexBasis: 50,
+  friendAddIcon: {
+    flexBasis: 40,
     flexShrink: 0,
     flexGrow: 0
   },
@@ -202,5 +203,12 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     flexGrow: 1
   },
+	userInfoContainer: {
+		flexDirection: 'column',
+		marginLeft: 10,
+		flexBasis: 300,
+    flexShrink: 0,
+    flexGrow: 0
+	}
 
 });
