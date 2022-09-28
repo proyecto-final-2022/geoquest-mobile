@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, ScrollView, TextInput, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity} from 'react-native';
 import {Avatar} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
+import CustomInput from '../../components/commons/CustomInput'
 import CustomButton2 from '../commons/CustomButton2'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
@@ -21,13 +22,15 @@ import userImage_9 from '../../../assets/userImages/userImage_9.png'
 
 const {width} = Dimensions.get('screen')
 
-export default FriendsList = ({route, navigation}) => {
+export default FriendsSearch = ({route, navigation}) => {
   
   const [data, setData] = useState([])
+	const [text, setText] = useState('')
+	const [filteredData, setFilteredData] = useState([])
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Amigos',
+      headerTitle: 'Buscar Amigos',
       headerTintColor: '#a52a2a',
       headerRight: () => (
         <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Navigator')}/>
@@ -82,7 +85,6 @@ export default FriendsList = ({route, navigation}) => {
             setCancel(friend)}
             }
           >
-            <AntDesign style={{color:'darkred'}} size={25} name ='closecircle'/> 
           </Pressable>
         </View>              
 
@@ -90,37 +92,52 @@ export default FriendsList = ({route, navigation}) => {
     ) 
   }
 
+	const filterSearch = (text) => {
+    if (text) {
+    const newData = data.filter((user) => {
+      const userData = user.name ? user.name.toUpperCase() : ''.toUpperCase()
+      const textData = text.toUpperCase()
+      return userData.indexOf(textData) > -1
+    })
+    setFilteredData(newData)
+    } else {
+    setFilteredData("")
+    } 
+  }
+
 
   return (
     <ScrollView style={styles.view}>
       <View style={styles.container}> 
-        <View style={styles.containerHeader}>
-          <View style={styles.containerHeaderIcon}>
-            <FontAwesome name='users' size={35} style={{color:'darkred'}} />
-          </View>
-          <View style={styles.containerHeaderText}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>15</Text>
-          </View>
-        </View>
-      
+					<View style={styles.searchContainer}>
+						<View style={styles.searchContainerText}>
+					  	<TextInput
+								fontSize={20}
+//            	value={value}
+								onChangeText={(text) => setText(text)}
+   //         	onBlur={onBlur}
+            		placeholder={"Buscar..."}
+     //       	style={styles.input}  
+  	        	/>
+						</View>
+					
+						<View style={styles.searchContainerIcon}>
+							<Ionicons color='#a52a2a' name ='search-circle' size={40} onPress={() => filterSearch(text)}/>
+						</View>
+				
+ 	        
+					</View>
+
         <FlatList
           horizontal= {false}
           contentContainerStyle={{
             backgroundColor: '#ffefd5',
-            paddingVertical: 5}}
+            paddingVertical: 10}}
           showsHorizontalScrollIndicator = {false}
-          data={friends}
+          data={filteredData}
           keyExtractor={(item, index) => item.id}
           renderItem={({item}) => <Friend friend={item}/>}>      
         </FlatList>
-
-        <CustomButton2 
-          text ="Buscar"
-          onPress={() => navigation.navigate('Friends Search')}
-          icon = "search-outline"
-          bgColor= '#CA955C'
-          fgColor='white'
-        />
         
       </View>
 
@@ -168,6 +185,22 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     flexGrow: 0
   },
+	searchContainer: {
+		flexDirection: 'row',
+		height: 40,
+		marginTop: 20
+  },
+	searchContainerText: {
+		flexBasis: 300,
+		backgroundColor: 'white',
+		marginLeft: 10,
+    flexShrink: 0,
+    flexGrow: 1
+  },
+	searchContainerIcon: {
+		flexBasis: 10,
+    flexShrink: 0,
+    flexGrow: 1
+  },
 
 });
-
