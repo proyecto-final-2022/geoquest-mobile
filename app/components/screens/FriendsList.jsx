@@ -96,7 +96,7 @@ export default FriendsList = ({route, navigation}) => {
       <View style={styles.container}> 
         <View style={styles.containerHeader}>
           <View style={styles.containerHeaderIcon}>
-            <FontAwesome name='users' size={35} style={{marginLeft: 10, color:'darkred'}} />
+            <FontAwesome name='users' size={35} style={{color:'darkred'}} />
           </View>
           <View style={styles.containerHeaderText}>
             <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>15</Text>
@@ -113,15 +113,14 @@ export default FriendsList = ({route, navigation}) => {
           keyExtractor={(item, index) => item.id}
           renderItem={({item}) => <Friend friend={item}/>}>      
         </FlatList>
-        
        
-          <CustomButton2 
-            text ="Buscar"
-            onPress = {() => console.log("buscar")}
-            icon = "search-outline"
-            bgColor= '#CA955C'
-            fgColor='white'
-          />
+        <CustomButton2 
+          text ="Buscar"
+          onPress = {() => console.log("buscar")}
+          icon = "search-outline"
+          bgColor= '#CA955C'
+          fgColor='white'
+        />
         
 
       </View>
@@ -143,15 +142,15 @@ const styles = StyleSheet.create({
   containerHeader:{
     paddingVertical: 10,
     backgroundColor: '#FFF9CA',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   containerHeaderIcon:{
     flexBasis: 50,
     flexShrink: 0,
-    flexGrow: 0
+    flexGrow: 0,
   },
   containerHeaderText:{
-    flexBasis: 50,
+    flexBasis: 320,
     flexShrink: 0,
     flexGrow: 0
   },
