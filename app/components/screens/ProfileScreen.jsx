@@ -29,41 +29,44 @@ import userImage_8 from '../../../assets/userImages/userImage_8.png'
 import userImage_9 from '../../../assets/userImages/userImage_9.png'
 import geoQuestLogo_edge from '../../../assets/GeoQuestLogo.png'
 
-import {avatarChange} from '../../utils/apicalls/ApiCalls'
+import { useFocusEffect } from '@react-navigation/native';
+
+import {avatarChange, submitUserChanges, passwordUpdate} from '../../utils/apicalls/ApiCalls'
 
 const ProfileScreen = () => {
     const {height} = useWindowDimensions();
 
     const [userId, setUserId] = useState(1);
-    useEffect(() => {
-        Storage.getObject('user').
-        then(user => setUserId(user.id))
-    }, []);
     const [image, setImage] = useState(1);
-    useEffect(() => {
-        Storage.getObject('user').
-        then(user => setImage(user.image))
-    }, []);
     const [name, setName] = useState("");
-    useEffect(() => {
-        Storage.getObject('user').
-        then(user => setName(user.name))
-    }, []);
     const [username, setUsername] = useState("");
-    useEffect(() => {
-        Storage.getObject('user').
-        then(user => setUsername(user.username))
-    }, []);
     const [email, setEmail] = useState("");
-    useEffect(() => {
-        Storage.getObject('user').
-        then(user => setEmail(user.email))
-    }, []);
     const [manual, setManual] = useState(false);
     useEffect(() => {
         Storage.getObject('user').
-        then(user => setManual(user.manual))
+        then(user => {
+            refreshValues(user);
+        })
     }, []);
+
+    function refreshValues(user){
+        setManual(user.manual);
+        setUserId(user.id);
+        setImage(user.image);
+        setName(user.name);
+        setEmail(user.email);
+        setUsername(user.username);
+    }
+
+    useFocusEffect(
+        React.useCallback(() => {
+            Storage.getObject('user').
+            then(user => {
+                refreshValues(user);
+            })
+          return () => {};
+        }, [])
+    );
     
     const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
     const getUserImage = (imageNumber) => { 
@@ -73,16 +76,55 @@ const ProfileScreen = () => {
     const [profileModal, setProfileModal] = useState(true);
     const [avatarModal, setAvatarModal] = useState(true);
     const [imageSelectorModal, setImageSelectorModal] = useState(false);
-    const [nameSelectorModal, setNameSelectorModal] = useState(false);
+    const [detailsSelectorModal, setDetailsSelectorModal] = useState(false);
     const [passwordSelectorModal, setPasswordSelectorModal] = useState(false);
       
     const {control, handleSubmit, watch} = useForm();
     
     const pass = watch('password');
 
-    const onSaveDataPressed = async (data) => {
+    const onSaveDataPressed = (data) => {
         try{
-            console.log('saved?')
+            submitUserChanges(userId,
+                {
+                    name: data.name,
+                    username: data.username,
+                    email: {manual}? data.email : {email},
+                }
+            ).then(response => {
+                setAvatarModal(true);
+                setProfileModal(true);
+                setDetailsSelectorModal(false);
+
+                Storage.setObjectField('user', 'name', data.name);
+                setName(data.name);
+                Storage.setObjectField('user', 'username', data.username);
+                setUsername(data.username);
+                if({manual}){
+                    Storage.setObjectField('user', 'email', data.email);
+                    setEmail(data.email);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            })
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    const onNewPasswordDataPressed = (data) => {
+        try{
+            passwordUpdate(userId, data.oldPassword, data.password)
+            .then(response => {
+                setAvatarModal(true);
+                setProfileModal(true);
+                setPasswordSelectorModal(false);
+            })
+            .catch(error => {
+                console.error(error);
+            })
         }
         catch (error) {
             console.error(error);
@@ -91,6 +133,14 @@ const ProfileScreen = () => {
 
     return (
         <View>
+            {/* <Text style={{marginLeft: 5}}>
+                manual: {manual.toString()}{"\n"}
+                id: {userId}{"\n"}
+                image: {image}{"\n"}
+                name: {name}{"\n"}
+                email: {email}{"\n"}
+                username: {username}{"\n"}
+            </Text> */}
             {avatarModal && <View style={styles.avatar}>
                 <Pressable onPress={() => {
                         setProfileModal(false);
@@ -142,7 +192,7 @@ const ProfileScreen = () => {
                 <Pressable onPress={() => {
                             setAvatarModal(false);
                             setProfileModal(false);
-                            setNameSelectorModal(true);
+                            setDetailsSelectorModal(true);
                         }}>
                     <View style={styles.row}>
                         <Icon name="user" size={20}/>
@@ -155,22 +205,18 @@ const ProfileScreen = () => {
                         <Icon style={styles.edit_logo} name={'edit'}/>
                     </View>
                 </Pressable>
-                <Pressable onPress={() => {
-                            if(manual){
-                                setAvatarModal(false);
-                                setProfileModal(false);
-                                setNameSelectorModal(true);
-                            }else{
-                                Alert.alert('No disponible');
-                            }
+                {manual && <Pressable onPress={() => {
+                            setAvatarModal(false);
+                            setProfileModal(false);
+                            setDetailsSelectorModal(true);
                         }}>
                     <View style={styles.row}>
                         <Icon name="mail" size={20}/>
                         <Text style={{marginLeft: 20, fontSize: 15}}>{email}</Text>
-                        <Icon style={styles.edit_logo} name={manual? 'edit' : 'lock'}/>
+                        <Icon style={styles.edit_logo} name={'edit'}/>
                     </View>
-                </Pressable>
-                <Pressable style={{marginTop: 20}} onPress={() => {
+                </Pressable>}
+                {manual && <Pressable style={{marginTop: 20}} onPress={() => {
                             setAvatarModal(false);
                             setProfileModal(false);
                             setPasswordSelectorModal(true);
@@ -180,7 +226,7 @@ const ProfileScreen = () => {
                         <Text style={{marginLeft: 20, fontSize: 15}}>Cambiar contraseña </Text>
                         <Icon style={styles.edit_logo} name={'edit'}/>
                     </View>
-                </Pressable>
+                </Pressable>}
                 <View style={styles.container}>
                     <Image
                         source = {geoQuestLogo_edge}
@@ -189,30 +235,41 @@ const ProfileScreen = () => {
                         />
                 </View>
             </View>}
-            {nameSelectorModal && <View style={styles.containerInput}>
+            {detailsSelectorModal && <View style={styles.containerInput}>
                 <CustomInput 
                     name = "name"
-                    placeholder="Name" 
+                    placeholder="Nombre"
+                    defaultValue={name}
                     control = {control}
-                    rules = {{required: 'Name is required'}}    
+                    rules = {{
+                      required: 'El Nombre es requerido'
+                    }}   
                     icon = "user"
                 />
                 <CustomInput 
                     name = "username"
-                    placeholder="Username" 
-                    control = {control}
-                    rules = {{required: 'Username is required'}}    
-                    icon = "user"
-                />
-                <CustomInput 
-                    name = "email"
-                    placeholder="Email" 
-                    icon = "mail"
+                    placeholder="Usuario"
+                    defaultValue={username}
                     control = {control}
                     rules = {{
-                        required: 'Email is required'
-                    }}    
+                      required: 'El usuario es requerido'
+                    }}   
+                    icon = "user"
                 />
+                {manual && <CustomInput 
+                    name = "email"
+                    placeholder="Email"
+                    icon = "mail"
+                    defaultValue={email}
+                    control = {control}
+                    rules = {{
+                        pattern: {
+                            value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                            message: 'Email invalido'
+                        },
+                        required: 'El email es requerido'
+                    }}    
+                />}
                 
                 <View style={styles.buttons}>
                     <CustomButton 
@@ -227,7 +284,7 @@ const ProfileScreen = () => {
                         onPress={() => {
                             setAvatarModal(true);
                             setProfileModal(true);
-                            setNameSelectorModal(false);
+                            setDetailsSelectorModal(false);
                         }}
                     />
                 </View>
@@ -235,47 +292,47 @@ const ProfileScreen = () => {
             {passwordSelectorModal && <View style={styles.containerInput}>
                 <CustomInput
                     name = "oldPassword" 
-                    placeholder="Old Password" 
+                    placeholder="Contraseña vieja" 
                     icon = "lock"
                     control = {control}
                     rules = {{
-                        required: 'Password is required',
+                        required: 'La Contraseña es requerida',
                         minLength: {
-                            value: 8,
-                            message: 'Minimum 8 characters',
+                                value: 8,
+                                message: 'Mínimo 8 caracteres',
                             },
                             maxLength: {
-                            value: 32,
-                            message: 'Maximum 32 characters',
+                                value: 32,
+                                message: 'Máximo 32 caracteres',
                             }
-                        }}   
-                        secureTextEntry
+                    }} 
+                    secureTextEntry
                 />
                 <CustomInput
                     name = "password" 
-                    placeholder="New Password" 
+                    placeholder="Nueva contraseña" 
                     icon = "lock"
                     control = {control}
                     rules = {{
-                        required: 'Password is required',
+                        required: 'La Contraseña es requerida',
                         minLength: {
-                            value: 8,
-                            message: 'Minimum 8 characters',
+                                value: 8,
+                                message: 'Mínimo 8 caracteres',
                             },
                             maxLength: {
-                            value: 32,
-                            message: 'Maximum 32 characters',
+                                value: 32,
+                                message: 'Máximo 32 caracteres',
                             }
-                        }}   
-                        secureTextEntry
+                    }} 
+                    secureTextEntry
                 />
                 <CustomInput 
                     name = "password-repeat"
-                    placeholder="Repeat Password" 
+                    placeholder="Repita la contraseña" 
                     icon = "lock"
                     control = {control}
                     rules = {{
-                        validate: value => value == pass || 'Password do not match',
+                        validate: value => value == pass || 'Las contraseñas no coinciden',
                     }}
                     secureTextEntry
                 />
@@ -284,7 +341,7 @@ const ProfileScreen = () => {
                     <CustomButton 
                         style={styles.button}
                         text='Guardar'
-                        onPress={handleSubmit(onSaveDataPressed)}
+                        onPress={handleSubmit(onNewPasswordDataPressed)}
                     />
                     <CustomButton 
                         style={styles.button}

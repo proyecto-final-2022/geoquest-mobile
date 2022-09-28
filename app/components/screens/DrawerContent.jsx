@@ -43,21 +43,15 @@ export function DrawerContent(props) {
   const getUserImage = (imageNumber) => { 
     const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
     return userImages[imageNumber-1];
-   }
+  }
 
   useEffect(() => {
     Storage.getObject('user').
-    then(user => setName(user.name))
-  }, [props])
-
-  useEffect(() => {
-    Storage.getObject('user').
-    then(user => setUsername(user.username))
-  }, [props])
-
-  useEffect(() => {
-    Storage.getObject('user').
-    then(user => setImage(user.image))
+    then(user => {
+      setName(user.name);
+      setUsername(user.username);
+      setImage(user.image);
+    })
   }, [props])
 
   return(
@@ -159,7 +153,7 @@ export function DrawerContent(props) {
                         size={size}
                         />
                     )}
-                    label="Sign Out"
+                    label="Cerrar Sesión"
                     onPress={() => {
                         closeSession()
                         navigation.navigate('Sign In')

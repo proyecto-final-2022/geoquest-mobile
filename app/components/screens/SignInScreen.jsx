@@ -25,24 +25,23 @@ const SignInScreen = () => {
       fetch(
         Config.appUrl+'users/sessions/', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'},
-      body: JSON.stringify({ 
-        email: data.email,  
-        password: data.password})
-      })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+          email: data.email,  
+          password: data.password})
+        })
       .then(response => {
         if(!response.ok) Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}]) ;
         else response.json().then(async (data) => {
           Storage.setObject('user', data)
           navigation.navigate('Quest Navigator')
         }).catch((error) => {
-        console.log('error: ' + error);
-        this.setState({ requestFailed: true });
-        });})
-      }  
-    
-     catch (error) {
+          console.log('error: ' + error);
+          this.setState({ requestFailed: true });
+        });
+      })
+    }  
+    catch (error) {
       console.error(error);
     }
   }
@@ -68,28 +67,36 @@ const SignInScreen = () => {
           name = "email"
           placeholder ="Email" 
           control = {control}
-          rules = {{required: 'Email is required'}}
+          rules = {{
+            pattern: {
+              value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+              message: 'Email invalido'
+            },
+            required: 'El email es requerido'
+          }}
           icon = "mail"
         />
         <CustomInput
           name = "password" 
-          placeholder ="Password" 
+          placeholder ="Contraseña" 
           icon = "lock"
           control = {control} 
-          rules = {{required: 'Password is required'}}
+          rules = {{
+            required: 'La contraseña es requerida'
+          }}
           secureTextEntry
         /> 
 
         <CustomButton 
-          text='Sign In' 
+          text='Iniciar Sesión' 
           onPress={handleSubmit(onSignInPressed)}/>
         <CustomButton 
-          text='Forgot password?' 
+          text='¿Olvidó su contraseña?' 
           onPress={onForgotPasswordPressed}
           type="TERTIARY"/>
         <SocialSignInButtons/>
         <CustomButton 
-          text ="Don't have an account? Create one"
+          text ="¿No tenés una cuenta? Creá una!"
           onPress = {onSignUpPress}
           type="TERTIARY"
         />

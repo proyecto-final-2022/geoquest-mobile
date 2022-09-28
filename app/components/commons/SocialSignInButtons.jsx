@@ -25,7 +25,7 @@ export default SocialSignInButtons = () => {
       const userInfo = await GoogleSignin.signIn();
       const user = userInfo.user
       token = GoogleSignin.getTokens()
-      postLoginGoogle(user.email, user.givenName, token.idToken)
+      postLoginGoogle(user.email, user.givenName, user.givenName, token.idToken)
       navigation.navigate('Quest Navigator')
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -36,21 +36,21 @@ export default SocialSignInButtons = () => {
        // play services not available or outdated
       } else {
       // some other error happened
-    }
+      }
     }
   };
 
   return(
     <>
     <CustomButton 
-      text ="Sign in with Facebook"
+      text ="Iniciar sesión con Facebook"
       onPress = {onSignInFacebook}
       icon = "facebook-official"
       bgColor='#E7EAF4'
       fgColor='#4765A9'
     />
     <CustomButton 
-      text ="Sign in with Google"
+      text ="Iniciar sesión con Google"
       onPress = {signInGoogle}
       icon = "google"
       bgColor='#FAE9EA'

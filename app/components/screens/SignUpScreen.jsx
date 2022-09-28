@@ -16,7 +16,7 @@ export default SignUpScreen = () => {
   const navigation = useNavigation()
   
   const onRegisterPressed = (data) => {
-    postExample(data.email, data.username, data.password)
+    postExample(data.email, data.name, data.username, data.password)
     navigation.navigate('Quest Navigator')
   }
 
@@ -27,61 +27,76 @@ export default SignUpScreen = () => {
   return (
     <ScrollView style={styles.view}>
       <View style={styles.root}>
-        <Text style = {styles.title}>Create an account
-          </Text>
-            <CustomInput 
-              name = "username"
-              placeholder="Username" 
-              control = {control}
-              rules = {{required: 'Username is required'}}    
-              icon = "user"
-            />
-            <CustomInput 
-              name = "email"
-              placeholder="Email" 
-              icon = "mail"
-              control = {control}
-              rules = {{required: 'Email is required'}}    
-            />
-            <CustomInput
-              name = "password" 
-              placeholder="Password" 
-              icon = "lock"
-              control = {control}
-              rules = {{
-                  required: 'Password is required',
-                  minLength: {
-                    value: 8,
-                      message: 'Minimum 8 characters',
-                    },
-                    maxLength: {
-                      value: 32,
-                      message: 'Maximum 32 characters',
-                    }
-                }}   
-                secureTextEntry
-            />
-            <CustomInput 
-              name = "password-repeat"
-              placeholder="Repeat Password" 
-              icon = "lock"
-              control = {control}
-              rules = {{
-                validate: value => value == pass || 'Password do not match',
-              }}
-              secureTextEntry
-            />
-            <CustomButton 
-              text='Register' 
-              onPress={handleSubmit(onRegisterPressed)}
-            />
-            <SocialSignInButtons/>
-            <CustomButton 
-              text ="Have an account? Sign in"
-              onPress = {onSignInPress}
-              type="TERTIARY"
-            />
-
+        <Text style = {styles.title}>Create an account</Text>
+          <CustomInput 
+            name = "username"
+            placeholder="Usuario" 
+            control = {control}
+            rules = {{
+              required: 'El usuario es requerido'
+            }}
+            icon = "user"
+          />
+          <CustomInput 
+            name = "name"
+            placeholder="Nombre" 
+            control = {control}
+            rules = {{
+              required: 'El nombre es requerido'
+            }}
+            icon = "user"
+          />
+          <CustomInput 
+            name = "email"
+            placeholder="Email" 
+            icon = "mail"
+            control = {control}
+            rules = {{
+              pattern: {
+                value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                message: 'Email invalido'
+              },
+              required: 'El email es requerido'
+            }}   
+          />
+          <CustomInput
+            name = "password" 
+            placeholder="Contraseña" 
+            icon = "lock"
+            control = {control}
+            rules = {{
+              required: 'La Contraseña es requerida',
+              minLength: {
+                value: 8,
+                  message: 'Mínimo 8 caracteres',
+                },
+                maxLength: {
+                  value: 32,
+                  message: 'Máximo 32 caracteres',
+                }
+            }}   
+            secureTextEntry
+          />
+          <CustomInput 
+            name = "password-repeat"
+            placeholder="Repita la contraseña" 
+            icon = "lock"
+            control = {control}
+            rules = {{
+              validate: value => value == pass || 'Las contraseñas no coinciden',
+            }}
+            secureTextEntry
+          />
+          <CustomButton 
+            text='Registrarse' 
+            onPress={handleSubmit(onRegisterPressed)}
+          />
+          <SocialSignInButtons/>
+          <CustomButton 
+            text ={"¿Ya tienes una cuenta?"+"\n"+"Inicia sesión"}
+            onPress = {onSignInPress}
+            type="TERTIARY"
+          />
       </View>
     </ScrollView>
   )
