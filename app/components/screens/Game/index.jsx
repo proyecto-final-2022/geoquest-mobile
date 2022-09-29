@@ -17,7 +17,10 @@ function useQuestStateHandler(questID) {
     setConfig(exampleQuest);
     // If there is a session download current state.
     // If not, create a session and initialize with returned initial state:
-    setState({scene: 0});
+    setState({
+      scene: 0,
+      objects: {}
+    });
   }
 
   const setUpdateListener = () => {
@@ -42,14 +45,15 @@ function useQuestStateHandler(questID) {
     questConfig: config,
     questState: state,
 
-    updateQuestState: (newState) => {
+    setQuestState: (newState) => {
       // TODO: Notify state update.
       console.log("Update sent");
       // If ok, then:
       setState(newState);
-    }
+    },
   }
 }
+
 
 export default Game = ({questID}) => {
   const questHandler = useQuestStateHandler(questID);
@@ -58,7 +62,7 @@ export default Game = ({questID}) => {
     return <View><Text>Loading...</Text></View>;
 
   return (
-    <ARView handler={questHandler} />
+    <ARView questHandler={questHandler} />
   );
 }
 

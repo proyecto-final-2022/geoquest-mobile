@@ -1,28 +1,15 @@
 import React from "react";
 import WithImageRecognition from "./objects/WithImageRecognition";
-import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScene";
 
-
-const Scene = ({objectComponents}) => {
-  return (
-    <ViroARScene>
-      {objectComponents}
-    </ViroARScene>
-  );
-}
 
 export function parseScene(scene) {
   return (questHandler) => {
-    const objectComponents = scene.objects.map((o, key) => parseObject(questHandler, key, o));
-    return {
-      objectComponents,
-      scene: Scene
-    }
+    return scene.objects.map((o, key) => parseObject(questHandler, key, o));
   }
 }
 
 
-function parseObject(questHandler, key, object) {
+function parseObject(handler, key, object) {
   var objectComponent = undefined;
   switch (object.type) {
     case "WithImageRecognition":
@@ -30,5 +17,5 @@ function parseObject(questHandler, key, object) {
       break;
   }
 
-  return React.createElement(objectComponent, {key, questHandler, ...object});
+  return React.createElement(objectComponent, {key, handler, ...object});
 }

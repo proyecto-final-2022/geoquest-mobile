@@ -22,12 +22,14 @@
               ],
             },
             "interactions": [
-              {
-                "name": "showHint",
-                "params": [
-                  "una pista re loca"
-                ]
-              }
+              [
+                {
+                  "name": "showHint",
+                  "params": [
+                    "una pista re loca"
+                  ]
+                }
+              ],
             ]
           },
         }

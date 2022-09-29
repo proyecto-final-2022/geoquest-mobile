@@ -5,7 +5,7 @@ import { Viro3DObject } from "@viro-community/react-viro/components/Viro3DObject
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 import Resources from "../../../../utils/resources.js";
 
-export default WithImageRecognition = ({handler, typeProps}) => {
+export default WithImageRecognition = ({objNum, handler, typeProps}) => {
   const [pauseUpdates, setPauseUpdates] = useState(false);
 
   const {target, model, interactions} = typeProps;
@@ -25,6 +25,20 @@ export default WithImageRecognition = ({handler, typeProps}) => {
     resources: model.resources.map(r => Resources.get(r))
   };
 
+  const onClick = () => {
+    const state = handler.questState.objects[objNum] || 0;
+
+    const intAmount = interactions.length;
+    if(intAmount < state)
+      return;
+
+    interactions[state].forEach((int) => handler.interact(int.name, ...int.params));
+
+    const questState = handler.questState;
+    questState.objects[objNum] = Math.min(state + 1, intAmount - 1);
+    handler.setQuestState(questState);
+  }
+
   return (
     <ViroARImageMarker 
       target={"target"}
@@ -32,7 +46,7 @@ export default WithImageRecognition = ({handler, typeProps}) => {
       pauseUpdates={pauseUpdates}
     >
       <ViroAmbientLight color="#ffffff"/>
-      <Viro3DObject {...modelProps} />
+      <Viro3DObject onClick={onClick} {...modelProps} />
     </ViroARImageMarker>
   );
 }
