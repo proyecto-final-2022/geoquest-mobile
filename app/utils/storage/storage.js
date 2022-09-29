@@ -14,8 +14,9 @@ export const areYouSureAlert = ({navigation}) => {
       {
         text: "Si",
         onPress: () => {
-          closeSession();
-          navigation.navigate('Sign In');
+          closeSession().then(() => {
+            navigation.navigate('Sign In');
+          })
         },
       },
       {
@@ -26,7 +27,7 @@ export const areYouSureAlert = ({navigation}) => {
   );
 }
 
-export const closeSession = async () => { 
+export async function closeSession() { 
   await AsyncStorage.removeItem('auth.token');
   await GoogleSignin.signOut();
   await setObject('user', {});

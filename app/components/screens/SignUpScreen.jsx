@@ -70,10 +70,10 @@ export default SignUpScreen = () => {
                 value: 8,
                   message: 'Mínimo 8 caracteres',
                 },
-                maxLength: {
-                  value: 32,
-                  message: 'Máximo 32 caracteres',
-                }
+              maxLength: {
+                value: 32,
+                message: 'Máximo 32 caracteres',
+              }
             }}   
             secureTextEntry
           />
