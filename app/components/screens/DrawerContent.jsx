@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem
@@ -15,7 +15,7 @@ import {
   TouchableRipple,
   Switch
 } from 'react-native-paper';
-import {closeSession} from '../../utils/storage/storage';
+import {areYouSureAlert} from '../../utils/storage/storage';
 import Storage from '../../utils/storage/storage';
 import {useNavigation} from '@react-navigation/native'
 
@@ -155,8 +155,7 @@ export function DrawerContent(props) {
                     )}
                     label="Cerrar Sesión"
                     onPress={() => {
-                        closeSession()
-                        navigation.navigate('Sign In')
+                      areYouSureAlert({navigation});
                     }}
                 />
             </Drawer.Section>

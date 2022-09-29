@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, useWindowDimensions, Image, Pressable, FlatList, Alert} from 'react-native';
+import { StyleSheet, View, useWindowDimensions, Image, Pressable, FlatList, BackHandler} from 'react-native';
 import Storage from '../../utils/storage/storage';
-import {
-    useTheme,
-    Avatar,
-    Title,
-    Caption,
-    Paragraph,
-    Drawer,
-    Text,
-    Switch,
-    Modal,
-    Button
-} from 'react-native-paper';
+import { Avatar, Text } from 'react-native-paper';
 import CustomInput from '../commons/CustomInput'
 import CustomButton from '../commons/CustomButton'
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -31,9 +20,21 @@ import geoQuestLogo_edge from '../../../assets/GeoQuestLogo.png'
 
 import { useFocusEffect } from '@react-navigation/native';
 
-import {avatarChange, submitUserChanges, passwordUpdate} from '../../utils/apicalls/ApiCalls'
+import {avatarChange, submitUserChanges, passwordUpdate} from '../../utils/apicalls/ApiCalls';
+import {areYouSureAlert} from '../../utils/storage/storage';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
+    useFocusEffect(
+        React.useCallback(() => {
+            const onBackPress = () => {
+                areYouSureAlert({navigation});
+                return true;
+            };
+            BackHandler.addEventListener('hardwareBackPress',onBackPress);
+            return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+        }, []),
+    );
+
     const {height} = useWindowDimensions();
 
     const [userId, setUserId] = useState(1);

@@ -1,9 +1,30 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { Alert } from 'react-native';
 
 export const storeData = async (value) => {await AsyncStorage.setItem('auth.token', value)}
 
 export const getData = async () => { await AsyncStorage.getItem('auth.token') }
+
+export const areYouSureAlert = ({navigation}) => {
+  Alert.alert(
+    "Cerrar Sesión",
+    "¿Esta seguro que quiere cerrar su sesión?",
+    [
+      {
+        text: "Si",
+        onPress: () => {
+          closeSession();
+          navigation.navigate('Sign In');
+        },
+      },
+      {
+        text: "No",
+        onPress: () => null,
+      },
+    ]
+  );
+}
 
 export const closeSession = async () => { 
   await AsyncStorage.removeItem('auth.token');
