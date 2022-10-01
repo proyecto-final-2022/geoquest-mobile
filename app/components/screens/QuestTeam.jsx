@@ -19,18 +19,18 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   //sendID field is for test if you wanna try invite yourself to make a group
   const sendID = 72 
   const friends = [
-    {id: 1, sendID:72, name: "string", username: "string", email: "string"},
-    {id: 2, sendID:2, name: "string2", username: "string2", email: "string2"},
-    {id: 3, sendID:72, name: "string3", username: "string3", email: "string3"},
-    {id: 4, sendID:4, name: "string4", username: "string4", email: "string4"},
-    {id: 5, sendID:5, name: "string5", username: "string5", email: "string5"},
-    {id: 6, sendID:6, name: "string6", username: "string6", email: "string6"},
-    {id: 7, sendID:7, name: "string7", username: "string7", email: "string7"},
-    {id: 8, sendID: 8, name: "string8", username: "string8", email: "string8"},
-    {id: 9, sendID: 9, name: "string9", username: "string9", email: "string9"},
-    {id: 10, sendID:10, name: "string10", username: "string10", email: "string10"},
-    {id: 11, sendID:11, name: "string11", username: "string11", email: "string11"},
-    {id: 12, sendID:12, name: "string12", username: "string12", email: "string12"},
+    {id: 1, name: "string", username: "string", email: "string"},
+    {id: 2, name: "string2", username: "string2", email: "string2"},
+    {id: 3, name: "string3", username: "string3", email: "string3"},
+    {id: 4, name: "string4", username: "string4", email: "string4"},
+    {id: 5, name: "string5", username: "string5", email: "string5"},
+    {id: 6, name: "string6", username: "string6", email: "string6"},
+    {id: 7, name: "string7", username: "string7", email: "string7"},
+    {id: 8, name: "string8", username: "string8", email: "string8"},
+    {id: 9, name: "string9", username: "string9", email: "string9"},
+    {id: 10, name: "string10", username: "string10", email: "string10"},
+    {id: 11, name: "string11", username: "string11", email: "string11"},
+    {id: 12, name: "string12", username: "string12", email: "string12"},
   ]
 
   const [view, setView] = useState(false)
@@ -66,7 +66,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         response.json().then(teamId => 
           {
             invited.map((user) => {
-              fetch(Config.appUrl + "users/" + user.sendID  + '/notifications', {
+              //sendID -> user.id
+              fetch(Config.appUrl + "users/" + sendID  + '/notifications', {
                 method: 'POST',
                 body: JSON.stringify({ 
                 quest_name: questName,
@@ -165,7 +166,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
         <View style={styles.addUserIcon}>
           <Pressable onPress={() => { 
-           Alert.alert("Jugador invitado")
+           Alert.alert("Jugador añadido")
             setFilteredData(filteredData.filter((friend) => friend.id != player.id))
             setData(data.filter((friend) => friend.id != player.id))
             setInvited([...invited, player])
