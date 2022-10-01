@@ -50,6 +50,7 @@ export default FriendsSearch = ({route, navigation}) => {
 
 
   useEffect(() => {
+    setInvitedIDs([])
     Storage.getObject('user').then(user => setUser(user))
     fetch(url)
     .then((response) => response.json())
@@ -108,8 +109,21 @@ export default FriendsSearch = ({route, navigation}) => {
         <View style={styles.friendAddIcon}>
           <Pressable onPress={() => 
             {
-            setInvitedIDs([...invitedIDs, friend.id])
-            sendNotification(friend)
+              Alert.alert(
+                "Enviar solicitud de amistad a " + friend.username +" ?",
+                "",
+                [
+                  {
+                    text: "Cancel",
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => {          
+                    setFilteredData(filteredData.filter((user) => user.id != friend.id))  
+                    setInvitedIDs([...invitedIDs, friend.id])
+                    sendNotification(friend)} }
+                ]
+              );
+
           }
             }
           >
