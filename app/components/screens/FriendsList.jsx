@@ -23,13 +23,29 @@ const {width} = Dimensions.get('screen')
 
 export default FriendsList = ({route, navigation}) => {
   
-  const userID = route.params
+  const user = route.params
 
   const [friends, setFriends] = useState([])
   const [friendIDs, setFriendIDs] = useState([])
   const [loading, setLoading] = useState(true)
   
-  const url = Config.appUrl + "users/" + userID + "/friends"
+  const url = Config.appUrl + "users/" + user.id + "/friends"
+
+  const deleteFriend = (friendID) => {
+    setFriends(friends.filter((friend) => friend.id != friendID))
+    //sendID -> friendID
+    fetch(Config.appUrl + "users/" + user.id + '/friends/' + friendID, {
+      method: 'DELETE'
+    })
+    .catch((error) => console.error(error))
+    .then(
+      fetch(Config.appUrl + "users/" + friendID + '/friends/' + user.id, {
+        method: 'DELETE'
+      })
+      )
+    .catch((error) => console.error(error))
+    .then(navigation.navigate("Friends List", user))
+  }
 
   useEffect(() => {
     navigation.setOptions({
@@ -78,7 +94,21 @@ export default FriendsList = ({route, navigation}) => {
         <View style={styles.friendDeleteIcon}>
           <Pressable onPress={() => 
             {
-            console.log(friend.id)}
+              Alert.alert(
+                "Eliminar a " + friend.username +" ?",
+                "",
+                [
+                  {
+                    text: "Cancel",
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => {          
+                    deleteFriend(friend.id)
+                   } 
+                  }
+                ]
+              )
+            }
             }
           >
             <AntDesign style={{color:'darkred'}} size={30} name ='closecircle'/> 

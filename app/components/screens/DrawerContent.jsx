@@ -116,7 +116,11 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Amigos"
-                            onPress={() => {navigation.navigate('Friends List', userID)}}
+                            onPress={() => {
+                              Storage.getObject('user').
+                              then(user => navigation.navigate('Friends List', user))
+                            }
+                            }
                         />
                         <DrawerItem 
                             icon={({color, size}) => (

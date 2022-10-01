@@ -29,7 +29,8 @@ export default Notifications = ({route, navigation}) => {
   }
 
   const forwardToFriendList = () => {
-    navigation.navigate('Friends List')
+    Storage.getObject('user')
+    .then(user => navigation.navigate('Friends List', user))
   }
 
   const HandleCancel = (teamID, userID, notificationID, questID) => {
