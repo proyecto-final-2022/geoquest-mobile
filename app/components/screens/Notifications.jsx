@@ -28,6 +28,10 @@ export default Notifications = ({route, navigation}) => {
     navigation.navigate('Wait Room', {questID, teamID, userID})
   }
 
+  const forwardToFriendList = () => {
+    navigation.navigate('Friends List')
+  }
+
   const HandleCancel = (teamID, userID, notificationID, questID) => {
     fetch(
       Config.appUrl+'teams/' + teamID + '/users/' + userID, {
@@ -97,6 +101,36 @@ export default Notifications = ({route, navigation}) => {
     .catch((error) => console.error(error))
     
   }
+
+  const handleAcceptFriendRequest = (senderID, notificationID) => {
+    Alert.alert("Solicitud aceptada")
+      fetch(Config.appUrl + "users/" + user.id + "/friends/" + senderID  , {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json'} 
+        })
+      .catch((error) => console.error(error))
+      .then(
+        fetch(
+          Config.appUrl+'users/' + user.id + '/notifications/'+ notificationID, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json'}
+          })
+        )
+      .catch((error) => console.error(error))  
+      .then(forwardToFriendList())
+  }
+
+  const handleCancelFriendRequest = (notificationID) => {
+    Alert.alert("Solicitud cancelada")
+        fetch(
+          Config.appUrl+'users/' + user.id + '/notifications/'+ notificationID, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json'}
+          })
+      .catch((error) => console.error(error))  
+      .then(forwardToFriendList())
+  }
   
   const url = Config.appUrl + "users/" + user.id + "/notifications"
 
@@ -150,14 +184,14 @@ export default Notifications = ({route, navigation}) => {
             }) 
           })
         )}
-          ) : console.log("cancelar friend") }>
+          ) : handleCancelFriendRequest(notification.id) }>
           <Text style={{fontWeight: 'bold', color: 'red', fontSize: 15}}>Rechazar</Text> 
         </Pressable>
 
         </View>
 
         <View style={styles.options}>
-          <Pressable onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : console.log("amigos")}>
+          <Pressable onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : handleAcceptFriendRequest(notification.sender_id, notification.id)}>
             <Text style={{fontWeight: 'bold', color: 'green', fontSize: 15}}>Aceptar</Text>
           </Pressable>
         </View>

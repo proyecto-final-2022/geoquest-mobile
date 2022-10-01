@@ -42,12 +42,29 @@ export default function App() {
           switch(remoteMessage.data.msgType) {
             case "Quest Invitation":
               forwardToNotifications()
+            break;
+            case "Friend Request":
+              forwardToNotifications()
+            break;
           }
         }
 
         if (!fromBackground && remoteMessage.data.msgType) {
           switch(remoteMessage.data.msgType) {
             case "Quest Invitation":
+              Alert.alert(
+                title,
+                "",
+                [
+                  {
+                    text: "Cancel",
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => {forwardToNotifications()} }
+                ]
+              );
+            break;
+            case "Friend Request":
               Alert.alert(
                 title,
                 "",

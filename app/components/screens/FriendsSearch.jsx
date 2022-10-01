@@ -23,8 +23,10 @@ import userImage_9 from '../../../assets/userImages/userImage_9.png'
 const {width} = Dimensions.get('screen')
 
 export default FriendsSearch = ({route, navigation}) => {
-  
+
+  const [user, setUser] = useState([])
   const [data, setData] = useState([])
+  const [invitedIDs, setInvitedIDs] = useState([])
 	const [text, setText] = useState('')
 	const [filteredData, setFilteredData] = useState([])
 
@@ -43,6 +45,7 @@ export default FriendsSearch = ({route, navigation}) => {
 
   useEffect(() => {
     setData(friends)
+    Storage.getObject('user').then(user => setUser(user))
   }, [route])
 
   const sendID = 72 
@@ -64,6 +67,32 @@ export default FriendsSearch = ({route, navigation}) => {
     return userImages[imageNumber-1];
    }
 
+
+  const sendNotification = (friend) => {
+    //sendID -> friend.id
+    fetch(Config.appUrl + "users/" + sendID + '/notifications', {
+      method: 'POST',
+      body: JSON.stringify({ 
+      sender_id: user.id,
+      quest_id: id,
+      type: 'friend_request'
+    })
+    })
+    .catch((error) => console.error(error))
+    .then(
+      fetch(Config.appNotificationsUrl + "notifications/friend_request", {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+          sender_name: user.username,
+          sender_id: user.id
+        }) 
+      })
+      )
+    .catch((error) => console.error(error))
+  }
+
   const Friend = ({friend}) => {
     return (
       <View style={{marginTop: 5, height: 70, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
@@ -81,8 +110,10 @@ export default FriendsSearch = ({route, navigation}) => {
         <View style={styles.friendAddIcon}>
           <Pressable onPress={() => 
             {
-            setView(true)
-            setCancel(friend)}
+            setInvitedIDs([...invitedIDs, friend.id])
+            setFilteredData(filteredData.filter((user) => user.id != friend.id))
+            sendNotification(friend)
+          }
             }
           >
 						<AntDesign style={{color:'darkgreen'}} size={35} name ='adduser'/>  
@@ -95,7 +126,7 @@ export default FriendsSearch = ({route, navigation}) => {
 
 	const filterSearch = (text) => {
     if (text) {
-    const newData = data.filter((user) => {
+    const newData = data.filter((user) => !invitedIDs.includes(user.id)).filter((user) => {
       const userData = user.name ? user.name.toUpperCase() : ''.toUpperCase()
       const textData = text.toUpperCase()
       return userData.indexOf(textData) > -1
@@ -123,7 +154,10 @@ export default FriendsSearch = ({route, navigation}) => {
 						</View>
 					
 						<View style={styles.searchContainerIcon}>
-							<Ionicons color='#a52a2a' name ='search-circle' size={40} onPress={() => filterSearch(text)}/>
+							<Ionicons color='#a52a2a' name ='search-circle' size={40} onPress={() => 
+                {
+                filterSearch(text)}
+                }/>
 						</View>
 				
  	        
