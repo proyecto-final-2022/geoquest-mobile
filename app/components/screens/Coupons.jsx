@@ -10,18 +10,15 @@ import Tags from "react-native-tags"
 const {width} = Dimensions.get('screen')
 
 export default Coupons = ({route, navigation}) => {
+  
+  const user = route.params
 
+  const [coupons, setCoupons] = useState([])
   const [view, setView] = useState(false)
   const [description, setDescription] = useState("")
   const [qrValue, setQrValue] = useState("")
 
-  const coupons = [
-    {clientId: 1, userId: 1, description: "Medialunas Buffet 1", expirationDate: '22/11/2022', used: false, image: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"},
-    {clientId: 1, userId: 1, description: "Medialunas Buffet 2", expirationDate: '22/11/2022', used: false, image: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"},
-    {clientId: 1, userId: 1, description: "Medialunas Buffet 3", expirationDate: '22/11/2022', used: false, image: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"},
-    {clientId: 1, userId: 1, description: "Medialunas Buffet 4", expirationDate: '22/11/2022', used: false, image: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"},
-    {clientId: 1, userId: 1, description: "Medialunas Buffet 5", expirationDate: '22/11/2022', used: false, image: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"},
-  ]
+  const url = Config.appUrl + "users/" + user.id + "/coupons"
   
   useEffect(() => {
     navigation.setOptions({
@@ -33,6 +30,15 @@ export default Coupons = ({route, navigation}) => {
     })
   })
 
+  useEffect(() => {
+    fetch(url)
+    .then((response) => response.json())
+    .then((json) => setCoupons(json))
+    .catch((error) => console.error(error))
+    .finally(()=>setLoading(false))
+    .catch((error) => console.error(error))
+  }, [route])
+
   const Card = ({coupon}) => {
     return (
       <Pressable onPress={() => {
@@ -40,9 +46,10 @@ export default Coupons = ({route, navigation}) => {
         setDescription(coupon.description)
         setQrValue(JSON.stringify(
           {clientId: 1, 
-            userId: 1, 
-            description: "Medialunas Buffet 1", 
-            expirationDate: '22/11/2022', 
+            userId: 1,
+            couponId: coupon.id, 
+            description: coupon.description, 
+            expirationDate: coupon.expiration_date, 
             used: false
           }))
         }}>
@@ -50,9 +57,9 @@ export default Coupons = ({route, navigation}) => {
           <View
             style={styles.couponInfo}>
               <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{coupon.description}</Text>
-              <Text style={{marginTop: 20, fontSize: 15}}>{'Válido hasta: ' + coupon.expirationDate}</Text>
+              <Text style={{marginTop: 20, fontSize: 15}}>{'Válido hasta: ' + coupon.expiration_date.split('T')[0]}</Text>
           </View>
-          <Image source={{uri: coupon.image}} style={styles.image} />
+          <Image source={{uri: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"}} style={styles.image} />
         </View>
       </Pressable>
       ) 
