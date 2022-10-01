@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import ARView from "./ARView";
@@ -5,7 +6,7 @@ import ARView from "./ARView";
 import exampleQuest from "../../../../res/exampleQuest.json";
 
 
-function useQuestStateHandler(questID) {
+function useQuestStateHandler(_questID) {
   const [config, setConfig] = useState();
   const [state, setState] = useState();
   const [loading, setLoading] = useState(true);
@@ -21,13 +22,13 @@ function useQuestStateHandler(questID) {
       scene: 0,
       objects: {}
     });
-  }
+  };
 
   const setUpdateListener = () => {
     console.log("Listener set");
     // TODO: On update notification update state.
     return () => { };  // Unset listener.
-  }
+  };
 
   useEffect(() => {
     initQuest().then(() => { 
@@ -51,11 +52,11 @@ function useQuestStateHandler(questID) {
       // If ok, then:
       setState(newState);
     },
-  }
+  };
 }
 
 
-export default Game = ({questID}) => {
+export default function Game({questID}) {
   const questHandler = useQuestStateHandler(questID);
 
   if (questHandler.loading)
@@ -65,4 +66,3 @@ export default Game = ({questID}) => {
     <ARView questHandler={questHandler} />
   );
 }
-
