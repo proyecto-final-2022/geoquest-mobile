@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { useIsFocused } from '@react-navigation/native'
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
@@ -9,7 +10,7 @@ import CustomButton from '../commons/CustomButton'
 const {width} = Dimensions.get('screen')
 
 export default Ranking = ({route, navigation}) => {
-  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
+  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0)
   
   const url = Config.appUrl + "quests/" + id + "/rankings"
@@ -19,6 +20,8 @@ export default Ranking = ({route, navigation}) => {
   const [teamRanking, setTeamRanking] = useState([])
   const [loading, setLoading] = useState(true)
 
+  const isFocused = useIsFocused()
+
   useEffect(() => {
     fetch(url)
     .then((response) => response.json())
@@ -27,7 +30,7 @@ export default Ranking = ({route, navigation}) => {
     })
     .catch((error) => console.error(error))
     .finally(()=>setLoading(false))
-  }, [])
+  }, [isFocused])
 
   useEffect(() => {
     fetch(urlTeam)
@@ -37,13 +40,13 @@ export default Ranking = ({route, navigation}) => {
     })
     .catch((error) => console.error(error))
     .finally(()=>setLoading(false))
-  }, [])
+  }, [isFocused])
   
   useEffect(() => {
     navigation.setOptions({
       headerTitle: 'Ranking',
       headerRight: () => (
-        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Visualizer', {id, name, qualification, description, difficulty, duration, completions, image_url, tags})}/>
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Visualizer', {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName})}/>
       ),
       headerTintColor: '#a52a2a',
     })

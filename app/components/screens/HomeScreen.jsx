@@ -26,7 +26,7 @@ const HomeScreen = () => {
 
   const ongetData = async () =>  {
     try {
-      const value = await AsyncStorage.getItem('@storage_Key')
+      const value = await AsyncStorage.getItem('auth.token')
         if(value !== null) {
           console.warn('Token : ' + value)
               // value previously stored

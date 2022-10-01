@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { useIsFocused } from '@react-navigation/native'
 import {Button} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
@@ -12,18 +13,32 @@ export default ClientQuests = ({route, navigation}) => {
   
  // const navigation = useNavigation()
 
-  const {ID} = route.params
+  const {clientID, clientName} = route.params
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [view, setView] = useState(false)
   const [search, setSearch] = useState([])
    const [loading, setLoading] = useState(true)
 
-  const url = Config.appUrl + "clients/" + ID + "/quests"
+  const url = Config.appUrl + "clients/" + clientID + "/quests"
+
+  const colors = ['darkslateblue','darkgoldenrod', 'darkred', 'darkgreen']
+  
+  const isFocused = useIsFocused()
+  
+  useEffect(() => {
+    fetch(url)
+    .then((response) => response.json())
+    .then((json) => {
+      setData(json) 
+      setFilteredData(json)})
+    .catch((error) => console.error(error))
+    .finally(()=>setLoading(false))
+  } , [isFocused])
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: route.params.name,
+      headerTitle: clientName,
       headerRight: () => (
         <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Quest Navigator')}/>
       ),
@@ -58,8 +73,8 @@ export default ClientQuests = ({route, navigation}) => {
 
   const option = options.map((item, index) => {
     return (
+      <View style={styles.optionContainer}>
       <Pressable
-        style={styles.option}
         key={index}
         onPress={() => onPressItem(item)}
       >
@@ -67,18 +82,9 @@ export default ClientQuests = ({route, navigation}) => {
           {item}
         </Text>
       </Pressable>
+      </View>
     )
   })
-
-  const Tags = ({tag}) => {
-    return (
-      <View style={styles.tag}>
-      <View style={{marginTop: -38, marginLeft:10}}>
-        <Text style={styles.tagInfoText}>{tag}</Text>
-      </View>
-      </View>
-    )
-  }
 
   const filterSearch = (text) => {
 
@@ -96,51 +102,62 @@ export default ClientQuests = ({route, navigation}) => {
     } 
   }
   
+  const Tags = ({tag, index}) => {
+    return (
+      <View style={[
+        styles.tag,
+        {backgroundColor: colors[index]}
+        ]}>
+        <Text style={{fontWeight: 'bold', color: 'white'}}>{tag}</Text>
+      </View>
+    )
+  }
+
   const Card = ({quest}) => {
     return (
-      <Pressable onPress={() => navigation.navigate('Quest Visualizer', {...quest})}>
+      <Pressable onPress={() => navigation.navigate('Quest Visualizer', {...quest, clientID, clientName})}>
         <View style={styles.card}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: 10,
-            }}>
-            <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
-          </View>
-          <View style={{marginTop: 10, flexDirection: 'row'}}>
-            <View style={styles.questInfo}>
-              <FontAwesome name ='clock-o' size={25}/>
-                <Text style={styles.questInfoText}>{quest.duration}</Text>
+          <View style={styles.infoDisplay}>
+            <View style={styles.questName}>
+              <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
             </View>
-          <View style={styles.questInfo} marginLeft={18}>
-            <Entypo name ='gauge' size={25}/>
+            <View style={styles.questInfo}>
+              <FontAwesome name ='clock-o' color={'darkslateblue'} size={25}/>
+              <Text style={styles.questInfoText}>{quest.duration}</Text>
+            </View>
+            <View style={styles.questInfo}>
+              <Entypo name ='gauge' color={'firebrick'} size={25}/>
               <Text style={styles.questInfoText}>{quest.difficulty}</Text>
+            </View>
+            <View style={styles.questInfo}>
+              <Entypo name ='star' color={'goldenrod'} size={25}/>
+              <Text style={styles.questInfoText}>{quest.qualification}</Text>
+            </View>
+          </View>
+          <View style={styles.tagContainer}>
+            {quest.tags.map((tag, index) => <Tags tag={tag} index={index}/>)}
           </View>
 
-          <View style={styles.questInfo} marginTop={-50} marginLeft={18}>
-            <Entypo name ='star' size={30}/>
-            <Text style={styles.questInfoText}>{quest.qualification}</Text>
-          </View>
-            {quest.tags.map((tag) => <Tags tag={tag}/>)}  
-          </View>
         </View>
-      </Pressable>) 
-    }
+      </Pressable>
+    ) 
+  }
   
   return (
 
     <ScrollView style={styles.view}>
-      <TextInput 
-        style={styles.textInput}
-        onChangeText={(text) => filterSearch(text)}
+      <View style={styles.headerContainer}>
+        <TextInput 
+          style={styles.textInput}
+          onChangeText={(text) => filterSearch(text)}
         />
       
-      <Pressable onPress={() => {setView(true)}}>
-        <View style={styles.sortBtn}>
-          <Ionicons name='filter' size={18} />
-        </View>
-      </Pressable>
+        <Pressable onPress={() => {setView(true)}}>
+          <View style={styles.sortBtn}>
+            <Ionicons name='filter' size={18} />
+          </View>
+        </Pressable>
+      </View>
 
       <Modal
         animationType="slide"
@@ -150,6 +167,7 @@ export default ClientQuests = ({route, navigation}) => {
         <View
           style={{
             flex: 1,
+            flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
           }}
@@ -158,27 +176,31 @@ export default ClientQuests = ({route, navigation}) => {
             style={{
               height:'25%', 
               width: '60%',
+              flexDirection: 'column',
+              justifyContent: 'space-evenly',
               backgroundColor: 'aliceblue',
               borderWidth: 10,
               borderColor: '#a52a2a', 
             }}  
           >
-            <View>
+            <View style={styles.orderByContainer}>
               <Pressable onPress={() => {setView(false)}}>
-                <Ionicons name='close' size={35} style={{marginLeft:195}}/>
+                <Ionicons name='close' size={35}/>
               </Pressable>
-              <ScrollView>
+            </View>
+            <ScrollView>
                 {option}
-              </ScrollView>
+            </ScrollView>
 
-            </View>  
+  
           </View>
         </View>
       </Modal>
 
       <FlatList
         horizontal= {false}
-        contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+        contentContainerStyle={{
+          paddingLeft: 20, paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
         data={filteredData}
         renderItem={({item}) => <Card quest={item}/>}>      
@@ -190,71 +212,87 @@ export default ClientQuests = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
   textInput: {
+    flexBasis: 300,
+    flexShrink: 0,
+    flexGrow: 0,
     height: 40,
-    marginLeft: 20,
-    width: 300,
     borderWidth: 3,
     borderColor: '#a52a2a',
     backgroundColor: 'cornsilk',
     marginTop: 10
   },
+  sortBtn: {
+    backgroundColor: 'bisque',
+    flexBasis: 50,
+    flexShrink: 0,
+    flexGrow: 0,
+    height: 50,
+    width: 50,
+    borderRadius: 10,
+    marginTop: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   view: {
     flex: 1,
     backgroundColor: '#FFF9CA',
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
   card:{
     height: 120,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    marginTop: 10,
     backgroundColor: '#ffefd5',
-    elevation: 10,
-    width: width - 40,
-    marginTop:20,
-    padding: 15,
-    borderRadius: 20,
+  },
+  infoDisplay:{
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 10,
+  },
+  questInfo:{
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexBasis: 45,
+    flexShrink: 0,
+    flexGrow: 0,
+  },
+  questName:{
+    flexBasis: 220,
+    flexShrink: 0,
+    flexGrow: 0,
+  },
+  tagContainer:{
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   tag:{
-    height: 10,
-    marginRight: 360,
-    marginLeft: -345,
-    marginTop: 15,
-    backgroundColor: 'mintcream',
-    width: 78,
-    padding: 15,
-    borderRadius: 20,
-  },
-  questInfo: {
     flexDirection: 'row',
-    marginTop: -50, 
-    marginLeft: 200,
+    justifyContent: 'center',
+    backgroundColor: 'mintcream',
+    width: 90,
+    padding: 5,
+    borderRadius: 20,
+    marginLeft: 5
   },
   questInfoText: {
-    marginTop: 28,
-    marginLeft: -25,
     color: '#696969',
+    fontWeight: 'bold'
   },
-  tagInfoText: {
-    fontSize: 11,
-    marginTop: 25,
-    marginLeft: -15,
-    color: '#696969',
+  orderByContainer: {
+    flexDirection: 'row-reverse'
   },
-  sortBtn: {
-    backgroundColor: 'bisque',
-    height: 50,
-    width: 50,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: -45,
-    marginLeft: 340,
-  },
-  option: {
+  optionContainer: {
     backgroundColor: 'white',
-    alignItems: 'flex-start'
+    alignItems: 'center',
+    marginTop: 10
   },
   text: {
-    marginTop: 30,
     marginLeft: 10,
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold'
   }
 });
