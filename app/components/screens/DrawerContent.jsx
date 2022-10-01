@@ -37,6 +37,7 @@ export function DrawerContent(props) {
   const navigation = useNavigation()
   
   const [name, setName] = useState("")
+  const [userID, setUserID] = useState("")
   const [username, setUsername] = useState("")
   const [image, setImage] = useState(1)
 
@@ -62,14 +63,8 @@ export function DrawerContent(props) {
 
   useEffect(() => {
     Storage.getObject('user').
-    then(user => setName(user.name))
-    }, [props])
-
-    useEffect(() => {
-      Storage.getObject('user').
-      then(user => setUsername(user.username))
-    }, [props])
-
+    then(user => setUserID(user.id))
+  }, [props])
 
   return(
     <View style={{flex:1,backgroundColor: '#FFF9CA'}}>
@@ -121,7 +116,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Amigos"
-                            onPress={() => {navigation.navigate('Friends List')}}
+                            onPress={() => {navigation.navigate('Friends List', userID)}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (

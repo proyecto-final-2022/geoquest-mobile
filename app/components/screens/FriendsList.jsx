@@ -23,7 +23,12 @@ const {width} = Dimensions.get('screen')
 
 export default FriendsList = ({route, navigation}) => {
   
-  const [data, setData] = useState([])
+  const userID = route.params
+
+  const [friends, setFriends] = useState([])
+  
+  
+  const url = Config.appUrl + "users/" + userID + "/friends"
 
   useEffect(() => {
     navigation.setOptions({
@@ -39,22 +44,14 @@ export default FriendsList = ({route, navigation}) => {
   })
 
   useEffect(() => {
-    setData(friends)
+    fetch(url)
+    .then((response) => response.json())
+    .then((json) => setFriends(json))
+    .catch((error) => console.error(error))
+    .finally(()=>setLoading(false))
+    .catch((error) => console.error(error))
   }, [route])
 
-  const sendID = 72 
-  const friends = [
-    {id: 1, name: "string", username: "string", email: "string@gmail.com", image:1},
-    {id: 2, name: "string2", username: "string2", email: "string2@gmail.com", image:2},
-    {id: 3, name: "string3", username: "string3", email: "string3@gmail.com", image:3},
-    {id: 4, name: "string4", username: "string4", email: "string4@gmail.com", image:4},
-    {id: 5, name: "string5", username: "string5", email: "string5@gmail.com", image:5},
-    {id: 6, name: "string6", username: "string6", email: "string6@gmail.com", image:6},
-    {id: 7, name: "string7", username: "string7", email: "string7@gmail.com", image:7},
-    {id: 8, name: "string8", username: "string8", email: "string8@gmail.com", image:8},
-    {id: 9, name: "string9", username: "string9", email: "string9@gmail.com", image:9},
-    {id: 10, name: "string10", username: "string", email: "string@gmail.com", image:1}
-  ]
 
   const getUserImage = (imageNumber) => { 
     const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
