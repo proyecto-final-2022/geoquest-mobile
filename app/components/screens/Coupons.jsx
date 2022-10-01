@@ -45,8 +45,8 @@ export default Coupons = ({route, navigation}) => {
         setView(true)
         setDescription(coupon.description)
         setQrValue(JSON.stringify(
-          {clientId: 1, 
-            userId: 1,
+          { 
+            userId: user.id,
             couponId: coupon.id, 
             description: coupon.description, 
             expirationDate: coupon.expiration_date, 
