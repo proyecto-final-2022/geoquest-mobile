@@ -26,7 +26,8 @@ export default FriendsList = ({route, navigation}) => {
   const userID = route.params
 
   const [friends, setFriends] = useState([])
-  
+  const [friendIDs, setFriendIDs] = useState([])
+  const [loading, setLoading] = useState(true)
   
   const url = Config.appUrl + "users/" + userID + "/friends"
 
@@ -44,6 +45,7 @@ export default FriendsList = ({route, navigation}) => {
   })
 
   useEffect(() => {
+    console.log("hola")
     fetch(url)
     .then((response) => response.json())
     .then((json) => setFriends(json))
@@ -76,8 +78,7 @@ export default FriendsList = ({route, navigation}) => {
         <View style={styles.friendDeleteIcon}>
           <Pressable onPress={() => 
             {
-            setView(true)
-            setCancel(friend)}
+            console.log(friend.id)}
             }
           >
             <AntDesign style={{color:'darkred'}} size={30} name ='closecircle'/> 
@@ -87,7 +88,6 @@ export default FriendsList = ({route, navigation}) => {
       </View>
     ) 
   }
-
 
   return (
     <ScrollView style={styles.view}>
@@ -114,7 +114,11 @@ export default FriendsList = ({route, navigation}) => {
 
         <CustomButton2 
           text ="Buscar"
-          onPress={() => navigation.navigate('Friends Search')}
+          onPress={() => 
+          {
+            
+            navigation.navigate('Friends Search', {friends})
+          }}
           icon = "search-outline"
           bgColor= '#CA955C'
           fgColor='white'

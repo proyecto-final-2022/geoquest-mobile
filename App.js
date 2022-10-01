@@ -32,7 +32,8 @@ export default function App() {
     }
 
     const forwardToFriendsList = () => {
-      navigationRef.current?.navigate('Friends List')
+      Storage.getObject('user')
+      .then(user => navigationRef.current?.navigate('Friends List', user.id))
     }
 
     const processNotification = (remoteMessage, fromBackground) => {

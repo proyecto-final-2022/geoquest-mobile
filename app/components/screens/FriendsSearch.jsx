@@ -24,18 +24,23 @@ const {width} = Dimensions.get('screen')
 
 export default FriendsSearch = ({route, navigation}) => {
 
+  const {friends} = route.params
+
   const [user, setUser] = useState([])
   const [data, setData] = useState([])
   const [invitedIDs, setInvitedIDs] = useState([])
 	const [text, setText] = useState('')
 	const [filteredData, setFilteredData] = useState([])
 
+  const url = Config.appUrl + "users/" 
+  var ids = [] 
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: 'Buscar Amigos',
       headerTintColor: '#a52a2a',
       headerRight: () => (
-        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Friends List')}/>
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Friends List', user.id)}/>
       ),
       headerSearchBarOptions: {
         placeholder: "Search",
@@ -43,24 +48,18 @@ export default FriendsSearch = ({route, navigation}) => {
     })
   })
 
+
   useEffect(() => {
-    setData(friends)
     Storage.getObject('user').then(user => setUser(user))
+    fetch(url)
+    .then((response) => response.json())
+    .then((json) => setData(json))
+    .catch((error) => console.error(error))
+    .catch((error) => console.error(error))
+    
   }, [route])
 
   const sendID = 72 
-  const friends = [
-    {id: 1, name: "string", username: "string", email: "string@gmail.com", image:1},
-    {id: 2, name: "string2", username: "string2", email: "string2@gmail.com", image:2},
-    {id: 3, name: "string3", username: "string3", email: "string3@gmail.com", image:3},
-    {id: 4, name: "string4", username: "string4", email: "string4@gmail.com", image:4},
-    {id: 5, name: "string5", username: "string5", email: "string5@gmail.com", image:5},
-    {id: 6, name: "string6", username: "string6", email: "string6@gmail.com", image:6},
-    {id: 7, name: "string7", username: "string7", email: "string7@gmail.com", image:7},
-    {id: 8, name: "string8", username: "string8", email: "string8@gmail.com", image:8},
-    {id: 9, name: "string9", username: "string9", email: "string9@gmail.com", image:9},
-    {id: 10, name: "string10", username: "string", email: "string@gmail.com", image:1}
-  ]
 
   const getUserImage = (imageNumber) => { 
     const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
@@ -110,7 +109,6 @@ export default FriendsSearch = ({route, navigation}) => {
           <Pressable onPress={() => 
             {
             setInvitedIDs([...invitedIDs, friend.id])
-            setFilteredData(filteredData.filter((user) => user.id != friend.id))
             sendNotification(friend)
           }
             }
@@ -123,9 +121,11 @@ export default FriendsSearch = ({route, navigation}) => {
     ) 
   }
 
-	const filterSearch = (text) => {
+	const filterSearch = (text, friendIDs) => {
     if (text) {
-    const newData = data.filter((user) => !invitedIDs.includes(user.id)).filter((user) => {
+    const newData = data.filter((search) => 
+    !(invitedIDs.includes(search.id) || friendIDs.includes(search.id) || user.id == search.id)
+    ).filter((user) => {
       const userData = user.name ? user.name.toUpperCase() : ''.toUpperCase()
       const textData = text.toUpperCase()
       return userData.indexOf(textData) > -1
@@ -155,7 +155,9 @@ export default FriendsSearch = ({route, navigation}) => {
 						<View style={styles.searchContainerIcon}>
 							<Ionicons color='#a52a2a' name ='search-circle' size={40} onPress={() => 
                 {
-                filterSearch(text)}
+                  var friendIDs = []
+                  friends.forEach((friend) => friendIDs.push(friend.id))
+                  filterSearch(text, friendIDs)}
                 }/>
 						</View>
 				
