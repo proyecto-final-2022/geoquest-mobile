@@ -12,6 +12,7 @@ import {
 } from '@react-navigation/native'
 
 import messaging from '@react-native-firebase/messaging'
+import FriendsList from "./app/components/screens/FriendsList";
 
 export default function App() {
   
@@ -30,6 +31,10 @@ export default function App() {
       navigationRef.current?.navigate('Wait Room', {questID, teamID, userID})
     }
 
+    const forwardToFriendsList = () => {
+      navigationRef.current?.navigate('Friends List')
+    }
+
     const processNotification = (remoteMessage, fromBackground) => {
       let title = ''
 
@@ -45,6 +50,12 @@ export default function App() {
             break;
             case "Friend Request":
               forwardToNotifications()
+            break;
+            case "Friend Accept":
+              forwardToFriendsList()
+            break;
+            case "Friend Deny":
+              forwardToFriendsList()
             break;
           }
         }
@@ -76,6 +87,32 @@ export default function App() {
                   { text: "OK", onPress: () => {forwardToNotifications()} }
                 ]
               );
+            break;
+            case "Friend Accept":
+              Alert.alert(
+                title,
+                "",
+                [
+                  {
+                    text: "Cancel",
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => {forwardToFriendsList()} }
+                ]
+              );
+            break;
+              case "Friend Deny":
+                Alert.alert(
+                  title,
+                  "",
+                  [
+                    {
+                      text: "Cancel",
+                      style: "cancel"
+                    },
+                    { text: "OK", onPress: () => {forwardToFriendsList()} }
+                  ]
+                ); 
             break;
             case "Quest Accept":
               Alert.alert(

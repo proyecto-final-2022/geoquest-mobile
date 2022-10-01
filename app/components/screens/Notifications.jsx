@@ -111,24 +111,54 @@ export default Notifications = ({route, navigation}) => {
         })
       .catch((error) => console.error(error))
       .then(
+        fetch(Config.appUrl + "users/" + senderID + "/friends/" + user.id  , {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json'} 
+          })
+      )
+      .catch((error) => console.error(error))
+      .then(
         fetch(
           Config.appUrl+'users/' + user.id + '/notifications/'+ notificationID, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json'}
           })
         )
-      .catch((error) => console.error(error))  
+      .catch((error) => console.error(error))
+      .then(
+        fetch(Config.appNotificationsUrl + "notifications/friend_accept", {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json'},
+          body: JSON.stringify({ 
+            sender_name: user.username,
+          }) 
+        })
+        )  
+      .catch((error) => console.error(error))
       .then(forwardToFriendList())
   }
 
   const handleCancelFriendRequest = (notificationID) => {
-    Alert.alert("Solicitud cancelada")
+    Alert.alert("Solicitud rechazada")
         fetch(
           Config.appUrl+'users/' + user.id + '/notifications/'+ notificationID, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json'}
           })
       .catch((error) => console.error(error))  
+      .then(
+        fetch(Config.appNotificationsUrl + "notifications/friend_deny", {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json'},
+          body: JSON.stringify({ 
+            sender_name: user.username,
+          }) 
+        })
+        )  
+      .catch((error) => console.error(error))
       .then(forwardToFriendList())
   }
   

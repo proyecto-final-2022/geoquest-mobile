@@ -74,7 +74,6 @@ export default FriendsSearch = ({route, navigation}) => {
       method: 'POST',
       body: JSON.stringify({ 
       sender_id: user.id,
-      quest_id: id,
       type: 'friend_request'
     })
     })
