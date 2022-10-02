@@ -1,8 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ViroARSceneNavigator } from "@viro-community/react-viro/components/AR/ViroARSceneNavigator";
 import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScene";
 import { parseScene } from "./questParsers";
 import interactions from "./interactions";
+import { View, StyleSheet } from "react-native";
+import HintModal from "./HintModal";
 
 
 const Scene = ({objectComponents}) => {
@@ -11,7 +13,7 @@ const Scene = ({objectComponents}) => {
       {objectComponents}
     </ViroARScene>
   );
-}
+};
 
 const buildHandler = (ctx, questHandler) => {
   return {
@@ -20,17 +22,16 @@ const buildHandler = (ctx, questHandler) => {
       return interactions[interaction](ctx, questHandler, ...params);
     }
   };
-}
+};
 
-export default ARView = ({questHandler}) => {
+export default function ARView({questHandler}) {
   const [ showHint, setShowHint ] = useState(false);
-  const [ hintText, setHintText ] = useState();
+  const [ hintText, setHintText ] = useState("");
 
   const hint = (text) => {
-    /* setHintText(text); */
-    /* setShowHint(true); */
-    alert(text);
-  }
+    setHintText(text);
+    setShowHint(true);
+  };
 
   const ctx = { hint };
   const handler = buildHandler(ctx, questHandler);
@@ -40,8 +41,23 @@ export default ARView = ({questHandler}) => {
   const objects = parseScene(sceneConfig)(handler);
 
   return (
-    <ViroARSceneNavigator 
-      initialScene={{scene: Scene, passProps: { objectComponents: objects }}} 
-    />
+    <View style={{height: "100%", width: "100%"}}>
+      <ViroARSceneNavigator 
+        initialScene={{scene: Scene, passProps: { objectComponents: objects }}} 
+      />
+      <HintModal 
+        style={styles.hintModal} 
+        visible={showHint} 
+        hint={hintText} 
+        onClose={() => setShowHint(false)}
+      />
+    </View>
   );
 }
+
+
+const styles = StyleSheet.create({
+  hintModal: {
+
+  },
+});
