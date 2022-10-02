@@ -9,7 +9,7 @@ export function parseScene(scene) {
 }
 
 
-function parseObject(handler, key, object) {
+function parseObject(handler, id, object) {
   var objectComponent = undefined;
   switch (object.type) {
   case "WithImageRecognition":
@@ -17,5 +17,5 @@ function parseObject(handler, key, object) {
     break;
   }
 
-  return React.createElement(objectComponent, {key, handler, ...object});
+  return React.createElement(objectComponent, {key: id, id, handler, ...object});
 }
