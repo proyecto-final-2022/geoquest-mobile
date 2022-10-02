@@ -7,7 +7,6 @@ import Resources from "../../../../utils/resources.js";
 
 export default function WithImageRecognition({id, handler, typeProps}) {
   const [pauseUpdates, setPauseUpdates] = useState(false);
-  console.log("Obj id: ", id);
 
   const {target, model, interactions} = typeProps;
 
@@ -33,11 +32,12 @@ export default function WithImageRecognition({id, handler, typeProps}) {
     if(intAmount < state)
       return;
 
-    interactions[state].forEach((int) => handler.interact(int.name, ...int.params));
+    const newState = interactions[state].reduce((prevState, int) => {
+      return handler.interact(int.name, prevState, ...int.params) || prevState;
+    }, handler.questState);
 
-    const questState = handler.questState;
-    questState.objects[id] = Math.min(state + 1, intAmount - 1);
-    handler.setQuestState(questState);
+    newState.objects[id] = Math.min(state + 1, intAmount - 1);
+    handler.setQuestState(newState);
   };
 
   return (

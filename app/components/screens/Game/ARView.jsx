@@ -18,8 +18,8 @@ const Scene = ({objectComponents}) => {
 const buildHandler = (ctx, questHandler) => {
   return {
     ...questHandler,
-    interact: (interaction, ...params) => {
-      return interactions[interaction](ctx, questHandler, ...params);
+    interact: (interaction, questState, ...params) => {
+      return interactions[interaction]({...ctx, questState}, ...params);
     }
   };
 };
@@ -37,6 +37,7 @@ export default function ARView({questHandler}) {
   const handler = buildHandler(ctx, questHandler);
 
   const sceneNum = questHandler.questState.scene;
+  console.log("Scene number: ", sceneNum);
   const sceneConfig = questHandler.questConfig.scenes[sceneNum];
   const objects = parseScene(sceneConfig)(handler);
 

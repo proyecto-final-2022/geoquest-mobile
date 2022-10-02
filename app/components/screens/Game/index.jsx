@@ -48,7 +48,7 @@ function useQuestStateHandler(_questID) {
 
     setQuestState: (newState) => {
       // TODO: Notify state update.
-      console.log("Update sent");
+      console.log("Update sent, new state: ", newState);
       // If ok, then:
       setState(newState);
     },

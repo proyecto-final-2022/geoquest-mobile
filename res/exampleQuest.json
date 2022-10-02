@@ -26,7 +26,7 @@
                 {
                   "name": "showHint",
                   "params": [
-                    "una pista re loca"
+                    "Escena 1: una pista re loca"
                   ]
                 }
               ],
@@ -34,10 +34,50 @@
                 {
                   "name": "showHint",
                   "params": [
-                    "Una pista re loca 2!!!"
+                    "Escene 1: una pista re loca 2!!!"
                   ]
                 }
+              ],
+              [
+                {
+                  "name": "nextScene",
+                  "params": []
+                }
               ]
+            ]
+          },
+        }
+      ]
+    },
+    {
+      "objects": [
+        {
+          "type": "WithImageRecognition",
+          "typeProps": { 
+            "target": {
+              "source": "images.exampleImage",
+              "physicalWidth": 0.2,
+              "orientation": "Up"
+            },
+            "model": {
+              "source": "models.cubone.model",
+              "type": "OBJ",
+              "position": [0,-2,0],
+              "scale": [1,1,1],
+              "rotation": [90,180,0],
+              "resources": [
+                "models.cubone.materials"
+              ],
+            },
+            "interactions": [
+              [
+                {
+                  "name": "showHint",
+                  "params": [
+                    "Escena 2: una pista re loca"
+                  ]
+                }
+              ],
             ]
           },
         }
