@@ -24,22 +24,32 @@ export default Ranking = ({route, navigation}) => {
 
   useEffect(() => {
     fetch(url)
-    .then((response) => response.json())
-    .then((json) => {
-      setRanking(json) 
-    })
-    .catch((error) => console.error(error))
-    .finally(()=>setLoading(false))
+    .then((response) => 
+    {
+      if (response.ok)
+        response.json()
+        .then((json) => {setRanking(json)})
+        .catch((error) => 
+        
+        console.error(error))
+        .finally(()=>setLoading(false))
+    }
+    )
   }, [isFocused])
 
   useEffect(() => {
     fetch(urlTeam)
-    .then((response) => response.json())
-    .then((json) => {
-      setTeamRanking(json) 
-    })
-    .catch((error) => console.error(error))
-    .finally(()=>setLoading(false))
+    .then((response) => 
+    {
+      if (response.ok)
+        response.json()
+        .then((json) => {setTeamRanking(json)})
+        .catch((error) => 
+        
+        console.error(error))
+        .finally(()=>setLoading(false))
+    }
+    )
   }, [isFocused])
   
   useEffect(() => {
