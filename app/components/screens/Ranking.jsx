@@ -125,7 +125,7 @@ export default Ranking = ({route, navigation}) => {
                 style={[styles.logo]}
               />
             :
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>{index}</Text> 
+              <Text style={{fontSize: 20, marginLeft: 10, fontWeight: 'bold'}}>{index}</Text> 
           }
         </View>
         <View style={styles.rankingItemImage}>
@@ -148,25 +148,59 @@ export default Ranking = ({route, navigation}) => {
       )
   }
 
-  const TeamRanking = ({data}, index) => {
-    var index = 0
+  const TeamRanking = ({data, index}) => {
     return(
-      <View style={styles.rankingContainer}>
-        
-        {console.log(index)}
-        <View style={styles.rankingItem}>
-          {data.users.map((user, index) => 
+        <View style={styles.teamRankingContainer}>
+          <View style={styles.rankingItemPos}>
           {
-          <View>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>{user}</Text>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>{index}</Text>
-          </View>
-          })
+            index == 1 ? 
+              <Image
+                source = {goldMedal}
+                size= {100}
+                style={[styles.logo]}
+              />
+            :
+            index == 2 ?
+              <Image
+                source = {silverMedal}
+                size= {100}
+                style={[styles.logo]}
+              />
+            :
+            index == 3 ? 
+              <Image
+                source = {bronzeMedal}
+                size= {100}
+                style={[styles.logo]}
+              />
+            :
+              <Text style={{fontSize: 20, marginLeft: 10, fontWeight: 'bold'}}>{index}</Text> 
           }
+          </View>
+          
+          <View style={styles.teamRankingContainerItem}>
+            {data.users.map((user) =>
+                <View style={{flexDirection: 'row'}}>
+                  <View style={styles.rankingItemImage}>
+                    <Avatar.Image 
+                      source={getUserImage(user.image)}
+                      size={50}
+                      marginTop={5}
+                  />
+                  </View>
+                  <View style={styles.rankingTeamUsername}>         
+                    <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{user.username}</Text>
+                  </View>
+                </View>
+            )
+          }
+          </View>
+        <View style={styles.rankingItemClock}>
+          <FontAwesome name ='clock-o' color={'darkslategreen'} size={32}/>
         </View>
-        <View style={styles.rankingItem}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>{data.hours + "h " + data.minutes + "m " + data.seconds + "s "}</Text>
-        </View>
+        <View style={styles.rankingItemTime}>
+          <Text style={{fontSize: 15, fontWeight: 'bold', color:'#a52a2a'}}>{data.hours + "h " + data.minutes + "m " + data.seconds + "s "}</Text>
+        </View>  
       </View>
       )
   }
@@ -183,18 +217,12 @@ export default Ranking = ({route, navigation}) => {
           data={ranking}
           renderItem={({item, index}) => <Ranking data={item} index= {index+1}/>
         }
-  //        {
-//    console.log(index + 1)
-  //          {console.log(index)}
-            //<Ranking data={item}/>
-//        }
-        //}
         ></FlatList> :           
         <FlatList
           contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
           data={teamRanking}
-          renderItem={({item}) => <TeamRanking data={item}/>
+          renderItem={({item, index}) => <TeamRanking data={item} index= {index+1}/>
         }></FlatList>
       }
     </ScrollView>
@@ -260,8 +288,23 @@ const styles = StyleSheet.create({
     maxWidth: 40,
     maxHeight: 40,
   },
-  rankingItem: {
-
+  teamRankingContainer: {
+    height: 270,
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'antiquewhite',
+  },
+  teamRankingContainerItem: {
+    marginTop: 2,
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  rankingTeamUsername: {
+    flexBasis: 100,
+    flexShrink: 0,
+    flexGrow: 0,
   }
 });
 
