@@ -18,6 +18,10 @@ import userImage_7 from '../../../assets/userImages/userImage_7.png'
 import userImage_8 from '../../../assets/userImages/userImage_8.png'
 import userImage_9 from '../../../assets/userImages/userImage_9.png'
 
+import goldMedal from '../../../assets/medals/gold.png'
+import silverMedal from '../../../assets/medals/silver.png'
+import bronzeMedal from '../../../assets/medals/bronze.png'
+
 const {width} = Dimensions.get('screen')
 
 export default Ranking = ({route, navigation}) => {
@@ -92,13 +96,37 @@ export default Ranking = ({route, navigation}) => {
   const getUserImage = (imageNumber) => { 
     const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
     return userImages[imageNumber-1];
-   }
+  }
 
   const Ranking = ({data, index}) => {
+
     return(
       <View style={styles.rankingContainer}>
         <View style={styles.rankingItemPos}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>{index}</Text>
+          {
+            index == 1 ? 
+              <Image
+                source = {goldMedal}
+                size= {100}
+                style={[styles.logo]}
+              />
+            :
+            index == 2 ?
+              <Image
+                source = {silverMedal}
+                size= {100}
+                style={[styles.logo]}
+              />
+            :
+            index == 3 ? 
+              <Image
+                source = {bronzeMedal}
+                size= {100}
+                style={[styles.logo]}
+              />
+            :
+              <Text style={{fontSize: 20, fontWeight: 'bold'}}>{index}</Text> 
+          }
         </View>
         <View style={styles.rankingItemImage}>
           <Avatar.Image 
@@ -108,10 +136,13 @@ export default Ranking = ({route, navigation}) => {
           />
         </View>
         <View style={styles.rankingItemUsername}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>{data.username}</Text>
+          <Text style={{fontSize: 20, color:'#a52a2a', fontWeight: 'bold'}}>{data.username}</Text>
+        </View>
+        <View style={styles.rankingItemClock}>
+          <FontAwesome name ='clock-o' color={'darkslategreen'} size={32}/>
         </View>
         <View style={styles.rankingItemTime}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>{data.hours + "h " + data.minutes + "m " + data.seconds + "s "}</Text>
+          <Text style={{fontSize: 15, fontWeight: 'bold', color:'#a52a2a'}}>{data.hours + "h " + data.minutes + "m " + data.seconds + "s "}</Text>
         </View>
       </View>
       )
@@ -150,7 +181,8 @@ export default Ranking = ({route, navigation}) => {
           contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
           data={ranking}
-          renderItem={({item, index}) => <Ranking data={item} index= {index + 1}/> }
+          renderItem={({item, index}) => <Ranking data={item} index= {index+1}/>
+        }
   //        {
 //    console.log(index + 1)
   //          {console.log(index)}
@@ -199,7 +231,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   rankingItemPos: {
-    flexBasis: 30,
+    flexBasis: 40,
     flexShrink: 0,
     flexGrow: 0,
   },
@@ -209,14 +241,24 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   rankingItemUsername: {
-    flexBasis: 100,
+    flexBasis: 120,
     flexShrink: 0,
     flexGrow: 0,
   },
   rankingItemTime: {
-    flexBasis: 200,
+    flexBasis: 150,
     flexShrink: 0,
     flexGrow: 0,
+  },
+  rankingItemClock: {
+    flexBasis: 35,
+    flexShrink: 0,
+    flexGrow: 0,
+  },
+  logo: {
+    width: '100%',
+    maxWidth: 40,
+    maxHeight: 40,
   },
   rankingItem: {
 
