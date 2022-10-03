@@ -45,23 +45,23 @@ const SignInScreen = () => {
     navigation.navigate('Sign Up')
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      Storage.getObject('user').
-      then(user => {
-        if(user.id !== undefined){ //user is already logged in
-          getUser(user.id)
-          .then(() => {
-            navigation.navigate('Quest Navigator');
-          })
-          .catch(error => {
-            console.log(error);
-          })
-        }
-      })
-      return () => {};
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     Storage.getObject('user').
+  //     then(user => {
+  //       if(user.id !== undefined){ //user is already logged in
+  //         getUser(user.id)
+  //         .then(() => {
+  //           navigation.navigate('Quest Navigator');
+  //         })
+  //         .catch(error => {
+  //           console.log(error);
+  //         })
+  //       }
+  //     })
+  //     return () => {};
+  //   }, [])
+  // );
 
   return (
     <ScrollView style={styles.view}>
