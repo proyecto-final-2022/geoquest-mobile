@@ -9,6 +9,15 @@ import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
 import Storage from '../../utils/storage/storage'
 
+import userImage_1 from '../../../assets/userImages/userImage_1.png'
+import userImage_2 from '../../../assets/userImages/userImage_2.png'
+import userImage_3 from '../../../assets/userImages/userImage_3.png'
+import userImage_4 from '../../../assets/userImages/userImage_4.png'
+import userImage_5 from '../../../assets/userImages/userImage_5.png'
+import userImage_6 from '../../../assets/userImages/userImage_6.png'
+import userImage_7 from '../../../assets/userImages/userImage_7.png'
+import userImage_8 from '../../../assets/userImages/userImage_8.png'
+import userImage_9 from '../../../assets/userImages/userImage_9.png'
 
 const {width} = Dimensions.get('screen')
 
@@ -26,6 +35,11 @@ export default Notifications = ({route, navigation}) => {
 
   const forwardToWaitRoom = (questID, teamID, userID) => {
     navigation.navigate('Wait Room', {questID, teamID, userID})
+  }
+
+  const getUserImage = (imageNumber) => { 
+    const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
+    return userImages[imageNumber-1];
   }
 
   const HandleCancel = (teamID, userID, notificationID, questID) => {
@@ -124,42 +138,51 @@ export default Notifications = ({route, navigation}) => {
   const Notification = ({notification}) => {
     return (
       <View style={styles.notificationContainer}>
+        <View style={styles.notificationUserImage}> 
+          <Avatar.Image 
+            source={getUserImage(notification.sender_image)}
+            size={50}
+            marginTop={5}
+          />
+        </View>
         <View style={styles.description}>
           {notification.type == 'quest_invite' ? 
-          <Text style={{fontWeight: 'bold', fontSize: 18}}>{notification.sender_name + ' te ha invitado a: '+ notification.quest_name}</Text>
-          : 
-          <Text style={{fontWeight: 'bold', fontSize: 18}}>{notification.sender_name + ' te ha enviado una solicitud de amistad'}</Text>
+          <View> 
+            <Text style={{fontWeight: 'bold', fontSize: 18}}>{notification.sender_name}</Text>
+            <Text style={{fontSize: 16}}>{'Te ha invitado a: '}</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 18}}>{notification.quest_name}</Text>
+          </View>
+          :
+          <View> 
+            <Text style={{fontWeight: 'bold', fontSize: 20}}>{notification.sender_name}</Text>
+            <Text style={{fontSize: 16}}>{'Quiere sumarte a amigos!'}</Text>
+          </View>
           }
         </View>
 
         <View style={styles.optionsContainer}>          
         
         <View style={styles.options}>
-        <Pressable onPress={() => notification.type == "quest_invite" ? Storage.getObject('user').then(user => 
-          {Alert.alert("Invitacion rechazada")
-          HandleCancel(notification.team_id, user.id, notification.id, notification.quest_id)
-        .then(
-          fetch(Config.appNotificationsUrl + "notifications/quest_deny", {
-            method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json'},
-            body: JSON.stringify({ 
-              sender_name: user.username,
-              quest_id: notification.quest_id,
-              team_id: notification.team_id,
-            }) 
-          })
-        )}
-          ) : console.log("cancelar friend") }>
-          <Text style={{fontWeight: 'bold', color: 'red', fontSize: 15}}>Rechazar</Text> 
-        </Pressable>
-
+          <Ionicons color='firebrick' name ='md-close-circle' size={40} onPress={() => notification.type == "quest_invite" ? Storage.getObject('user').then(user => 
+            {Alert.alert("Invitacion rechazada")
+            HandleCancel(notification.team_id, user.id, notification.id, notification.quest_id)
+            .then(
+            fetch(Config.appNotificationsUrl + "notifications/quest_deny", {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json'},
+              body: JSON.stringify({ 
+                sender_name: user.username,
+                quest_id: notification.quest_id,
+                team_id: notification.team_id,
+              }) 
+            })
+          )}
+          ) : console.log("cancelar friend") }/> 
         </View>
 
         <View style={styles.options}>
-          <Pressable onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : console.log("amigos")}>
-            <Text style={{fontWeight: 'bold', color: 'green', fontSize: 15}}>Aceptar</Text>
-          </Pressable>
+          <Ionicons color='green' name ='ios-checkmark-circle' size={40} onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : console.log("amigos")}/>
         </View>
           
         </View>
@@ -193,7 +216,7 @@ const styles = StyleSheet.create({
   },
   options: {
     justifyContent: 'flex-end',
-    flexBasis: 80,
+    flexBasis: 60,
     flexShrink: 1,
     flexGrow: 0
   },
@@ -201,19 +224,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse'
   },
   description: {
-    flexBasis: 60,
-    flexShrink: 1,
+    flexBasis: 100,
+    flexShrink: 0,
     flexGrow: 1,
   },
   notificationContainer:{
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    height: 140,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 120,
     width: '100%',
     backgroundColor: 'aliceblue',
     elevation: 5,
     marginTop:10,
     padding: 15, 
+  },
+  notificationUserImage: {
+    flexBasis: 60,
+    flexShrink: 0,
+    flexGrow: 0
   },
 });
 
