@@ -61,7 +61,6 @@ export default FriendsList = ({route, navigation}) => {
   })
 
   useEffect(() => {
-    console.log("hola")
     fetch(url)
     .then((response) => response.json())
     .then((json) => setFriends(json))

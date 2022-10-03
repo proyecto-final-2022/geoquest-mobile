@@ -40,7 +40,7 @@ export default FriendsSearch = ({route, navigation}) => {
       headerTitle: 'Buscar Amigos',
       headerTintColor: '#a52a2a',
       headerRight: () => (
-        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Friends List', user.id)}/>
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Friends List', user)}/>
       ),
       headerSearchBarOptions: {
         placeholder: "Search",

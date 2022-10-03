@@ -10,28 +10,46 @@ import IconButton from '../commons/IconButton'
 import CustomButton2 from '../commons/CustomButton2'
 import Storage from '../../../app/utils/storage/storage'
 
+import userImage_1 from '../../../assets/userImages/userImage_1.png'
+import userImage_2 from '../../../assets/userImages/userImage_2.png'
+import userImage_3 from '../../../assets/userImages/userImage_3.png'
+import userImage_4 from '../../../assets/userImages/userImage_4.png'
+import userImage_5 from '../../../assets/userImages/userImage_5.png'
+import userImage_6 from '../../../assets/userImages/userImage_6.png'
+import userImage_7 from '../../../assets/userImages/userImage_7.png'
+import userImage_8 from '../../../assets/userImages/userImage_8.png'
+import userImage_9 from '../../../assets/userImages/userImage_9.png'
+
 const {width} = Dimensions.get('screen')
 
 export default MultiplayerWaitRoom = ({route, navigation}) => {
 
-  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
+  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, user} = route.params
+
+  const [friends, setFriends] = useState([])
 
   //sendID field is for test if you wanna try invite yourself to make a group
   const sendID = 72 
-  const friends = [
-    {id: 1, sendID:72, name: "string", username: "string", email: "string"},
-    {id: 2, sendID:2, name: "string2", username: "string2", email: "string2"},
-    {id: 3, sendID:72, name: "string3", username: "string3", email: "string3"},
-    {id: 4, sendID:4, name: "string4", username: "string4", email: "string4"},
-    {id: 5, sendID:5, name: "string5", username: "string5", email: "string5"},
-    {id: 6, sendID:6, name: "string6", username: "string6", email: "string6"},
-    {id: 7, sendID:7, name: "string7", username: "string7", email: "string7"},
-    {id: 8, sendID: 8, name: "string8", username: "string8", email: "string8"},
-    {id: 9, sendID: 9, name: "string9", username: "string9", email: "string9"},
-    {id: 10, sendID:10, name: "string10", username: "string10", email: "string10"},
-    {id: 11, sendID:11, name: "string11", username: "string11", email: "string11"},
-    {id: 12, sendID:12, name: "string12", username: "string12", email: "string12"},
-  ]
+
+  const url = Config.appUrl + "users/" + user.id + "/friends"
+
+  useEffect(() => {
+    setInvited([])
+    setInvitedIDs([])
+    fetch(url)
+    .then((response) => 
+    {
+      if (response.ok)
+        response.json()
+        .then((json) => {
+          setFriends(json)
+          setData(json)
+          setFilteredData(json)
+        })
+        .catch((error) => console.error(error))
+    }
+    )
+  }, [route])
 
   const [view, setView] = useState(false)
   const [inviteView, setInviteView] = useState(false)
@@ -46,9 +64,10 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     navigation.navigate('Wait Room', {questID, teamID, userID})
   }
 
-  useEffect(() => {
-    setData(friends)
-    setFilteredData(friends)}, [route])
+  const getUserImage = (imageNumber) => { 
+    const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
+    return userImages[imageNumber-1];
+  }
 
   const sendNotification = async (senderID, senderName, questName) => {
   
@@ -66,7 +85,10 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         response.json().then(teamId => 
           {
             invited.map((user) => {
-              fetch(Config.appUrl + "users/" + user.sendID  + '/notifications', {
+              //ONLY FOR TEST
+              //senderID (url) -> user.id
+              //sendID -> senderID
+              fetch(Config.appUrl + "users/" + senderID  + '/notifications', {
                 method: 'POST',
                 body: JSON.stringify({ 
                 quest_name: questName,
@@ -95,42 +117,19 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         })
         .catch((error) => {console.log('error: ' + error)});
     }
-    
-
-  const Button = ({text, onPress}) => {
-    return (
-      <Pressable 
-        onPress={onPress} 
-        style={styles.button}>  
-        <Text 
-          style={styles.buttonText}>{text}</Text>
-      </Pressable>
-    )
-  }
-
-  const StartButton = ({text, onPress}) => {
-    return (
-      <IconButton
-        onPress={onPress}
-        icon={'arrow-forward-circle'}
-        bgColor={(invited.length > 1) ? 'darkseagreen' : 'lightgreen'}>
-      </IconButton>
-    )
-  }
 
   const Player = ({player}) => {
     return (
       <View style={{marginTop: 5, height: 50, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
         <View style={styles.invitedUserImage}>
           <Avatar.Image 
-            source={{
-            uri: 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki'}}
-            size={40}
+            source={getUserImage(player.image)}
+            size={50}
             marginTop={5}
           />
         </View>
         <View style={styles.invitedUserText}>
-          <Text style={{fontSize: 20, color:'#a52a2a'}}>{player.name}</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{player.name}</Text>
         </View>
         
         <View style={styles.invitedUserCloseIcon}>
@@ -140,7 +139,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             setCancel(player)}
             }
           >
-            <AntDesign style={{color:'darkred'}} size={25} name ='closecircle'/> 
+            <AntDesign style={{color:'darkred'}} size={30} name ='closecircle'/> 
           </Pressable>
         </View>              
 
@@ -153,24 +152,25 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       <View style={{marginTop: 5, height: 50, backgroundColor:'azure', alignItems: 'center', flexDirection: 'row'}}>
         <View style={styles.addUserImage}>
           <Avatar.Image 
-            source={{
-            uri: 'https://img.olympicchannel.com/images/image/private/f_auto/t_1-1_300/primary/wfrhxc0kh2vvq77sonki'}}
-            size={40}
+            source={getUserImage(player.image)}
+            size={50}
+            marginTop={5}
           />
         </View>
 
         <View style={styles.addUserText}>
-          <Text style={{fontSize: 20, color:'#a52a2a'}}>{player.name}</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{player.name}</Text>
         </View>
 
         <View style={styles.addUserIcon}>
           <Pressable onPress={() => { 
-           Alert.alert("Jugador invitado")
+           Alert.alert("Jugador añadido")
             setFilteredData(filteredData.filter((friend) => friend.id != player.id))
             setData(data.filter((friend) => friend.id != player.id))
             setInvited([...invited, player])
-          //cambiarlo por player.id
-           setInvitedIDs([...invitedIDs, sendID])
+          //TEST
+          //user.id -> player.id
+           setInvitedIDs([...invitedIDs, user.id])
          }}>
          <AntDesign style={{color:'black'}} size={35} name ='adduser'/>       
         </Pressable>
@@ -303,8 +303,11 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
           <View style={styles.searchContainer}>    
             <TextInput
+              fontSize={20}
+              placeholder={"Buscar..."}
               style={styles.textInput}
-              onChangeText={(text) => filterSearch(text)}/>
+              onChangeText={(text) => filterSearch(text)}
+              />
           </View>
          
           <FlatList
@@ -344,16 +347,18 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         fgColor='white'
       />
 
-      <StartButton onPress={() => {
-        if (invited.length > 1) {
-          Storage.getObject('user')
-          .then(user => 
-          {
-          sendNotification(user.id, user.username, name)
+      <CustomButton2 
+        onPress = {() => 
+        {
+          if (invited.length > 1) {    
+            sendNotification(user.id, user.username, name)
           }
-          )
-        }
-      }}/>      
+        }}
+        icon = "arrow-forward-circle"
+        bgColor= {(invited.length > 1) ? 'darkseagreen' : 'beige'}
+        fgColor = 'white'
+      />
+
     </View>
     
   </ScrollView>
@@ -376,7 +381,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   textInput: {
-    flexBasis: 275,
+    flexBasis: 310,
     flexShrink: 0,
     flexGrow: 0,
     borderWidth: 1,
@@ -415,6 +420,7 @@ const styles = StyleSheet.create({
     flexGrow: 0
   },
   addUserText: {
+    marginLeft: 5,
     flexBasis: 200,
     flexShrink: 0,
     flexGrow: 0
@@ -425,7 +431,8 @@ const styles = StyleSheet.create({
     flexGrow: 0
   },
   invitedUserText: {
-    flexBasis: 300,
+    marginLeft: 10,
+		flexBasis: 280,
     flexShrink: 0,
     flexGrow: 0
   },
