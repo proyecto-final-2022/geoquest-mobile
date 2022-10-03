@@ -5,21 +5,27 @@ import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
+import CustomButton2 from '../commons/CustomButton2'
+import Storage from '../../utils/storage/storage'
 
 const {width} = Dimensions.get('screen')
 
 export default QuestVisualizer = ({route, navigation}) => {
 
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
+  const colors = ['sandybrown', 'indianred', 'darksalmon', 'darkseagreen']
 
-  const Tag = ({tag}) => {
+  const Tag = ({tag, index}) => {
     return (
-      <View style={styles.tag}>
-        <Text>{tag}</Text>
+      <View style={[
+        styles.tag,
+        {backgroundColor: colors[index]}
+        ]}>
+        <Text style={{fontWeight: 'bold', color: 'white'}}>{tag}</Text>
       </View>
     )
   }
-  //Por que no reutilizar CustomButton? Porque me pone el boton donde se le canta la verga basicamente y no me deja moverlo
+
   const Button = ({text, onPress}) => {
     return (
       <Pressable 
@@ -52,16 +58,16 @@ export default QuestVisualizer = ({route, navigation}) => {
       <View style={styles.card}>
         <View style={styles.questInfoContainer}>
           <View style={styles.questInfo}>
-            <Entypo name ='star' size={25}/>
-            <Text>{qualification}</Text>
+            <Entypo name ='star' size={25} color={'goldenrod'}/>
+            <Text style={{fontWeight: 'bold'}}>{qualification}</Text>
           </View>
           <View style={styles.questInfo}>
-            <Entypo name ='gauge' size={25}/>
-            <Text>{difficulty}</Text>
+            <Entypo name ='gauge' color={'firebrick'} size={25}/>
+            <Text style={{fontWeight: 'bold'}}>{difficulty}</Text>
           </View>
           <View style={styles.questInfo}>
-            <FontAwesome name ='clock-o' size={25}/>
-            <Text>{duration}</Text>
+            <FontAwesome name ='clock-o' color={'black'} size={25}/>
+            <Text style={{fontWeight: 'bold'}}>{duration}</Text>
           </View>
         </View>
         <View style={styles.description}>
@@ -69,15 +75,35 @@ export default QuestVisualizer = ({route, navigation}) => {
         </View>
   
         <View style={styles.tagContainer}>
-          {tags.map((tag) => <Tag tag={tag}/>)}
+          {tags.map((tag, index) => <Tag tag={tag} index={index}/>)}
         </View>
 
       </View>
-
-      <Button onPress={() => console.log('Comenzar')} text="Comenzar"/>
-      <Button onPress={() => navigation.navigate('Quest Team', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags}})} text="Armar Grupo"/>
-      <Button onPress={() => navigation.navigate('Ranking', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})} text="Ver Rankings"/>
-    
+   
+      <View style={styles.teamButtonsContainer}> 
+        <CustomButton2 
+          onPress = {() => console.log('Comenzar')}
+          icon = "arrow-forward-circle"
+          bgColor= 'darkseagreen'
+          fgColor = 'white'
+        />
+        <CustomButton2 
+          onPress = {() => 
+            Storage.getObject('user')
+            .then( (user) => navigation.navigate('Quest Team', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags, user}}))}
+          icon = "people-sharp"
+          bgColor= '#CA955C'
+          fgColor = 'white'
+          text = 'Armar Equipo'
+        />
+        <CustomButton2 
+          onPress={() => navigation.navigate('Ranking', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})}
+          icon = "ios-podium-sharp"
+          bgColor= '#CA955C'
+          fgColor = 'white'
+          text = 'Podio'
+        />
+      </View>
     </ScrollView>
 
     )
@@ -118,7 +144,6 @@ const styles = StyleSheet.create({
   tag:{
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: 'mintcream',
     width: 90,
     padding: 5,
     borderRadius: 20,
@@ -140,6 +165,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     backgroundColor: '#CA955C'
+  },
+  teamButtonsContainer: {
+    marginTop: 15,
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   text: {
     fontWeight: 'bold',

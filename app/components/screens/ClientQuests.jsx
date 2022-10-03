@@ -22,7 +22,7 @@ export default ClientQuests = ({route, navigation}) => {
 
   const url = Config.appUrl + "clients/" + clientID + "/quests"
 
-  const colors = ['darkslateblue','darkgoldenrod', 'darkred', 'darkgreen']
+  const colors = ['sandybrown', 'indianred', 'darksalmon', 'darkseagreen']
   
   const isFocused = useIsFocused()
   
@@ -113,7 +113,7 @@ export default ClientQuests = ({route, navigation}) => {
               <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
             </View>
             <View style={styles.questInfo}>
-              <FontAwesome name ='clock-o' color={'darkslateblue'} size={25}/>
+              <FontAwesome name ='clock-o' color={'darkslategreen'} size={25}/>
               <Text style={styles.questInfoText}>{quest.duration}</Text>
             </View>
             <View style={styles.questInfo}>
