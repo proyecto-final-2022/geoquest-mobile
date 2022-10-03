@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem
@@ -15,7 +15,7 @@ import {
   TouchableRipple,
   Switch
 } from 'react-native-paper';
-import {closeSession} from '../../utils/storage/storage';
+import {areYouSureAlert} from '../../utils/storage/storage';
 import Storage from '../../utils/storage/storage';
 import {useNavigation} from '@react-navigation/native'
 
@@ -43,21 +43,15 @@ export function DrawerContent(props) {
   const getUserImage = (imageNumber) => { 
     const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
     return userImages[imageNumber-1];
-   }
+  }
 
   useEffect(() => {
     Storage.getObject('user').
-    then(user => setName(user.name))
-  }, [props])
-
-  useEffect(() => {
-    Storage.getObject('user').
-    then(user => setUsername(user.username))
-  }, [props])
-
-  useEffect(() => {
-    Storage.getObject('user').
-    then(user => setImage(user.image))
+    then(user => {
+      setName(user.name);
+      setUsername(user.username);
+      setImage(user.image);
+    })
   }, [props])
 
   return(
@@ -121,7 +115,9 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Perfil"
-                            onPress={() => {console.log('Perfil')}}
+                            onPress={() => {
+                              navigation.navigate('Profile')
+                            }}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -157,10 +153,9 @@ export function DrawerContent(props) {
                         size={size}
                         />
                     )}
-                    label="Sign Out"
+                    label="Cerrar Sesión"
                     onPress={() => {
-                        closeSession()
-                        navigation.navigate('Sign In')
+                      areYouSureAlert({navigation});
                     }}
                 />
             </Drawer.Section>

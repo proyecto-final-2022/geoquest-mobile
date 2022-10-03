@@ -10,12 +10,14 @@ export default CustomInput = ({
   placeholder,
   secureTextEntry,
   icon,
+  defaultValue
 }) => {
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
+      defaultValue={defaultValue}
       render={({field: {value, onChange, onBlur}, fieldState: {error}}) => (
         <>
           <View
