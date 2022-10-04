@@ -1181,7 +1181,7 @@
     "node-forge" "^1.2.1"
     "nullthrows" "^1.1.1"
 
-"@expo/config-plugins@^4.0.14", "@expo/config-plugins@^4.0.16", "@expo/config-plugins@^4.1.0", "@expo/config-plugins@~4.1.4", "@expo/config-plugins@4.1.5":
+"@expo/config-plugins@^4.0.14", "@expo/config-plugins@^4.0.16", "@expo/config-plugins@^4.1.0", "@expo/config-plugins@^4.1.5", "@expo/config-plugins@~4.1.4", "@expo/config-plugins@4.1.5":
   "integrity" "sha512-RVvU40RtZt12HavuDAe+LDIq9lHj7sheOfMEHdmpJ/uTA8pgvkbc56XF6JHQD+yRr6+uhhb+JnAasGq49dsQbw=="
   "resolved" "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-4.1.5.tgz"
   "version" "4.1.5"
@@ -3255,6 +3255,13 @@
   "integrity" "sha512-qUxCW7kPB6AVX5h3ZPVnxw4LLZWsRwAPBtRDlh1UDN7GWZ+CQN1SNk0w0BPotjNtSlXEZSFDqKqtoDDAUYjNmg=="
   "resolved" "https://registry.npmjs.org/expo-error-recovery/-/expo-error-recovery-3.1.0.tgz"
   "version" "3.1.0"
+
+"expo-facebook@~12.2.0":
+  "integrity" "sha512-goW+s2tyzAxo2EX6Qp0vML8fjb25TE8ZzpmjGdwh3FvapIBzcY3AKpiAyjH/1sGMvadtbgfy2ApiMKNIom6aTA=="
+  "resolved" "https://registry.npmjs.org/expo-facebook/-/expo-facebook-12.2.0.tgz"
+  "version" "12.2.0"
+  dependencies:
+    "@expo/config-plugins" "^4.0.14"
 
 "expo-file-system@~14.0.0":
   "integrity" "sha512-Asva7ehLUq/PIem6Y+/OQvoIqhFqYDd7l4l49yDRDgLSbK2I7Fr8qGhDeDpnUXrMVamg2uwt9zRGhyrjFNRhVw=="
@@ -5744,6 +5751,14 @@
     "jscodeshift" "^0.13.1"
     "nullthrows" "^1.1.1"
 
+"react-native-fbsdk-next@^11.0.0":
+  "integrity" "sha512-F0rNqfSByO7MG0n2J8rDdqBsqu2P5+nFkEnBuOh+HN1UDnxpF6lbt4N38oWN1v32h+Gb0TL0wiJnperbGuu5tQ=="
+  "resolved" "https://registry.npmjs.org/react-native-fbsdk-next/-/react-native-fbsdk-next-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "@expo/config-plugins" "^4.1.5"
+    "xml2js" "^0.4.23"
+
 "react-native-gesture-handler@>= 1.0.0", "react-native-gesture-handler@~2.2.1":
   "integrity" "sha512-P4kAPbSY8VFAjvFNzfePgFsbZEldfEnEfNqOJw6MlpcdXrPGwRbvMqWMVkA9lifdKTZ3XifvAgJ8+R+uEZN0zA=="
   "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.2.1.tgz"
@@ -5826,7 +5841,7 @@
     "normalize-css-color" "^1.0.2"
     "prop-types" "^15.6.0"
 
-"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.69 || 1000.0.0", "react-native@>=0.42.0", "react-native@>=0.61", "react-native@0.65.1", "react-native@0.68.2":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.69 || 1000.0.0", "react-native@>=0.42.0", "react-native@>=0.61", "react-native@>=0.63.3", "react-native@0.65.1", "react-native@0.68.2":
   "integrity" "sha512-qNMz+mdIirCEmlrhapAtAG+SWVx6MAiSfCbFNhfHqiqu1xw1OKXdzIrjaBEPihRC2pcORCoCHduHGQe/Pz9Yuw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.68.2.tgz"
   "version" "0.68.2"
@@ -7170,7 +7185,7 @@
   dependencies:
     "sax" "^1.2.4"
 
-"xml2js@0.4.23":
+"xml2js@^0.4.23", "xml2js@0.4.23":
   "integrity" "sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug=="
   "resolved" "https://registry.npmjs.org/xml2js/-/xml2js-0.4.23.tgz"
   "version" "0.4.23"
