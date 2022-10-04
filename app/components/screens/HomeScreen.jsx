@@ -3,7 +3,7 @@ import { ActivityIndicator, FlatList, StyleSheet, ScrollView, Text, Alert, View 
 import CustomButton from '../commons/CustomButton'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native'
-import { CloseSession} from '../../utils/storage/storage';
+import { closeSession} from '../../utils/storage/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
@@ -11,12 +11,12 @@ const HomeScreen = () => {
     
   const onSignOutGoogle = async () =>  {
     await GoogleSignin.signOut()
-    CloseSession()
+    closeSession()
     navigation.navigate('Sign In')
   }  
   
   const onSignOutManual = async () =>  {
-    CloseSession()
+    closeSession()
     navigation.navigate('Sign In')
   }
 
@@ -24,9 +24,9 @@ const HomeScreen = () => {
     navigation.navigate('Scene')
   }
 
-  const onGetData = async () =>  {
+  const ongetData = async () =>  {
     try {
-      const value = await AsyncStorage.getItem('@storage_Key')
+      const value = await AsyncStorage.getItem('auth.token')
         if(value !== null) {
           console.warn('Token : ' + value)
               // value previously stored
@@ -51,7 +51,7 @@ const HomeScreen = () => {
         />
         <CustomButton 
           text ="Log token (only for test xD)"
-          onPress = {onGetData}
+          onPress = {ongetData}
           type="TERTIARY"
         />
         <CustomButton 

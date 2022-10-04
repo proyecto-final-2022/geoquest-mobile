@@ -5,23 +5,26 @@ import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
+import CustomButton2 from '../commons/CustomButton2'
 
 const {width} = Dimensions.get('screen')
 
 export default QuestVisualizer = ({route, navigation}) => {
 
-  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags} = route.params
+  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
+  const colors = ['sandybrown', 'indianred', 'darksalmon', 'darkseagreen']
 
-  const Tags = ({tag}) => {
+  const Tag = ({tag, index}) => {
     return (
-      <View style={styles.tag}>
-      <View style={{marginTop: -38, marginLeft:10}}>
-        <Text style={styles.tagInfoText}>{tag}</Text>
-      </View>
+      <View style={[
+        styles.tag,
+        {backgroundColor: colors[index]}
+        ]}>
+        <Text style={{fontWeight: 'bold', color: 'white'}}>{tag}</Text>
       </View>
     )
   }
-  //Por que no reutilizar CustomButton? Porque me pone el boton donde se le canta la verga basicamente y no me deja moverlo
+
   const Button = ({text, onPress}) => {
     return (
       <Pressable 
@@ -37,6 +40,9 @@ export default QuestVisualizer = ({route, navigation}) => {
     navigation.setOptions({
       headerTitle: route.params.name,
       headerTintColor: '#a52a2a',
+      headerRight: () => (
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Client Quests', {clientID, clientName})}/>
+      ),
       headerSearchBarOptions: {
         placeholder: "Search",
       }
@@ -47,30 +53,54 @@ export default QuestVisualizer = ({route, navigation}) => {
 
     <ScrollView style={styles.view}> 
       <Image style={styles.image} source={{uri: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"}} />
-      <View style={styles.card}>
-          <Text style={{marginTop: 50, fontSize: 20, fontWeight: 'bold'}}>{description}</Text>
-          <View style={{marginTop: 10, flexDirection: 'row'}}>
-            <View style={styles.questInfo}>
-              <FontAwesome name ='clock-o' size={25}/>
-                <Text style={styles.questInfoText}>{duration}</Text>
-            </View>
-            <View style={styles.questInfo} marginLeft={18}>
-              <Entypo name ='gauge' size={25}/>
-                <Text style={styles.questInfoText}>{difficulty}</Text>
-            </View>
 
-            <View style={styles.questInfo} marginTop={-150} marginLeft={18}>
-              <Entypo name ='star' size={30}/>
-              <Text style={styles.questInfoText}>{qualification}</Text>
-            </View>
-            {tags.map((tag) => <Tags tag={tag}/>)}  
+      <View style={styles.card}>
+        <View style={styles.questInfoContainer}>
+          <View style={styles.questInfo}>
+            <Entypo name ='star' size={25} color={'goldenrod'}/>
+            <Text style={{fontWeight: 'bold'}}>{qualification}</Text>
+          </View>
+          <View style={styles.questInfo}>
+            <Entypo name ='gauge' color={'firebrick'} size={25}/>
+            <Text style={{fontWeight: 'bold'}}>{difficulty}</Text>
+          </View>
+          <View style={styles.questInfo}>
+            <FontAwesome name ='clock-o' color={'black'} size={25}/>
+            <Text style={{fontWeight: 'bold'}}>{duration}</Text>
           </View>
         </View>
+        <View style={styles.description}>
+          <Text style={{fontSize: 20}}>{description}</Text>
+        </View>
+  
+        <View style={styles.tagContainer}>
+          {tags.map((tag, index) => <Tag tag={tag} index={index}/>)}
+        </View>
 
-      <Button onPress={() => console.log('Comenzar')} text="Comenzar"/>
-      <Button onPress={() => console.log('Armar Grupo')} text="Armar Grupo"/>
-      <Button onPress={() => navigation.navigate('Ranking', {...{id}})} text="Ver Rankings"/>
-    
+      </View>
+
+      <View style={styles.teamButtonsContainer}> 
+        <CustomButton2 
+          onPress = {() => console.log('Comenzar')}
+          icon = "arrow-forward-circle"
+          bgColor= 'darkseagreen'
+          fgColor = 'white'
+        />
+        <CustomButton2 
+          onPress = {() => console.log('Armar Equipo')}
+          icon = "people-sharp"
+          bgColor= '#CA955C'
+          fgColor = 'white'
+          text = 'Armar Equipo'
+        />
+        <CustomButton2 
+          onPress={() => navigation.navigate('Ranking', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})}
+          icon = "ios-podium-sharp"
+          bgColor= '#CA955C'
+          fgColor = 'white'
+          text = 'Podio'
+        />
+      </View>
     </ScrollView>
 
     )
@@ -83,36 +113,38 @@ const styles = StyleSheet.create({
   },
   card:{
     height: 250,
+    flexDirection: 'column',
     backgroundColor: '#ffefd5',
     elevation: 5,
     marginTop:20,
     padding: 15, 
   },
-  questInfo: {
-    flexDirection: 'row',
-    marginTop: -150, 
-    marginLeft: 200,
+  questInfoContainer: {
+    flex: 1,
+    flexDirection: 'row-reverse',
   },
-  questInfoText: {
-    marginTop: 28,
-    marginLeft: -25,
-    color: '#696969',
+  questInfo: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexBasis: 45,
+    flexShrink: 0,
+    flexGrow: 0,
+  },
+  description: {
+    flex: 2  
+  },
+  tagContainer:{
+    flex: 0.5,
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   tag:{
-    height: 10,
-    marginRight: 360,
-    marginLeft: -340,
-    marginTop: 30,
-    backgroundColor: 'mintcream',
-    width: 78,
-    padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: 90,
+    padding: 5,
     borderRadius: 20,
-  },
-  tagInfoText: {
-    fontSize: 11,
-    marginTop: 25,
-    marginLeft: -15,
-    color: '#696969',
+    marginLeft: 5
   },
   image: {
     height: 140,
@@ -130,6 +162,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     backgroundColor: '#CA955C'
+  },
+  teamButtonsContainer: {
+    marginTop: 15,
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   text: {
     fontWeight: 'bold',
