@@ -1,49 +1,39 @@
 import React, {useState} from 'react'
-import {View, Button, Text, TextInput, Image, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
+import {View, ActivityIndicator, Image, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
 import Logo from '../../../assets/GeoQuestLogo.png'
 import CustomInput from '../commons/CustomInput'
 import CustomButton from '../commons/CustomButton'
 import SocialSignInButtons from '../commons/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
-import {loginManual} from '../../utils/apicalls/ApiCalls'
+import {loginManual, getUser} from '../../utils/apicalls/ApiCalls'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Storage from '../../utils/storage/storage';
 import Config from '../../../config.json'
+import { useFocusEffect } from '@react-navigation/native';
 
 const SignInScreen = () => {
 
   const {height} = useWindowDimensions();
 
   const {control, handleSubmit} = useForm();
+  const [loggingIn, setLoggingIn] = useState(false);
 
   const navigation = useNavigation()
 
   const onSignInPressed = async (data) => {
-    try{
-      fetch(
-        Config.appUrl+'users/sessions/', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'},
-      body: JSON.stringify({ 
-        email: data.email,  
-        password: data.password})
+    if(!loggingIn){
+      setLoggingIn(true);
+      loginManual(data.email, data.password)
+      .then(result => {
+        navigation.navigate('Quest Navigator');
+        setLoggingIn(false);
       })
-      .then(response => {
-        if(!response.ok) Alert.alert('GeoQuest', 'User not registered', [{text: 'Ok'}]) ;
-        else response.json().then(async (data) => {
-          Storage.setObject('user', data)
-          navigation.navigate('Quest Navigator')
-        }).catch((error) => {
-        console.log('error: ' + error);
-        this.setState({ requestFailed: true });
-        });})
-      }  
-    
-     catch (error) {
-      console.error(error);
+      .catch(error => {
+        Alert.alert('Usuario o contraseña incorrecta');
+        setLoggingIn(false);
+      })
     }
   }
 
@@ -55,6 +45,24 @@ const SignInScreen = () => {
     navigation.navigate('Sign Up')
   }
 
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     Storage.getObject('user').
+  //     then(user => {
+  //       if(user.id !== undefined){ //user is already logged in
+  //         getUser(user.id)
+  //         .then(() => {
+  //           navigation.navigate('Quest Navigator');
+  //         })
+  //         .catch(error => {
+  //           console.log(error);
+  //         })
+  //       }
+  //     })
+  //     return () => {};
+  //   }, [])
+  // );
+
   return (
     <ScrollView style={styles.view}>
       <View style={styles.root}>
@@ -64,35 +72,59 @@ const SignInScreen = () => {
           resizeMode="contain"
         />
     
-        <CustomInput 
-          name = "email"
-          placeholder ="Email" 
-          control = {control}
-          rules = {{required: 'Email is required'}}
-          icon = "mail"
-        />
-        <CustomInput
-          name = "password" 
-          placeholder ="Password" 
-          icon = "lock"
-          control = {control} 
-          rules = {{required: 'Password is required'}}
-          secureTextEntry
-        /> 
+        {
+          loggingIn && <ActivityIndicator size="large" style={{justifyContent: "center", paddingTop: 50, transform: [{ scaleX: 2 }, { scaleY: 2 }]}}/>
+        }
+        {
+          !loggingIn && 
+          <>
+            <CustomInput 
+              name = "email"
+              placeholder ="Email" 
+              control = {control}
+              rules = {{
+                pattern: {
+                  value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                  message: 'Email invalido'
+                },
+                required: 'El email es requerido'
+              }}
+              icon = "mail"
+            />
+            <CustomInput
+              name = "password" 
+              placeholder ="Contraseña" 
+              icon = "lock"
+              control = {control} 
+              rules = {{
+                required: 'La contraseña es requerida',
+                minLength: {
+                  value: 8,
+                    message: 'Mínimo 8 caracteres',
+                  },
+                maxLength: {
+                  value: 32,
+                  message: 'Máximo 32 caracteres',
+                }
+              }}
+              secureTextEntry
+            /> 
 
-        <CustomButton 
-          text='Sign In' 
-          onPress={handleSubmit(onSignInPressed)}/>
-        <CustomButton 
-          text='Forgot password?' 
-          onPress={onForgotPasswordPressed}
-          type="TERTIARY"/>
-        <SocialSignInButtons/>
-        <CustomButton 
-          text ="Don't have an account? Create one"
-          onPress = {onSignUpPress}
-          type="TERTIARY"
-        />
+            <CustomButton 
+              text='Iniciar Sesión' 
+              onPress={handleSubmit(onSignInPressed)}/>
+            <CustomButton 
+              text='¿Olvidó su contraseña?' 
+              onPress={onForgotPasswordPressed}
+              type="TERTIARY"/>
+            <SocialSignInButtons/>
+            <CustomButton 
+              text ="¿No tenés una cuenta? Creá una!"
+              onPress = {onSignUpPress}
+              type="TERTIARY"
+            />
+          </>
+        }
       </View>
     </ScrollView>
     )
