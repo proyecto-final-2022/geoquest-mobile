@@ -5,7 +5,7 @@ import { Viro3DObject } from "@viro-community/react-viro/components/Viro3DObject
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 import Resources from "../../../../utils/resources.js";
 
-export default function WithImageRecognition({id, handler, typeProps}) {
+export default function WithImageRecognition({id, handler, typeProps, ...props}) {
   const [pauseUpdates, setPauseUpdates] = useState(false);
 
   const {target, model, interactions} = typeProps;
