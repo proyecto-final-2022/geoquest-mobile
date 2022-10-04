@@ -14,6 +14,8 @@ import Ranking from '../screens/Ranking'
 import QuestTeam from '../screens/QuestTeam'
 import Notifications from '../screens/Notifications'
 import WaitRoom from '../screens/WaitRoom'
+import Profile from '../screens/ProfileScreen'
+
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContent } from '../screens/DrawerContent';
 
@@ -35,6 +37,7 @@ export default Navigation = () => {
         <Drawer.Screen name="Quest Team" component={QuestTeam} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Notifications" component={Notifications} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Wait Room" component={WaitRoom} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Profile" component={Profile} options={{ headerShown: true, headerTitle: "", headerStyle: {backgroundColor: '#FFF9CA'}}}/>
       </Drawer.Navigator>
   )
 }
