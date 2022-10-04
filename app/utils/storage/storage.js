@@ -33,8 +33,6 @@ export async function closeSession() {
   await setObject("user", {});
 }
 
-export const CloseSession = async () => { await AsyncStorage.removeItem("@storage_Key");};
-
 export async function getObject(key) {
   return AsyncStorage.getItem(key).then(json => JSON.parse(json));
 }

@@ -22,7 +22,7 @@ const Drawer = createDrawerNavigator();
 
 const Stack = createNativeStackNavigator();
 
-export default Navigation = () => {
+export default function Navigation() {
   return(
     <NavigationContainer>
       <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
@@ -39,4 +39,4 @@ export default Navigation = () => {
       </Drawer.Navigator>
     </NavigationContainer>
   );
-};
+}
