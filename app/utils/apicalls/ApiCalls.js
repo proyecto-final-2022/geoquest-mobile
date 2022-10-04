@@ -95,7 +95,40 @@ export const postLoginGoogle = async (email, name, username, token) => {
         })
         .catch((error) => {
           console.log('error: ' + error);
-          this.setState({ requestFailed: true });
+          // this.setState({ requestFailed: true });
+        });
+      }
+    )
+  }
+  catch (error) {
+    console.error(error);
+  }
+}
+
+export const postLoginFacebook = async (email, name, username, token) => {
+  try {
+    await fetch(
+      Config.appUrl+'users/sessions/facebook', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': token
+        },
+        body: JSON.stringify({ 
+          email: email, 
+          name: name,
+          username: username
+        })
+      })
+      .then(response => {
+        if(!response.ok) throw new Error(response.status);
+        else response.json().then(data => {
+          Storage.setObject('user', data)
+        })
+        .catch((error) => {
+          console.log('error: ' + error);
+          throw new Error(response.body);
+          // this.setState({ requestFailed: true });
         });
       }
     )

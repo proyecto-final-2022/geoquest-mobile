@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem
@@ -60,10 +60,12 @@ export function DrawerContent(props) {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{flexDirection:'row',marginTop: 15}}>
-              <Avatar.Image 
-                source={getUserImage(image)}
-                size={50}
-              />
+              <Pressable onPress={() => {navigation.navigate('Profile')}}>
+                <Avatar.Image 
+                  source={getUserImage(image)}
+                  size={50}
+                />
+              </Pressable>
               <View style={{marginLeft:15, flexDirection:'column'}}>
                 <Title style={styles.title}>{username}</Title>
                 <Caption style={styles.caption}>{name}</Caption>

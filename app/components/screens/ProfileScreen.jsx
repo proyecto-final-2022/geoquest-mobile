@@ -157,7 +157,7 @@ const ProfileScreen = ({navigation}) => {
             {imageSelectorModal && <View style={styles.container}>
                 <FlatList 
                     data={userImages}
-                    keyExtractor={item => item.index}
+                    keyExtractor={(item, index) => String(index)}
                     numColumns={3}
                     renderItem={(item) =>
                         <Pressable
