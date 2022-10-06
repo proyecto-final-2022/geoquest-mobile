@@ -32,9 +32,8 @@ export default function ARView({questHandler}) {
 
   const onClickOk = (hint) => {
     console.log("Hint: " + hint)
-    if (hint == "Escene 1: una pista re loca 2!!!") {
-        console.log("hola: " + hint)
-        navigation.navigate("Game2")
+    if (hint == "Escene 5: una pista re loca 2!!!") {
+      navigation.navigate("WinScreen")
     }
     setShowHint(false)
   }

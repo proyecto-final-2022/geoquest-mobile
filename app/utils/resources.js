@@ -1,7 +1,7 @@
 
 export const resources = {
   images: {
-    exampleImage: require("../../res/images/exampleImage.jpg")
+    exampleImage: require("../../res/images/boquita.jpg")
   },
 
   models: {

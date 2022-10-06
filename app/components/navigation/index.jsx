@@ -12,6 +12,11 @@ import Scene from "../scenes/HelloUser";
 import ClientQuests from "../screens/ClientQuests";
 import Ranking from "../screens/Ranking";
 import Game from "../screens/Game";
+import Game2 from "../screens/Game2";
+import Game3 from "../screens/Game3";
+import Game4 from "../screens/Game4";
+import Game5 from "../screens/Game5";
+import WinScreen from "../screens/WinScreen";
 import Profile from "../screens/ProfileScreen";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -27,6 +32,11 @@ export default function Navigation() {
     <NavigationContainer>
       <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
         <Drawer.Screen name="Game" component={Game} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
+        <Drawer.Screen name="Game2" component={Game2} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
+        <Drawer.Screen name="Game3" component={Game3} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
+        <Drawer.Screen name="Game4" component={Game4} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
+        <Drawer.Screen name="Game5" component={Game5} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
+        <Drawer.Screen name="WinScreen" component={WinScreen} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
         <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>
         <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>
         <Drawer.Screen name="Home" component={HomeScreen} options={{ headerShown: true, headerTitle: "" }}/>
