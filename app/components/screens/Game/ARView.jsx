@@ -20,7 +20,7 @@ export default function ARView({questHandler}) {
   const [ showHint, setShowHint ] = useState(false);
   const [ hintText, setHintText ] = useState("");
   const [isOpen, setIsOpen] = useState(true)
-  const snapPoints = ["3%","40%"]
+  const snapPoints = ["3%","45%"]
 
   const hint = (text) => {
     setHintText(text);

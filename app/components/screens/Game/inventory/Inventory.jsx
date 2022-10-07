@@ -62,13 +62,13 @@ const Inventory = () => {
       <View style={styles.container}>
            {items[index].visibleMenu && 
                 <View style={styles.popup}>
-                {console.log(visibleMenu)}
                 {options.map((op, i) => (
-                  <TouchableOpacity key={i} onPress={() => op.action(index)}>
+                  <TouchableOpacity style={[styles.option, {borderBottomWidth: i === options.length - 1 ? 0 : 1}]} key={i} onPress={() => op.action(index)}>
                     <Text>{op.title}</Text>
                   </TouchableOpacity>
                 )
                 )}
+
               </View>      
           }
 
@@ -144,8 +144,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     marginBottom: 5,
-    marginTop: -70,
-
+    marginTop: -100,
+   },
+   option: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 7,
+    borderBottomColor: '#ccc'
    }
 });
 
