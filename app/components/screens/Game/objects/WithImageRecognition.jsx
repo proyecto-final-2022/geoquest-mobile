@@ -50,4 +50,4 @@ export default function WithImageRecognition({id, handler, typeProps, ...props})
       <Viro3DObject onClick={onClick} {...modelProps} />
     </ViroARImageMarker>
   );
-}
+} 

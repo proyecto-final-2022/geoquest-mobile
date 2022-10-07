@@ -9,11 +9,11 @@ export default function Scene(props) {
   console.log(props.arSceneNavigator);
   console.log("Scene num: ", sceneNum);
   const sceneConfig = handler.questConfig.scenes[sceneNum];
-
+/*
   useEffect(() => {
     props.arSceneNavigator.replace({scene: Scene});
   }, []);
-
+*/
   return (
     <ViroARScene>
       {parseScene(sceneConfig)(handler)}
