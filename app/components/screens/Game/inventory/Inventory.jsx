@@ -7,43 +7,71 @@ import userImage_3 from '../../../../../assets/medals/gold.png'
 
 const Inventory = () => {
   //Despues cambiar esto con un useEffect despues de ejecutar el llamado
-  const [visibleMenu, setVisibleMenu] = useState([false, false, false])
-  const [items, setItems] = useState([{
-    questItemID: 1,
-    image: "1",
-    combinable: [2],
-    visibleMenu: false
-  },
-  {
+  const [items, setItems] = useState([
+    {
+      questItemID: 1,
+      image: "2",
+      combinable: [
+        {
+          combinableQuestItemID: 2,
+          image: "3"
+        }    
+      ],
+      visibleMenu: false,
+      marker: false
+    },
+    {
     questItemID: 2,
-    image: "2",
-    combinable: [1],
-    visibleMenu: false
+    image: "1",
+    combinable: [
+      {
+        combinableQuestItemID: 1,
+        image: "3"
+      }
+    ],
+    visibleMenu: false,
+    marker: false
   },
   {
     questItemID: 3,
-    image: "3",
-    visibleMenu: false
+    image: "2",
+    visibleMenu: false,
+    marker: false
   } 
   ])
 
   const options = [
     {
       title: 'Ver',
-      action: (index) =>  {
+      action: (item, index) =>  {
         let itemsList = [...items];
-        let item = {
+        let itemNotVisible = {
         ...itemsList[index],
         visibleMenu: false
       }
-     itemsList[index] = item;
+     itemsList[index] = itemNotVisible;
      setItems(itemsList);
       }
 
     },
     {
       title: 'Combinar',
-      action: () => {console.log('Combinar')}
+      action: (item, index) => {
+        var itemsToCombine = []
+        item.combinable.forEach(combine => itemsToCombine.push(items.find(item => item.questItemID == combine.combinableQuestItemID)) )
+        var combinableItemsIDs = []
+        itemsToCombine.forEach(item => combinableItemsIDs.push(items.indexOf(item)))
+        combinableItemsIDs.forEach(id => {
+          let itemsList = [...items];
+          let itemMarked = {
+          ...itemsList[id],
+          marker: true
+          }
+         itemsList[id] = itemMarked;
+         setItems(itemsList);       
+        })
+
+      }
     },
     {
       title: 'Usar',
@@ -63,7 +91,7 @@ const Inventory = () => {
            {items[index].visibleMenu && 
                 <View style={styles.popup}>
                 {options.map((op, i) => (
-                  <TouchableOpacity style={[styles.option, {borderBottomWidth: i === options.length - 1 ? 0 : 1}]} key={i} onPress={() => op.action(index)}>
+                  <TouchableOpacity style={[styles.option, {borderBottomWidth: i === options.length - 1 ? 0 : 1}]} key={i} onPress={() => op.action(item, index)}>
                     <Text>{op.title}</Text>
                   </TouchableOpacity>
                 )
@@ -84,7 +112,7 @@ const Inventory = () => {
       setItems(itemsList);
       }
       }>
-        <View style={styles.itemContainer}> 
+        <View style={[styles.itemContainer, item.marker ? {borderWidth: 8, borderColor: 'seagreen'} : {} ]}> 
           <Image 
             source={getUserImage(item.image)}
             size={50}
