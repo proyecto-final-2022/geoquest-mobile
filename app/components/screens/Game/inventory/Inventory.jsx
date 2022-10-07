@@ -30,7 +30,16 @@ const Inventory = () => {
   const options = [
     {
       title: 'Ver',
-      action: () => setVisibleMenu(false)
+      action: (index) =>  {
+        let itemsList = [...items];
+        let item = {
+        ...itemsList[index],
+        visibleMenu: false
+      }
+     itemsList[index] = item;
+     setItems(itemsList);
+      }
+
     },
     {
       title: 'Combinar',
@@ -55,18 +64,7 @@ const Inventory = () => {
                 <View style={styles.popup}>
                 {console.log(visibleMenu)}
                 {options.map((op, i) => (
-                  <TouchableOpacity key={i} onPress={() => 
-                    {
-                      let itemsList = [...items];
-                      let item = {
-                      ...itemsList[index],
-                      visibleMenu: false
-                    }
-                   itemsList[index] = item;
-                   setItems(itemsList);
-                    }
-                    //op.action                  
-                  }>
+                  <TouchableOpacity key={i} onPress={() => op.action(index)}>
                     <Text>{op.title}</Text>
                   </TouchableOpacity>
                 )
