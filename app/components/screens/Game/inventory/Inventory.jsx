@@ -6,6 +6,7 @@ import userImage_2 from '../../../../../assets/medals/silver.png'
 import userImage_3 from '../../../../../assets/medals/gold.png'
 
 const Inventory = () => {
+  const [combinable, setCombinable] = useState({})
   //Despues cambiar esto con un useEffect despues de ejecutar el llamado
   const [items, setItems] = useState([
     {
@@ -23,12 +24,6 @@ const Inventory = () => {
     {
     questItemID: 2,
     image: "1",
-    combinable: [
-      {
-        combinableQuestItemID: 1,
-        image: "3"
-      }
-    ],
     visibleMenu: false,
     marker: false
   },
@@ -58,30 +53,75 @@ const Inventory = () => {
       title: 'Combinar',
       action: (item, index) => {
         var itemsToCombine = []
-        item.combinable.forEach(combine => itemsToCombine.push(items.find(item => item.questItemID == combine.combinableQuestItemID)) )
-        var combinableItemsIDs = []
-        itemsToCombine.forEach(item => combinableItemsIDs.push(items.indexOf(item)))
-        combinableItemsIDs.forEach(id => {
+        item.combinable.forEach(combine => itemsToCombine.push(
+          {
+          imageOfCombination: combine.image,
+          item: items.find(item => item.questItemID == combine.combinableQuestItemID)
+          }
+        ))          
+          
+        var combinableItems = []
+        itemsToCombine.forEach(itemCombine => combinableItems.push(
+          {
+          imageOfCombination: itemCombine.imageOfCombination,
+          itemIndex: items.indexOf(itemCombine.item)
+          }
+        
+        ))
+
+        combinableItems.forEach(itemCombine => {
           let itemsList = [...items];
           let itemMarked = {
-          ...itemsList[id],
+          ...itemsList[itemCombine.itemIndex],
           marker: true
           }
-         itemsList[id] = itemMarked;
-         setItems(itemsList);       
+         itemsList[itemCombine.itemIndex] = itemMarked;
+         setItems(itemsList)
+        //TODO: para mas de un item combinable
+         setCombinable({
+          indexCombine: index,
+          indexCombinable: itemCombine.itemIndex,
+          image: itemCombine.imageOfCombination
+        })       
         })
 
       }
     },
     {
       title: 'Usar',
-      action: () => {console.log('Usar')}
+      action: () => {console.log("Los items son: ", items)}
     }
   ]
   
   const getUserImage = (imageNumber) => { 
     const userImages = [userImage_1, userImage_2, userImage_3];
     return userImages[imageNumber-1];
+  }
+
+  const showMenu = (index) => {
+      let itemsList = [...items];
+      let item = {
+      ...itemsList[index],
+      visibleMenu: true
+    }
+
+    itemsList[index] = item;
+    setItems(itemsList);
+  }
+
+  const combineItem = (itemSelected) => {
+    let itemsList = [...items];
+    let item = {
+    ...itemsList[combinable.indexCombine],
+    image: combinable.image,
+    combinable: {},
+    visibleMenu: false
+  }
+  itemsList[combinable.indexCombine] = item;
+  const indexItem = itemsList.indexOf(itemSelected);
+  itemsList.splice(indexItem, 1);
+
+  setItems(itemsList);
   }
 
   const Item = ({item, index}) => {
@@ -100,18 +140,10 @@ const Inventory = () => {
               </View>      
           }
 
-      <TouchableOpacity key={index} onPress={() =>       
-        {
-          let itemsList = [...items];
-          let item = {
-          ...itemsList[index],
-          visibleMenu: true
-        }
-
-      itemsList[index] = item;
-      setItems(itemsList);
-      }
+      <TouchableOpacity key={index} onPress={() => {item.marker ? combineItem(item) : showMenu(index)}   
+        
       }>
+         
         <View style={[styles.itemContainer, item.marker ? {borderWidth: 8, borderColor: 'seagreen'} : {} ]}> 
           <Image 
             source={getUserImage(item.image)}
