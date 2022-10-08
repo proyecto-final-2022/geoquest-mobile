@@ -4,6 +4,7 @@ import {Avatar} from 'react-native-paper';
 import userImage_1 from '../../../../../assets/medals/bronze.png'
 import userImage_2 from '../../../../../assets/medals/silver.png'
 import userImage_3 from '../../../../../assets/medals/gold.png'
+import userImage_4 from '../../../../../assets/medals/treasure_chest.png'
 
 const Inventory = () => {
   const [combinable, setCombinable] = useState({})
@@ -16,6 +17,10 @@ const Inventory = () => {
         {
           combinableQuestItemID: 2,
           image: "3"
+        },
+        {
+          combinableQuestItemID: 3,
+          image: "4"
         }    
       ],
       visibleMenu: false,
@@ -58,31 +63,29 @@ const Inventory = () => {
       action: (item, index) => {
         if (item.combinable.length != 0) { 
         var itemsToCombine = []
-        item.combinable.forEach(combine => itemsToCombine.push(
+        item.combinable.forEach(combine => 
+          {
+          var item = items.find(item => item.questItemID == combine.combinableQuestItemID)  
+          itemsToCombine.push(
           {
           imageOfCombination: combine.image,
-          item: items.find(item => item.questItemID == combine.combinableQuestItemID)
+          item: item,
+          itemIndex: items.indexOf(item)
           }
-        ))          
-          
-        var combinableItems = []
-        itemsToCombine.forEach(itemCombine => combinableItems.push(
-          {
-          imageOfCombination: itemCombine.imageOfCombination,
-          itemIndex: items.indexOf(itemCombine.item)
+          )
           }
-        
-        ))
-
-        combinableItems.forEach(itemCombine => {
-          let itemsList = [...items];
+        )
+        var i = 0
+        let itemsList = [...items];
+        itemsList[index].visibleMenu = false;
+        itemsToCombine.forEach(itemCombine => {
+          i++
+          console.log("Items iteracion " + i + ":", items)
           let itemMarked = {
           ...itemsList[itemCombine.itemIndex],
           marker: true
           }
          itemsList[itemCombine.itemIndex] = itemMarked;
-         itemsList[index].visibleMenu = false;
-         setItems(itemsList)
         //TODO: para mas de un item combinable
          setCombinable({
           indexCombine: index,
@@ -90,6 +93,9 @@ const Inventory = () => {
           image: itemCombine.imageOfCombination
         })       
         })
+        setItems(itemsList)
+
+        console.log(items)
 
       }
 
@@ -102,7 +108,7 @@ const Inventory = () => {
   ]
   
   const getUserImage = (imageNumber) => { 
-    const userImages = [userImage_1, userImage_2, userImage_3];
+    const userImages = [userImage_1, userImage_2, userImage_3, userImage_4];
     return userImages[imageNumber-1];
   }
 
