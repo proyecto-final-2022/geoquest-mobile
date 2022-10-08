@@ -24,12 +24,16 @@ const Inventory = () => {
     {
     questItemID: 2,
     image: "1",
+    combinable: [    
+    ],
     visibleMenu: false,
     marker: false
   },
   {
     questItemID: 3,
     image: "2",
+    combinable: [    
+    ],
     visibleMenu: false,
     marker: false
   } 
@@ -52,6 +56,7 @@ const Inventory = () => {
     {
       title: 'Combinar',
       action: (item, index) => {
+        if (item.combinable.length != 0) { 
         var itemsToCombine = []
         item.combinable.forEach(combine => itemsToCombine.push(
           {
@@ -76,6 +81,7 @@ const Inventory = () => {
           marker: true
           }
          itemsList[itemCombine.itemIndex] = itemMarked;
+         itemsList[index].visibleMenu = false;
          setItems(itemsList)
         //TODO: para mas de un item combinable
          setCombinable({
@@ -84,6 +90,8 @@ const Inventory = () => {
           image: itemCombine.imageOfCombination
         })       
         })
+
+      }
 
       }
     },
@@ -114,7 +122,7 @@ const Inventory = () => {
     let item = {
     ...itemsList[combinable.indexCombine],
     image: combinable.image,
-    combinable: {},
+    combinable: [],
     visibleMenu: false
   }
   itemsList[combinable.indexCombine] = item;
