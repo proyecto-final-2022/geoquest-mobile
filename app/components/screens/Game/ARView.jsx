@@ -33,7 +33,7 @@ export default function ARView({questHandler}) {
 
   useEffect(() => {
     if(handler.questState.scene == 1) {
-      console.log("*****************************ojaldre*******************", handler.questState.scene)
+      console.log("*****************************entré acá*******************", handler.questState.scene)
       handler.setObjectVisualize(true)
     }
   }, [handler]);
