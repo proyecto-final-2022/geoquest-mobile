@@ -1,7 +1,6 @@
 import React from "react";
 import WithImageRecognition from "./objects/WithImageRecognition";
 
-
 export function parseScene(scene) {
   return (questHandler) => {
     return scene.objects.map((o, key) => parseObject(questHandler, key, o));

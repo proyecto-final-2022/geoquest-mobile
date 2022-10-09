@@ -46,6 +46,7 @@ export default function WithImageRecognition({id, handler, typeProps, ...props})
       onAnchorFound={() => setPauseUpdates(true)}
       pauseUpdates={pauseUpdates}
     >
+      {console.log("***********Props:", props)}
       <ViroAmbientLight color="#ffffff"/>
       <Viro3DObject onClick={onClick} {...modelProps} />
     </ViroARImageMarker>

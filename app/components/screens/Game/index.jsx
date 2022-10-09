@@ -9,6 +9,7 @@ import exampleQuest from "../../../../res/exampleQuest.json";
 function useQuestStateHandler(_questID) {
   const [config, setConfig] = useState();
   const [state, setState] = useState();
+  const [visualize, setVisualize] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const initQuest = async () => {
@@ -45,6 +46,7 @@ function useQuestStateHandler(_questID) {
     loading: loading,
     questConfig: config,
     questState: state,
+    visualize: visualize,
 
     setQuestState: (newState) => {
       // TODO: Notify state update.
@@ -52,6 +54,9 @@ function useQuestStateHandler(_questID) {
       // If ok, then:
       setState(newState);
     },
+    setObjectVisualize: (bool) => {
+      setVisualize(bool);
+    }
   };
 }
 

@@ -5,14 +5,14 @@ import { ViroText } from "@viro-community/react-viro/components/ViroText";
 import { ViroTrackingStateConstants } from "@viro-community/react-viro/components/ViroConstants";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwt_decode from "jwt-decode";
-
+/*
 export default function Scene() {
     return (
       <ViroARSceneNavigator initialScene={{scene: HelloUserScene}}/>
     );
   }
-
-const HelloUserScene = (_props) => {
+*/
+const HelloUser = (_props) => {
     const [text, setText] = useState("Loading...");
     const [name, setName] = useState("");
  
@@ -53,3 +53,5 @@ const HelloUserScene = (_props) => {
       </ViroARScene>
     );
   }
+
+  export default HelloUser
