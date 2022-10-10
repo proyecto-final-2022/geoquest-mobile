@@ -1,7 +1,11 @@
 
 export const resources = {
   images: {
-    exampleImage: require("../../res/images/exampleImage.jpg")
+    exampleImage: require("../../res/images/exampleImage.jpg"),
+    boquita: require("../../res/images/boquita.jpg"),
+    rasin: require("../../res/images/rasin.jpg"),
+    independiente: require("../../res/images/independiente.jpg"),
+    pantera: require("../../res/images/exampleimage2.jpg")
   },
 
   models: {

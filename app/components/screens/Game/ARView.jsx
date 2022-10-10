@@ -4,6 +4,7 @@ import interactions from "./interactions";
 import { View, StyleSheet, Text } from "react-native";
 import HintModal from "./HintModal";
 import Scene from "./Scene";
+import Scene2 from "./Scene2";
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet'
 import Inventory from "./inventory/Inventory"
 

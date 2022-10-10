@@ -4,9 +4,8 @@ import { ViroARTrackingTargets } from "@viro-community/react-viro/components/AR/
 import { Viro3DObject } from "@viro-community/react-viro/components/Viro3DObject";
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 import Resources from "../../../../utils/resources.js";
-import Boquita from "../../../../../res/images/boquita.jpg";
 
-export default function WithImageRecognition({id, handler, typeProps, ...props}) {
+export default function WithImageRecognition2({id, handler, typeProps, ...props}) {
   const [pauseUpdates, setPauseUpdates] = useState(false);
   const [visible, setVisible] = useState(true);
 
@@ -14,11 +13,11 @@ export default function WithImageRecognition({id, handler, typeProps, ...props})
 
   const targetProps = {
     ...target,
-    source: Resources.get("images.exampleImage")
+    source: Resources.get("images.independiente")
   };
-  
+
   ViroARTrackingTargets.createTargets({
-    "target1": targetProps
+    "target4": targetProps
   });
 
   const modelProps = {
@@ -42,11 +41,11 @@ export default function WithImageRecognition({id, handler, typeProps, ...props})
 
   return (
     <ViroARImageMarker 
-      target={"target1"}
+      target={"target4"}
       onAnchorFound={() => setPauseUpdates(true)}
       pauseUpdates={pauseUpdates}
     >
-      {console.log("***********PropsObj1:", id)}
+      {console.log("***********Obj2:", id)}
       <ViroAmbientLight color="#ffffff"/>
       <Viro3DObject 
       visible={visible}
