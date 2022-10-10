@@ -1,7 +1,8 @@
 
 export const resources = {
   images: {
-    exampleImage: require("../../res/images/exampleImage.jpg")
+    exampleImage: require("../../res/images/exampleImage.jpg"),
+    duende: require("../../res/images/duende.jpg")
   },
 
   models: {
@@ -18,4 +19,4 @@ export default {
     const tree = spec.split(".");
     return tree.reduce((prev, curr, _i) => prev[curr], resources);
   }
-}
+};

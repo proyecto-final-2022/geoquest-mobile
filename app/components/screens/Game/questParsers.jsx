@@ -3,19 +3,25 @@ import WithImageRecognition from "./objects/WithImageRecognition";
 
 
 export function parseScene(scene) {
-  return (questHandler) => {
-    return scene.objects.map((o, key) => parseObject(questHandler, key, o));
+  return (props) => {
+    return scene.objects.map((o, key) => parseObject(o, {...props, key, id: key}));
   };
 }
 
 
-function parseObject(handler, id, object) {
-  var objectComponent = undefined;
-  switch (object.type) {
-  case "WithImageRecognition":
-    objectComponent = WithImageRecognition;
-    break;
-  }
+function parseObject(object, props) {
+  const components = {
+    "WithImageRecognition": WithImageRecognition
+  };
+  const component = components[object.type] ?? undefined;
 
-  return React.createElement(objectComponent, {key: id, id, handler, ...object});
+  if (!component)
+    throw Error(`Invalid object type: ${object.type}`);
+
+  return <ARObject component={component} {...props} {...object} />;
+}
+
+
+function ARObject({component, ...props}) {
+  return React.createElement(component, props);
 }

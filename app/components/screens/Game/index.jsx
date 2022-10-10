@@ -19,7 +19,6 @@ function useQuestStateHandler(_questID) {
     // If there is a session download current state.
     // If not, create a session and initialize with returned initial state:
     setState({
-      scene: 0,
       objects: {}
     });
   };

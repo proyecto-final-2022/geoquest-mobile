@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ViroARSceneNavigator } from "@viro-community/react-viro/components/AR/ViroARSceneNavigator";
-import interactions from "./interactions";
 import { View, StyleSheet } from "react-native";
 import HintModal from "./HintModal";
 import Scene from "./Scene";
 
 
-const buildHandler = (ctx, questHandler) => {
+const buildHandler = (ctxFunctions, questHandler) => {
   return {
     ...questHandler,
-    interact: (interaction, questState, ...params) => {
-      return interactions[interaction]({...ctx, questState}, ...params);
+    ctx: {
+      global: {...ctxFunctions}
     }
   };
 };
@@ -18,20 +17,23 @@ const buildHandler = (ctx, questHandler) => {
 export default function ARView({questHandler}) {
   const [ showHint, setShowHint ] = useState(false);
   const [ hintText, setHintText ] = useState("");
+  const navigatorRef = useRef();
 
   const hint = (text) => {
     setHintText(text);
     setShowHint(true);
   };
 
-  const ctx = { hint };
-  const handler = buildHandler(ctx, questHandler);
+  const globalCtx = { 
+    hint
+  };
 
   return (
     <View style={{height: "100%", width: "100%"}}>
       <ViroARSceneNavigator 
+        ref={navigatorRef}
         initialScene={{scene: Scene}} 
-        viroAppProps={{handler}}
+        viroAppProps={{handler: questHandler, globalCtx}}
       />
       <HintModal 
         style={styles.hintModal} 

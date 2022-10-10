@@ -1,13 +1,6 @@
 
 export default {
   "showHint": (ctx, text) => {
-    ctx.hint(text);
+    ctx.global.hint(text);
   },
-
-  "nextScene": (ctx) => {
-    return {
-      scene: ctx.questState.scene + 1,
-      objects: {}
-    };
-  }
 };
