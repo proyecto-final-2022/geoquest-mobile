@@ -6,6 +6,7 @@ import Config from '../../../config.json'
 import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
 import CustomButton2 from '../commons/CustomButton2'
+import Storage from '../../utils/storage/storage'
 
 const {width} = Dimensions.get('screen')
 
@@ -78,7 +79,7 @@ export default QuestVisualizer = ({route, navigation}) => {
         </View>
 
       </View>
-
+   
       <View style={styles.teamButtonsContainer}> 
         <CustomButton2 
           onPress = {() => console.log('Comenzar')}
@@ -87,7 +88,9 @@ export default QuestVisualizer = ({route, navigation}) => {
           fgColor = 'white'
         />
         <CustomButton2 
-          onPress = {() => console.log('Armar Equipo')}
+          onPress = {() => 
+            Storage.getObject('user')
+            .then( (user) => navigation.navigate('Quest Team', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags, user}}))}
           icon = "people-sharp"
           bgColor= '#CA955C'
           fgColor = 'white'
@@ -105,7 +108,7 @@ export default QuestVisualizer = ({route, navigation}) => {
 
     )
 }
-
+   
 const styles = StyleSheet.create({
   view: {
     flex: 1,

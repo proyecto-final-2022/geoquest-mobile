@@ -48,15 +48,6 @@ export default ClientQuests = ({route, navigation}) => {
       }
     })
   })
-  useEffect(() => {
-    fetch(url)
-    .then((response) => response.json())
-    .then((json) => {
-      setData(json) 
-      setFilteredData(json)})
-    .catch((error) => console.error(error))
-    .finally(()=>setLoading(false))
-  }, [])
   
   const options = ['Popularidad', 'Calificación']
 
@@ -187,7 +178,7 @@ export default ClientQuests = ({route, navigation}) => {
           >
             <View style={styles.orderByContainer}>
               <Pressable onPress={() => {setView(false)}}>
-                <Ionicons name='close' size={35}/>
+                <Ionicons name='close' color='darkred' size={35}/>
               </Pressable>
             </View>
             <ScrollView>

@@ -54,6 +54,17 @@ export function DrawerContent(props) {
     })
   }, [props])
 
+  useEffect(() => {
+    Storage.getObject('user').
+    then(user => setName(user.name))
+    }, [props])
+
+    useEffect(() => {
+      Storage.getObject('user').
+      then(user => setUsername(user.username))
+    }, [props])
+
+
   return(
     <View style={{flex:1,backgroundColor: '#FFF9CA'}}>
       <DrawerContentScrollView {...props}>
@@ -141,7 +152,10 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Notificaciones"
-                            onPress={() => {console.log('Notificaciones')}}
+                            onPress={() => {
+                              Storage.getObject('user').
+                              then(user => navigation.navigate('Notifications', user))
+                              }}
                         />
                     </Drawer.Section>
                 </View>
