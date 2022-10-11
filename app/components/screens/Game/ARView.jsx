@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { ViroARSceneNavigator } from "@viro-community/react-viro/components/AR/ViroARSceneNavigator";
-import { StyleSheet, Text, ScrollView, Modal, View, Pressable} from 'react-native';
+import { StyleSheet, Text, ScrollView, Modal, View, Pressable, Image} from 'react-native';
+import Lebron from '../../../../assets/medals/silver.png'
+import {Avatar} from 'react-native-paper';
 import {Ionicons} from '@expo/vector-icons'
 import HintModal from "./HintModal";
 import Scene from "./Scene";
@@ -43,20 +45,15 @@ export default function ARView({questHandler}) {
 
   useEffect(() => {
     handleSnapPress(0)
-//    props.sceneNavigator.push({scene: HelloUser})
   }, []);
 
   useEffect(() => {
     if (questHandler.visualize == true){
-      console.log("Chuchu wa: ")
       navigatorRef.current.jump({scene: ObjectView})
     }
     if (questHandler.visualize == false){
       navigatorRef.current.jump({scene: Scene})
-      console.log("Piña vá: ")
     }
-
-//    props.sceneNavigator.push({scene: HelloUser})
   }, [questHandler.visualize]);
 
   return (
@@ -91,6 +88,7 @@ export default function ARView({questHandler}) {
         <View
           style={{
             flex: 1,
+            marginTop: 200,
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
@@ -98,12 +96,12 @@ export default function ARView({questHandler}) {
         >
           <View
             style={{
-              height:'25%', 
-              width: '60%',
+              height:'40%', 
+              width: '90%',
               flexDirection: 'column',
               justifyContent: 'space-evenly',
-              backgroundColor: 'aliceblue',
-              borderWidth: 10,
+              backgroundColor: 'linen',
+              borderWidth: 5,
               borderColor: '#a52a2a', 
             }}  
           >
@@ -114,8 +112,28 @@ export default function ARView({questHandler}) {
                 <Ionicons name='close' size={35}/>
               </Pressable>
             </View>
+
+
             <ScrollView>
-                <Text>En Francia la tortuga busca la cabeza</Text>
+                <View style={{flexDirection: 'column', justifyContent: 'space-around'}}>
+          
+                  <Text style={{fontWeight: 'bold', color: 'darkred', fontSize: 20}}>El desodrande de Marcelo Hugo T</Text>
+            
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={styles.descriptionText}>
+                      <Text style={{fontWeight: 'bold', fontSize: 15, marginTop: 30}}>Desodrante extraviado perteneciente a Hugo T Desodrante extraviado perteneciente a Hugo T Desodrante extraviado perteneciente a Hugo T</Text>
+                    </View>
+
+                    <View style={styles.descriptionImage}>
+                      <Image 
+                        source={Lebron}
+                        style={styles.itemImage}
+                        size={50}
+                      />
+                    </View>
+                                        
+                  </View>
+                </View>
             </ScrollView>
 
   
@@ -131,4 +149,20 @@ const styles = StyleSheet.create({
   hintModal: {
 
   },
+  itemImage: {
+    width: '100%',
+    marginTop: 30,
+    maxWidth: 60,
+    maxHeight: 60,
+  },
+  descriptionText: {
+    flexBasis: 300,
+    flexShrink: 0,
+    flexGrow: 0
+  },
+  descriptionImage: {
+    flexBasis: 50,
+    flexShrink: 0,
+    flexGrow: 0
+  }
 });

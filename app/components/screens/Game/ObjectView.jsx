@@ -15,7 +15,7 @@ const ObjectView = () => {
       <ViroARCamera>  
         <Viro3DObject
           source={require("../../../../res/models/cubone/model.obj")}
-          position={[0,1.5,-3]}
+          position={[0,1.3,-3]}
           scale={[1.5,1.5,1.5]}
           rotation={[0,180,0]}
           animation={{name: "loopRotate", run: true, loop: true}}

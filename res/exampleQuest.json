@@ -5,7 +5,7 @@
       "type": "WithImageRecognition",
       "typeProps": { 
         "target": {
-          "source": "images.exampleImage",
+          "source": "images.duende",
           "physicalWidth": 0.2,
           "orientation": "Up"
         },
