@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
-import {useNavigation} from '@react-navigation/native'
+import { StyleSheet, ScrollView, Text, View, Dimensions, Image, Pressable, TouchableOpacity} from 'react-native';
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
-import Config from '../../../config.json'
-import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
 import CustomButton2 from '../commons/CustomButton2'
+import CustomModal from '../commons/CustomModal';
+
+import starFilled from '../../../assets/ratingStars/star_filled.png'
+import starCorner from '../../../assets/ratingStars/star_corner.png'
 
 const {width} = Dimensions.get('screen')
 
@@ -49,6 +50,29 @@ export default QuestVisualizer = ({route, navigation}) => {
     })
   })
 
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+      setModalVisible(!isModalVisible);
+  };
+  const [defaultRating, setDefaultRating] = useState(2);
+  const maxRating = [1,2,3,4,5];
+
+  const CustomRatingBar = () => {
+    return (
+      <View style={styles.customRatingBar}>
+        {
+          maxRating.map((item, key) => {
+            return (
+              <TouchableOpacity activeOpacity={0.7} key={item} onPress={() => setDefaultRating(item)}>
+                <Image style={styles.starImg} source={item <= defaultRating ? starFilled : starCorner}/>
+              </TouchableOpacity>
+            )
+          })
+        }
+      </View>
+    )
+  }
+
   return (
 
     <ScrollView style={styles.view}> 
@@ -74,7 +98,7 @@ export default QuestVisualizer = ({route, navigation}) => {
         </View>
   
         <View style={styles.tagContainer}>
-          {tags.map((tag, index) => <Tag tag={tag} index={index}/>)}
+          {tags.map((tag, index) => <Tag tag={tag} key={index} index={index}/>)}
         </View>
 
       </View>
@@ -100,7 +124,39 @@ export default QuestVisualizer = ({route, navigation}) => {
           fgColor = 'white'
           text = 'Podio'
         />
+        <CustomButton2 
+          onPress={toggleModal}
+          icon = "star"
+          bgColor= '#CA955C'
+          fgColor = 'white'
+          text = 'Calificar busqueda'
+        />
       </View>
+
+      
+      <CustomModal visible={isModalVisible} dismiss={toggleModal}>
+        <View style={{flex: 1}}/>
+        <View style={styles.customRating}>
+          <Text>¡Califica esta búsqueda!</Text>
+          <CustomRatingBar/>
+          <Text>{'\n'+defaultRating+'/'+maxRating.length+'\n'}</Text>
+          <CustomButton
+            onPress={toggleModal}
+            style={{marginTop: 100}}
+            bgColor= '#CA955C'
+            fgColor = 'white'
+            text = 'Guardar'
+          />
+          <CustomButton
+            onPress={toggleModal}
+            style={{marginTop: 100}}
+            bgColor= 'grey'
+            fgColor = 'white'
+            text = 'Volver'
+          />
+        </View>
+        <View style={{flex: 1}}/>
+      </CustomModal>
     </ScrollView>
 
     )
@@ -171,6 +227,26 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     color: 'white',
-  },  
+  },
+  customRatingBar: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginTop: 30
+  },
+  starImg: {
+    width: 40,
+    height: 40,
+    resizeMode: 'cover'
+  },
+  customRating: {
+    flex: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ffefd5',
+    margin: 30,
+    borderWidth: 3,
+    borderRadius:10,
+    borderColor: '#CA955C'
+  }
 });
 
