@@ -10,7 +10,6 @@ function useQuestStateHandler(_questID) {
   const [config, setConfig] = useState();
   const [state, setState] = useState();
   const [loading, setLoading] = useState(true);
-  const [visualize, setVisualize] = useState();
 
   const initQuest = async () => {
     console.log("Init quest");
@@ -45,16 +44,12 @@ function useQuestStateHandler(_questID) {
     loading: loading,
     questConfig: config,
     questState: state,
-    visualize: visualize,
 
     setQuestState: (newState) => {
       // TODO: Notify state update.
       console.log("Update sent");
       // If ok, then:
       setState(newState);
-    },
-    setObjectVisualize: (bool) => {
-      setVisualize(bool);
     }
   };
 }

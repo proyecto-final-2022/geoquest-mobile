@@ -73,7 +73,7 @@ const Inventory = (props, ctx) => {
       title: 'Ver',
       action: (item, index) =>  {
         hideMenu(index)
-        props.props.setObjectVisualize(item.view)
+        props.ctx.setObjectVisualize(item.view)
         props.ctx.handleSnapPress(0)
         props.ctx.setVisibleDescription(true)
       }
