@@ -7,19 +7,19 @@ import { ViroARCamera } from "@viro-community/react-viro/components/AR/ViroARCam
 import { ViroOmniLight } from "@viro-community/react-viro/components/ViroOmniLight";
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 
-const ObjectView = () => {
+const ObjectView2 = () => {
 
   return (
     <ViroARScene>
       <ViroAmbientLight color="#ffffff"/>
       <ViroARCamera>  
         <Viro3DObject
-          source={require("../../../../res/models/cubone/model.obj")}
+          source={require("../../../../../res/models/cubone/model.obj")}
           position={[0,1.3,-3]}
           scale={[1.5,1.5,1.5]}
           rotation={[0,180,0]}
-          animation={{name: "loopRotate", run: true, loop: true}}
-          resources={[require("../../../../res/models/cubone/materials.mtl")]}
+          animation={{name: "loopRotate2", run: true, loop: true}}
+          resources={[require("../../../../../res/models/cubone/materials.mtl")]}
           type="OBJ"
         />
       </ViroARCamera>  
@@ -28,13 +28,13 @@ const ObjectView = () => {
 }
 
 ViroAnimations.registerAnimations({
-  loopRotate:{
+  loopRotate2:{
     properties:{
-      rotateY: "+=45"
+      rotateX: "+=45"
     }, 
     duration:1000
   },
 });
 
 
-export default ObjectView;
+export default ObjectView2;

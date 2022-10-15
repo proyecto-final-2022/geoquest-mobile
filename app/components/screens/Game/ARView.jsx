@@ -6,7 +6,9 @@ import {Avatar} from 'react-native-paper';
 import {Ionicons} from '@expo/vector-icons'
 import HintModal from "./HintModal";
 import Scene from "./Scene";
-import ObjectView from "./ObjectView";
+import object_view_cubone from "./ObjectVisualization/object_view_cubone";
+import object_view_cubone2 from "./ObjectVisualization/object_view_cubone2";
+import object_view_cubone3 from "./ObjectVisualization/object_view_cubone3";
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet'
 import Inventory from "./inventory/Inventory"
 
@@ -42,16 +44,28 @@ export default function ARView({questHandler}) {
   })
 
   const arViewCtx = { handleSnapPress, setVisibleDescription};
+  
+  const getObjectView = (sceneNumber) => { 
+//    const objectViews = [object_view_cubone, object_view_cubone2, object_view_cubone3];
+    const objectViews = [object_view_cubone, object_view_cubone2, object_view_cubone3];
+    console.log("***************************Scene number: ", sceneNumber)
+    console.log("***************************object view: ", objectViews[sceneNumber-1])
+    return objectViews[sceneNumber-1];
+  }
 
   useEffect(() => {
     handleSnapPress(0)
   }, []);
 
   useEffect(() => {
-    if (questHandler.visualize == true){
-      navigatorRef.current.jump({scene: ObjectView})
+    if (questHandler.visualize != 0 && questHandler.visualize != undefined){
+      console.log("Visualizeeee:", questHandler.visualize)
+//      navigatorRef.current.jump({scene: getObjectView(questHandler.visualize)})
+      const arr = [object_view_cubone]
+      const view = object_view_cubone
+      navigatorRef.current.jump({scene: getObjectView(questHandler.visualize)})
     }
-    if (questHandler.visualize == false){
+    if (questHandler.visualize == 0){
       navigatorRef.current.jump({scene: Scene})
     }
   }, [questHandler.visualize]);
@@ -107,7 +121,7 @@ export default function ARView({questHandler}) {
           >
             <View style={{flexDirection: 'row-reverse'}}>
               <Pressable onPress={() => {
-                questHandler.setObjectVisualize(false)
+                questHandler.setObjectVisualize(0)
                 setVisibleDescription(false)}}>
                 <Ionicons name='close' size={35}/>
               </Pressable>

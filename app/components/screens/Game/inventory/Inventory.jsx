@@ -13,6 +13,7 @@ const Inventory = (props, ctx) => {
     {
       questItemID: 1,
       image: "2",
+      view: 1,
       combinable: [
         {
           combinableQuestItemID: 2,
@@ -29,6 +30,7 @@ const Inventory = (props, ctx) => {
     {
     questItemID: 2,
     image: "1",
+    view: 2,
     combinable: [    
     ],
     visibleMenu: false,
@@ -37,6 +39,7 @@ const Inventory = (props, ctx) => {
   {
     questItemID: 3,
     image: "2",
+    view: 3,
     combinable: [    
     ],
     visibleMenu: false,
@@ -70,7 +73,7 @@ const Inventory = (props, ctx) => {
       title: 'Ver',
       action: (item, index) =>  {
         hideMenu(index)
-        props.props.setObjectVisualize(true)
+        props.props.setObjectVisualize(item.view)
         props.ctx.handleSnapPress(0)
         props.ctx.setVisibleDescription(true)
       }
