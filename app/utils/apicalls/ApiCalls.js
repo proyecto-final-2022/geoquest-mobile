@@ -203,3 +203,29 @@ export const passwordUpdate = async (userId, oldPassword, newPassword) => {
     console.error(error);
   }
 }
+
+export const updateQuestRating = async (userId, questId, rating) => {
+  try {
+    await fetch(
+      Config.appUrl+'quests/'+questId+'/rating/'+userId, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          rating: rating
+        })
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      else response.json().catch((error) => {
+        console.log('error: ' + error);
+        this.setState({ requestFailed: true });
+      });
+    })
+    .catch(error => {
+      console.error(error);
+    })
+  }
+  catch (error) {
+    console.error(error);
+  }
+}

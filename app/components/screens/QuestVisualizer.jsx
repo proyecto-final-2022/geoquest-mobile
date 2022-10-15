@@ -4,6 +4,9 @@ import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import CustomButton from '../commons/CustomButton'
 import CustomButton2 from '../commons/CustomButton2'
 import CustomModal from '../commons/CustomModal';
+import Storage from '../../utils/storage/storage';
+import Config from '../../../config.json';
+import {updateQuestRating} from '../../utils/apicalls/ApiCalls';
 
 import starFilled from '../../../assets/ratingStars/star_filled.png'
 import starCorner from '../../../assets/ratingStars/star_corner.png'
@@ -12,7 +15,7 @@ const {width} = Dimensions.get('screen')
 
 export default QuestVisualizer = ({route, navigation}) => {
 
-  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
+  const {id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
   const colors = ['sandybrown', 'indianred', 'darksalmon', 'darkseagreen']
 
   const Tag = ({tag, index}) => {
@@ -54,7 +57,7 @@ export default QuestVisualizer = ({route, navigation}) => {
   const toggleModal = () => {
       setModalVisible(!isModalVisible);
   };
-  const [defaultRating, setDefaultRating] = useState(2);
+  const [starRating, setDefaultRating] = useState(3);
   const maxRating = [1,2,3,4,5];
 
   const CustomRatingBar = () => {
@@ -64,7 +67,7 @@ export default QuestVisualizer = ({route, navigation}) => {
           maxRating.map((item, key) => {
             return (
               <TouchableOpacity activeOpacity={0.7} key={item} onPress={() => setDefaultRating(item)}>
-                <Image style={styles.starImg} source={item <= defaultRating ? starFilled : starCorner}/>
+                <Image style={styles.starImg} source={item <= starRating ? starFilled : starCorner}/>
               </TouchableOpacity>
             )
           })
@@ -73,8 +76,36 @@ export default QuestVisualizer = ({route, navigation}) => {
     )
   }
 
-  return (
+  const refreshUserRanking = () => {
+    Storage.getObject('user').then(user => {
+      fetch(
+        Config.appUrl+'quests/'+questId+'/rating/'+user.id, {
+          method: 'GET',
+          headers: {'Content-Type': 'application/json'}
+      })
+      .then(response => {
+        if(!response.ok) return;
+        else response.json().then( (data) => {
+          setDefaultRating(data.rate);
+        })
+        .catch((error) => {
+          console.log('error: ' + error);
+          this.setState({ requestFailed: true });
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      })
+    })
+  }
 
+  const updateRating = () => {
+    Storage.getObject('user').then(user => {
+      updateQuestRating(user.id, questId, starRating);
+    })
+  }
+
+  return (
     <ScrollView style={styles.view}> 
       <Image style={styles.image} source={{uri: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"}} />
 
@@ -118,14 +149,17 @@ export default QuestVisualizer = ({route, navigation}) => {
           text = 'Armar Equipo'
         />
         <CustomButton2 
-          onPress={() => navigation.navigate('Ranking', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})}
+          onPress={() => navigation.navigate('Ranking', {...{id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})}
           icon = "ios-podium-sharp"
           bgColor= '#CA955C'
           fgColor = 'white'
           text = 'Podio'
         />
         <CustomButton2 
-          onPress={toggleModal}
+          onPress={() => {
+            refreshUserRanking();
+            toggleModal();
+          }}
           icon = "star"
           bgColor= '#CA955C'
           fgColor = 'white'
@@ -139,9 +173,12 @@ export default QuestVisualizer = ({route, navigation}) => {
         <View style={styles.customRating}>
           <Text>¡Califica esta búsqueda!</Text>
           <CustomRatingBar/>
-          <Text>{'\n'+defaultRating+'/'+maxRating.length+'\n'}</Text>
+          <Text>{'\n'+starRating+'/'+maxRating.length+'\n'}</Text>
           <CustomButton
-            onPress={toggleModal}
+            onPress={() => {
+              updateRating();
+              toggleModal();
+            }}
             style={{marginTop: 100}}
             bgColor= '#CA955C'
             fgColor = 'white'
@@ -158,8 +195,7 @@ export default QuestVisualizer = ({route, navigation}) => {
         <View style={{flex: 1}}/>
       </CustomModal>
     </ScrollView>
-
-    )
+  )
 }
 
 const styles = StyleSheet.create({
