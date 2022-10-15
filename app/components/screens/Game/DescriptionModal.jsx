@@ -5,9 +5,11 @@ import {Ionicons} from '@expo/vector-icons'
 
 export default function DescriptionModal({ctx}) {
   const [visibleDescription, setVisibleDescription] = useState(false);
+  const [description, setObjectDescription] = useState({title: "", description: ""});
 
   useEffect(() => {
     setVisibleDescription(ctx.visibleDescription)
+    setObjectDescription(ctx.description)
   }, [ctx.visibleDescription]);
 
   return (        
@@ -50,11 +52,11 @@ export default function DescriptionModal({ctx}) {
             <ScrollView>
                 <View style={{flexDirection: 'column', justifyContent: 'space-around'}}>
           
-                  <Text style={{fontWeight: 'bold', color: 'darkred', fontSize: 20}}>El desodrande de Marcelo Hugo T</Text>
+                  <Text style={{fontWeight: 'bold', color: 'darkred', fontSize: 20}}>{description.title}</Text>
             
                   <View style={{flexDirection: 'row'}}>
                     <View style={styles.descriptionText}>
-                      <Text style={{fontWeight: 'bold', fontSize: 15, marginTop: 30}}>Desodrante extraviado perteneciente a Hugo T Desodrante extraviado perteneciente a Hugo T Desodrante extraviado perteneciente a Hugo T</Text>
+                      <Text style={{fontWeight: 'bold', fontSize: 15, marginTop: 30}}>{description.description}</Text>
                     </View>
 
                     <View style={styles.descriptionImage}>

@@ -13,6 +13,8 @@ const Inventory = (props, ctx) => {
     {
       questItemID: 1,
       image: "2",
+      title: "Objeto 1",
+      description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
       view: 1,
       combinable: [
         {
@@ -31,6 +33,8 @@ const Inventory = (props, ctx) => {
     questItemID: 2,
     image: "1",
     view: 2,
+    title: "Objeto 2",
+    description: "Objeto 2 descripcion Objeto 2 descripcion Objeto 2 descripcion Objeto 2 descripcion",
     combinable: [    
     ],
     visibleMenu: false,
@@ -40,6 +44,8 @@ const Inventory = (props, ctx) => {
     questItemID: 3,
     image: "2",
     view: 3,
+    title: "Objeto 3",
+    description: "Objeto 3 descripcion Objeto 3 descripcion Objeto 3 descripcion Objeto 3 descripcion",
     combinable: [    
     ],
     visibleMenu: false,
@@ -74,6 +80,11 @@ const Inventory = (props, ctx) => {
       action: (item, index) =>  {
         hideMenu(index)
         props.ctx.setObjectVisualize(item.view)
+        props.ctx.setObjectDescription(
+          {
+            title: item.title,
+            description: item.description
+          })
         props.ctx.handleSnapPress(0)
         props.ctx.setVisibleDescription(true)
       }

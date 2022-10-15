@@ -28,6 +28,7 @@ export default function ARView({questHandler}) {
   const [isOpen, setIsOpen] = useState(true);
 
   const [visualize, setObjectVisualize] = useState();
+  const [description, setObjectDescription] = useState({title: "", description: ""});
   const [visibleDescription, setVisibleDescription] = useState(false);
 
   const snapPoints = ["3%", "45%"];
@@ -47,7 +48,7 @@ export default function ARView({questHandler}) {
     sheetRef.current?.snapToIndex(index);
   })
 
-  const arViewCtx = { setObjectVisualize, handleSnapPress, visibleDescription, setVisibleDescription};
+  const arViewCtx = { setObjectVisualize, setObjectDescription, description, handleSnapPress, visibleDescription, setVisibleDescription};
   
   const getObjectView = (sceneNumber) => { 
     const objectViews = [object_view_cubone, object_view_cubone2, object_view_cubone3];
