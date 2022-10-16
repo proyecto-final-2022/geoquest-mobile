@@ -130,7 +130,10 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Cupones"
-                            onPress={() => {console.log('Cupones')}}
+                            onPress={() => {
+                              Storage.getObject('user').
+                              then(user => navigation.navigate('Coupons', user))
+                              }}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (

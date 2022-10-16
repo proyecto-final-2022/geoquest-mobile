@@ -161,8 +161,6 @@ export default ClientQuests = ({route, navigation}) => {
 
       <Modal
         animationType="slide"
-        onDismiss={() => console.log('close')}
-        onShow={() => console.log('show')}
         transparent
         visible={view}
       >

@@ -11,6 +11,7 @@ import QuestVisualizer from '../screens/QuestVisualizer'
 import Scene from '../scenes/HelloUser'
 import ClientQuests from '../screens/ClientQuests'
 import Ranking from '../screens/Ranking'
+import Coupons from '../screens/Coupons'
 import Profile from '../screens/ProfileScreen'
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -33,6 +34,7 @@ export default Navigation = () => {
         <Drawer.Screen name="Scene" component={Scene} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Quest Visualizer" component={QuestVisualizer} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Ranking" component={Ranking} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Coupons" component={Coupons} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Profile" component={Profile} options={{ headerShown: true, headerTitle: "", headerStyle: {backgroundColor: '#FFF9CA'}}}/>
       </Drawer.Navigator>
     </NavigationContainer>
