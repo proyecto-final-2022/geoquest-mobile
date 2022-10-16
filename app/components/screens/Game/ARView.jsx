@@ -56,19 +56,24 @@ export default function ARView({questHandler}) {
   }
 
   useEffect(() => {
-    handleSnapPress(0)
-    console.log("Width: ", PixelRatio.getPixelSizeForLayoutSize(Dimensions.get('window').width))
-    console.log("Height: ", PixelRatio.getPixelSizeForLayoutSize(Dimensions.get('window').height))
+    handleSnapPress(0)  
   }, []);
 
   useEffect(() => {
     if (visualize != 0 && visualize != undefined){
+//      navigatorRef.current.jump({scene: Scene})
       navigatorRef.current.jump({scene: getObjectView(visualize)})
     }
     if (visualize == 0){
       navigatorRef.current.jump({scene: Scene})
     }
   }, [visualize]);
+
+  useEffect(() => {
+    if (questHandler.inventory.find(item => (item.key == "cubone"))) {
+      navigatorRef.current.jump({scene: Scene})
+    }
+  }, [questHandler.inventory]);
 
   return (
     <View style={{height: "100%", width: "100%"}}>

@@ -8,7 +8,7 @@ import Interactions from "../interactions";
 import { ViroAnimations } from "@viro-community/react-viro/components/Animation/ViroAnimations";
 
 
-export default function WithImageRecognition({id, handler, typeProps, globalCtx}) {
+export default function WithImageRecognition3({id, handler, typeProps, globalCtx}) {
   const [pauseUpdates, setPauseUpdates] = useState(false);
   const [visible, setIsVisible] = useState(true);
   const [runFade, setRunFade] = useState(false);
@@ -17,7 +17,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 
   const targetProps = {
     ...target,
-    source: Resources.get("images.exampleImage")
+    source: Resources.get("images.duende")
   };
 
   const modelProps = {
@@ -38,7 +38,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     }
 
     ViroARTrackingTargets.createTargets({
-      target: targetProps
+      target3: targetProps
     });
 
 //    return () => ViroARTrackingTargets.deleteTarget(target);
@@ -99,7 +99,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 
   return (
     <ViroARImageMarker 
-      target={"target"}
+      target={"target3"}
 //      onAnchorFound={() => console.log("************************on anchor found")}
 //      pauseUpdates={false}
       onAnchorFound={() => {setPauseUpdates(true);}}
@@ -110,7 +110,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
         visible={handler.asdasdasd} 
         onClick={onClick} 
         {...modelProps} 
-        animation={{name: "fade", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
+        animation={{name: "fade2", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
       />
     </ViroARImageMarker>
   );
@@ -118,7 +118,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 
 
 ViroAnimations.registerAnimations({
-  fade: {
+  fade2: {
     properties: {
       opacity: "-=1"
     },
