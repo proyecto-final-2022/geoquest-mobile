@@ -8,49 +8,54 @@ import userImage_4 from '../../../../../assets/medals/treasure_chest.png'
 
 const Inventory = (props, ctx) => {
   const [combinable, setCombinable] = useState({})
+  
+  const combinations = {
+    "1": {
+      "2": "3",
+      "4": "5"
+    }
+  }
   //Despues cambiar esto con un useEffect despues de ejecutar el llamado
   const [items, setItems] = useState([
     {
-      questItemID: 1,
-      image: "2",
+      key: "cubone",
       title: "Objeto 1",
       description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
+      questItemID: 1,
+      image: "2",
       view: 1,
       combinable: [
         {
           combinableQuestItemID: 2,
           image: "3"
-        },
-        {
-          combinableQuestItemID: 3,
-          image: "4"
-        }    
+        } 
       ],
       visibleMenu: false,
       marker: false
     },
     {
+    key: "cubone2",
+    title: "Objeto 2",
+    description: "Objeto 2 descripcion Objeto 2 descripcion Objeto 2 descripcion Objeto 2 descripcion",
     questItemID: 2,
     image: "1",
     view: 2,
-    title: "Objeto 2",
-    description: "Objeto 2 descripcion Objeto 2 descripcion Objeto 2 descripcion Objeto 2 descripcion",
-    combinable: [    
-    ],
+    combinable: [],
     visibleMenu: false,
     marker: false
   },
   {
+    key: "cubone3",
+    title: "Objeto 3",
+    description: "Objeto 3 descripcion Objeto 3 descripcion Objeto 3 descripcion Objeto 3 descripcion",
     questItemID: 3,
     image: "2",
     view: 3,
-    title: "Objeto 3",
-    description: "Objeto 3 descripcion Objeto 3 descripcion Objeto 3 descripcion Objeto 3 descripcion",
-    combinable: [    
-    ],
+    combinable: [],
     visibleMenu: false,
     marker: false
-  } 
+  }
+   
   ])
 
   const hideMenu = (index) => {

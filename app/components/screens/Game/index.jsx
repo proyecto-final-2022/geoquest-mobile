@@ -9,6 +9,7 @@ import exampleQuest from "../../../../res/exampleQuest.json";
 function useQuestStateHandler(_questID) {
   const [config, setConfig] = useState();
   const [state, setState] = useState();
+  const [inventory, setInventory] = useState([{}]);
   const [loading, setLoading] = useState(true);
 
   const initQuest = async () => {
@@ -40,16 +41,29 @@ function useQuestStateHandler(_questID) {
     return cleanUp;
   }, []);
 
+  //por ejemplo:
+  useEffect(() => {
+    //GET id inventario
+    //actualizar variable de inventario
+    console.log("***********Quest ID: ", _questID)
+  }, _questID);
+
+
   return {
     loading: loading,
     questConfig: config,
     questState: state,
+    inventory: inventory,
 
     setQuestState: (newState) => {
       // TODO: Notify state update.
       console.log("Update sent");
       // If ok, then:
       setState(newState);
+    },
+    setTeamInventory: (inventory) => {
+      console.log("Update inventory");
+      setInventory(inventory)
     }
   };
 }

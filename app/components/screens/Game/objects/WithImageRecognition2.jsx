@@ -8,16 +8,18 @@ import Interactions from "../interactions";
 import { ViroAnimations } from "@viro-community/react-viro/components/Animation/ViroAnimations";
 
 
-export default function WithImageRecognition({id, handler, typeProps, globalCtx}) {
+export default function WithImageRecognition2({id, handler, typeProps, globalCtx}) {
   const [pauseUpdates, setPauseUpdates] = useState(false);
-  const [visible, setIsVisible] = useState(true);
+  const [visible, setIsVisible] = useState(false);
   const [runFade, setRunFade] = useState(false);
 
   const {target, model, interactions} = typeProps;
 
-  const targetProps = {
+  const key = "cubone"
+
+  const targetProps2 = {
     ...target,
-    source: Resources.get(target.source)
+    source: Resources.get("images.exampleImage")
   };
 
   const modelProps = {
@@ -31,18 +33,6 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     const interactionN = interactions.length;
     return interactionN - 1  >= objectState;
   };
-
-  useEffect(() => {
-    if(!hasInteractionsLeft()) {
-      setIsVisible(false);
-    }
-
-    ViroARTrackingTargets.createTargets({
-      target: targetProps
-    });
-
-    return () => ViroARTrackingTargets.deleteTarget(target);
-  }, []);
 
   const onClick = () => {
     const interactionN = interactions.length;
@@ -59,7 +49,6 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
       return Interactions[name](ctx, ...params);
     };
 
- //   const objectState = handler.questState.objects[id] ?? {visible: true};
     const objectState = handler.questState.objects[id] ?? 0;
     const newState = interactions[objectState].reduce((prevState, int) => {
       return interact(int.name, prevState, int.params) || prevState;
@@ -72,41 +61,62 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 
     newState.objects[id] = newObjectState;
     handler.setQuestState(newState);
-
-    //POST (id inventario, ["objeto1"])
-    //response --> devuelve el inventario actualizado con lo ultimo
-    
-    handler.setTeamInventory([{
-      key: "cubone",
-      title: "Objeto 1",
-      description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
-      questItemID: 1,
-      image: "2",
-      view: 1,
-      combinable: [
-        {
-          combinableQuestItemID: 2,
-          image: "3"
-        } 
-      ],
-      visibleMenu: false,
-      marker: false
-    }])
-    
   };
+
+  useEffect(() => {
+    if(!hasInteractionsLeft()) {
+      setIsVisible(false);
+    }
+
+    ViroARTrackingTargets.createTargets({
+      "target2": targetProps2
+    });
+
+    console.log("Inventory: ", handler.inventory)
+    
+
+
+//    return () => ViroARTrackingTargets.deleteTarget(target);
+  }, []);
+
+  function findKey(item_key) {
+    return key === item_key
+  }
+  useEffect(() => {
+    if (handler.inventory.find(item => findKey(item.key))) {
+      setIsVisible(true)
+    }
+    console.log("****************Inventory: ", handler.inventory)
+  }, handler.inventory);
+
+/*
+  useEffect(() => {
+    if(!hasInteractionsLeft()) {
+      setIsVisible(false);
+    }
+
+    ViroARTrackingTargets.createTargets({
+      "target2": targetProps2
+    });
+
+    return () => ViroARTrackingTargets.deleteTarget(target);
+  }, []);
+*/
+
+
 
   return (
     <ViroARImageMarker 
-      target={"target"}
+      target={"target2"}
       onAnchorFound={() => {setPauseUpdates(true);}}
       pauseUpdates={pauseUpdates}
     >
       <ViroAmbientLight color="#ffffff"/>
       <Viro3DObject 
-        visible={handler.asdasdasd} 
+        visible={visible} 
         onClick={onClick} 
         {...modelProps} 
-        animation={{name: "fade", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
+        animation={{name: "fade2", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
       />
     </ViroARImageMarker>
   );
@@ -114,7 +124,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 
 
 ViroAnimations.registerAnimations({
-  fade: {
+  fade2: {
     properties: {
       opacity: "-=1"
     },

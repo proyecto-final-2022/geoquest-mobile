@@ -139,7 +139,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Notificaciones"
-                            onPress={() => {console.log('Notificaciones')}}
+                            onPress={() => {navigation.navigate("Game", {...2})}}
                         />
                     </Drawer.Section>
                 </View>

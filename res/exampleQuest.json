@@ -1,5 +1,10 @@
 {
   "id": "unID",
+  "items": {
+    "1": {
+
+    }
+  },
   "objects": [
     {
       "type": "WithImageRecognition",
@@ -26,6 +31,10 @@
               "params": [
                 "Pista numero 1"
               ]
+            },
+            {
+              "name": "grabItem",
+              "params": ["1"]
             }
           ],
           [

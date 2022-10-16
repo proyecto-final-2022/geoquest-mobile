@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { ViroARSceneNavigator } from "@viro-community/react-viro/components/AR/ViroARSceneNavigator";
-import { StyleSheet, Text, ScrollView, Modal, View, Pressable, Image} from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio, Text, ScrollView, Modal, View, Pressable, Image} from 'react-native';
 import Lebron from '../../../../assets/medals/silver.png'
 import {Avatar} from 'react-native-paper';
 import {Ionicons} from '@expo/vector-icons'
@@ -57,6 +57,8 @@ export default function ARView({questHandler}) {
 
   useEffect(() => {
     handleSnapPress(0)
+    console.log("Width: ", PixelRatio.getPixelSizeForLayoutSize(Dimensions.get('window').width))
+    console.log("Height: ", PixelRatio.getPixelSizeForLayoutSize(Dimensions.get('window').height))
   }, []);
 
   useEffect(() => {
