@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, PixelRatio , Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import QRCode from 'react-native-qrcode-svg'
 import {Button} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
-
-const {width} = Dimensions.get('screen')
+import CustomModal from '../commons/CustomModal';
 
 export default Coupons = ({route, navigation}) => {
   
@@ -15,7 +14,7 @@ export default Coupons = ({route, navigation}) => {
 
   const [loading, setLoading] = useState(true)
   const [coupons, setCoupons] = useState([])
-  const [view, setView] = useState(false)
+  const [couponView, setCouponView] = useState(false)
   const [description, setDescription] = useState("")
   const [qrValue, setQrValue] = useState("")
 
@@ -42,7 +41,7 @@ export default Coupons = ({route, navigation}) => {
   const Card = ({coupon}) => {
     return (
       <Pressable onPress={() => {
-        setView(true)
+        setCouponView(true)
         setDescription(coupon.description)
         setQrValue(JSON.stringify(
           { 
@@ -75,6 +74,10 @@ export default Coupons = ({route, navigation}) => {
       }
       { !loading && 
         <View style={styles.view}>
+          {/* <Text>{' width: '+Dimensions.get('window').width}</Text>
+          <Text>{' height: '+Dimensions.get('window').height}</Text>
+          <Text>{' '+PixelRatio.getPixelSizeForLayoutSize(Dimensions.get('screen').width)}</Text>
+          <Text>{' '+PixelRatio.getPixelSizeForLayoutSize(Dimensions.get('screen').height)}</Text> */}
           <FlatList
             horizontal= {false}
             contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
@@ -83,11 +86,31 @@ export default Coupons = ({route, navigation}) => {
             renderItem={({item}) => <Card coupon={item}/>}>      
           </FlatList>
 
-          <Modal
-            animationType="slide"
-            transparent
-            visible={view}>
-            <View
+          <CustomModal visible={couponView} dismiss={() => {setCouponView(false)}}>
+            <View style={{flex: 1}}/>
+            <View style={{
+                flex: 2,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#ffefd5',
+                margin: 30,
+                borderWidth: 3,
+                borderRadius:10,
+                borderColor: '#CA955C'
+              }}>
+                <Pressable style={{alignSelf:'flex-end'}} onPress={() => {setCouponView(false)}}>
+                  <Ionicons size={35} name='close'/>
+                </Pressable>
+                <QRCode
+                  value={qrValue ? qrValue : 'NA'}
+                  color='white'
+                  size={200}
+                  backgroundColor='black'/>
+              <Text style={{fontWeight: 'bold'}}>{description}</Text>  
+            </View>
+            <View style={{flex: 1}}/>
+
+            {/* <View
               style={{
                 flex: 1,
                 justifyContent: 'center',
@@ -105,8 +128,8 @@ export default Coupons = ({route, navigation}) => {
                   style={{
                     alignItems:'center'
                   }}>
-                  <Pressable onPress={() => {setView(false)}}>
-                    <Ionicons name='close' size={35} style={{marginLeft:270}}/>
+                  <Pressable onPress={() => {setCouponView(false)}}>
+                    <Ionicons name='close' size={35} style={{marginLeft:50}}/>
                   </Pressable>
                   <QRCode
                     value={qrValue ? qrValue : 'NA'}
@@ -116,8 +139,8 @@ export default Coupons = ({route, navigation}) => {
                 </View>
                 <Text style={{marginTop: 15, marginLeft: 50, fontSize: 20, fontWeight: 'bold'}}>{description}</Text>  
               </View>
-            </View>
-          </Modal>
+            </View> */}
+          </CustomModal>
         </View>
       }
     </>
