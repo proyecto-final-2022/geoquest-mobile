@@ -10,6 +10,7 @@ import {loginManual, getUser} from '../../utils/apicalls/ApiCalls'
 import { Alert } from 'react-native'
 import Storage from '../../utils/storage/storage';
 import { useFocusEffect } from '@react-navigation/native';
+import {closeSession} from '../../utils/storage/storage';
 
 const SignInScreen = () => {
 
@@ -29,7 +30,11 @@ const SignInScreen = () => {
         setLoggingIn(false);
       })
       .catch(error => {
-        Alert.alert('Usuario o contraseña incorrecta');
+        if(String(error).includes('Network request failed')){
+          Alert.alert('Hubo problemas al conectarse con los servidores');
+        }else{
+          Alert.alert('Usuario o contraseña incorrecta');
+        }
         setLoggingIn(false);
       })
     }
@@ -54,6 +59,9 @@ const SignInScreen = () => {
           })
           .catch(error => {
             console.log(error);
+            closeSession().then(() => {
+              Alert.alert('Hubo problemas al conectarse con los servidores');
+            })
           })
         }
       })

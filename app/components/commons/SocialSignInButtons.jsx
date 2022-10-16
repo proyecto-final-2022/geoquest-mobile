@@ -1,11 +1,12 @@
-import {React} from 'react';
+import {React, useEffect} from 'react';
 import CustomButton from './CustomButton'
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { useEffect } from 'react';
+import { Alert } from 'react-native';
 import {postLoginGoogle, postLoginFacebook} from '../../utils/apicalls/ApiCalls';
 import {useNavigation} from '@react-navigation/native'
 import Config from '../../../config.json'
 import { AccessToken, Profile, GraphRequest, GraphRequestManager, LoginManager } from 'react-native-fbsdk-next';
+import {closeSession} from '../../utils/storage/storage';
 
 export default SocialSignInButtons = () => {
 
@@ -22,13 +23,18 @@ export default SocialSignInButtons = () => {
       const userInfo = await GoogleSignin.signIn();
       const user = userInfo.user;
       const token = GoogleSignin.getTokens();
-      postLoginGoogle(user.email, user.givenName, user.givenName, token.idToken).then(() => {
+      postLoginGoogle(user.email, user.givenName, user.givenName, token.idToken)
+      .then(() => {
         navigation.navigate('Quest Navigator');
       }).catch(error => {
         console.log('Google login error: '+error);
+        closeSession();
+        Alert.alert('Hubo problemas al conectarse con los servidores');
       })
     } catch (error) {
       console.log('Google login error: '+error);
+      closeSession();
+      Alert.alert('Hubo problemas al conectarse con los servidores');
     }
   };
   
@@ -51,21 +57,30 @@ export default SocialSignInButtons = () => {
                       }
                     }
                   }, (err, res) => {
-                    postLoginFacebook(res.email, currentProfile.name, currentProfile.name, data.accessToken).then(() => {
+                    postLoginFacebook(res.email, currentProfile.name, currentProfile.name, data.accessToken)
+                    .then(() => {
                       navigation.navigate('Quest Navigator');
                     }).catch(error => {
                       console.log('Facebook login error: '+error);
+                      closeSession();
+                      Alert.alert('Hubo problemas al conectarse con los servidores');
                     })
                   });
                   new GraphRequestManager().addRequest(infoRequest).start();
                 }
               }
-            ).catch(error => console.log('error'))
+            ).catch(error =>{
+              console.log('error');
+              closeSession();
+              Alert.alert('Hubo problemas al conectarse con los servidores');
+            })
           })
         }
       },
       function (error) {
         console.log('Facebook login fail with error: ' + error)
+        closeSession();
+        Alert.alert('Hubo problemas al conectarse con los servidores');
       }
     )
   }
