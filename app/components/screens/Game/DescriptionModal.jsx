@@ -4,13 +4,6 @@ import Lebron from '../../../../assets/medals/silver.png'
 import {Ionicons} from '@expo/vector-icons'
 
 export default function DescriptionModal({ctx}) {
-  const [visibleDescription, setVisibleDescription] = useState(false);
-  const [description, setObjectDescription] = useState({title: "", description: ""});
-
-  useEffect(() => {
-    setVisibleDescription(ctx.visibleDescription)
-    setObjectDescription(ctx.description)
-  }, [ctx.visibleDescription]);
 
   return (        
       <Modal
@@ -18,7 +11,7 @@ export default function DescriptionModal({ctx}) {
         onDismiss={() => console.log('close')}
         onShow={() => console.log('show')}
         transparent
-        visible={visibleDescription}
+        visible={ctx.visibleDescription}
       >
         <View
           style={{
@@ -52,11 +45,11 @@ export default function DescriptionModal({ctx}) {
             <ScrollView>
                 <View style={{flexDirection: 'column', justifyContent: 'space-around'}}>
           
-                  <Text style={{fontWeight: 'bold', color: 'darkred', fontSize: 20}}>{description.title}</Text>
+                  <Text style={{fontWeight: 'bold', color: 'darkred', fontSize: 20}}>{ctx.description.title}</Text>
             
                   <View style={{flexDirection: 'row'}}>
                     <View style={styles.descriptionText}>
-                      <Text style={{fontWeight: 'bold', fontSize: 15, marginTop: 30}}>{description.description}</Text>
+                      <Text style={{fontWeight: 'bold', fontSize: 15, marginTop: 30}}>{ctx.description.description}</Text>
                     </View>
 
                     <View style={styles.descriptionImage}>

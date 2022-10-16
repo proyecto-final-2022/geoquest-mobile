@@ -48,7 +48,7 @@ export default function ARView({questHandler}) {
     sheetRef.current?.snapToIndex(index);
   })
 
-  const arViewCtx = { setObjectVisualize, setObjectDescription, description, handleSnapPress, visibleDescription, setVisibleDescription};
+  const arViewCtx = {description, handleSnapPress, visibleDescription, setObjectVisualize, setObjectDescription, setVisibleDescription, handleSnapPress};
   
   const getObjectView = (sceneNumber) => { 
     const objectViews = [object_view_cubone, object_view_cubone2, object_view_cubone3];

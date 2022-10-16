@@ -6,8 +6,10 @@ import userImage_2 from '../../../../../assets/medals/silver.png'
 import userImage_3 from '../../../../../assets/medals/gold.png'
 import userImage_4 from '../../../../../assets/medals/treasure_chest.png'
 
-const Inventory = (props, ctx) => {
+const Inventory = (ctx) => {
   const [combinable, setCombinable] = useState({})
+
+  var context = ctx.ctx
   
   const combinations = {
     "1": {
@@ -84,14 +86,14 @@ const Inventory = (props, ctx) => {
       title: 'Ver',
       action: (item, index) =>  {
         hideMenu(index)
-        props.ctx.setObjectVisualize(item.view)
-        props.ctx.setObjectDescription(
+        context.setObjectVisualize(item.view)
+        context.setObjectDescription(
           {
             title: item.title,
             description: item.description
           })
-        props.ctx.handleSnapPress(0)
-        props.ctx.setVisibleDescription(true)
+        context.handleSnapPress(0)
+        context.setVisibleDescription(true)
       }
     },
     {
