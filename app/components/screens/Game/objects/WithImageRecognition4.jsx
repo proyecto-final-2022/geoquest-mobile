@@ -3,21 +3,24 @@ import { ViroARImageMarker } from "@viro-community/react-viro/components/AR/Viro
 import { ViroARTrackingTargets } from "@viro-community/react-viro/components/AR/ViroARTrackingTargets";
 import { Viro3DObject } from "@viro-community/react-viro/components/Viro3DObject";
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
+import {useNavigation} from '@react-navigation/native'
 import Resources from "../../../../utils/resources.js";
 import Interactions from "../interactions";
 import { ViroAnimations } from "@viro-community/react-viro/components/Animation/ViroAnimations";
 
 
-export default function WithImageRecognition({id, handler, typeProps, globalCtx}) {
+export default function WithImageRecognition4({id, handler, typeProps, globalCtx}) {
   const [pauseUpdates, setPauseUpdates] = useState(false);
   const [visible, setIsVisible] = useState(true);
   const [runFade, setRunFade] = useState(false);
+  
+  const navigation = useNavigation()
 
   const {target, model, interactions} = typeProps;
 
   const targetProps = {
     ...target,
-    source: Resources.get("images.exampleImage")
+    source: Resources.get("images.exampleImage3")
   };
 
   const modelProps = {
@@ -33,19 +36,20 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
   };
 
   useEffect(() => {
+    console.log("***************&&%%%%%%escena 4")
     if(!hasInteractionsLeft()) {
       setIsVisible(false);
     }
 
     ViroARTrackingTargets.createTargets({
-      target: targetProps
+      target4: targetProps
     });
 
 //    return () => ViroARTrackingTargets.deleteTarget(target);
   }, []);
 
   const onClick = () => {
-  //  setIsVisible(false)
+    navigation.navigate("Quest Navigator")
   /*
     const interactionN = interactions.length;
     if(!hasInteractionsLeft()) {
@@ -79,28 +83,12 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     //POST (id inventario, ["objeto1"])
     //response --> devuelve el inventario actualizado con lo ultimo
     */
-    handler.setTeamInventory([{
-      key: "cubone",
-      title: "Objeto 1",
-      description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
-      questItemID: 1,
-      image: "2",
-      view: 1,
-      combinable: [
-        {
-          combinableQuestItemID: 2,
-          image: "3"
-        } 
-      ],
-      visibleMenu: false,
-      marker: false
-    }])
     
   };
 
   return (
     <ViroARImageMarker 
-      target={"target"}
+      target={"target4"}
 //      onAnchorFound={() => console.log("************************on anchor found")}
 //      pauseUpdates={false}
       onAnchorFound={() => {setPauseUpdates(true);}}
@@ -111,7 +99,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
         visible={visible} 
         onClick={onClick} 
         {...modelProps} 
-        animation={{name: "fade", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
+        animation={{name: "fade4", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
       />
     </ViroARImageMarker>
   );
@@ -119,7 +107,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 
 
 ViroAnimations.registerAnimations({
-  fade: {
+  fade4: {
     properties: {
       opacity: "-=1"
     },

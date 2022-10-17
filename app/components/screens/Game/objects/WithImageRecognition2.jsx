@@ -45,6 +45,22 @@ export default function WithImageRecognition2({id, handler, typeProps, globalCtx
   }, []);
 
   const onClick = () => {
+    handler.setTeamInventory([{
+      key: "cubone2",
+      title: "Objeto 1",
+      description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
+      questItemID: 1,
+      image: "2",
+      view: 1,
+      combinable: [
+        {
+          combinableQuestItemID: 2,
+          image: "3"
+        } 
+      ],
+      visibleMenu: false,
+      marker: false
+    }])
   /*
     const interactionN = interactions.length;
     if(!hasInteractionsLeft()) {
@@ -78,22 +94,7 @@ export default function WithImageRecognition2({id, handler, typeProps, globalCtx
     //POST (id inventario, ["objeto1"])
     //response --> devuelve el inventario actualizado con lo ultimo
     */
-    handler.setTeamInventory([{
-      key: "cubone",
-      title: "Objeto 1",
-      description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
-      questItemID: 1,
-      image: "2",
-      view: 1,
-      combinable: [
-        {
-          combinableQuestItemID: 2,
-          image: "3"
-        } 
-      ],
-      visibleMenu: false,
-      marker: false
-    }])
+
     
   };
 
@@ -107,7 +108,7 @@ export default function WithImageRecognition2({id, handler, typeProps, globalCtx
     >
       <ViroAmbientLight color="#ffffff"/>
       <Viro3DObject 
-        visible={handler.asdasdasd} 
+        visible={visible} 
         onClick={onClick} 
         {...modelProps} 
         animation={{name: "fade2", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}

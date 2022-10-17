@@ -7,6 +7,9 @@ import {Ionicons} from '@expo/vector-icons'
 import HintModal from "./HintModal";
 import DescriptionModal from "./DescriptionModal";
 import Scene from "./Scene";
+import Scene2 from "./Scene2";
+import Scene3 from "./Scene3";
+import Scene4 from "./Scene4";
 import object_view_cubone from "./ObjectVisualization/object_view_cubone";
 import object_view_cubone2 from "./ObjectVisualization/object_view_cubone2";
 import object_view_cubone3 from "./ObjectVisualization/object_view_cubone3";
@@ -71,8 +74,18 @@ export default function ARView({questHandler}) {
 
   useEffect(() => {
     if (questHandler.inventory.find(item => (item.key == "cubone"))) {
-      navigatorRef.current.jump({scene: Scene})
+      console.log("************************************Cambio de escena")
+      navigatorRef.current.jump({scene: Scene2})
     }
+    if (questHandler.inventory.find(item => (item.key == "cubone2"))) {
+      console.log("************************************Cambio de escena")
+      navigatorRef.current.jump({scene: Scene3})
+    }
+    if (questHandler.inventory.find(item => (item.key == "cubone3"))) {
+      console.log("************************************Cambio de escena")
+      navigatorRef.current.jump({scene: Scene4})
+    }
+
   }, [questHandler.inventory]);
 
   return (

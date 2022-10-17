@@ -79,7 +79,7 @@ export default function WithImageRecognition3({id, handler, typeProps, globalCtx
     //response --> devuelve el inventario actualizado con lo ultimo
     */
     handler.setTeamInventory([{
-      key: "cubone",
+      key: "cubone3",
       title: "Objeto 1",
       description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
       questItemID: 1,
@@ -107,10 +107,10 @@ export default function WithImageRecognition3({id, handler, typeProps, globalCtx
     >
       <ViroAmbientLight color="#ffffff"/>
       <Viro3DObject 
-        visible={handler.asdasdasd} 
+        visible={visible} 
         onClick={onClick} 
         {...modelProps} 
-        animation={{name: "fade2", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
+        animation={{name: "fade3", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
       />
     </ViroARImageMarker>
   );
@@ -118,7 +118,7 @@ export default function WithImageRecognition3({id, handler, typeProps, globalCtx
 
 
 ViroAnimations.registerAnimations({
-  fade2: {
+  fade3: {
     properties: {
       opacity: "-=1"
     },
