@@ -46,6 +46,26 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 
   const onClick = () => {
   //  setIsVisible(false)
+      //POST (id inventario, ["objeto1"])
+    //response --> devuelve el inventario actualizado con lo ultimo
+    
+    handler.setTeamInventory([{
+      key: "cubone",
+      title: "Objeto 1",
+      description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
+      questItemID: 1,
+      image: "2",
+      view: 1,
+      combinable: [
+        {
+          combinableQuestItemID: 2,
+          image: "3"
+        } 
+      ],
+      visibleMenu: false,
+      marker: false
+    }])
+  
   /*
     const interactionN = interactions.length;
     if(!hasInteractionsLeft()) {
@@ -76,26 +96,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     newState.objects[id] = newObjectState;
     //handler.setQuestState(newState);
 
-    //POST (id inventario, ["objeto1"])
-    //response --> devuelve el inventario actualizado con lo ultimo
-    */
-    handler.setTeamInventory([{
-      key: "cubone",
-      title: "Objeto 1",
-      description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
-      questItemID: 1,
-      image: "2",
-      view: 1,
-      combinable: [
-        {
-          combinableQuestItemID: 2,
-          image: "3"
-        } 
-      ],
-      visibleMenu: false,
-      marker: false
-    }])
-    
+*/    
   };
 
   return (

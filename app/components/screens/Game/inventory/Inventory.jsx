@@ -17,48 +17,20 @@ const Inventory = (ctx) => {
       "4": "5"
     }
   }
-  //Despues cambiar esto con un useEffect despues de ejecutar el llamado
-  const [items, setItems] = useState([
-    {
-      key: "cubone",
-      title: "Objeto 1",
-      description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
-      questItemID: 1,
-      image: "2",
-      view: 1,
-      combinable: [
-        {
-          combinableQuestItemID: 2,
-          image: "3"
-        } 
-      ],
-      visibleMenu: false,
-      marker: false
-    },
-    {
-    key: "cubone2",
-    title: "Objeto 2",
-    description: "Objeto 2 descripcion Objeto 2 descripcion Objeto 2 descripcion Objeto 2 descripcion",
-    questItemID: 2,
-    image: "1",
-    view: 2,
-    combinable: [],
-    visibleMenu: false,
-    marker: false
-  },
-  {
-    key: "cubone3",
-    title: "Objeto 3",
-    description: "Objeto 3 descripcion Objeto 3 descripcion Objeto 3 descripcion Objeto 3 descripcion",
-    questItemID: 3,
-    image: "2",
-    view: 3,
-    combinable: [],
-    visibleMenu: false,
-    marker: false
-  }
-   
-  ])
+
+  var inventory =  context.questHandler.questState.inventory ?? ["1","2","3"]
+  
+  var inventoryItems = inventory.map(item => 
+    ({
+      "title": context.questHandler.questConfig.items[item].title,
+      "description": context.questHandler.questConfig.items[item].description,
+      "image": context.questHandler.questConfig.items[item].image,
+      "visibleMenu": false,
+      "marker": false
+    })
+    )
+
+  const [items, setItems] = useState(inventoryItems)
 
   const hideMenu = (index) => {
     let itemsList = [...items];
