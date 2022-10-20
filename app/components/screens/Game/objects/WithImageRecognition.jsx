@@ -38,7 +38,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     }
 
     ViroARTrackingTargets.createTargets({
-      target: targetProps
+      "target": targetProps
     });
 
     return () => ViroARTrackingTargets.deleteTarget(target);
@@ -69,8 +69,13 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
       setRunFade(true);
     }
 
+    console.log(newState);
+
     newState.objects[id] = newObjectState;
     handler.setQuestState(newState);
+    if (newState.scene > handler.questState.scene) {
+      globalCtx.forceReload();
+    }
   };
 
   return (

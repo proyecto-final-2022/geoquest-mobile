@@ -5,7 +5,11 @@ import { parseScene } from "./questParsers";
 
 export default function Scene(props) {
   const sceneProps= props.arSceneNavigator.viroAppProps;
-  const sceneConfig = sceneProps.handler.questConfig;
+  const questConfig = sceneProps.handler.questConfig;
+  const questState = sceneProps.handler.questState;
+  const sceneConfig = questConfig.scenes[questState.scene];
+
+  console.log("Escena: ", questState.scene);
 
   return (
     <ViroARScene>

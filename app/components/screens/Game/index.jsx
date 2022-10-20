@@ -2,11 +2,13 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import ARView from "./ARView";
+import QuestLog from "./QuestLog";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import exampleQuest from "../../../../res/exampleQuest.json";
 
 
-function useQuestStateHandler(_questID) {
+function useQuestStateHandler(questID) {
   const [config, setConfig] = useState();
   const [state, setState] = useState();
   const [loading, setLoading] = useState(true);
@@ -19,6 +21,7 @@ function useQuestStateHandler(_questID) {
     // If there is a session download current state.
     // If not, create a session and initialize with returned initial state:
     setState({
+      scene: 0,
       objects: {}
     });
   };
@@ -38,7 +41,7 @@ function useQuestStateHandler(_questID) {
     });
     const cleanUp = setUpdateListener();
     return cleanUp;
-  }, []);
+  }, [questID]);
 
   return {
     loading: loading,
@@ -55,13 +58,28 @@ function useQuestStateHandler(_questID) {
 }
 
 
-export default function Game({questID}) {
-  const questHandler = useQuestStateHandler(questID);
+const Tab = createBottomTabNavigator();
 
-  if (questHandler.loading)
+export default function Game({questID}) {
+  const {loading, ...questHandler} = useQuestStateHandler(questID);
+
+  if(loading)
     return <View><Text>Loading...</Text></View>;
 
   return (
-    <ARView questHandler={questHandler} />
+    <Tab.Navigator>
+      <Tab.Screen 
+        name="Mis Notas" 
+        component={QuestLog} 
+        initialParams={{questHandler}} 
+        options={{headerShown: false}}
+      />
+      <Tab.Screen 
+        name="Camara" 
+        component={ARView} 
+        initialParams={{questHandler}} 
+        options={{headerShown: false}} 
+      />
+    </Tab.Navigator>
   );
 }

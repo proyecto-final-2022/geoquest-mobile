@@ -1,43 +1,96 @@
 {
   "id": "unID",
-  "objects": [
+  "scenes": [
     {
-      "type": "WithImageRecognition",
-      "typeProps": { 
-        "target": {
-          "source": "images.exampleImage",
-          "physicalWidth": 0.2,
-          "orientation": "Up"
-        },
-        "model": {
-          "source": "models.cubone.model",
-          "type": "OBJ",
-          "position": [0,-2,0],
-          "scale": [1,1,1],
-          "rotation": [90,180,0],
-          "resources": [
-            "models.cubone.materials"
-          ],
-        },
-        "interactions": [
-          [
-            {
-              "name": "showHint",
-              "params": [
-                "Pista numero 1"
+      "objects": [
+        {
+          "type": "WithImageRecognition",
+          "typeProps": { 
+            "target": {
+              "source": "images.exampleImage",
+              "physicalWidth": 0.2,
+              "orientation": "Up"
+            },
+            "model": {
+              "source": "models.cubone.model",
+              "type": "OBJ",
+              "position": [0,-2,0],
+              "scale": [1,1,1],
+              "rotation": [90,180,0],
+              "resources": [
+                "models.cubone.materials"
+              ],
+            },
+            "interactions": [
+              [
+                {
+                  "name": "showHint",
+                  "params": [
+                    {
+                      "short": "Pista numero 1",
+                      "long": "Me encontre con kubone en '<lugar>' y me dijo que <bla bla>."
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "name": "showHint",
+                  "params": [
+                    {
+                      "short": "Pista numero 2",
+                      "long": "Me encontre con kubone en '<lugar>' y me dijo que <bla bla>."
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "name": "nextScene",
+                  "params": []
+                }
               ]
-            }
-          ],
-          [
-            {
-              "name": "showHint",
-              "params": [
-                "Pista numero 2"
-              ]
-            }
-          ],
-        ]
-      },
+            ]
+          },
+        }
+      ]
+    },
+    {
+      "objects": [
+        {
+          "type": "WithImageRecognition",
+          "typeProps": { 
+            "target": {
+              "source": "images.duende",
+              "physicalWidth": 0.2,
+              "orientation": "Up"
+            },
+            "model": {
+              "source": "models.cubone.model",
+              "type": "OBJ",
+              "position": [0,-2,0],
+              "scale": [1,1,1],
+              "rotation": [90,180,0],
+              "resources": [
+                "models.cubone.materials"
+              ],
+            },
+            "interactions": [
+              [
+                {
+                  "name": "showHint",
+                  "params": [
+                    {
+                      "short": "Pista numero desde la escena 2!",
+                      "long": "Me encontre con kubone en '<lugar>' y me dijo que <bla bla>."
+                    }
+                  ]
+                }
+              ],
+            ]
+          },
+        }
+      ]
     }
   ]
 }

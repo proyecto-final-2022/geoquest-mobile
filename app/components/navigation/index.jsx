@@ -26,7 +26,7 @@ export default function Navigation() {
   return(
     <NavigationContainer>
       <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
-        <Drawer.Screen name="Game" component={Game} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
+        <Drawer.Screen name="Game" component={Game} options={{ headerShown: false, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
         <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>
         <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>
         <Drawer.Screen name="Home" component={HomeScreen} options={{ headerShown: true, headerTitle: "" }}/>

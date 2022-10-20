@@ -1,6 +1,14 @@
 
 export default {
-  "showHint": (ctx, text) => {
-    ctx.global.hint(text);
+  "showHint": (ctx, hint) => {
+    ctx.global.hint(hint.short);
   },
+
+  "nextScene": (ctx) => {
+    /* ctx.global.forceReload(); */
+    return {
+      ...ctx.state,
+      scene: ctx.state.scene + 1
+    };
+  }
 };
