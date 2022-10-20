@@ -21,13 +21,12 @@ import geoQuestLogo_edge from '../../../assets/GeoQuestLogo.png'
 import { useFocusEffect } from '@react-navigation/native';
 
 import {avatarChange, submitUserChanges, passwordUpdate} from '../../utils/apicalls/ApiCalls';
-import {areYouSureAlert} from '../../utils/storage/storage';
 
 const ProfileScreen = ({navigation}) => {
     useFocusEffect(
         React.useCallback(() => {
             const onBackPress = () => {
-                areYouSureAlert({navigation});
+                navigation.navigate('Quest Navigator')
                 return true;
             };
             BackHandler.addEventListener('hardwareBackPress',onBackPress);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Text, View, Dimensions, Image, Pressable, TouchableOpacity} from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Dimensions, Image, Pressable, TouchableOpacity, BackHandler} from 'react-native';
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import CustomButton from '../commons/CustomButton'
 import CustomButton2 from '../commons/CustomButton2'
@@ -7,6 +7,7 @@ import CustomModal from '../commons/CustomModal';
 import Storage from '../../utils/storage/storage';
 import Config from '../../../config.json';
 import {updateQuestRating} from '../../utils/apicalls/ApiCalls';
+import { useFocusEffect } from '@react-navigation/native';
 
 import starFilled from '../../../assets/ratingStars/star_filled.png'
 import starCorner from '../../../assets/ratingStars/star_corner.png'
@@ -20,10 +21,7 @@ export default QuestVisualizer = ({route, navigation}) => {
 
   const Tag = ({tag, index}) => {
     return (
-      <View style={[
-        styles.tag,
-        {backgroundColor: colors[index]}
-        ]}>
+      <View style={[styles.tag, {backgroundColor: colors[index]}]}>
         <Text style={{fontWeight: 'bold', color: 'white'}}>{tag}</Text>
       </View>
     )
@@ -39,6 +37,17 @@ export default QuestVisualizer = ({route, navigation}) => {
       </Pressable>
     )
   }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate('Client Quests', {clientID, clientName});
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
 
   useEffect(() => {
     navigation.setOptions({
@@ -226,13 +235,13 @@ const styles = StyleSheet.create({
     flex: 2  
   },
   tagContainer:{
-    flex: 0.5,
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
   tag:{
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems:  'center',
     width: 90,
     padding: 5,
     borderRadius: 20,

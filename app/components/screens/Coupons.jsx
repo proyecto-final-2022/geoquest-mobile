@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, PixelRatio , Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, PixelRatio , BackHandler, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import QRCode from 'react-native-qrcode-svg'
 import {Button} from 'react-native'
-import {useNavigation} from '@react-navigation/native'
+import {useFocusEffect} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
@@ -37,6 +37,17 @@ export default Coupons = ({route, navigation}) => {
     .finally(()=>setLoading(false))
     .catch((error) => console.error(error))
   }, [route])
+  
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate('Quest Navigator')
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
 
   const Card = ({coupon}) => {
     return (
@@ -55,7 +66,7 @@ export default Coupons = ({route, navigation}) => {
         <View style={styles.cardContainer}>
           <View
             style={styles.couponInfo}>
-              <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{coupon.description}</Text>
+              <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{coupon.description.length > 15? (coupon.description.substring(0,14))+'...' : coupon.description}</Text>
               <Text style={{marginTop: 20, fontSize: 15}}>{'Válido hasta: ' + coupon.expiration_date.split('T')[0]}</Text>
           </View>
           <Image source={{uri: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"}} style={styles.image} />
@@ -83,17 +94,16 @@ export default Coupons = ({route, navigation}) => {
             contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
             showsHorizontalScrollIndicator = {false}
             data={coupons}
-            renderItem={({item}) => <Card coupon={item}/>}>      
+            renderItem={({item, index}) => <Card coupon={item} key={index}/>}>      
           </FlatList>
 
           <CustomModal visible={couponView} dismiss={() => {setCouponView(false)}}>
             <View style={{flex: 1}}/>
             <View style={{
-                flex: 2,
+                flex: 3,
                 alignItems: 'center',
-                justifyContent: 'center',
                 backgroundColor: '#ffefd5',
-                margin: 30,
+                margin: 20,
                 borderWidth: 3,
                 borderRadius:10,
                 borderColor: '#CA955C'
@@ -101,12 +111,14 @@ export default Coupons = ({route, navigation}) => {
                 <Pressable style={{alignSelf:'flex-end'}} onPress={() => {setCouponView(false)}}>
                   <Ionicons size={35} name='close'/>
                 </Pressable>
-                <QRCode
-                  value={qrValue ? qrValue : 'NA'}
-                  color='white'
-                  size={200}
-                  backgroundColor='black'/>
-              <Text style={{fontWeight: 'bold'}}>{description}</Text>  
+                <View style={{borderWidth: 8, borderColor: 'white'}}>
+                  <QRCode
+                    value={qrValue ? qrValue : 'NA'}
+                    color='black'
+                    size={Dimensions.get('window').width / 1.8}
+                    backgroundColor='white'/>
+                </View>
+              <Text style={{fontWeight: 'bold', margin: 15}}>{description}</Text>  
             </View>
             <View style={{flex: 1}}/>
 
