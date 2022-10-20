@@ -5,7 +5,6 @@ export default {
   },
 
   "nextScene": (ctx) => {
-    /* ctx.global.forceReload(); */
     return {
       ...ctx.state,
       scene: ctx.state.scene + 1

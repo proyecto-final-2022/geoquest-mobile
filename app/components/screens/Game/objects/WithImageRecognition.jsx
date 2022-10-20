@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { ViroARImageMarker } from "@viro-community/react-viro/components/AR/ViroARImageMarker";
-import { ViroARTrackingTargets } from "@viro-community/react-viro/components/AR/ViroARTrackingTargets";
+import { 
+  ViroARTrackingTargets 
+} from "@viro-community/react-viro/components/AR/ViroARTrackingTargets";
 import { Viro3DObject } from "@viro-community/react-viro/components/Viro3DObject";
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 import Resources from "../../../../utils/resources.js";
 import Interactions from "../interactions";
 import { ViroAnimations } from "@viro-community/react-viro/components/Animation/ViroAnimations";
+import { useSelector, useDispatch } from "react-redux";
+import Quest from "../../../../redux/slices/quest";
 
 
-export default function WithImageRecognition({id, handler, typeProps, globalCtx}) {
+export default function WithImageRecognition({id, typeProps, globalCtx}) {
+  const questState = useSelector(state => state.quest);
+  const dispatch = useDispatch();
   const [pauseUpdates, setPauseUpdates] = useState(false);
   const [visible, setIsVisible] = useState(true);
   const [runFade, setRunFade] = useState(false);
@@ -27,7 +33,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
   };
 
   const hasInteractionsLeft = () => {
-    const objectState = handler.questState.objects[id] ?? 0;
+    const objectState = questState.objects[id] ?? 0;
     const interactionN = interactions.length;
     return interactionN - 1  >= objectState;
   };
@@ -37,9 +43,9 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
       setIsVisible(false);
     }
 
-    ViroARTrackingTargets.createTargets({
-      "target": targetProps
-    });
+    const targets = {};
+    targets[target.source] = targetProps;
+    ViroARTrackingTargets.createTargets(targets);
 
     return () => ViroARTrackingTargets.deleteTarget(target);
   }, []);
@@ -54,33 +60,31 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
       const ctx = {
         state,
         global: globalCtx,
-        object: {}  // TODO
+        object: {}  // TODO estado de este objeto
       };
       return Interactions[name](ctx, ...params);
     };
 
-    const objectState = handler.questState.objects[id] ?? 0;
+    const objectState = questState.objects[id] ?? 0;
     const newState = interactions[objectState].reduce((prevState, int) => {
       return interact(int.name, prevState, int.params) || prevState;
-    }, handler.questState);
+    }, questState);
 
     const newObjectState = objectState + 1;
     if(newObjectState == interactionN) {
       setRunFade(true);
     }
 
-    console.log(newState);
-
+    console.log(id, objectState, newObjectState);
     newState.objects[id] = newObjectState;
-    handler.setQuestState(newState);
-    if (newState.scene > handler.questState.scene) {
-      globalCtx.forceReload();
-    }
+    console.log("Prev state:", questState);
+    console.log("New state:", newState);
+    dispatch(Quest.actions.set(newState));
   };
 
   return (
     <ViroARImageMarker 
-      target={"target"}
+      target={target.source}
       onAnchorFound={() => {setPauseUpdates(true);}}
       pauseUpdates={pauseUpdates}
     >
@@ -89,7 +93,12 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
         visible={visible} 
         onClick={onClick} 
         {...modelProps} 
-        animation={{name: "fade", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
+        animation={{
+          name: "fade", 
+          run: runFade, 
+          loop: false, 
+          onFinish: () => {setIsVisible(false);}
+        }}
       />
     </ViroARImageMarker>
   );

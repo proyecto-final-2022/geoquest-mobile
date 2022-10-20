@@ -1,15 +1,17 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScene";
 import { parseScene } from "./questParsers";
 
 
 export default function Scene(props) {
-  const sceneProps= props.arSceneNavigator.viroAppProps;
-  const questConfig = sceneProps.handler.questConfig;
-  const questState = sceneProps.handler.questState;
-  const sceneConfig = questConfig.scenes[questState.scene];
+  const sceneNum = useSelector(state => state.quest.scene);
 
-  console.log("Escena: ", questState.scene);
+  const sceneProps= props.arSceneNavigator.viroAppProps;
+  const questConfig = sceneProps.questConfig;
+  const sceneConfig = questConfig.scenes[sceneNum];
+
+  console.log("Escena: ", sceneNum);
 
   return (
     <ViroARScene>

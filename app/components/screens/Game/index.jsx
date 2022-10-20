@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { View, Text } from "react-native";
 import ARView from "./ARView";
 import QuestLog from "./QuestLog";
@@ -8,10 +9,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import exampleQuest from "../../../../res/exampleQuest.json";
 
 
-function useQuestStateHandler(questID) {
+function useQuestSetup(questID) {
+  const dispatch = useDispatch();
+  const questState = useSelector(state => state.quest);
   const [config, setConfig] = useState();
-  const [state, setState] = useState();
   const [loading, setLoading] = useState(true);
+
+  console.log(questState);
 
   const initQuest = async () => {
     console.log("Init quest");
@@ -20,10 +24,6 @@ function useQuestStateHandler(questID) {
     setConfig(exampleQuest);
     // If there is a session download current state.
     // If not, create a session and initialize with returned initial state:
-    setState({
-      scene: 0,
-      objects: {}
-    });
   };
 
   const setUpdateListener = () => {
@@ -45,15 +45,7 @@ function useQuestStateHandler(questID) {
 
   return {
     loading: loading,
-    questConfig: config,
-    questState: state,
-
-    setQuestState: (newState) => {
-      // TODO: Notify state update.
-      console.log("Update sent");
-      // If ok, then:
-      setState(newState);
-    },
+    questConfig: config
   };
 }
 
@@ -61,7 +53,7 @@ function useQuestStateHandler(questID) {
 const Tab = createBottomTabNavigator();
 
 export default function Game({questID}) {
-  const {loading, ...questHandler} = useQuestStateHandler(questID);
+  const {loading, questConfig } = useQuestSetup(questID);
 
   if(loading)
     return <View><Text>Loading...</Text></View>;
@@ -71,13 +63,13 @@ export default function Game({questID}) {
       <Tab.Screen 
         name="Mis Notas" 
         component={QuestLog} 
-        initialParams={{questHandler}} 
+        initialParams={{questConfig}} 
         options={{headerShown: false}}
       />
       <Tab.Screen 
         name="Camara" 
         component={ARView} 
-        initialParams={{questHandler}} 
+        initialParams={{questConfig}} 
         options={{headerShown: false}} 
       />
     </Tab.Navigator>

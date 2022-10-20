@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { 
   ViroARSceneNavigator
 } from "@viro-community/react-viro/components/AR/ViroARSceneNavigator";
@@ -10,28 +10,21 @@ import Scene from "./Scene";
 export default function ARView({route}) {
   const [ showHint, setShowHint ] = useState(false);
   const [ hintText, setHintText ] = useState("");
-  const navigatorRef = useRef();
 
   const hint = (text) => {
     setHintText(text);
     setShowHint(true);
   };
 
-  const forceReload = () => {
-    console.log("Force Reload");
-    navigatorRef.current.jump({scene: Scene});
-  };
-
   const globalCtx = { 
-    hint, forceReload
+    hint,
   };
 
   return (
     <View style={{height: "100%", width: "100%"}}>
       <ViroARSceneNavigator 
-        ref={navigatorRef}
         initialScene={{scene: Scene}} 
-        viroAppProps={{handler: route.params.questHandler, globalCtx}}
+        viroAppProps={{questConfig: route.params.questConfig, globalCtx}}
       />
       <HintModal 
         style={styles.hintModal} 

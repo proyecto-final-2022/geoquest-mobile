@@ -4,22 +4,26 @@ import { ViroARSceneNavigator } from "@viro-community/react-viro/components/AR/V
 import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScene";
 import { ViroText } from "@viro-community/react-viro/components/ViroText";
 import { ViroTrackingStateConstants } from "@viro-community/react-viro/components/ViroConstants";
-import Navigation from './app/components/navigation'
+import Navigation from "./app/components/navigation";
+import { Provider } from "react-redux";
+import store from "./app/redux";
+
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.root}>
-      <Navigation />
-    </SafeAreaView>
-
- //   <ViroARSceneNavigator initialScene={{scene: HelloWorldScene}}/>
+    <Provider store={store}>
+      <SafeAreaView style={styles.root}>
+        <Navigation />
+      </SafeAreaView>
+    </Provider>
+  //   <ViroARSceneNavigator initialScene={{scene: HelloWorldScene}}/>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#FFF9CA'
+    backgroundColor: "#FFF9CA"
   },
 });
 
@@ -31,7 +35,7 @@ const HelloWorldScene = (_props) => {
       setText("Tracking unavailable");
     else if (state === ViroTrackingStateConstants.TRACKING_NORMAL)
       setText("Hello world!");
-  }
+  };
 
   return (
     <ViroARScene onTrackingUpdated={onTrackingUpdated}>
@@ -42,4 +46,4 @@ const HelloWorldScene = (_props) => {
       />
     </ViroARScene>
   );
-}
+};
