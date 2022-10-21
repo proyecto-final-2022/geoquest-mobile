@@ -6,6 +6,7 @@ import {Avatar} from 'react-native-paper';
 import {Ionicons} from '@expo/vector-icons'
 import HintModal from "./HintModal";
 import DescriptionModal from "./DescriptionModal";
+import DescriptionModal2 from "./DescriptionModal2";
 import Scene from "./Scene";
 import Scene2 from "./Scene2";
 import Scene3 from "./Scene3";
@@ -31,6 +32,7 @@ export default function ARView({questHandler}) {
   const [isOpen, setIsOpen] = useState(true);
 
   const [visualize, setObjectVisualize] = useState();
+  const [visualize2, setObjectVisualize2] = useState(false);
   const [description, setObjectDescription] = useState({title: "", description: ""});
   const [visibleDescription, setVisibleDescription] = useState(false);
 
@@ -44,14 +46,15 @@ export default function ARView({questHandler}) {
   };
 
   const globalCtx = { 
-    hint
+    hint,
+    setObjectVisualize2
   };
 
   const handleSnapPress = useCallback((index) => {
     sheetRef.current?.snapToIndex(index);
   })
 
-  const arViewCtx = {questHandler, description, handleSnapPress, visibleDescription, setObjectVisualize, setObjectDescription, setVisibleDescription, handleSnapPress};
+  const arViewCtx = {questHandler, description, handleSnapPress, visibleDescription, visualize2, setObjectVisualize2, setObjectVisualize, setObjectDescription, setVisibleDescription, handleSnapPress};
   
   const getObjectView = (sceneNumber) => { 
     const objectViews = [object_view_cubone, object_view_cubone2, object_view_cubone3];
@@ -111,6 +114,8 @@ export default function ARView({questHandler}) {
       </BottomSheet>
 
       <DescriptionModal
+        ctx={arViewCtx}/>
+      <DescriptionModal2
         ctx={arViewCtx}/>
       
     </View>

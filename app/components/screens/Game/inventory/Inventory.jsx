@@ -18,7 +18,7 @@ const Inventory = (ctx) => {
     }
   }
 
-  var inventory =  context.questHandler.questState.inventory ?? ["1","2","3"]
+  var inventory =  context.questHandler.questState.inventory ?? []
   
   var inventoryItems = inventory.map(item => 
     ({

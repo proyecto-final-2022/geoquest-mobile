@@ -10,14 +10,14 @@ import { ViroAnimations } from "@viro-community/react-viro/components/Animation/
 
 export default function WithImageRecognition({id, handler, typeProps, globalCtx}) {
   const [pauseUpdates, setPauseUpdates] = useState(false);
-  const [visible, setIsVisible] = useState(true);
+  const [visible, setIsVisible] = useState(false);
   const [runFade, setRunFade] = useState(false);
 
   const {target, model, interactions} = typeProps;
 
   const targetProps = {
     ...target,
-    source: Resources.get("images.exampleImage")
+    source: Resources.get(target.source)
   };
 
   const modelProps = {
@@ -36,12 +36,14 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     if(!hasInteractionsLeft()) {
       setIsVisible(false);
     }
+    const source = target.source
+    const targets = {}
+    targets[source] = targetProps
+    console.log("*¨***********Targets: ", targets)
+    console.log("*¨***********ModelProps: ", modelProps)
+    ViroARTrackingTargets.createTargets(targets);
 
-    ViroARTrackingTargets.createTargets({
-      target: targetProps
-    });
-
-//    return () => ViroARTrackingTargets.deleteTarget(target);
+    return () => ViroARTrackingTargets.deleteTarget(target.source);
   }, []);
 
   const onClick = () => {
@@ -96,24 +98,27 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     newState.objects[id] = newObjectState;
     //handler.setQuestState(newState);
 
+    <ViroAmbientLight color="#ffffff"/>
+    <Viro3DObject 
+        visible={visible}
+        onClick={onClick} 
+        {...modelProps} 
+        animation={{name: "fade", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
+      />
 */    
   };
 
   return (
     <ViroARImageMarker 
-      target={"target"}
+      target={target.source}
 //      onAnchorFound={() => console.log("************************on anchor found")}
 //      pauseUpdates={false}
-      onAnchorFound={() => {setPauseUpdates(true);}}
+      onAnchorFound={() => {
+        globalCtx.setObjectVisualize2(true)
+        setPauseUpdates(true);}}
       pauseUpdates={pauseUpdates}
     >
-      <ViroAmbientLight color="#ffffff"/>
-      <Viro3DObject 
-        visible={visible} 
-        onClick={onClick} 
-        {...modelProps} 
-        animation={{name: "fade", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
-      />
+      
     </ViroARImageMarker>
   );
 }
