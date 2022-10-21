@@ -69,8 +69,10 @@ export default function ARView({questHandler}) {
   }, []);
 
   useEffect(() => {
-    console.log("***********************actualizado inventario", questHandler.questState) 
-  }, [questHandler.questState.inventory]);
+    if (questHandler.questState.scene == 2) {
+      navigatorRef.current.jump({scene: Scene2})
+    }
+  }, [questHandler.questState.scene]);
 
   useEffect(() => {
     if (visualize != 0 && visualize != undefined){

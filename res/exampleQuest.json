@@ -29,6 +29,7 @@
       "objects": [
         {
           "type": "WithImageRecognition",
+          "changeScene": "2",
           "typeProps": { 
             "target": {
               "source": "images.exampleImage",
@@ -81,7 +82,7 @@
           "type": "WithImageRecognition",
           "typeProps": { 
             "target": {
-              "source": "images.exampleImage",
+              "source": "images.exampleImage2",
               "physicalWidth": 0.2,
               "orientation": "Up"
             },
@@ -100,7 +101,7 @@
                 {
                   "name": "showHint",
                   "params": [
-                    "Pista numero 1"
+                    "Pista numero 1 escena 2"
                   ]
                 }
               ],
@@ -108,7 +109,7 @@
                 {
                   "name": "showHint",
                   "params": [
-                    "Pista numero 2"
+                    "Pista numero 2 escena 2"
                   ]
                 }
               ]

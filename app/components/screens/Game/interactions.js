@@ -10,19 +10,20 @@ export default {
     const newInventory = [...inventory, id]
 
     const newState = {...currentState,
-      inventory: newInventory}
+      inventory: newInventory,
+      scene: currentState.scene + 1
+    }
+    console.log("***********************New state:", newState) 
 
     ctx.global.setQuestState(newState)
-    
-    /*
-    const currentState = ctx.currentState;
-    const inventory = currentState.inventory;
-    const newInventory = inventory + [id]
-    return {...currentState,
-      inventory: newInventory
-    }
-    */
+  },
+  "changeScene": (ctx, id) => {
+    const newState = {...ctx.state,
+      scene: id}
+
+    ctx.global.setQuestState(newState)
   }
+
   
 };
 

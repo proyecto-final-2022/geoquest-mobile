@@ -8,12 +8,6 @@ export default function Scene(props) {
   const sceneProps= props.arSceneNavigator.viroAppProps;
   const sceneConfig = sceneProps.handler.questConfig.scenes["1"];
 
-  
-  useEffect(() => {
-    console.log("****************Scene config, ", sceneConfig)
-  }, []);
-
-
   return (
     <ViroARScene>
       {parseScene(sceneConfig)(sceneProps)}

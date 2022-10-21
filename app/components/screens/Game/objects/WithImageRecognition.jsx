@@ -17,7 +17,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 
   const targetProps = {
     ...target,
-    source: Resources.get("images.exampleImage")
+    source: Resources.get(typeProps.target.source)
   };
 
   const modelProps = {
@@ -34,7 +34,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 
   useEffect(() => {
     if(!hasInteractionsLeft()) {
-      setIsVisible(false);
+      //setIsVisible(false);
     }
     const source = target.source
     const targets = {}
@@ -43,32 +43,10 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     console.log("*¨***********ModelProps: ", modelProps)
     ViroARTrackingTargets.createTargets(targets);
 
-    return () => ViroARTrackingTargets.deleteTarget(target.source);
+//    return () => ViroARTrackingTargets.deleteTarget(target.source);
   }, []);
 
-  const onClick = () => {
-  //  setIsVisible(false)
-      //POST (id inventario, ["objeto1"])
-    //response --> devuelve el inventario actualizado con lo ultimo
-    /*
-    handler.setTeamInventory([{
-      key: "cubone",
-      title: "Objeto 1",
-      description: "Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion Objeto 1 descripcion",
-      questItemID: 1,
-      image: "2",
-      view: 1,
-      combinable: [
-        {
-          combinableQuestItemID: 2,
-          image: "3"
-        } 
-      ],
-      visibleMenu: false,
-      marker: false
-    }])
-  */
-  
+  const onClick = () => {  
     const interactionN = interactions.length;
     if(!hasInteractionsLeft()) {
       return;
@@ -107,6 +85,8 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 //      onAnchorFound={() => console.log("************************on anchor found")}
 //      pauseUpdates={false}
       onAnchorFound={() => {
+        console.log("hola")
+        console.log("Target source::", target.source)
         setPauseUpdates(true);}}
       pauseUpdates={pauseUpdates}
     >
@@ -115,7 +95,9 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
         visible={visible}
         onClick={onClick} 
         {...modelProps} 
-        animation={{name: "fade", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
+        animation={{name: "fade", run: runFade, loop: false, onFinish: () => {
+          //setIsVisible(false);
+        }}}
       />
       
     </ViroARImageMarker>
