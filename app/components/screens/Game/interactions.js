@@ -4,16 +4,26 @@ export default {
   "showHint": (ctx, text) => {
     ctx.global.hint(text);
   },
-  /*
   "grabItem": (ctx, id) => {
+    const currentState = ctx.state;
+    const inventory = currentState.inventory;    
+    const newInventory = [...inventory, id]
+
+    const newState = {...currentState,
+      inventory: newInventory}
+
+    ctx.global.setQuestState(newState)
+    
+    /*
     const currentState = ctx.currentState;
     const inventory = currentState.inventory;
     const newInventory = inventory + [id]
     return {...currentState,
       inventory: newInventory
     }
+    */
   }
-  */
+  
 };
 
 

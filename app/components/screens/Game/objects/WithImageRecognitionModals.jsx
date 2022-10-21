@@ -10,14 +10,14 @@ import { ViroAnimations } from "@viro-community/react-viro/components/Animation/
 
 export default function WithImageRecognition({id, handler, typeProps, globalCtx}) {
   const [pauseUpdates, setPauseUpdates] = useState(false);
-  const [visible, setIsVisible] = useState(true);
+  const [visible, setIsVisible] = useState(false);
   const [runFade, setRunFade] = useState(false);
 
   const {target, model, interactions} = typeProps;
 
   const targetProps = {
     ...target,
-    source: Resources.get("images.exampleImage")
+    source: Resources.get(target.source)
   };
 
   const modelProps = {
@@ -50,7 +50,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
   //  setIsVisible(false)
       //POST (id inventario, ["objeto1"])
     //response --> devuelve el inventario actualizado con lo ultimo
-    /*
+    
     handler.setTeamInventory([{
       key: "cubone",
       title: "Objeto 1",
@@ -67,8 +67,8 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
       visibleMenu: false,
       marker: false
     }])
-  */
   
+  /*
     const interactionN = interactions.length;
     if(!hasInteractionsLeft()) {
       return;
@@ -84,7 +84,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
       return Interactions[name](ctx, ...params);
     };
 
- //  interaction number
+ //   const objectState = handler.questState.objects[id] ?? {visible: true};
     const objectState = handler.questState.objects[id] ?? 0;
     const newState = interactions[objectState].reduce((prevState, int) => {
       return interact(int.name, prevState, int.params) || prevState;
@@ -98,7 +98,14 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     newState.objects[id] = newObjectState;
     //handler.setQuestState(newState);
 
-    
+    <ViroAmbientLight color="#ffffff"/>
+    <Viro3DObject 
+        visible={visible}
+        onClick={onClick} 
+        {...modelProps} 
+        animation={{name: "fade", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
+      />
+*/    
   };
 
   return (
@@ -107,16 +114,10 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
 //      onAnchorFound={() => console.log("************************on anchor found")}
 //      pauseUpdates={false}
       onAnchorFound={() => {
+        globalCtx.setObjectVisualize2(true)
         setPauseUpdates(true);}}
       pauseUpdates={pauseUpdates}
     >
-          <ViroAmbientLight color="#ffffff"/>
-    <Viro3DObject 
-        visible={visible}
-        onClick={onClick} 
-        {...modelProps} 
-        animation={{name: "fade", run: runFade, loop: false, onFinish: () => {setIsVisible(false);}}}
-      />
       
     </ViroARImageMarker>
   );

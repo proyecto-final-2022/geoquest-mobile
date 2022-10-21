@@ -18,19 +18,24 @@ const Inventory = (ctx) => {
     }
   }
 
-  var inventory =  context.questHandler.questState.inventory ?? []
+  useEffect(() => {
+    var inventory =  context.questHandler.questState.inventory ?? []
   
-  var inventoryItems = inventory.map(item => 
-    ({
-      "title": context.questHandler.questConfig.items[item].title,
-      "description": context.questHandler.questConfig.items[item].description,
-      "image": context.questHandler.questConfig.items[item].image,
-      "visibleMenu": false,
-      "marker": false
-    })
-    )
+    var inventoryItems = inventory.map(item => 
+      ({
+        "title": context.questHandler.questConfig.items[item].title,
+        "description": context.questHandler.questConfig.items[item].description,
+        "image": context.questHandler.questConfig.items[item].image,
+        "visibleMenu": false,
+        "marker": false
+      })
+      )
+    
+    setItems(inventoryItems)
+      
+  }, [context.questHandler.questState]);
 
-  const [items, setItems] = useState(inventoryItems)
+  const [items, setItems] = useState([])
 
   const hideMenu = (index) => {
     let itemsList = [...items];

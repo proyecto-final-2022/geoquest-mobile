@@ -45,9 +45,12 @@ export default function ARView({questHandler}) {
     setShowHint(true);
   };
 
+  const setQuestState = (newState) => {questHandler.setQuestState(newState)}
+
   const globalCtx = { 
     hint,
-    setObjectVisualize2
+    setObjectVisualize2,
+    setQuestState
   };
 
   const handleSnapPress = useCallback((index) => {
@@ -64,6 +67,10 @@ export default function ARView({questHandler}) {
   useEffect(() => {
     handleSnapPress(0)  
   }, []);
+
+  useEffect(() => {
+    console.log("***********************actualizado inventario", questHandler.questState) 
+  }, [questHandler.questState]);
 
   useEffect(() => {
     if (visualize != 0 && visualize != undefined){
