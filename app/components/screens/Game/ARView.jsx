@@ -70,7 +70,7 @@ export default function ARView({questHandler}) {
 
   useEffect(() => {
     console.log("***********************actualizado inventario", questHandler.questState) 
-  }, [questHandler.questState]);
+  }, [questHandler.questState.inventory]);
 
   useEffect(() => {
     if (visualize != 0 && visualize != undefined){

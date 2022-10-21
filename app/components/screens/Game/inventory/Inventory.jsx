@@ -33,7 +33,7 @@ const Inventory = (ctx) => {
     
     setItems(inventoryItems)
       
-  }, [context.questHandler.questState]);
+  }, [context.questHandler.questState.inventory]);
 
   const [items, setItems] = useState([])
 
