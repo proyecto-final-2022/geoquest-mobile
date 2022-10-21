@@ -1,6 +1,6 @@
 import React from "react";
 import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScene";
-import { parseScene3 } from "./questParsers3";
+import { parseScene } from "./questParsers";
 
 export default function Scene3(props) {
   const sceneProps= props.arSceneNavigator.viroAppProps;
@@ -8,7 +8,7 @@ export default function Scene3(props) {
 
   return (
     <ViroARScene>
-      {parseScene3(sceneConfig)(sceneProps)}
+      {parseScene(sceneConfig)(sceneProps)}
     </ViroARScene>
   );
 }

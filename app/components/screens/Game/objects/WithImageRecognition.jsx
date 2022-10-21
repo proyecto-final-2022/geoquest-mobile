@@ -39,8 +39,6 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     const source = target.source
     const targets = {}
     targets[source] = targetProps
-    console.log("*¨***********Targets: ", targets)
-    console.log("*¨***********ModelProps: ", modelProps)
     ViroARTrackingTargets.createTargets(targets);
 
 //    return () => ViroARTrackingTargets.deleteTarget(target.source);

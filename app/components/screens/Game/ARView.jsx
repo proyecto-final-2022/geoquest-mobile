@@ -70,6 +70,11 @@ export default function ARView({questHandler}) {
 
   useEffect(() => {
     if (questHandler.questState.scene == 2) {
+      console.log("***********************State scene 2:", questHandler.questState)
+      const newState = {...questHandler.questState,
+        objects: {}
+      }
+      setQuestState(newState)
       navigatorRef.current.jump({scene: Scene2})
     }
   }, [questHandler.questState.scene]);
