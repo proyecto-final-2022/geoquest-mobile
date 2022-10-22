@@ -37,6 +37,7 @@ export function DrawerContent(props) {
   const navigation = useNavigation()
   
   const [name, setName] = useState("")
+  const [userID, setUserID] = useState("")
   const [username, setUsername] = useState("")
   const [image, setImage] = useState(1)
 
@@ -52,6 +53,11 @@ export function DrawerContent(props) {
       setUsername(user.username);
       setImage(user.image);
     })
+  }, [props])
+
+  useEffect(() => {
+    Storage.getObject('user').
+    then(user => setUserID(user.id))
   }, [props])
 
   return(
@@ -106,7 +112,11 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Amigos"
-                            onPress={() => {console.log('Amigos')}}
+                            onPress={() => {
+                              Storage.getObject('user').
+                              then(user => navigation.navigate('Friends List', user))
+                            }
+                            }
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -144,7 +154,10 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Notificaciones"
-                            onPress={() => {console.log('Notificaciones')}}
+                            onPress={() => {
+                              Storage.getObject('user').
+                              then(user => navigation.navigate('Notifications', user))
+                              }}
                         />
                     </Drawer.Section>
                 </View>
