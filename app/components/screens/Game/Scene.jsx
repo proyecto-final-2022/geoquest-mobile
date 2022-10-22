@@ -10,10 +10,13 @@ export default function Scene(props) {
   const sceneProps= props.arSceneNavigator.viroAppProps;
   const questConfig = sceneProps.questConfig;
   const sceneConfig = questConfig.scenes[sceneNum];
+  const objects = parseScene(sceneConfig)(sceneProps);
+
+  console.log("Secene:", sceneNum, "Objects:", objects.length);
 
   return (
     <ViroARScene>
-      {parseScene(sceneConfig)(sceneProps)}
+      {objects}
     </ViroARScene>
   );
 }

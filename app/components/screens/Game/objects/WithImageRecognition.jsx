@@ -3,8 +3,8 @@ import { ViroARImageMarker } from "@viro-community/react-viro/components/AR/Viro
 import { 
   ViroARTrackingTargets 
 } from "@viro-community/react-viro/components/AR/ViroARTrackingTargets";
-import { Viro3DObject } from "@viro-community/react-viro/components/Viro3DObject";
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
+import { Viro3DObject } from "@viro-community/react-viro/components/Viro3DObject";
 import Resources from "../../../../utils/resources.js";
 import Interactions from "../interactions";
 import { ViroAnimations } from "@viro-community/react-viro/components/Animation/ViroAnimations";
@@ -20,6 +20,7 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
   const [runFade, setRunFade] = useState(false);
 
   const {target, model, interactions} = typeProps;
+  const targetID = target.source + "_" + questState.scene;
 
   const targetProps = {
     ...target,
@@ -44,10 +45,14 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     }
 
     const targets = {};
-    targets[target.source] = targetProps;
+    targets[targetID] = targetProps;
+    console.log("Creating:", targetID);
     ViroARTrackingTargets.createTargets(targets);
 
-    return () => ViroARTrackingTargets.deleteTarget(target.source);
+    return () => {
+      console.log("Removing:", targetID);
+      ViroARTrackingTargets.deleteTarget(targetID);
+    };
   }, [questState.scene]);
 
   const onClick = () => {
@@ -59,7 +64,6 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
       const ctx = {
         state,
         global: globalCtx,
-        object: {}  // TODO estado de este objeto
       };
       return Interactions[name](ctx, ...params);
     };
@@ -79,7 +83,6 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     }, inputState);
 
     if(!hasInteractionsLeft(newState)) {
-      console.log("Fading...");
       setRunFade(true);
     }
 
@@ -88,7 +91,7 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
 
   return (
     <ViroARImageMarker 
-      target={target.source}
+      target={targetID}
       onAnchorFound={() => {setPauseUpdates(true);}}
       pauseUpdates={pauseUpdates}
     >

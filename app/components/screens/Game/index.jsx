@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { View, Text } from "react-native";
 import ARView from "./ARView";
 import QuestLog from "./QuestLog";
@@ -10,12 +9,8 @@ import exampleQuest from "../../../../res/exampleQuest.json";
 
 
 function useQuestSetup(questID) {
-  const dispatch = useDispatch();
-  const questState = useSelector(state => state.quest);
   const [config, setConfig] = useState();
   const [loading, setLoading] = useState(true);
-
-  console.log(questState);
 
   const initQuest = async () => {
     console.log("Init quest");
@@ -61,16 +56,16 @@ export default function Game({questID}) {
   return (
     <Tab.Navigator>
       <Tab.Screen 
-        name="Mis Notas" 
-        component={QuestLog} 
-        initialParams={{questConfig}} 
-        options={{headerShown: false}}
-      />
-      <Tab.Screen 
         name="Camara" 
         component={ARView} 
         initialParams={{questConfig}} 
         options={{headerShown: false}} 
+      />
+      <Tab.Screen 
+        name="Mis Notas" 
+        component={QuestLog} 
+        initialParams={{questConfig}} 
+        options={{headerShown: false}}
       />
     </Tab.Navigator>
   );
