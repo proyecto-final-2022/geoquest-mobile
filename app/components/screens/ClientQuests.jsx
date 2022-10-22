@@ -4,6 +4,7 @@ import { useIsFocused } from '@react-navigation/native'
 import {Button} from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Config from '../../../config.json'
 import CustomModal from '../commons/CustomModal';
 
@@ -17,6 +18,7 @@ export default ClientQuests = ({route, navigation}) => {
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [view, setView] = useState(false)
+  const [sortIcon, setSortIcon] = useState('filter')
   const [search, setSearch] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -69,16 +71,37 @@ export default ClientQuests = ({route, navigation}) => {
     .finally(()=>setLoading(false))
   }, [])
   
-  const options = [' Popularidad ', ' Calificación ']
+  const options = [{
+      label:' Popularidad ',
+      value:'Popularidad',
+      icon: 'filter-plus'
+    },
+    {
+      label:' Calificación ',
+      value:'Calificación',
+      icon: 'filter-plus'
+    },
+    {
+      label:' Cancelar ',
+      value:'Cancelar',
+      icon: 'filter-remove'
+    }
+  ]
 
   const onPressItem = (item) => {
-    if (String(item).includes('Calificación')) {
-      setFilteredData(filteredData.sort((a, b) => a.qualification < b.qualification))
+    if (item == 'Calificación') {
+      setFilteredData(filteredData.sort((a, b) => a.qualification < b.qualification && a.name > b.name))
       setView(false)
-    }else if (String(item).includes('Popularidad')) {
-      setFilteredData(filteredData.sort((a, b) => a.completions < b.completions))
+      setSortIcon('filter-menu')
+    }else if (item == 'Popularidad') {
+      setFilteredData(filteredData.sort((a, b) => a.completions < b.completions && a.name > b.name))
       setView(false)
-    }    
+      setSortIcon('filter-menu')
+    }else if (item == 'Cancelar') {
+      setFilteredData(filteredData.sort((a, b) => a.name > b.name))
+      setView(false)
+      setSortIcon('filter')
+    }
   }
 
   const option = options.map((item, index) => {
@@ -86,9 +109,10 @@ export default ClientQuests = ({route, navigation}) => {
       <View style={styles.optionContainer} key={index}>
         <Pressable
           key={index}
-          onPress={() => onPressItem(item)}>
+          onPress={() => onPressItem(item.value)}>
           <Text style={styles.text}>
-            {item}
+            {item.label}
+            <Icon name={item.icon} size={18} />
           </Text>
         </Pressable>
       </View>
@@ -150,33 +174,30 @@ export default ClientQuests = ({route, navigation}) => {
   return (
     <View style={styles.view}>
       <View style={styles.headerContainer}>
-        <TextInput 
-          style={styles.textInput}
-          onChangeText={(text) => filterSearch(text)}
-        />
+        <View style={styles.textInput}>
+          <TextInput style={{marginLeft: 5}}
+            onChangeText={(text) => filterSearch(text)}
+          />
+        </View>
       
         <Pressable onPress={() => {setView(true)}}>
           <View style={styles.sortBtn}>
-            <Ionicons name='filter' size={18} />
+            <Icon name={sortIcon} size={18} />
           </View>
         </Pressable>
       </View>
 
       <CustomModal visible={view} dismiss={() => {setView(false)}}>
-        <View style={{
-                  flex: 1,
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#ffefd5',
-                  margin: 30,
-                  borderWidth: 3,
-                  borderRadius:10,
-                  borderColor: '#CA955C'}}>
-          <View style={styles.orderByContainer}>
-            <Pressable onPress={() => {setView(false)}}>
-              <Ionicons name='close' size={35}/>
-            </Pressable>
+        <View style={styles.sortModal}>
+          <View style={{flex: 1,flexDirection: 'row'}}>
+              <View style={{flex: 3, alignItems: 'center', marginTop: 5, marginLeft: 5}}>
+                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Seleccione un filtro:</Text>
+              </View>
+              <View style={{flex: 1, alignItems: 'flex-end'}}>
+                <Pressable onPress={() => {setView(false)}}>
+                  <Ionicons name='close' size={35}/>
+                </Pressable>
+              </View>
           </View>
           <ScrollView>
               {option}
@@ -203,9 +224,10 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     height: 40,
     borderWidth: 3,
-    borderColor: '#a52a2a',
+    borderRadius: 10,
+    borderColor: '#CA955C',
     backgroundColor: 'cornsilk',
-    marginTop: 10
+    marginTop: 10,
   },
   sortBtn: {
     backgroundColor: 'bisque',
@@ -277,7 +299,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   orderByContainer: {
-    flexDirection: 'row-reverse',
     alignSelf: 'flex-end'
   },
   optionContainer: {
@@ -291,6 +312,17 @@ const styles = StyleSheet.create({
     borderRadius:10,
     borderColor: '#CA955C',
     backgroundColor: 'white'
+  },
+  sortModal: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ffefd5',
+    margin: 30,
+    borderWidth: 3,
+    borderRadius:10,
+    borderColor: '#CA955C'
   }
 });
 

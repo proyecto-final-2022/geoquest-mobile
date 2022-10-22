@@ -65,6 +65,10 @@ const SignInScreen = () => {
           })
         }
       })
+      .catch(error => {
+        console.log(error);
+        closeSession();
+      })
       return () => {};
     }, [])
   );
