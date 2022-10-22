@@ -4,7 +4,7 @@ import { parseScene } from "./questParsers";
 
 export default function Scene4(props) {
   const sceneProps= props.arSceneNavigator.viroAppProps;
-  const sceneConfig = sceneProps.handler.questConfig;
+  const sceneConfig = sceneProps.handler.questConfig.scenes["4"];
 
   return (
     <ViroARScene>

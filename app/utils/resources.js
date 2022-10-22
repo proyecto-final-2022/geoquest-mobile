@@ -4,7 +4,8 @@ export const resources = {
     exampleImage: require("../../res/images/exampleImage.jpg"),
     exampleImage2: require("../../res/images/exampleimage2.jpg"),
     duende: require("../../res/images/duende.jpg"),
-    exampleImage3: require("../../res/images/exampleImage3.jpg")
+    exampleImage3: require("../../res/images/exampleImage3.jpg"),
+    exampleImage4: require("../../res/images/exampleImage4.jpg")
   },
 
   models: {

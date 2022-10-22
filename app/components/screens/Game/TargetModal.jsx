@@ -3,7 +3,7 @@ import { StyleSheet, Text, ScrollView, Modal, View, Pressable, Image} from 'reac
 import Lebron from '../../../../assets/medals/silver.png'
 import {Ionicons} from '@expo/vector-icons'
 
-export default function DescriptionModal2({ctx}) {
+export default function TargetModal({ctx}) {
 
   return (        
       <Modal
@@ -11,7 +11,7 @@ export default function DescriptionModal2({ctx}) {
         onDismiss={() => console.log('close')}
         onShow={() => console.log('show')}
         transparent
-        visible={ctx.visualize2}
+        visible={ctx.visualizeTargetModal}
       >
         <View
           style={{
@@ -35,7 +35,12 @@ export default function DescriptionModal2({ctx}) {
           >
             <View style={{flexDirection: 'row-reverse'}}>
               <Pressable onPress={() => {
-                ctx.setObjectVisualize2(false)}}>
+                ctx.setVisualizeTargetModal(false)
+                const newState = {...ctx.questHandler.questState,
+                  scene: ctx.questHandler.questState.scene + 1
+                }
+                ctx.questHandler.setQuestState(newState)
+                }}>
                 <Ionicons name='close' size={35}/>
               </Pressable>
             </View>
@@ -44,7 +49,7 @@ export default function DescriptionModal2({ctx}) {
             <ScrollView>
                 <View style={{flexDirection: 'column', justifyContent: 'space-around'}}>
           
-                  <Text style={{fontWeight: 'bold', color: 'darkred', fontSize: 20}}>hola</Text>
+                  <Text style={{fontWeight: 'bold', color: 'darkred', fontSize: 20}}>Coca</Text>
           
                 </View>
             </ScrollView>

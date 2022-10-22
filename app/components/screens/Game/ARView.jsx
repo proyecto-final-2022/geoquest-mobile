@@ -1,12 +1,11 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { ViroARSceneNavigator } from "@viro-community/react-viro/components/AR/ViroARSceneNavigator";
 import { StyleSheet, Dimensions, PixelRatio, Text, ScrollView, Modal, View, Pressable, Image} from 'react-native';
-import Lebron from '../../../../assets/medals/silver.png'
-import {Avatar} from 'react-native-paper';
-import {Ionicons} from '@expo/vector-icons'
+import {useNavigation} from '@react-navigation/native'
 import HintModal from "./HintModal";
 import DescriptionModal from "./DescriptionModal";
-import DescriptionModal2 from "./DescriptionModal2";
+import TargetModal from "./TargetModal";
+import TargetModal2 from "./TargetModal2";
 import Scene from "./Scene";
 import Scene2 from "./Scene2";
 import Scene3 from "./Scene3";
@@ -31,8 +30,10 @@ export default function ARView({questHandler}) {
   const [ hintText, setHintText ] = useState("");
   const [isOpen, setIsOpen] = useState(true);
 
-  const [visualize, setObjectVisualize] = useState();
-  const [visualize2, setObjectVisualize2] = useState(false);
+  const navigation = useNavigation()
+
+  const [visualizeTargetModal, setVisualizeTargetModal] = useState(false);
+  const [visualizeTargetModal2, setVisualizeTargetModal2] = useState(false);
   const [description, setObjectDescription] = useState({title: "", description: ""});
   const [visibleDescription, setVisibleDescription] = useState(false);
 
@@ -49,7 +50,8 @@ export default function ARView({questHandler}) {
 
   const globalCtx = { 
     hint,
-    setObjectVisualize2,
+    setVisualizeTargetModal,
+    setVisualizeTargetModal2,
     setQuestState
   };
 
@@ -57,27 +59,48 @@ export default function ARView({questHandler}) {
     sheetRef.current?.snapToIndex(index);
   })
 
-  const arViewCtx = {questHandler, description, handleSnapPress, visibleDescription, visualize2, setObjectVisualize2, setObjectVisualize, setObjectDescription, setVisibleDescription, handleSnapPress};
+  const arViewCtx = {questHandler, description, handleSnapPress, visibleDescription, visualizeTargetModal, visualizeTargetModal2, setVisualizeTargetModal, setVisualizeTargetModal2,  setObjectDescription, setVisibleDescription, handleSnapPress};
   
-  const getObjectView = (sceneNumber) => { 
-    const objectViews = [object_view_cubone, object_view_cubone2, object_view_cubone3];
-    return objectViews[sceneNumber-1];
-  }
-
   useEffect(() => {
     handleSnapPress(0)  
   }, []);
 
   useEffect(() => {
     if (questHandler.questState.scene == 2) {
-      console.log("***********************State scene 2:", questHandler.questState)
       const newState = {...questHandler.questState,
         objects: {}
       }
       setQuestState(newState)
       navigatorRef.current.jump({scene: Scene2})
     }
+    if (questHandler.questState.scene == 3) {
+      const newState = {...questHandler.questState,
+        objects: {}
+      }
+      setQuestState(newState)
+      navigatorRef.current.jump({scene: Scene3})
+    }
+    if (questHandler.questState.scene == 4) {
+      console.log("*********************************Escena4")
+      const newState = {...questHandler.questState,
+        objects: {}
+      }
+      setQuestState(newState)
+      navigatorRef.current.jump({scene: Scene4})
+    }
+
+    if (questHandler.questState.scene == 5) {
+      navigation.navigate("Quest Navigator")
+    }
+
+
   }, [questHandler.questState.scene]);
+
+  /*
+    const getObjectView = (sceneNumber) => { 
+    const objectViews = [object_view_cubone, object_view_cubone2, object_view_cubone3];
+    return objectViews[sceneNumber-1];
+  }
 
   useEffect(() => {
     if (visualize != 0 && visualize != undefined){
@@ -88,22 +111,7 @@ export default function ARView({questHandler}) {
       navigatorRef.current.jump({scene: Scene})
     }
   }, [visualize]);
-
-  useEffect(() => {
-    if (questHandler.inventory.find(item => (item.key == "cubone"))) {
-      console.log("************************************Cambio de escena")
-      navigatorRef.current.jump({scene: Scene2})
-    }
-    if (questHandler.inventory.find(item => (item.key == "cubone2"))) {
-      console.log("************************************Cambio de escena")
-      navigatorRef.current.jump({scene: Scene3})
-    }
-    if (questHandler.inventory.find(item => (item.key == "cubone3"))) {
-      console.log("************************************Cambio de escena")
-      navigatorRef.current.jump({scene: Scene4})
-    }
-
-  }, [questHandler.inventory]);
+*/
 
   return (
     <View style={{height: "100%", width: "100%"}}>
@@ -129,9 +137,12 @@ export default function ARView({questHandler}) {
 
       <DescriptionModal
         ctx={arViewCtx}/>
-      <DescriptionModal2
+      <TargetModal
         ctx={arViewCtx}/>
-      
+     <TargetModal2
+        ctx={arViewCtx}/>
+
+
     </View>
   );
 }

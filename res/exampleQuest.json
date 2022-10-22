@@ -79,10 +79,34 @@
     "2": {
       "objects": [
         {
+          "type": "WithImageRecognitionModal",
+          "typeProps": { 
+            "target": {
+              "source": "images.exampleImage3",
+              "physicalWidth": 0.2,
+              "orientation": "Up"
+            }
+          }
+        },
+        {
+        "type": "WithImageRecognitionModal2",
+        "typeProps": { 
+          "target": {
+            "source": "images.exampleImage2",
+            "physicalWidth": 0.2,
+            "orientation": "Up"
+          }
+        }
+      }
+      ]
+    },
+    "3": {
+      "objects": [
+        {
           "type": "WithImageRecognition",
           "typeProps": { 
             "target": {
-              "source": "images.exampleImage2",
+              "source": "images.duende",
               "physicalWidth": 0.2,
               "orientation": "Up"
             },
@@ -101,7 +125,7 @@
                 {
                   "name": "showHint",
                   "params": [
-                    "Pista numero 1 escena 2"
+                    "Pista numero 1 escena 3"
                   ]
                 }
               ],
@@ -109,7 +133,15 @@
                 {
                   "name": "showHint",
                   "params": [
-                    "Pista numero 2 escena 2"
+                    "Pista numero 2 escena 3"
+                  ]
+                }
+              ],
+              [
+                {
+                  "name": "grabItem",
+                  "params": [
+                    "2"
                   ]
                 }
               ]
@@ -117,8 +149,57 @@
           }
         }
       ]
+    },
+    "4": {
+      "objects": [
+        {
+          "type": "WithImageRecognition",
+          "typeProps": { 
+            "target": {
+              "source": "images.exampleImage4",
+              "physicalWidth": 0.2,
+              "orientation": "Up"
+            },
+            "model": {
+              "source": "models.cubone.model",
+              "type": "OBJ",
+              "position": [0,-2,0],
+              "scale": [1,1,1],
+              "rotation": [90,180,0],
+              "resources": [
+                "models.cubone.materials"
+              ]
+            },
+            "interactions": [
+              [
+                {
+                  "name": "showHint",
+                  "params": [
+                    "Pista numero 1 escena 4"
+                  ]
+                }
+              ],
+              [
+                {
+                  "name": "showHint",
+                  "params": [
+                    "Pista numero 2 escena 4"
+                  ]
+                }
+              ],
+              [
+                {
+                  "name": "grabItem",
+                  "params": [
+                    "3"
+                  ]
+                }
+              ] 
+            ]
+          }
+        }
+      ]
     }
-
   }
 
 }

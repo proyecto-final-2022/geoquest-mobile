@@ -41,7 +41,7 @@ export default function WithImageRecognition({id, handler, typeProps, globalCtx}
     targets[source] = targetProps
     ViroARTrackingTargets.createTargets(targets);
 
-//    return () => ViroARTrackingTargets.deleteTarget(target.source);
+    return () => ViroARTrackingTargets.deleteTarget(target.source);
   }, []);
 
   const onClick = () => {  
