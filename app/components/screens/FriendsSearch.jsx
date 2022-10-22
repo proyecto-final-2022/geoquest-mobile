@@ -70,7 +70,7 @@ export default FriendsSearch = ({route, navigation}) => {
 
   const sendNotification = (friend) => {
     //sendID -> friend.id
-    fetch(Config.appUrl + "users/" + sendID + '/notifications', {
+    fetch(Config.appUrl + "users/" + friend.id + '/notifications', {
       method: 'POST',
       body: JSON.stringify({ 
       sender_id: user.id,
@@ -152,7 +152,7 @@ export default FriendsSearch = ({route, navigation}) => {
 
 
   return (
-    <ScrollView style={styles.view}>
+    <View style={styles.view}>
       <View style={styles.container}> 
 					<View style={styles.searchContainer}>
 						<View style={styles.searchContainerText}>
@@ -191,7 +191,7 @@ export default FriendsSearch = ({route, navigation}) => {
         
       </View>
 
-    </ScrollView>
+    </View>
   )
 }
 
@@ -255,9 +255,9 @@ const styles = StyleSheet.create({
 	userInfoContainer: {
 		flexDirection: 'column',
 		marginLeft: 10,
-		flexBasis: 300,
-    flexShrink: 0,
-    flexGrow: 0
+		// flexBasis: 300,
+    // flexShrink: 0,
+    // flexGrow: 0
 	}
 
 });

@@ -69,8 +69,9 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     return userImages[imageNumber-1];
   }
 
-  const sendNotification = async (senderID, senderName, questName) => {
-  
+  const sendNotification = async (senderID, senderName, senderImage, questName) => {
+    console.log("InvitedIDs: ", invitedIDs)
+    
     fetch(
       Config.appUrl+'teams/', {
       method: 'POST',
@@ -84,15 +85,16 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         else 
         response.json().then(teamId => 
           {
-            invited.map((user) => {
+            invitedIDs.map((invited_id) => {
               //ONLY FOR TEST
               //senderID (url) -> user.id
               //sendID -> senderID
-              fetch(Config.appUrl + "users/" + senderID  + '/notifications', {
+              fetch(Config.appUrl + "users/" + invited_id  + '/notifications', {
                 method: 'POST',
                 body: JSON.stringify({ 
                 quest_name: questName,
                 sender_id: senderID,
+                sender_image: senderImage,
                 quest_id: id,
                 team_id: teamId,
                 type: 'quest_invite'
@@ -116,7 +118,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         .catch((error) => {console.log('error: ' + error)});
         })
         .catch((error) => {console.log('error: ' + error)});
-    }
+  }
 
   const Player = ({player}) => {
     return (
@@ -170,7 +172,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
             setInvited([...invited, player])
           //TEST
           //user.id -> player.id
-           setInvitedIDs([...invitedIDs, user.id])
+           setInvitedIDs([...invitedIDs, player.id])
          }}>
          <AntDesign style={{color:'black'}} size={35} name ='adduser'/>       
         </Pressable>
@@ -244,21 +246,19 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           </View>
 
           <View style={styles.optionsContainer}>
-
-
-          <View style={styles.options}>
-            <Pressable onPress={() => {
-              {
-              setView(false)
-              setFilteredData([cancel, ...filteredData])
-              setData([cancel, ...data])
-              setInvited(invited.filter((player) => player.id != cancel.id))
-              setInvitedIDs(invitedIDs.filter((id) => id != cancel.id))
-              }
-            }}>
+            <View style={styles.options}>
+              <Pressable onPress={() => {{
+                  setView(false)
+                  setFilteredData([cancel, ...filteredData])
+                  setData([cancel, ...data])
+                  setInvited(invited.filter((player) => player.id != cancel.id))
+                  setInvitedIDs(invitedIDs.filter((id) => id != cancel.id))
+                }}}>
+                <Text style={{fontSize: 20, color: 'green', fontWeight: 'bold'}}>Aceptar</Text>  
               <Text style={{fontSize: 20, color: 'green', fontWeight: 'bold'}}>Aceptar</Text>  
-            </Pressable>
-          </View>
+                <Text style={{fontSize: 20, color: 'green', fontWeight: 'bold'}}>Aceptar</Text>  
+              </Pressable>
+            </View>
 
             <View style={styles.options}>
             <Pressable onPress={() => {setView(false)}}>
@@ -286,8 +286,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       >
         <View
           style={{
-            height:'70%', 
-            width: '80%',
+            // height:'70%', 
+            // width: '80%',
             backgroundColor: 'aliceblue',
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -323,7 +323,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       </View>
     </Modal>
 
-    <ScrollView style={styles.containerWaitRoom}>
+    <View style={styles.containerWaitRoom}>
       <View style={styles.containerWaitRoomHeader}>
         <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Equipo</Text>
         <FontAwesome name='users' size={35} style={{marginLeft: 10, color:'darkred'}} />
@@ -336,7 +336,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         keyExtractor={(item, index) => item.id}
         renderItem={({item}) => <Player player={item}/>}>      
       </FlatList> 
-    </ScrollView>
+    </View>
 
     <View style={styles.teamButtonsContainer}>
       <CustomButton2 
@@ -350,12 +350,12 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       <CustomButton2 
         onPress = {() => 
         {
-          if (invited.length > 1) {    
-            sendNotification(user.id, user.username, name)
+          if (invited.length > 0) {    
+            sendNotification(user.id, user.username, user.image, name)
           }
         }}
         icon = "arrow-forward-circle"
-        bgColor= {(invited.length > 1) ? 'darkseagreen' : 'beige'}
+        bgColor= {(invited.length > 0) ? 'darkseagreen' : 'beige'}
         fgColor = 'white'
       />
 
@@ -399,15 +399,15 @@ const styles = StyleSheet.create({
   },
   options: {
     justifyContent: 'flex-end',
-    flexBasis: 80,
-    flexShrink: 1,
-    flexGrow: 0
+    // flexBasis: 80,
+    // flexShrink: 1,
+    // flexGrow: 0
   },
   textModal: {
     alignItems: 'center',
-    flexBasis: 60,
-    flexShrink: 0,
-    flexGrow: 0
+    // flexBasis: 60,
+    // flexShrink: 0,
+    // flexGrow: 0
   },
   addUserIcon: {
     flexBasis: 50,

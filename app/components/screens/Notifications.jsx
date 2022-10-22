@@ -242,11 +242,11 @@ export default Notifications = ({route, navigation}) => {
               }) 
             })
           )}
-          ) : console.log("cancelar friend") }/> 
+          ) : handleCancelFriendRequest(notification.id) }/> 
         </View>
 
         <View style={styles.options}>
-          <Ionicons color='green' name ='ios-checkmark-circle' size={40} onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : console.log("amigos")}/>
+          <Ionicons color='green' name ='ios-checkmark-circle' size={40} onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : handleAcceptFriendRequest(notification.sender_id, notification.id)}/>
         </View>
           
         </View>
@@ -257,19 +257,15 @@ export default Notifications = ({route, navigation}) => {
       }
 
   return (
-    <ScrollView style={styles.view}>
+    <View style={styles.view}>
       <FlatList
         horizontal= {false}
         contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
         data={notifications}
-        renderItem={({item}) => <Notification notification={item}/>
-        
-        }>      
+        renderItem={({item}) => <Notification notification={item}/>}>      
       </FlatList>
-
-      
-    </ScrollView>
+    </View>
   )
 }
 

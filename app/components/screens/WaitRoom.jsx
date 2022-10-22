@@ -38,8 +38,8 @@ export default WaitRoom = ({route, navigation}) => {
       <View style={{marginTop: 5, height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor:'antiquewhite'}}>
         <View style={styles.waitUserImage}>
           <Avatar.Image 
-            source={{
-              uri: getUserImage(player.image)}}
+            source={
+              getUserImage(player.image)}
               size={50}
               marginTop={5}
             />
