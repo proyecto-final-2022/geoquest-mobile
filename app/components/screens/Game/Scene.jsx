@@ -11,8 +11,6 @@ export default function Scene(props) {
   const questConfig = sceneProps.questConfig;
   const sceneConfig = questConfig.scenes[sceneNum];
 
-  console.log("Escena: ", sceneNum);
-
   return (
     <ViroARScene>
       {parseScene(sceneConfig)(sceneProps)}

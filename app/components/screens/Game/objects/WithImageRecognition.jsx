@@ -32,14 +32,14 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     resources: model.resources.map(r => Resources.get(r))
   };
 
-  const hasInteractionsLeft = () => {
-    const objectState = questState.objects[id] ?? 0;
+  const hasInteractionsLeft = (state) => {
+    const objectState = state.objects[id] ?? 0;
     const interactionN = interactions.length;
     return interactionN - 1  >= objectState;
   };
 
   useEffect(() => {
-    if(!hasInteractionsLeft()) {
+    if(!hasInteractionsLeft(questState)) {
       setIsVisible(false);
     }
 
@@ -47,12 +47,11 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     targets[target.source] = targetProps;
     ViroARTrackingTargets.createTargets(targets);
 
-    return () => ViroARTrackingTargets.deleteTarget(target);
-  }, []);
+    return () => ViroARTrackingTargets.deleteTarget(target.source);
+  }, [questState.scene]);
 
   const onClick = () => {
-    const interactionN = interactions.length;
-    if(!hasInteractionsLeft()) {
+    if(!hasInteractionsLeft(questState)) {
       return;
     }
 
@@ -66,19 +65,24 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     };
 
     const objectState = questState.objects[id] ?? 0;
+    const objects = {
+      ...questState.objects
+    };
+    objects[id] = objectState + 1;
+    const inputState = {
+      ...questState,
+      objects
+    };
+
     const newState = interactions[objectState].reduce((prevState, int) => {
       return interact(int.name, prevState, int.params) || prevState;
-    }, questState);
+    }, inputState);
 
-    const newObjectState = objectState + 1;
-    if(newObjectState == interactionN) {
+    if(!hasInteractionsLeft(newState)) {
+      console.log("Fading...");
       setRunFade(true);
     }
 
-    console.log(id, objectState, newObjectState);
-    newState.objects[id] = newObjectState;
-    console.log("Prev state:", questState);
-    console.log("New state:", newState);
     dispatch(Quest.actions.set(newState));
   };
 

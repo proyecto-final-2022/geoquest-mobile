@@ -10,13 +10,11 @@ const questSlice = createSlice({
   name: "quest",
   initialState,
   reducers: {
-    "set": (state, action) => {
-      state = action.payload;
+    set: (_state, action) => {
+      return {
+        ...action.payload
+      };
     },
-
-    "nextScene": (state) => {
-      state.scene += 1;
-    }
   }
 });
 

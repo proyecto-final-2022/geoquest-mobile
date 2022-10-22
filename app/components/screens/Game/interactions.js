@@ -7,7 +7,8 @@ export default {
   "nextScene": (ctx) => {
     return {
       ...ctx.state,
-      scene: ctx.state.scene + 1
+      scene: ctx.state.scene + 1,
+      objects: {}
     };
   }
 };
