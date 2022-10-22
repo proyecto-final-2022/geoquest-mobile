@@ -35,7 +35,7 @@ export default function DescriptionModal({ctx}) {
           >
             <View style={{flexDirection: 'row-reverse'}}>
               <Pressable onPress={() => {
-                ctx.setObjectVisualize(0)
+//                ctx.setObjectVisualize(0)
                 ctx.setVisibleDescription(false)}}>
                 <Ionicons name='close' size={35}/>
               </Pressable>
