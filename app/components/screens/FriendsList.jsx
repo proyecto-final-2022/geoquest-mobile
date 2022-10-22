@@ -119,7 +119,7 @@ export default FriendsList = ({route, navigation}) => {
   }
 
   return (
-    <ScrollView style={styles.view}>
+    <View style={styles.view}>
       <View style={styles.container}> 
         <View style={styles.containerHeader}>
           <View style={styles.containerHeaderIcon}>
@@ -155,7 +155,7 @@ export default FriendsList = ({route, navigation}) => {
         
       </View>
 
-    </ScrollView>
+    </View>
   )
 }
 
