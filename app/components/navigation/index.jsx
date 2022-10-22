@@ -16,6 +16,7 @@ import Notifications from '../screens/Notifications'
 import FriendsList from '../screens/FriendsList'
 import FriendsSearch from '../screens/FriendsSearch'
 import WaitRoom from '../screens/WaitRoom'
+import Coupons from '../screens/Coupons'
 import Profile from '../screens/ProfileScreen'
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -41,6 +42,7 @@ export default Navigation = () => {
         <Drawer.Screen name="Wait Room" component={WaitRoom} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Friends List" component={FriendsList} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Friends Search" component={FriendsSearch} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Coupons" component={Coupons} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
         <Drawer.Screen name="Profile" component={Profile} options={{ headerShown: true, headerTitle: "", headerStyle: {backgroundColor: '#FFF9CA'}}}/>
       </Drawer.Navigator>
   )

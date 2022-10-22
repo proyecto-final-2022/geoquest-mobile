@@ -139,7 +139,7 @@ export default Ranking = ({route, navigation}) => {
           <Text style={{fontSize: 20, color:'#a52a2a', fontWeight: 'bold'}}>{data.username}</Text>
         </View>
         <View style={styles.rankingItemClock}>
-          <FontAwesome name ='clock-o' color={'darkslategreen'} size={32}/>
+          <FontAwesome name ='clock-o' color={'#1A515B'} size={32}/>
         </View>
         <View style={styles.rankingItemTime}>
           <Text style={{fontSize: 15, fontWeight: 'bold', color:'#a52a2a'}}>{data.hours + "h " + data.minutes + "m " + data.seconds + "s "}</Text>
@@ -196,7 +196,7 @@ export default Ranking = ({route, navigation}) => {
           }
           </View>
         <View style={styles.rankingItemClock}>
-          <FontAwesome name ='clock-o' color={'darkslategreen'} size={32}/>
+          <FontAwesome name ='clock-o' color={'#1A515B'} size={32}/>
         </View>
         <View style={styles.rankingItemTime}>
           <Text style={{fontSize: 15, fontWeight: 'bold', color:'#a52a2a'}}>{data.hours + "h " + data.minutes + "m " + data.seconds + "s "}</Text>

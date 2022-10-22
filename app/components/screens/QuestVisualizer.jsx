@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
-import {useNavigation} from '@react-navigation/native'
+import { StyleSheet, ScrollView, Text, View, Dimensions, Image, Pressable, TouchableOpacity, BackHandler} from 'react-native';
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
-import Config from '../../../config.json'
-import Tags from "react-native-tags"
 import CustomButton from '../commons/CustomButton'
 import CustomButton2 from '../commons/CustomButton2'
-import Storage from '../../utils/storage/storage'
+import CustomModal from '../commons/CustomModal';
+import Storage from '../../utils/storage/storage';
+import Config from '../../../config.json';
+import {updateQuestRating} from '../../utils/apicalls/ApiCalls';
+import { useFocusEffect } from '@react-navigation/native';
+
+import starFilled from '../../../assets/ratingStars/star_filled.png'
+import starCorner from '../../../assets/ratingStars/star_corner.png'
 
 const {width} = Dimensions.get('screen')
 
 export default QuestVisualizer = ({route, navigation}) => {
 
-  const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
+  const {id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
   const colors = ['sandybrown', 'indianred', 'darksalmon', 'darkseagreen']
 
   const Tag = ({tag, index}) => {
     return (
-      <View style={[
-        styles.tag,
-        {backgroundColor: colors[index]}
-        ]}>
+      <View style={[styles.tag, {backgroundColor: colors[index]}]}>
         <Text style={{fontWeight: 'bold', color: 'white'}}>{tag}</Text>
       </View>
     )
@@ -37,6 +38,17 @@ export default QuestVisualizer = ({route, navigation}) => {
     )
   }
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate('Client Quests', {clientID, clientName});
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: route.params.name,
@@ -50,8 +62,59 @@ export default QuestVisualizer = ({route, navigation}) => {
     })
   })
 
-  return (
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+      setModalVisible(!isModalVisible);
+  };
+  const [starRating, setDefaultRating] = useState(3);
+  const maxRating = [1,2,3,4,5];
 
+  const CustomRatingBar = () => {
+    return (
+      <View style={styles.customRatingBar}>
+        {
+          maxRating.map((item, key) => {
+            return (
+              <TouchableOpacity activeOpacity={0.7} key={item} onPress={() => setDefaultRating(item)}>
+                <Image style={styles.starImg} source={item <= starRating ? starFilled : starCorner}/>
+              </TouchableOpacity>
+            )
+          })
+        }
+      </View>
+    )
+  }
+
+  const refreshUserRanking = () => {
+    Storage.getObject('user').then(user => {
+      fetch(
+        Config.appUrl+'quests/'+questId+'/rating/'+user.id, {
+          method: 'GET',
+          headers: {'Content-Type': 'application/json'}
+      })
+      .then(response => {
+        if(!response.ok) return;
+        else response.json().then( (data) => {
+          setDefaultRating(data.rate);
+        })
+        .catch((error) => {
+          console.log('error: ' + error);
+          this.setState({ requestFailed: true });
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      })
+    })
+  }
+
+  const updateRating = () => {
+    Storage.getObject('user').then(user => {
+      updateQuestRating(user.id, questId, starRating);
+    })
+  }
+
+  return (
     <ScrollView style={styles.view}> 
       <Image style={styles.image} source={{uri: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"}} />
 
@@ -75,7 +138,7 @@ export default QuestVisualizer = ({route, navigation}) => {
         </View>
   
         <View style={styles.tagContainer}>
-          {tags.map((tag, index) => <Tag tag={tag} index={index}/>)}
+          {tags.map((tag, index) => <Tag tag={tag} key={index} index={index}/>)}
         </View>
 
       </View>
@@ -97,16 +160,53 @@ export default QuestVisualizer = ({route, navigation}) => {
           text = 'Armar Equipo'
         />
         <CustomButton2 
-          onPress={() => navigation.navigate('Ranking', {...{id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})}
+          onPress={() => navigation.navigate('Ranking', {...{id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})}
           icon = "ios-podium-sharp"
           bgColor= '#CA955C'
           fgColor = 'white'
           text = 'Podio'
         />
+        <CustomButton2 
+          onPress={() => {
+            refreshUserRanking();
+            toggleModal();
+          }}
+          icon = "star"
+          bgColor= '#CA955C'
+          fgColor = 'white'
+          text = 'Calificar busqueda'
+        />
       </View>
-    </ScrollView>
 
-    )
+      
+      <CustomModal visible={isModalVisible} dismiss={toggleModal}>
+        <View style={{flex: 1}}/>
+        <View style={styles.customRating}>
+          <Text>¡Califica esta búsqueda!</Text>
+          <CustomRatingBar/>
+          <Text>{'\n'+starRating+'/'+maxRating.length+'\n'}</Text>
+          <CustomButton
+            onPress={() => {
+              updateRating();
+              toggleModal();
+            }}
+            style={{marginTop: 100}}
+            bgColor= '#CA955C'
+            fgColor = 'white'
+            text = 'Guardar'
+          />
+          <CustomButton
+            onPress={toggleModal}
+            style={{marginTop: 100}}
+            bgColor= 'grey'
+            fgColor = 'white'
+            text = 'Volver'
+          />
+        </View>
+        <View style={{flex: 1}}/>
+      </CustomModal>
+    </ScrollView>
+  )
 }
    
 const styles = StyleSheet.create({
@@ -137,13 +237,13 @@ const styles = StyleSheet.create({
     flex: 2  
   },
   tagContainer:{
-    flex: 0.5,
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
   tag:{
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems:  'center',
     width: 90,
     padding: 5,
     borderRadius: 20,
@@ -174,6 +274,26 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     color: 'white',
-  },  
+  },
+  customRatingBar: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginTop: 30
+  },
+  starImg: {
+    width: 40,
+    height: 40,
+    resizeMode: 'cover'
+  },
+  customRating: {
+    flex: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ffefd5',
+    margin: 30,
+    borderWidth: 3,
+    borderRadius:10,
+    borderColor: '#CA955C'
+  }
 });
 
