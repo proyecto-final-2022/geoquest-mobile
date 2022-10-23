@@ -1,70 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Text, View, Dimensions, Image, Pressable, TouchableOpacity, BackHandler} from 'react-native';
-import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
-import CustomButton from '../commons/CustomButton'
-import CustomButton2 from '../commons/CustomButton2'
-import CustomModal from '../commons/CustomModal';
-import Storage from '../../utils/storage/storage';
-import Config from '../../../config.json';
-import {updateQuestRating} from '../../utils/apicalls/ApiCalls';
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, ScrollView, Text, View, Dimensions, Image, Pressable, TouchableOpacity, BackHandler} from "react-native";
+import {FontAwesome, Entypo, Ionicons} from "@expo/vector-icons";
+import CustomButton from "../commons/CustomButton";
+import CustomButton2 from "../commons/CustomButton2";
+import CustomModal from "../commons/CustomModal";
+import Storage from "../../utils/storage/storage";
+import Config from "../../../config.json";
+import {updateQuestRating} from "../../utils/apicalls/ApiCalls";
+import { useFocusEffect } from "@react-navigation/native";
 
-import starFilled from '../../../assets/ratingStars/star_filled.png'
-import starCorner from '../../../assets/ratingStars/star_corner.png'
+import starFilled from "../../../assets/ratingStars/star_filled.png";
+import starCorner from "../../../assets/ratingStars/star_corner.png";
 
-const {width} = Dimensions.get('screen')
+const {width} = Dimensions.get("screen");
 
 export default QuestVisualizer = ({route, navigation}) => {
 
-  const {id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
-  const colors = ['sandybrown', 'indianred', 'darksalmon', 'darkseagreen']
+  const {id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params;
+  const colors = ["sandybrown", "indianred", "darksalmon", "darkseagreen"];
 
   const Tag = ({tag, index}) => {
     return (
       <View style={[styles.tag, {backgroundColor: colors[index]}]}>
-        <Text style={{fontWeight: 'bold', color: 'white'}}>{tag}</Text>
+        <Text style={{fontWeight: "bold", color: "white"}}>{tag}</Text>
       </View>
-    )
-  }
+    );
+  };
 
   const Button = ({text, onPress}) => {
     return (
       <Pressable 
         onPress={onPress} 
         style={styles.container}>  
-      <Text 
-        style={styles.text}>{text}</Text>
+        <Text 
+          style={styles.text}>{text}</Text>
       </Pressable>
-    )
-  }
+    );
+  };
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        navigation.navigate('Client Quests', {clientID, clientName});
+        navigation.navigate("Client Quests", {clientID, clientName});
         return true;
       };
-      BackHandler.addEventListener('hardwareBackPress',onBackPress);
-      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+      BackHandler.addEventListener("hardwareBackPress",onBackPress);
+      return () => { BackHandler.removeEventListener("hardwareBackPress",onBackPress); };
     }, []),
   );
 
   useEffect(() => {
     navigation.setOptions({
       headerTitle: route.params.name,
-      headerTintColor: '#a52a2a',
+      headerTintColor: "#a52a2a",
       headerRight: () => (
-        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate('Client Quests', {clientID, clientName})}/>
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => navigation.navigate("Client Quests", {clientID, clientName})}/>
       ),
       headerSearchBarOptions: {
         placeholder: "Search",
       }
-    })
-  })
+    });
+  });
 
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
-      setModalVisible(!isModalVisible);
+    setModalVisible(!isModalVisible);
   };
   const [starRating, setDefaultRating] = useState(3);
   const maxRating = [1,2,3,4,5];
@@ -78,41 +78,41 @@ export default QuestVisualizer = ({route, navigation}) => {
               <TouchableOpacity activeOpacity={0.7} key={item} onPress={() => setDefaultRating(item)}>
                 <Image style={styles.starImg} source={item <= starRating ? starFilled : starCorner}/>
               </TouchableOpacity>
-            )
+            );
           })
         }
       </View>
-    )
-  }
+    );
+  };
 
   const refreshUserRanking = () => {
-    Storage.getObject('user').then(user => {
+    Storage.getObject("user").then(user => {
       fetch(
-        Config.appUrl+'quests/'+questId+'/rating/'+user.id, {
-          method: 'GET',
-          headers: {'Content-Type': 'application/json'}
-      })
-      .then(response => {
-        if(!response.ok) return;
-        else response.json().then( (data) => {
-          setDefaultRating(data.rate);
+        Config.appUrl+"quests/"+questId+"/rating/"+user.id, {
+          method: "GET",
+          headers: {"Content-Type": "application/json"}
         })
-        .catch((error) => {
-          console.log('error: ' + error);
-          this.setState({ requestFailed: true });
+        .then(response => {
+          if(!response.ok) return;
+          else response.json().then( (data) => {
+            setDefaultRating(data.rate);
+          })
+            .catch((error) => {
+              console.log("error: " + error);
+              this.setState({ requestFailed: true });
+            });
+        })
+        .catch(error => {
+          console.error(error);
         });
-      })
-      .catch(error => {
-        console.error(error);
-      })
-    })
-  }
+    });
+  };
 
   const updateRating = () => {
-    Storage.getObject('user').then(user => {
+    Storage.getObject("user").then(user => {
       updateQuestRating(user.id, questId, starRating);
-    })
-  }
+    });
+  };
 
   return (
     <ScrollView style={styles.view}> 
@@ -121,16 +121,16 @@ export default QuestVisualizer = ({route, navigation}) => {
       <View style={styles.card}>
         <View style={styles.questInfoContainer}>
           <View style={styles.questInfo}>
-            <Entypo name ='star' size={25} color={'goldenrod'}/>
-            <Text style={{fontWeight: 'bold'}}>{qualification}</Text>
+            <Entypo name ='star' size={25} color={"goldenrod"}/>
+            <Text style={{fontWeight: "bold"}}>{qualification}</Text>
           </View>
           <View style={styles.questInfo}>
-            <Entypo name ='gauge' color={'firebrick'} size={25}/>
-            <Text style={{fontWeight: 'bold'}}>{difficulty}</Text>
+            <Entypo name ='gauge' color={"firebrick"} size={25}/>
+            <Text style={{fontWeight: "bold"}}>{difficulty}</Text>
           </View>
           <View style={styles.questInfo}>
-            <FontAwesome name ='clock-o' color={'black'} size={25}/>
-            <Text style={{fontWeight: 'bold'}}>{duration}</Text>
+            <FontAwesome name ='clock-o' color={"black"} size={25}/>
+            <Text style={{fontWeight: "bold"}}>{duration}</Text>
           </View>
         </View>
         <View style={styles.description}>
@@ -145,20 +145,20 @@ export default QuestVisualizer = ({route, navigation}) => {
 
       <View style={styles.teamButtonsContainer}> 
         <CustomButton2 
-          onPress = {() => console.log('Comenzar')}
+          onPress = {() => console.log("Comenzar")}
           icon = "arrow-forward-circle"
           bgColor= 'darkseagreen'
           fgColor = 'white'
         />
         <CustomButton2 
-          onPress = {() => console.log('Armar Equipo')}
+          onPress = {() => console.log("Armar Equipo")}
           icon = "people-sharp"
           bgColor= '#CA955C'
           fgColor = 'white'
           text = 'Armar Equipo'
         />
         <CustomButton2 
-          onPress={() => navigation.navigate('Ranking', {...{id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})}
+          onPress={() => navigation.navigate("Ranking", {...{id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})}
           icon = "ios-podium-sharp"
           bgColor= '#CA955C'
           fgColor = 'white'
@@ -182,7 +182,7 @@ export default QuestVisualizer = ({route, navigation}) => {
         <View style={styles.customRating}>
           <Text>¡Califica esta búsqueda!</Text>
           <CustomRatingBar/>
-          <Text>{'\n'+starRating+'/'+maxRating.length+'\n'}</Text>
+          <Text>{"\n"+starRating+"/"+maxRating.length+"\n"}</Text>
           <CustomButton
             onPress={() => {
               updateRating();
@@ -204,29 +204,29 @@ export default QuestVisualizer = ({route, navigation}) => {
         <View style={{flex: 1}}/>
       </CustomModal>
     </ScrollView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    backgroundColor: '#FFF9CA',
+    backgroundColor: "#FFF9CA",
   },
   card:{
     height: 250,
-    flexDirection: 'column',
-    backgroundColor: '#ffefd5',
+    flexDirection: "column",
+    backgroundColor: "#ffefd5",
     elevation: 5,
     marginTop:20,
     padding: 15, 
   },
   questInfoContainer: {
     flex: 1,
-    flexDirection: 'row-reverse',
+    flexDirection: "row-reverse",
   },
   questInfo: {
-    flexDirection: 'column',
-    alignItems: 'center',
+    flexDirection: "column",
+    alignItems: "center",
     flexBasis: 45,
     flexShrink: 0,
     flexGrow: 0,
@@ -235,13 +235,13 @@ const styles = StyleSheet.create({
     flex: 2  
   },
   tagContainer:{
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
+    flexDirection: "row",
+    justifyContent: "flex-start"
   },
   tag:{
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems:  'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems:  "center",
     width: 90,
     padding: 5,
     borderRadius: 20,
@@ -250,48 +250,47 @@ const styles = StyleSheet.create({
   image: {
     height: 140,
     borderRadius: 10,
-    width: '100%'
+    width: "100%"
   },
   container: {
-    width: '50%',
+    width: "50%",
 
     padding: 15,
     marginVertical: 5,
     marginLeft: 100,
     marginTop: 20,
 
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 5,
-    backgroundColor: '#CA955C'
+    backgroundColor: "#CA955C"
   },
   teamButtonsContainer: {
     marginTop: 15,
-    flexDirection: 'column',
-    alignItems: 'center'
+    flexDirection: "column",
+    alignItems: "center"
   },
   text: {
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
   },
   customRatingBar: {
-    justifyContent: 'center',
-    flexDirection: 'row',
+    justifyContent: "center",
+    flexDirection: "row",
     marginTop: 30
   },
   starImg: {
     width: 40,
     height: 40,
-    resizeMode: 'cover'
+    resizeMode: "cover"
   },
   customRating: {
     flex: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffefd5',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ffefd5",
     margin: 30,
     borderWidth: 3,
     borderRadius:10,
-    borderColor: '#CA955C'
+    borderColor: "#CA955C"
   }
 });
-

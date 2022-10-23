@@ -36,7 +36,9 @@ export async function closeSession() {
 }
 
 export async function getObject(key) {
-  return AsyncStorage.getItem(key).then(json => JSON.parse(json)).catch(error => console.log(error));
+  return AsyncStorage.getItem(key)
+    .then(json => JSON.parse(json))
+    .catch(error => console.log(error));
 }
   
 export async function setObject(key, object) {
@@ -44,7 +46,8 @@ export async function setObject(key, object) {
 }
 
 export async function setObjectField(key, field, value) {
-  return AsyncStorage.mergeItem(key, "{\""+field+"\":"+ (typeof value == "string"? "\""+value+"\"" : value) +"}");
+  return AsyncStorage
+    .mergeItem(key, "{\""+field+"\":"+ (typeof value == "string"? "\""+value+"\"" : value) +"}");
 }
   
 export async function removeObject(key) {

@@ -1,8 +1,9 @@
 import React from "react";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {
   NavigationContainer
 } from "@react-navigation/native";
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import QuestNavigator from "../screens/QuestNavigator";
@@ -13,10 +14,11 @@ import ClientQuests from "../screens/ClientQuests";
 import Ranking from "../screens/Ranking";
 import Coupons from "../screens/Coupons";
 import Profile from "../screens/ProfileScreen";
+import Game from "../screens/Game";
+import { DrawerContent } from "../screens/DrawerContent";
 
 
 const Drawer = createDrawerNavigator();
-
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
