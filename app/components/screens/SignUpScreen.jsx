@@ -6,6 +6,7 @@ import SocialSignInButtons from '../commons/SocialSignInButtons'
 import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
 import {signUpManual} from '../../utils/apicalls/ApiCalls'
+import Storage from '../../utils/storage/storage';
 
 export default SignUpScreen = () => {
 
@@ -18,10 +19,17 @@ export default SignUpScreen = () => {
   
   const onRegisterPressed = (data) => {
     setLoading(true);
-    signUpManual(data.email, data.name, data.username, data.password)
-    .then(result => {
-      setLoading(false);
-      navigation.navigate('Quest Navigator');
+    Storage.getObject('firebaseToken').then(firebaseToken => {
+      signUpManual(data.email, data.name, data.username, data.password)
+      .then(result => {
+        setLoading(false);
+        navigation.navigate('Quest Navigator');
+      })
+      .catch(error => {
+        setLoading(false);
+        console.log(error);
+        Alert.alert('Hubo problemas al conectarse con los servidores');
+      })
     })
     .catch(error => {
       setLoading(false);

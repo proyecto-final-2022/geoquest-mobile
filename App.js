@@ -182,6 +182,12 @@ export default function App() {
         console.log('Notification caused app to open from quit state: ', remoteMessage)
         processNotification(remoteMessage, true)
     })
+
+    messaging()
+    .getToken()
+    .then((token) => {
+      Storage.setObject('firebaseToken', token);
+    })
     
     /*
     const topicSubscriber = messaging()
