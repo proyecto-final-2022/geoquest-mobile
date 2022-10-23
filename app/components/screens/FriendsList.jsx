@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, BackHandler, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import {Avatar} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native'
+import {useFocusEffect} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import CustomButton2 from '../commons/CustomButton2'
 import Config from '../../../config.json'
@@ -47,6 +47,17 @@ export default FriendsList = ({route, navigation}) => {
     .then(navigation.navigate("Friends List", user))
   }
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate('Quest Navigator')
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: 'Amigos',
@@ -73,24 +84,23 @@ export default FriendsList = ({route, navigation}) => {
   const getUserImage = (imageNumber) => { 
     const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
     return userImages[imageNumber-1];
-   }
+  }
 
   const Friend = ({friend}) => {
     return (
-      <View style={{marginTop: 5, height: 70, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
-        <View style={styles.friendProfilePicture}>
+      <View style={{flex: 1, marginTop: 5, height: 70, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
+        <View style={{flex: 1, marginLeft: 5}}>
           <Avatar.Image 
             source={getUserImage(friend.image)}
             size={50}
-            marginTop={5}
-          />
+            marginTop={5}/>
         </View>
-        <View style={styles.userInfoContainer}>
+        <View style={{flex: 6, marginLeft: 20}}>
             <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{friend.name}</Text>
 					  <Text style={{fontSize: 15, color:'#a52a2a'}}>{friend.email}</Text>
         </View>
 
-        <View style={styles.friendDeleteIcon}>
+        <View style={{flex: 1}}>
           <Pressable onPress={() => 
             {
               Alert.alert(
@@ -108,53 +118,48 @@ export default FriendsList = ({route, navigation}) => {
                 ]
               )
             }
-            }
-          >
+          }>
             <AntDesign style={{color:'darkred'}} size={30} name ='closecircle'/> 
           </Pressable>
-        </View>              
-
+        </View>
       </View>
     ) 
   }
 
   return (
     <View style={styles.view}>
-      <View style={styles.container}> 
-        <View style={styles.containerHeader}>
-          <View style={styles.containerHeaderIcon}>
-            <FontAwesome name='users' size={35} style={{color:'darkred'}} />
-          </View>
-          <View style={styles.containerHeaderText}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{friends.length}</Text>
-          </View>
+      <View style={styles.containerHeader}>
+        <View style={styles.containerHeaderIcon}>
+          <FontAwesome name='users' size={35} style={{color:'darkred'}} />
         </View>
-      
+        <View style={styles.containerHeaderText}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{friends.length}</Text>
+        </View>
+      </View>
+    
+      <View style={{flex: 6}}>
         <FlatList
           horizontal= {false}
           contentContainerStyle={{
             backgroundColor: '#ffefd5',
-            paddingVertical: 5}}
-          showsHorizontalScrollIndicator = {false}
+            paddingVertical: 0}}
+          showsHorizontalScrollIndicator = {true}
           data={friends}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item, index) => index}
           renderItem={({item}) => <Friend friend={item}/>}>      
         </FlatList>
+      </View>
 
+      <View style={{flex: 1, alignItems: 'center', marginTop: 5}}>
         <CustomButton2 
           text ="Buscar"
-          onPress={() => 
-          {
-            
+          onPress={() => {
             navigation.navigate('Friends Search', {friends})
           }}
           icon = "search-outline"
           bgColor= '#CA955C'
-          fgColor='white'
-        />
-        
+          fgColor='white'/>
       </View>
-
     </View>
   )
 }
@@ -163,10 +168,7 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     backgroundColor: '#FFF9CA',
-  },
-  container:{
     flexDirection: 'column',
-    alignItems: 'center',
     height: 650,
   },
   containerHeader:{
@@ -175,6 +177,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   containerHeaderIcon:{
+    marginLeft: 30,
     flexBasis: 50,
     flexShrink: 0,
     flexGrow: 0,
@@ -184,28 +187,5 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     flexGrow: 0
   },
-  friendProfilePicture: {
-    flexBasis: 50,
-    flexShrink: 0,
-    flexGrow: 0
-  },
-  friendUsernameText: {
-    flexBasis: 300,
-    flexShrink: 0,
-    flexGrow: 0
-  },
-  friendDeleteIcon: {
-    flexBasis: 50,
-    flexShrink: 0,
-    flexGrow: 0
-  },
-  userInfoContainer: {
-		flexDirection: 'column',
-		marginLeft: 10,
-		flexBasis: 280,
-    flexShrink: 0,
-    flexGrow: 0
-	}
-
 });
 

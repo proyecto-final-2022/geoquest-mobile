@@ -137,7 +137,7 @@ const SignInScreen = () => {
         }
       </View>
     </ScrollView>
-    )
+  )
 }
 
 const styles = StyleSheet.create({
