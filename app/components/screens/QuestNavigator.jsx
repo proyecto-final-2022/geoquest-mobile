@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList} from 'react-native';
-import {useNavigation} from '@react-navigation/native'
+import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, BackHandler} from 'react-native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native'
 import {FontAwesome, Entypo} from '@expo/vector-icons'
 import Config from '../../../config.json'
+import {areYouSureAlert} from '../../utils/storage/storage';
 
 const {width} = Dimensions.get('screen')
 
@@ -44,18 +45,20 @@ const QuestNavigator = () => {
             }}>
             <Text style={{fontSize: 16, fontWeight: 'bold'}}>{quest.name}</Text>
           </View>
-            <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
-            <View style={{marginTop: 10, flexDirection: 'row'}}>
-              <View style={styles.questInfo}>
-                <FontAwesome name ='clock-o' size={18}/>
-                <Text style={styles.questInfoText}>{quest.duration}</Text>
-              </View>
-              <View style={styles.questInfo}>
-                <Entypo name ='gauge' size={18}/>
-                  <Text style={styles.questInfoText}>{quest.difficulty}</Text>
-              </View>
-        </View>
-      </View>)}
+          <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
+          <View style={{marginTop: 10, flexDirection: 'row'}}>
+            <View style={styles.questInfo}>
+              <FontAwesome name ='clock-o' size={18}/>
+              <Text style={styles.questInfoText}>{quest.duration}</Text>
+            </View>
+            <View style={styles.questInfo}>
+              <Entypo name ='gauge' size={18}/>
+              <Text style={styles.questInfoText}>{quest.difficulty}</Text>
+            </View>
+          </View>
+      </View>
+    )
+  }
 
   useEffect(() => {
     fetch(url)
@@ -69,7 +72,18 @@ const QuestNavigator = () => {
       .then((json) => setDataQuests(json))
       .catch((error) => console.error(error))
       .finally(()=>setLoading(false))
-    }, [])
+  }, [])
+  
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        areYouSureAlert({navigation});
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
 
   const getData = () => {
     if (loading) {
@@ -89,14 +103,14 @@ const QuestNavigator = () => {
         </Pressable>
           )
         )
-    }
+  }
+
   return (
     <ScrollView style={styles.view}> 
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{height: 350}}
-      >
+        style={{height: 350}}>
         <View style={styles.optionListContainer}>
           {getData()}
         </View>
@@ -122,7 +136,7 @@ const QuestNavigator = () => {
       }
 
     </ScrollView> 
-    )
+  )
 }
 
 const styles = StyleSheet.create({

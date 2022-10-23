@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, ScrollView, BackHandler, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import { useIsFocused } from '@react-navigation/native'
 import {Button} from 'react-native'
-import {useNavigation} from '@react-navigation/native'
+import { useFocusEffect } from '@react-navigation/native';
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Config from '../../../config.json'
-import Tags from "react-native-tags"
+import CustomModal from '../commons/CustomModal';
 
 const {width} = Dimensions.get('screen')
 
@@ -17,14 +18,26 @@ export default ClientQuests = ({route, navigation}) => {
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [view, setView] = useState(false)
+  const [sortIcon, setSortIcon] = useState('filter')
   const [search, setSearch] = useState([])
-   const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
 
   const url = Config.appUrl + "clients/" + clientID + "/quests"
 
   const colors = ['sandybrown', 'indianred', 'darksalmon', 'darkseagreen']
   
   const isFocused = useIsFocused()
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate('Quest Navigator')
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
   
   useEffect(() => {
     fetch(url)
@@ -48,66 +61,73 @@ export default ClientQuests = ({route, navigation}) => {
       }
     })
   })
-  useEffect(() => {
-    fetch(url)
-    .then((response) => response.json())
-    .then((json) => {
-      setData(json) 
-      setFilteredData(json)})
-    .catch((error) => console.error(error))
-    .finally(()=>setLoading(false))
-  }, [])
   
-  const options = ['Popularidad', 'Calificación']
+  const options = [{
+      label:' Popularidad ',
+      value:'Popularidad',
+      icon: 'filter-plus'
+    },
+    {
+      label:' Calificación ',
+      value:'Calificación',
+      icon: 'filter-plus'
+    },
+    {
+      label:' Cancelar ',
+      value:'Cancelar',
+      icon: 'filter-remove'
+    }
+  ]
 
   const onPressItem = (item) => {
-    if (item == "Calificación") {
-      setFilteredData(filteredData.sort((a, b) => a.qualification < b.qualification))
+    if (item == 'Calificación') {
+      setFilteredData(filteredData.sort((a, b) => a.qualification < b.qualification && a.name > b.name))
       setView(false)
+      setSortIcon('filter-menu')
+    }else if (item == 'Popularidad') {
+      setFilteredData(filteredData.sort((a, b) => a.completions < b.completions && a.name > b.name))
+      setView(false)
+      setSortIcon('filter-menu')
+    }else if (item == 'Cancelar') {
+      setFilteredData(filteredData.sort((a, b) => a.name > b.name))
+      setView(false)
+      setSortIcon('filter')
     }
-    if (item == "Popularidad") {
-      setFilteredData(filteredData.sort((a, b) => a.completions < b.completions))
-      setView(false)
-    }    
   }
 
   const option = options.map((item, index) => {
     return (
-      <View style={styles.optionContainer}>
-      <Pressable
-        key={index}
-        onPress={() => onPressItem(item)}
-      >
-        <Text style={styles.text}>
-          {item}
-        </Text>
-      </Pressable>
+      <View style={styles.optionContainer} key={index}>
+        <Pressable
+          key={index}
+          onPress={() => onPressItem(item.value)}>
+          <Text style={styles.text}>
+            {item.label}
+            <Icon name={item.icon} size={18} />
+          </Text>
+        </Pressable>
       </View>
     )
   })
 
   const filterSearch = (text) => {
-
     if (text) {
-    const newData = data.filter((quest) => {
-      const questData = quest.name ? quest.name.toUpperCase() : ''.toUpperCase()
-      const textData = text.toUpperCase()
-      return questData.indexOf(textData) > -1
-    })
-    setFilteredData(newData)
-    setSearch(text)
+      const newData = data.filter((quest) => {
+        const questData = quest.name ? quest.name.toUpperCase() : ''.toUpperCase()
+        const textData = text.toUpperCase()
+        return questData.indexOf(textData) > -1
+      })
+      setFilteredData(newData)
+      setSearch(text)
     } else {
-    setFilteredData(data)
-    setSearch(text)
+      setFilteredData(data)
+      setSearch(text)
     } 
   }
   
   const Tags = ({tag, index}) => {
     return (
-      <View style={[
-        styles.tag,
-        {backgroundColor: colors[index]}
-        ]}>
+      <View style={[styles.tag, {backgroundColor: colors[index]}]}>
         <Text style={{fontWeight: 'bold', color: 'white'}}>{tag}</Text>
       </View>
     )
@@ -116,13 +136,13 @@ export default ClientQuests = ({route, navigation}) => {
   const Card = ({quest}) => {
     return (
       <Pressable onPress={() => navigation.navigate('Quest Visualizer', {...quest, clientID, clientName})}>
-        <View style={styles.card}>
-          <View style={styles.infoDisplay}>
+        <View style={[styles.card, {flex: 1}]}>
+          <View style={[styles.infoDisplay, {flex: 1.5}]}>
             <View style={styles.questName}>
               <Text style={{marginTop: 5, fontSize: 20, fontWeight: 'bold'}}>{quest.name}</Text>
             </View>
             <View style={styles.questInfo}>
-              <FontAwesome name ='clock-o' color={'darkslategreen'} size={25}/>
+              <FontAwesome name ='clock-o' color={'#1A515B'} size={25}/>
               <Text style={styles.questInfoText}>{quest.duration}</Text>
             </View>
             <View style={styles.questInfo}>
@@ -134,82 +154,58 @@ export default ClientQuests = ({route, navigation}) => {
               <Text style={styles.questInfoText}>{quest.qualification}</Text>
             </View>
           </View>
-          <View style={styles.tagContainer}>
-            {quest.tags.map((tag, index) => <Tags tag={tag} index={index}/>)}
+          <View style={[styles.tagContainer, {flex: 1}]}>
+            {quest.tags.map((tag, index) => <Tags tag={tag} key={index} index={index}/>)}
           </View>
-
         </View>
       </Pressable>
     ) 
   }
   
   return (
-
-    <ScrollView style={styles.view}>
+    <View style={styles.view}>
       <View style={styles.headerContainer}>
-        <TextInput 
-          style={styles.textInput}
-          onChangeText={(text) => filterSearch(text)}
-        />
+        <View style={styles.textInput}>
+          <TextInput style={{marginLeft: 5}}
+            onChangeText={(text) => filterSearch(text)}
+          />
+        </View>
       
         <Pressable onPress={() => {setView(true)}}>
           <View style={styles.sortBtn}>
-            <Ionicons name='filter' size={18} />
+            <Icon name={sortIcon} size={18} />
           </View>
         </Pressable>
       </View>
 
-      <Modal
-        animationType="slide"
-        onDismiss={() => console.log('close')}
-        onShow={() => console.log('show')}
-        transparent
-        visible={view}
-      >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <View
-            style={{
-              height:'25%', 
-              width: '60%',
-              flexDirection: 'column',
-              justifyContent: 'space-evenly',
-              backgroundColor: 'aliceblue',
-              borderWidth: 10,
-              borderColor: '#a52a2a', 
-            }}  
-          >
-            <View style={styles.orderByContainer}>
-              <Pressable onPress={() => {setView(false)}}>
-                <Ionicons name='close' size={35}/>
-              </Pressable>
-            </View>
-            <ScrollView>
-                {option}
-            </ScrollView>
-
-  
+      <CustomModal visible={view} dismiss={() => {setView(false)}}>
+        <View style={styles.sortModal}>
+          <View style={{flex: 1,flexDirection: 'row'}}>
+              <View style={{flex: 3, alignItems: 'center', marginTop: 5, marginLeft: 5}}>
+                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Seleccione un filtro:</Text>
+              </View>
+              <View style={{flex: 1, alignItems: 'flex-end'}}>
+                <Pressable onPress={() => {setView(false)}}>
+                  <Ionicons name='close' size={35}/>
+                </Pressable>
+              </View>
           </View>
+          <ScrollView>
+              {option}
+          </ScrollView>
         </View>
-      </Modal>
+        <View style={{flex: 2}}/>
+      </CustomModal>
 
       <FlatList
         horizontal= {false}
-        contentContainerStyle={{
-          paddingLeft: 20, paddingVertical: 20}}
+        contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
         showsHorizontalScrollIndicator = {false}
         data={filteredData}
-        renderItem={({item}) => <Card quest={item}/>}>      
+        renderItem={({item, index}) => <Card quest={item} key={index} index={index}/>}>
       </FlatList> 
-    </ScrollView>
-
-    )
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -219,9 +215,10 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     height: 40,
     borderWidth: 3,
-    borderColor: '#a52a2a',
+    borderRadius: 10,
+    borderColor: '#CA955C',
     backgroundColor: 'cornsilk',
-    marginTop: 10
+    marginTop: 10,
   },
   sortBtn: {
     backgroundColor: 'bisque',
@@ -247,20 +244,26 @@ const styles = StyleSheet.create({
     height: 120,
     flexDirection: 'column',
     justifyContent: 'space-around',
-    marginTop: 10,
+    marginTop: 5,
     backgroundColor: '#ffefd5',
+    borderWidth: 3,
+    borderRadius: 10,
+    borderColor: '#CA955C',
+    marginLeft: -13,
+    marginRight: 5
   },
   infoDisplay:{
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginTop: 10,
+    marginLeft: 10
   },
   questInfo:{
     flexDirection: 'column',
     alignItems: 'center',
     flexBasis: 45,
     flexShrink: 0,
-    flexGrow: 0,
+    flexGrow: 0
   },
   questName:{
     flexBasis: 220,
@@ -274,28 +277,43 @@ const styles = StyleSheet.create({
   tag:{
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems:  'center',
     backgroundColor: 'mintcream',
     width: 90,
     padding: 5,
     borderRadius: 20,
-    marginLeft: 5
+    marginLeft: 5,
+    marginBottom: 5
   },
   questInfoText: {
     color: '#696969',
     fontWeight: 'bold'
   },
   orderByContainer: {
-    flexDirection: 'row-reverse'
+    alignSelf: 'flex-end'
   },
   optionContainer: {
-    backgroundColor: 'white',
     alignItems: 'center',
-    marginTop: 10
+    marginTop: 10,
   },
   text: {
-    marginLeft: 10,
     fontSize: 25,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    borderWidth: 2,
+    borderRadius:10,
+    borderColor: '#CA955C',
+    backgroundColor: 'white'
+  },
+  sortModal: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ffefd5',
+    margin: 30,
+    borderWidth: 3,
+    borderRadius:10,
+    borderColor: '#CA955C'
   }
 });
 

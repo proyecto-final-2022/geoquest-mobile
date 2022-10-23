@@ -8,10 +8,9 @@ import {useNavigation} from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
 import {loginManual, getUser} from '../../utils/apicalls/ApiCalls'
 import { Alert } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import Storage from '../../utils/storage/storage';
-import Config from '../../../config.json'
 import { useFocusEffect } from '@react-navigation/native';
+import {closeSession} from '../../utils/storage/storage';
 
 const SignInScreen = () => {
 
@@ -31,11 +30,15 @@ const SignInScreen = () => {
         setLoggingIn(false);
       })
       .catch(error => {
-        Alert.alert('Usuario o contraseña incorrecta');
+        if(String(error).includes('Network request failed')){
+          Alert.alert('Hubo problemas al conectarse con los servidores');
+        }else{
+          Alert.alert('Usuario o contraseña incorrecta');
+        }
         setLoggingIn(false);
       })
     }
-  }
+}
 
   const onForgotPasswordPressed = () => {
     console.warn('Forgot Password');
@@ -45,23 +48,30 @@ const SignInScreen = () => {
     navigation.navigate('Sign Up')
   }
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     Storage.getObject('user').
-  //     then(user => {
-  //       if(user.id !== undefined){ //user is already logged in
-  //         getUser(user.id)
-  //         .then(() => {
-  //           navigation.navigate('Quest Navigator');
-  //         })
-  //         .catch(error => {
-  //           console.log(error);
-  //         })
-  //       }
-  //     })
-  //     return () => {};
-  //   }, [])
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      Storage.getObject('user').
+      then(user => {
+        if(user.id !== undefined){ //user is already logged in
+          getUser(user.id)
+          .then(() => {
+            navigation.navigate('Quest Navigator');
+          })
+          .catch(error => {
+            console.log(error);
+            closeSession().then(() => {
+              Alert.alert('Hubo problemas al conectarse con los servidores');
+            })
+          })
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        closeSession();
+      })
+      return () => {};
+    }, [])
+  );
 
   return (
     <ScrollView style={styles.view}>

@@ -1,6 +1,7 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import { Alert } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { LoginManager } from 'react-native-fbsdk-next';
+import { Alert } from 'react-native';
 
 export const storeData = async (value) => {await AsyncStorage.setItem("auth.token", value);};
 
@@ -30,11 +31,12 @@ export const areYouSureAlert = ({navigation}) => {
 export async function closeSession() { 
   await AsyncStorage.removeItem("auth.token");
   await GoogleSignin.signOut();
-  await setObject("user", {});
+  LoginManager.logOut();
+  await setObject('user', {});
 }
 
 export async function getObject(key) {
-  return AsyncStorage.getItem(key).then(json => JSON.parse(json));
+  return AsyncStorage.getItem(key).then(json => JSON.parse(json)).catch(error => console.log(error))
 }
   
 export async function setObject(key, object) {

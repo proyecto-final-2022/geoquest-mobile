@@ -10,10 +10,14 @@ import HomeScreen from "../screens/HomeScreen";
 import QuestVisualizer from "../screens/QuestVisualizer";
 import Scene from "../scenes/HelloUser";
 import ClientQuests from "../screens/ClientQuests";
+import QuestTeam from "../screens/ClientQuests";
+import WaitRoom from "../screens/WaitRoom";
+import Notifications from "../screens/Notifications";
+import FriendsSearch from "../screens/FriendsSearch";
+import Coupons from "../screens/Coupons";
 import Ranking from "../screens/Ranking";
 import Game from "../screens/Game";
 import Profile from "../screens/ProfileScreen";
-
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { DrawerContent } from "../screens/DrawerContent";
 
@@ -24,19 +28,25 @@ const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
   return(
-    <NavigationContainer>
+    <NavigationContainer>              
       <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
         <Drawer.Screen name="Game" component={Game} options={{ headerShown: false, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
         <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>
         <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>
         <Drawer.Screen name="Home" component={HomeScreen} options={{ headerShown: true, headerTitle: "" }}/>
-        <Drawer.Screen name="Quest Navigator" component={QuestNavigator} options={{ headerShown: true, headerTitle: "Elige tu lugar de búsqueda", headerTintColor: "#a52a2a", headerStyle: {backgroundColor: "#FFF9CA"}}}/>
-        <Drawer.Screen name="Client Quests" component={ClientQuests} options={{headerShown: true, headerTitle: "Búsquedas", headerStyle: {backgroundColor: "#FFF9CA"}}}/>
-        <Drawer.Screen name="Scene" component={Scene} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
-        <Drawer.Screen name="Quest Visualizer" component={QuestVisualizer} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
-        <Drawer.Screen name="Ranking" component={Ranking} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
-        <Drawer.Screen name="Profile" component={Profile} options={{ headerShown: true, headerTitle: "", headerStyle: {backgroundColor: "#FFF9CA"}}}/>
-      </Drawer.Navigator>
-    </NavigationContainer>
-  );
+        <Drawer.Screen name="Quest Navigator" component={QuestNavigator} options={{ headerShown: true, headerTitle: "Elige tu lugar de búsqueda", headerTintColor: '#a52a2a', headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Client Quests" component={ClientQuests} options={{headerShown: true, headerTitle: "Búsquedas", headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Scene" component={Scene} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Quest Visualizer" component={QuestVisualizer} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Ranking" component={Ranking} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Quest Team" component={QuestTeam} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Notifications" component={Notifications} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Wait Room" component={WaitRoom} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Friends List" component={FriendsList} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Friends Search" component={FriendsSearch} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Coupons" component={Coupons} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+        <Drawer.Screen name="Profile" component={Profile} options={{ headerShown: true, headerTitle: "", headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+      </Drawer.Navigator>  
+    </NavigationContainer>    
+  )
 }
