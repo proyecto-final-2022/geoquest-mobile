@@ -61,15 +61,6 @@ export default ClientQuests = ({route, navigation}) => {
       }
     })
   })
-  useEffect(() => {
-    fetch(url)
-    .then((response) => response.json())
-    .then((json) => {
-      setData(json) 
-      setFilteredData(json)})
-    .catch((error) => console.error(error))
-    .finally(()=>setLoading(false))
-  }, [])
   
   const options = [{
       label:' Popularidad ',

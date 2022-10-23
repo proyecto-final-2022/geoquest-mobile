@@ -14,7 +14,7 @@ import starCorner from "../../../assets/ratingStars/star_corner.png";
 
 const {width} = Dimensions.get("screen");
 
-export default QuestVisualizer = ({route, navigation}) => {
+export default function QuestVisualizer({route, navigation}) {
 
   const {id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params;
   const colors = ["sandybrown", "indianred", "darksalmon", "darkseagreen"];
@@ -142,7 +142,7 @@ export default QuestVisualizer = ({route, navigation}) => {
         </View>
 
       </View>
-
+   
       <View style={styles.teamButtonsContainer}> 
         <CustomButton2 
           onPress = {() => console.log("Comenzar")}
@@ -151,19 +151,22 @@ export default QuestVisualizer = ({route, navigation}) => {
           fgColor = 'white'
         />
         <CustomButton2 
-          onPress = {() => console.log("Armar Equipo")}
+          onPress = {() => 
+            Storage.getObject("user")
+              .then( (user) => {
+                navigation.navigate("Quest Team", {...{id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, user}});
+              })
+          }
           icon = "people-sharp"
           bgColor= '#CA955C'
           fgColor = 'white'
-          text = 'Armar Equipo'
-        />
+          text = 'Armar Equipo'/>
         <CustomButton2 
           onPress={() => navigation.navigate("Ranking", {...{id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})}
           icon = "ios-podium-sharp"
           bgColor= '#CA955C'
           fgColor = 'white'
-          text = 'Podio'
-        />
+          text = 'Podio'/>
         <CustomButton2 
           onPress={() => {
             refreshUserRanking();
@@ -172,11 +175,9 @@ export default QuestVisualizer = ({route, navigation}) => {
           icon = "star"
           bgColor= '#CA955C'
           fgColor = 'white'
-          text = 'Calificar busqueda'
-        />
+          text = 'Calificar busqueda'/>
       </View>
 
-      
       <CustomModal visible={isModalVisible} dismiss={toggleModal}>
         <View style={{flex: 1}}/>
         <View style={styles.customRating}>
@@ -191,21 +192,19 @@ export default QuestVisualizer = ({route, navigation}) => {
             style={{marginTop: 100}}
             bgColor= '#CA955C'
             fgColor = 'white'
-            text = 'Guardar'
-          />
+            text = 'Guardar'/>
           <CustomButton
             onPress={toggleModal}
             style={{marginTop: 100}}
             bgColor= 'grey'
             fgColor = 'white'
-            text = 'Volver'
-          />
+            text = 'Volver'/>
         </View>
         <View style={{flex: 1}}/>
       </CustomModal>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   view: {

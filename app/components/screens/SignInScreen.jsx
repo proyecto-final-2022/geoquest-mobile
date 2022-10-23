@@ -38,7 +38,7 @@ const SignInScreen = () => {
         setLoggingIn(false);
       })
     }
-  }
+}
 
   const onForgotPasswordPressed = () => {
     console.warn('Forgot Password');
