@@ -87,8 +87,7 @@ export default FriendsSearch = ({route, navigation}) => {
     .then(
       fetch(Config.appNotificationsUrl + "notifications/friend_request", {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ 
           sender_name: user.username,
           sender_id: user.id

@@ -40,6 +40,8 @@ export function DrawerContent(props) {
   const [userID, setUserID] = useState("")
   const [username, setUsername] = useState("")
   const [image, setImage] = useState(1)
+  const [friends, setFriends] = useState(0)
+  const [notifications, setNotifications] = useState(0)
 
   const getUserImage = (imageNumber) => { 
     const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
@@ -52,6 +54,8 @@ export function DrawerContent(props) {
       setName(user.name);
       setUsername(user.username);
       setImage(user.image);
+      setFriends(user.friends);
+      setNotifications(user.notifications);
     })
   }, [props])
 
@@ -78,16 +82,16 @@ export function DrawerContent(props) {
               </View>
             </View>
 
-            {/* <View style={styles.row}>
+            <View style={styles.row}>
               <View style={styles.section}>
-                <Paragraph style={[styles.paragraph, styles.caption]}>100M</Paragraph>
+                <Paragraph style={[styles.paragraph, styles.caption]}>{friends}</Paragraph>
                 <Caption style={styles.caption}>Amigos</Caption>
               </View>
               <View style={styles.section}>
-                <Paragraph style={[styles.paragraph, styles.caption]}>200</Paragraph>
+                <Paragraph style={[styles.paragraph, styles.caption]}>{notifications}</Paragraph>
                 <Caption style={styles.caption}>Notificaciones</Caption>
               </View>
-            </View> */}
+            </View>
           </View>
 
       <Drawer.Section style={styles.drawerSection}>
@@ -99,31 +103,27 @@ export function DrawerContent(props) {
               size={size}
             />)}
               label="Búsquedas"
-              onPress={() => {
-                                navigation.navigate('Quest Navigator')
-                            }}
-                        />
+              onPress={() => { navigation.navigate('Quest Navigator') }}/>
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
-                                name="account-group" 
-                                color={color}
-                                size={size}
+                                  name="account-group" 
+                                  color={color}
+                                  size={size}
                                 />
                             )}
                             label="Amigos"
                             onPress={() => {
                               Storage.getObject('user').
                               then(user => navigation.navigate('Friends List', user))
-                            }
-                            }
+                            }}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
-                                name="account-cog" 
-                                color={color}
-                                size={size}
+                                  name="account-cog" 
+                                  color={color}
+                                  size={size}
                                 />
                             )}
                             label="Perfil"
@@ -133,31 +133,31 @@ export function DrawerContent(props) {
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
-                                <Icon 
+                              <Icon 
                                 name="ticket-percent" 
                                 color={color}
                                 size={size}
-                                />
+                              />
                             )}
                             label="Cupones"
                             onPress={() => {
                               Storage.getObject('user').
                               then(user => navigation.navigate('Coupons', user))
-                              }}
+                            }}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
-                                <Icon 
-                                name="bell-badge" 
+                              <Icon 
+                                name={notifications != 0? "bell-badge" : "bell"}
                                 color={color}
                                 size={size}
-                                />
+                              />
                             )}
                             label="Notificaciones"
                             onPress={() => {
                               Storage.getObject('user').
                               then(user => navigation.navigate('Notifications', user))
-                              }}
+                            }}
                         />
                     </Drawer.Section>
                 </View>
@@ -165,11 +165,11 @@ export function DrawerContent(props) {
             <Drawer.Section style={styles.bottomDrawerSection}>
                 <DrawerItem 
                     icon={({color, size}) => (
-                        <Icon 
+                      <Icon 
                         name="exit-to-app" 
                         color={color}
                         size={size}
-                        />
+                      />
                     )}
                     label="Cerrar Sesión"
                     onPress={() => {

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, BackHandler, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import {Avatar} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native'
+import {useFocusEffect} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import Config from '../../../config.json'
-import Tags from "react-native-tags"
-import CustomButton from '../commons/CustomButton'
-import IconButton from '../commons/IconButton'
+import CustomModal from '../commons/CustomModal';
 import CustomButton2 from '../commons/CustomButton2'
 import Storage from '../../../app/utils/storage/storage'
 
@@ -20,8 +18,6 @@ import userImage_7 from '../../../assets/userImages/userImage_7.png'
 import userImage_8 from '../../../assets/userImages/userImage_8.png'
 import userImage_9 from '../../../assets/userImages/userImage_9.png'
 
-const {width} = Dimensions.get('screen')
-
 export default MultiplayerWaitRoom = ({route, navigation}) => {
 
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, user} = route.params
@@ -34,8 +30,8 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const url = Config.appUrl + "users/" + user.id + "/friends"
 
   useEffect(() => {
-    setInvited([])
-    setInvitedIDs([])
+    //setInvited([])
+    //setInvitedIDs([])
     fetch(url)
     .then((response) => 
     {
@@ -49,7 +45,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         .catch((error) => console.error(error))
     }
     )
-  }, [route])
+  }, [route]) 
 
   const [view, setView] = useState(false)
   const [inviteView, setInviteView] = useState(false)
@@ -83,15 +79,15 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
       .then(response => {
         if(!response.ok) throw new Error(response.status);
         else 
-        response.json().then(teamId => 
-          {
-            invitedIDs.map((invited_id) => {
-              //ONLY FOR TEST
-              //senderID (url) -> user.id
-              //sendID -> senderID
-              fetch(Config.appUrl + "users/" + invited_id  + '/notifications', {
-                method: 'POST',
-                body: JSON.stringify({ 
+        response.json()
+        .then(teamId => {
+          invitedIDs.map((invited_id) => {
+            //ONLY FOR TEST
+            //senderID (url) -> user.id
+            //sendID -> senderID
+            fetch(Config.appUrl + "users/" + invited_id  + '/notifications', {
+              method: 'POST',
+              body: JSON.stringify({ 
                 quest_name: questName,
                 sender_id: senderID,
                 sender_image: senderImage,
@@ -99,30 +95,30 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
                 team_id: teamId,
                 type: 'quest_invite'
               })
-              })
-              .then(
-                fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
-                  method: 'POST',
-                  headers: { 
-                    'Content-Type': 'application/json'},
-                  body: JSON.stringify({ 
-                    sender_name: senderName
-                  }) 
-                })
-              )
-              .then(
-                Storage.getObject('user').then(user => forwardToWaitRoom(id, teamId, user.id)))
-              .catch((error) => console.error(error))
             })
+            .then(
+              fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
+                method: 'POST',
+                headers: { 
+                  'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                  sender_name: senderName
+                }) 
+              })
+            )
+            .then(
+              Storage.getObject('user').then(user => forwardToWaitRoom(id, teamId, user.id)))
+            .catch((error) => console.error(error))
+          })
         })
         .catch((error) => {console.log('error: ' + error)});
-        })
-        .catch((error) => {console.log('error: ' + error)});
+      })
+      .catch((error) => {console.log('error: ' + error)});
   }
 
   const Player = ({player}) => {
     return (
-      <View style={{marginTop: 5, height: 50, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
+      <View style={{flex: 1, marginTop: 5, height: 50, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
         <View style={styles.invitedUserImage}>
           <Avatar.Image 
             source={getUserImage(player.image)}
@@ -135,16 +131,13 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
         </View>
         
         <View style={styles.invitedUserCloseIcon}>
-          <Pressable onPress={() => 
-            {
-            setView(true)
-            setCancel(player)}
-            }
-          >
+          <Pressable onPress={() => {
+              setView(true)
+              setCancel(player)}
+            }>
             <AntDesign style={{color:'darkred'}} size={30} name ='closecircle'/> 
           </Pressable>
-        </View>              
-
+        </View>
       </View>
     ) 
   }
@@ -156,8 +149,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           <Avatar.Image 
             source={getUserImage(player.image)}
             size={50}
-            marginTop={5}
-          />
+            marginTop={5}/>
         </View>
 
         <View style={styles.addUserText}>
@@ -166,17 +158,17 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
 
         <View style={styles.addUserIcon}>
           <Pressable onPress={() => { 
-           Alert.alert("Jugador añadido")
+            Alert.alert("Jugador añadido")
             setFilteredData(filteredData.filter((friend) => friend.id != player.id))
             setData(data.filter((friend) => friend.id != player.id))
             setInvited([...invited, player])
-          //TEST
-          //user.id -> player.id
-           setInvitedIDs([...invitedIDs, player.id])
-         }}>
-         <AntDesign style={{color:'black'}} size={35} name ='adduser'/>       
+            //TEST
+            //user.id -> player.id
+            setInvitedIDs([...invitedIDs, player.id])
+          }}>
+        <AntDesign style={{color:'black'}} size={35} name ='adduser'/>       
         </Pressable>
-        </View> 
+      </View> 
     </View>
     ) 
   }
@@ -196,6 +188,17 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   }
 
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate('Quest Visualizer', {id, name, qualification, description, difficulty, duration, completions, image_url, tags});
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: 'Formar Equipo',
@@ -210,39 +213,18 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   })
 
   return (
-    <ScrollView style={styles.view}> 
-      <Modal
-        animationType="slide"
-        transparent
-        visible={view}
-      >
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <View
-          style={{
-            height:'25%', 
-            width: '80%',
-            backgroundColor: 'aliceblue',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            borderWidth: 10,
-            borderColor: '#a52a2a', 
-            }}  
-        >
+    <View style={styles.view}> 
+      <CustomModal visible={view} dismiss={() => setView(false)}>
+        <View style={{flex: 1}}></View>
+        <View style={styles.customRemoveModal}>
           <View style={styles.closeButtonContainer}>
             <Pressable onPress={() => {setView(false)}}>
               <Ionicons name='close' color={'darkred'} size={35}/>
             </Pressable>
           </View>
-          
+            
           <View style={styles.textModal}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>{"Desea cancelar invitación"}</Text>  
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>{"de " + cancel.name + '?'}</Text>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>{"Desea cancelar invitación de "+cancel.name+'?'}</Text>
           </View>
 
           <View style={styles.optionsContainer}>
@@ -254,47 +236,22 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
                   setInvited(invited.filter((player) => player.id != cancel.id))
                   setInvitedIDs(invitedIDs.filter((id) => id != cancel.id))
                 }}}>
-                <Text style={{fontSize: 20, color: 'green', fontWeight: 'bold'}}>Aceptar</Text>  
-              <Text style={{fontSize: 20, color: 'green', fontWeight: 'bold'}}>Aceptar</Text>  
-                <Text style={{fontSize: 20, color: 'green', fontWeight: 'bold'}}>Aceptar</Text>  
+                <Text style={{fontSize: 20, color: 'green', fontWeight: 'bold'}}>Aceptar</Text>
               </Pressable>
             </View>
 
             <View style={styles.options}>
-            <Pressable onPress={() => {setView(false)}}>
-              <Text style={{fontSize: 20, color: 'darkred', fontWeight: 'bold'}}>Volver</Text>     
-            </Pressable>
+              <Pressable onPress={() => {setView(false)}}>
+                <Text style={{fontSize: 20, color: 'darkred', fontWeight: 'bold'}}>Volver</Text>     
+              </Pressable>
             </View>
-
           </View>
-
         </View>
-      </View>
-    </Modal>
-
-    <Modal
-        animationType="slide"
-        transparent
-        visible={inviteView}
-      >
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <View
-          style={{
-            // height:'70%', 
-            // width: '80%',
-            backgroundColor: 'aliceblue',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            borderWidth: 10,
-            borderColor: '#a52a2a', 
-            }}  
-        >
+        <View style={{flex: 3}}></View>
+      </CustomModal>
+      
+      <CustomModal visible={inviteView} dismiss={() => setInviteView(false)}>
+        <View style={styles.customModal}>
           <View style={styles.closeButtonContainer}>
             <Pressable onPress={() => {setInviteView(false)}}>
               <Ionicons name='close' color={'darkred'} size={30}/>
@@ -306,62 +263,63 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
               fontSize={20}
               placeholder={"Buscar..."}
               style={styles.textInput}
-              onChangeText={(text) => filterSearch(text)}
-              />
+              onChangeText={(text) => filterSearch(text)}/>
           </View>
-         
+          
           <FlatList
             horizontal= {false}
-            contentContainerStyle={{paddingLeft: 10}}
+            contentContainerStyle={{paddingHorizontal: 10}}
             showsHorizontalScrollIndicator = {false}
             data={filteredData}
-            keyExtractor={(item, index) => item.id}
+            keyExtractor={(item, index) => index}
             renderItem={({item}) => <Friend player={item}/>}>      
           </FlatList> 
-
         </View>
+      </CustomModal>
+
+      <View style={styles.containerWaitRoom}>
+        <View style={styles.containerWaitRoomHeader}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Equipo ({invited.length})</Text>
+          <FontAwesome name='users' size={35} style={{marginLeft: 10, color:'darkred'}} />
+        </View>
+        <FlatList
+          horizontal= {false}
+          contentContainerStyle={{paddingVertical: 20}}
+          showsHorizontalScrollIndicator = {false}
+          data={invited}
+          keyExtractor={(item, index) => index}
+          renderItem={({item}) => <Player player={item}/>}>      
+        </FlatList> 
       </View>
-    </Modal>
 
-    <View style={styles.containerWaitRoom}>
-      <View style={styles.containerWaitRoomHeader}>
-        <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>Equipo</Text>
-        <FontAwesome name='users' size={35} style={{marginLeft: 10, color:'darkred'}} />
+      <View style={styles.teamButtonsContainer}>
+        <CustomButton2 
+          text ="Añadir amigos"
+          onPress = {() => setInviteView(true)}
+          icon = "person-add"
+          bgColor= '#CA955C'
+          fgColor='white'
+          style={styles.buttonStyle}
+          textStyle={styles.buttonTextStyle}
+          iconStyle={styles.iconStyle}
+        />
+
+        <CustomButton2 
+          text ="Comenzar"
+          onPress = {() => {
+            if (invited.length > 0) {    
+              sendNotification(user.id, user.username, user.image, name)
+            }
+          }}
+          icon = "arrow-forward-circle"
+          bgColor= {(invited.length > 0) ? 'darkseagreen' : 'beige'}
+          fgColor = 'white'
+          style={styles.buttonStyle}
+          textStyle={styles.buttonTextStyle}
+          iconStyle={styles.iconStyle}
+        />
       </View>
-      <FlatList
-        horizontal= {false}
-        contentContainerStyle={{paddingVertical: 20}}
-        showsHorizontalScrollIndicator = {false}
-        data={invited}
-        keyExtractor={(item, index) => item.id}
-        renderItem={({item}) => <Player player={item}/>}>      
-      </FlatList> 
     </View>
-
-    <View style={styles.teamButtonsContainer}>
-      <CustomButton2 
-        text ="Añadir"
-        onPress = {() => setInviteView(true)}
-        icon = "person-add"
-        bgColor= '#CA955C'
-        fgColor='white'
-      />
-
-      <CustomButton2 
-        onPress = {() => 
-        {
-          if (invited.length > 0) {    
-            sendNotification(user.id, user.username, user.image, name)
-          }
-        }}
-        icon = "arrow-forward-circle"
-        bgColor= {(invited.length > 0) ? 'darkseagreen' : 'beige'}
-        fgColor = 'white'
-      />
-
-    </View>
-    
-  </ScrollView>
   )
 }
 
@@ -370,41 +328,70 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF9CA',
   },
-  containerWaitRoom:{
-    height: 600,
+  customRemoveModal: {
+    flex: 2,
+    flexDirection: 'column',
     backgroundColor: '#ffefd5',
-    marginTop:20,
+    margin: 30,
+    borderWidth: 3,
+    borderRadius:10,
+    borderColor: '#CA955C',
+  },
+  customModal: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#ffefd5',
+    margin: 10,
+    borderWidth: 3,
+    borderRadius:10,
+    borderColor: '#CA955C',
+    justifyContent: 'space-between',
+  },
+  containerWaitRoom:{
+    flex: 3,
+    backgroundColor: '#ffefd5',
+    marginTop: 0,
     padding: 15, 
+    elevation: 2,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   searchContainer: {
-    marginTop: 5,
+    marginTop: 0,
     flexDirection: 'row'
   },
   textInput: {
-    flexBasis: 310,
-    flexShrink: 0,
-    flexGrow: 0,
+    marginHorizontal: 10,
+    marginBottom: 5,
     borderWidth: 1,
-    borderColor: '#a52a2a',
+    borderColor: '#CA955C',
     backgroundColor: 'white',
+    flexBasis: 240,
+    flexShrink: 1,
+    flexGrow: 1,
   },
   containerWaitRoomHeader:{
     flexDirection: 'row'
   },
   closeButtonContainer: {
-    flexDirection: 'row-reverse'
+    flexDirection: 'row-reverse',
+    padding: 5
   },
   optionsContainer: {
-    flexDirection: 'row-reverse'
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 10
   },
   options: {
-    justifyContent: 'flex-end',
+    padding: 20
+    // justifyContent: 'flex-end',
     // flexBasis: 80,
     // flexShrink: 1,
     // flexGrow: 0
   },
   textModal: {
     alignItems: 'center',
+    marginHorizontal: 10
     // flexBasis: 60,
     // flexShrink: 0,
     // flexGrow: 0
@@ -421,29 +408,27 @@ const styles = StyleSheet.create({
   },
   addUserText: {
     marginLeft: 5,
-    flexBasis: 200,
-    flexShrink: 0,
-    flexGrow: 0
+    flexBasis: 140,
+    flexShrink: 1,
+    flexGrow: 1
   },
   invitedUserImage: {
-    flexBasis: 50,
-    flexShrink: 0,
-    flexGrow: 0
+    flex: 1
   },
   invitedUserText: {
-    marginLeft: 10,
-		flexBasis: 280,
-    flexShrink: 0,
-    flexGrow: 0
+    flex: 4,
+    marginLeft: 5
   },
   invitedUserCloseIcon: {
-    flexBasis: 50,
-    flexShrink: 0,
-    flexGrow: 0
+    alignItems: 'flex-end',
+    flex: 1, 
+    marginRight: 10
   },
   teamButtonsContainer: {
+    flex: 1,
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 10
   },
   buttonText: {
     fontWeight: 'bold',
@@ -456,6 +441,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     backgroundColor: '#CA955C'
-  }  
+  },
+  buttonStyle: {
+    width: '40%',
+  },
+  buttonTextStyle: {
+    flexBasis: 200,
+    flexShrink: 1,
+    flexGrow: 1
+  },
+  iconStyle: {
+    flexBasis: 100,
+    flexShrink: 1,
+    flexGrow: 1
+  }
 });
 

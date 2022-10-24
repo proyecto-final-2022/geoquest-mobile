@@ -2,35 +2,36 @@ import React from 'react'
 import {View, Text, StyleSheet, Pressable} from 'react-native'
 import {FontAwesome, Ionicons} from '@expo/vector-icons'
 
-export default CustomButton2 = ({onPress, text, type = "PRIMARY", bgColor, fgColor, icon}) => {
+export default CustomButton2 = ({onPress, text, type = "PRIMARY", bgColor, fgColor, icon, style = {}, textStyle = {}, iconStyle = {}}) => {
   return (
-		<Pressable 
-      onPress={onPress} >  
-		<View style={[
-			styles.customButtonContainer,
-			styles.container, 
-			styles[`container_${type}`],
-			bgColor ? {backgroundColor: bgColor} : {},
-			]}>
-			
-			<Text 
-        style={[
-          styles.text, 
-          styles[`text_${type}`],
-          fgColor ? {color: fgColor} : {}
-        ]}>{text}</Text>
-			<Ionicons name ={icon} style={styles.icon} color={'white'} size={30}/>
-  
-    </View>
+		<Pressable onPress={onPress} >  
+      <View style={[
+        styles.customButtonContainer,
+        styles.container, 
+        styles[`container_${type}`],
+        bgColor ? {backgroundColor: bgColor} : {},
+        style
+        ]}>
+        
+        <Text 
+          style={[
+            styles.text, 
+            styles[`text_${type}`],
+            fgColor ? {color: fgColor} : {},
+            textStyle
+          ]}>{text}</Text>
+        <Ionicons name ={icon} style={[styles.icon, iconStyle]} color={'white'} size={30}/>
+    
+      </View>
 		</Pressable>
-    )
+  )
 }
 
 const styles = StyleSheet.create({
   customButtonContainer: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
   },
   container: {
     width: '30%',
@@ -63,7 +64,5 @@ const styles = StyleSheet.create({
 		flexBasis: 30,
     flexShrink: 0,
     flexGrow: 0,
-
-
   }
 })

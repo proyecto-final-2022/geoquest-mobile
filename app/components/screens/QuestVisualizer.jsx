@@ -116,7 +116,7 @@ export default QuestVisualizer = ({route, navigation}) => {
 
   return (
     <ScrollView style={styles.view}> 
-      <Image style={styles.image} source={{uri: "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"}} />
+      <Image style={styles.image} source={{uri: image_url}} />
 
       <View style={styles.card}>
         <View style={styles.questInfoContainer}>
@@ -149,6 +149,10 @@ export default QuestVisualizer = ({route, navigation}) => {
           icon = "arrow-forward-circle"
           bgColor= 'darkseagreen'
           fgColor = 'white'
+          text = 'Comenzar'
+          style={styles.buttonStyle}
+          textStyle={styles.buttonTextStyle}
+          iconStyle={styles.iconStyle}
         />
         <CustomButton2 
           onPress = {() => 
@@ -160,13 +164,19 @@ export default QuestVisualizer = ({route, navigation}) => {
           icon = "people-sharp"
           bgColor= '#CA955C'
           fgColor = 'white'
-          text = 'Armar Equipo'/>
+          text = 'Armar Equipo'
+          style={styles.buttonStyle}
+          textStyle={styles.buttonTextStyle}
+          iconStyle={styles.iconStyle}/>
         <CustomButton2 
           onPress={() => navigation.navigate('Ranking', {...{id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName}})}
           icon = "ios-podium-sharp"
           bgColor= '#CA955C'
           fgColor = 'white'
-          text = 'Podio'/>
+          text = 'Podio'
+          style={styles.buttonStyle}
+          textStyle={styles.buttonTextStyle}
+          iconStyle={styles.iconStyle}/>
         <CustomButton2 
           onPress={() => {
             refreshUserRanking();
@@ -175,7 +185,10 @@ export default QuestVisualizer = ({route, navigation}) => {
           icon = "star"
           bgColor= '#CA955C'
           fgColor = 'white'
-          text = 'Calificar busqueda'/>
+          text = 'Calificar busqueda'
+          style={styles.buttonStyle}
+          textStyle={styles.buttonTextStyle}
+          iconStyle={styles.iconStyle}/>
       </View>
 
       <CustomModal visible={isModalVisible} dismiss={toggleModal}>
@@ -216,7 +229,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#ffefd5',
     elevation: 5,
-    marginTop:20,
+    marginTop:0,
     padding: 15, 
   },
   questInfoContainer: {
@@ -247,8 +260,7 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   image: {
-    height: 140,
-    borderRadius: 10,
+    height: 160,
     width: '100%'
   },
   container: {
@@ -291,6 +303,19 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius:10,
     borderColor: '#CA955C'
+  },
+  buttonStyle: {
+    width: '40%',
+  },
+  buttonTextStyle: {
+    flexBasis: 200,
+    flexShrink: 1,
+    flexGrow: 1
+  },
+  iconStyle: {
+    flexBasis: 100,
+    flexShrink: 1,
+    flexGrow: 1
   }
 });
 

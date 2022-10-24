@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, ScrollView, Alert, BackHandler, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import {Avatar} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native'
+import {useFocusEffect} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
@@ -73,38 +73,35 @@ export default WaitRoom = ({route, navigation}) => {
       })
     .catch((error) => console.error(error))
     .finally(()=>setLoading(false))
-    }, [route])   
+  }, [route])   
 
-    useEffect(() => {    
-      fetch(urlTeam)
-      .then((response) => response.json())
-      .then((json) => {
-        setPlayersTeam(json)
-        })
-      .catch((error) => console.error(error))
-      .finally(()=>setLoading(false))
-      }, [route])   
+  useEffect(() => {    
+    fetch(urlTeam)
+    .then((response) => response.json())
+    .then((json) => {
+      setPlayersTeam(json)
+      })
+    .catch((error) => console.error(error))
+    .finally(()=>setLoading(false))
+  }, [route])   
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        areYousureLeave();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
 
   useEffect(() => {
     navigation.setOptions({
       headerTitle: 'Sala de Espera',
       headerTintColor: '#a52a2a',
       headerRight: () => (
-        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => 
-          Alert.alert(
-            "Abandonar grupo de busqueda?",
-            "",
-          [
-            {
-              text: "Cancelar",
-              style: "Cancelar"
-            },
-            { text: "OK", onPress: () => {HandleCancel()} }
-          ]
-        )
-        }          
-          />
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => areYousureLeave()}/>
       ),
       headerSearchBarOptions: {
         placeholder: "Search",
@@ -112,20 +109,37 @@ export default WaitRoom = ({route, navigation}) => {
     })
   })
 
-  return (
-    <ScrollView style={styles.view}> 
+  const areYousureLeave = () => {
+    Alert.alert(
+      "Abandonar grupo de busqueda?",
+      "",
+      [
+        {
+          text: "Si",
+          onPress: () => {HandleCancel()},
+        },
+        {
+          text: "No",
+          onPress: () => null,
+        },
+      ]
+    );
+  }
 
-      <ScrollView style={styles.containerWaitRoom}>
+  return (
+    <View style={styles.view}> 
+
+      <View style={styles.containerWaitRoom}>
         <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{'En espera (' + (playersAccepted.length > 0 ? playersAccepted.length: 0) + '/' + playersTeam.length +')'}</Text>
         <FlatList
           horizontal= {false}
           contentContainerStyle={{paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
           data={playersAccepted}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item, index) => index}
           renderItem={({item}) => <Player player={item}/>}>      
         </FlatList> 
-      </ScrollView>
+      </View>
 
       <View style={styles.teamButtonsContainer}> 
 
@@ -137,7 +151,7 @@ export default WaitRoom = ({route, navigation}) => {
         />
             
       </View>
-    </ScrollView>
+    </View>
   )
 }
 

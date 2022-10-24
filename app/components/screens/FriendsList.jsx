@@ -5,9 +5,6 @@ import {useFocusEffect} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import CustomButton2 from '../commons/CustomButton2'
 import Config from '../../../config.json'
-import Tags from "react-native-tags"
-import CustomButton from '../commons/CustomButton'
-import Storage from '../../../app/utils/storage/storage'
 
 import userImage_1 from '../../../assets/userImages/userImage_1.png'
 import userImage_2 from '../../../assets/userImages/userImage_2.png'
@@ -42,7 +39,7 @@ export default FriendsList = ({route, navigation}) => {
       fetch(Config.appUrl + "users/" + friendID + '/friends/' + user.id, {
         method: 'DELETE'
       })
-      )
+    )
     .catch((error) => console.error(error))
     .then(navigation.navigate("Friends List", user))
   }
