@@ -20,7 +20,7 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
   const [runFade, setRunFade] = useState(false);
 
   const {target, model, interactions} = typeProps;
-  const targetID = target.source + "_" + questState.scene;
+  const targetID = target.source;
 
   const targetProps = {
     ...target,
@@ -39,11 +39,36 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     return interactionN - 1  >= objectState;
   };
 
+  ViroARTrackingTargets.createTargets({
+    "images.exampleImage": {
+      source: require('../../../../../res/images/exampleImage.jpg'),
+      orientation: "Up",
+      physicalWidth: 0.2 // real world width in meters  
+    },
+    "images.duende": {
+      source: require('../../../../../res/images/duende.jpg'),
+      orientation: "Up",
+      physicalWidth: 0.2 // real world width in meters  
+    },
+    "images.boquita": {
+      source: require('../../../../../res/images/boquita.jpg'),
+      orientation: "Up",
+      physicalWidth: 0.2 // real world width in meters  
+    },
+    "images.argentina": {
+      source: require('../../../../../res/images/argentina.jpg'),
+      orientation: "Up",
+      physicalWidth: 0.2 // real world width in meters  
+    }
+  
+  });
+
   useEffect(() => {
     if(!hasInteractionsLeft(questState)) {
       setIsVisible(false);
     }
 
+    /* 
     const targets = {};
     targets[targetID] = targetProps;
     console.log("Creating:", targetID);
@@ -53,6 +78,7 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
       console.log("Removing:", targetID);
       ViroARTrackingTargets.deleteTarget(targetID);
     };
+    */
   }, [questState.scene]);
 
   const onClick = () => {

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   scene: 0,
+  inventory: [],
   objects: {}
 };
 

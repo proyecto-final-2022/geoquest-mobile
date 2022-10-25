@@ -1,5 +1,28 @@
 {
   "id": "unID",
+  "items": {
+    "1": {
+      "title": "Hoja",
+      "description": "Hoja Hoja Hoja Hoja Hoja Hoja",
+      "questItemID": 1,
+      "image": "1",
+      "view": 1
+    },
+    "2": {
+      "title": "Llave",
+      "description": "Llave llave llave llave llave llave",
+      "questItemID": 2,
+      "image": "2",
+      "view": 2
+    },
+    "3": {
+      "title": "Carpeta",
+      "description": "Carpeta carpeta carpeta carpeta carpeta carpeta",
+      "questItemID": 3,
+      "image": "3",
+      "view": 3
+    }
+  },
   "scenes": [
     {
       "objects": [
@@ -7,19 +30,18 @@
           "type": "WithImageRecognition",
           "typeProps": { 
             "target": {
-              "source": "images.exampleImage",
+              "source": "images.boquita",
               "physicalWidth": 0.2,
               "orientation": "Up"
             },
             "model": {
-              "source": "models.cubone.model",
-              "type": "OBJ",
-              "position": [0,-2,0],
-              "scale": [1,1,1],
-              "rotation": [90,180,0],
+              "source": "models.key.model",
+              "type": "VRX",
+              "position": [0,0,0],
+              "scale": [0.1,0.1,0.1],
+              "rotation": [0,0,0],
               "resources": [
-                "models.cubone.materials"
-              ],
+              ]
             },
             "interactions": [
               [
@@ -35,12 +57,18 @@
               ],
               [
                 {
+                  "name": "grabItem",
+                  "params": ["2"]
+                }
+              ],
+              [
+                {
                   "name": "nextScene",
                   "params": []
                 }
               ]
             ]
-          },
+          }
         },
         {
           "type": "WithImageRecognition",
@@ -51,14 +79,12 @@
               "orientation": "Up"
             },
             "model": {
-              "source": "models.cubone.model",
-              "type": "OBJ",
-              "position": [0,-2,0],
-              "scale": [1,1,1],
-              "rotation": [90,180,0],
-              "resources": [
-                "models.cubone.materials"
-              ],
+              "source": "models.page.model",
+              "type": "VRX",
+              "position": [0,0,0],
+              "scale": [0.1,0.1,0.1],
+              "rotation": [0,0,0],
+              "resources": []
             },
             "interactions": [
               [
@@ -74,6 +100,12 @@
               ],
               [
                 {
+                  "name": "grabItem",
+                  "params": ["1"]
+                }
+              ],
+              [
+                {
                   "name": "showHint",
                   "params": [
                     {
@@ -84,7 +116,7 @@
                 }
               ]
             ]
-          },
+          }
         }
       ]
     },
@@ -99,14 +131,13 @@
               "orientation": "Up"
             },
             "model": {
-              "source": "models.cubone.model",
-              "type": "OBJ",
-              "position": [0,-2,0],
-              "scale": [1,1,1],
-              "rotation": [90,180,0],
+              "source": "models.folder.model",
+              "type": "VRX",
+              "position": [0,0,0],
+              "scale": [0.1,0.1,0.1],
+              "rotation": [0,0,0],
               "resources": [
-                "models.cubone.materials"
-              ],
+              ]
             },
             "interactions": [
               [
@@ -120,8 +151,56 @@
                   ]
                 }
               ],
+              [
+                {
+                  "name": "grabItem",
+                  "params": ["3"]
+                }
+              ],
+              [
+                {
+                  "name": "nextScene",
+                  "params": []
+                }
+              ]
             ]
-          },
+          }
+        }
+      ]
+    },
+    {
+      "objects": [
+        {
+          "type": "WithImageRecognition",
+          "typeProps": { 
+            "target": {
+              "source": "images.argentina",
+              "physicalWidth": 0.2,
+              "orientation": "Up"
+            },
+            "model": {
+              "source": "models.box.model",
+              "type": "VRX",
+              "position": [0,0,0],
+              "scale": [0.1,0.1,0.1],
+              "rotation": [0,0,0],
+              "resources": [
+              ]
+            },
+            "interactions": [
+              [
+                {
+                  "name": "showHint",
+                  "params": [
+                    {
+                      "short": "Apa, me encontraste en la escena 3!",
+                      "long": "Me encontre con kubone en '<lugar>' y me dijo que <bla bla>."
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
         }
       ]
     }

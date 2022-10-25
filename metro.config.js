@@ -11,7 +11,7 @@ module.exports = {
     ...defaultResolver,
     assetExts: [
       ...defaultAssetExts,
-      "obj", "mtl"
+      "obj", "mtl", "vrx"
     ]
   }
 };
