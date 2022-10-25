@@ -6,7 +6,7 @@ import itemImage_3 from '../../../../../assets/questItems/folder.png'
 import {useSelector} from "react-redux";
 
 
-const Inventory = ({props, ctx}) => {
+const Inventory = ({props}) => {
   const questState = useSelector(state => state.quest);
 
     useEffect(() => {
@@ -14,9 +14,9 @@ const Inventory = ({props, ctx}) => {
 
       var inventoryItems = inventory.map(item => 
       ({
-        "title": props.items[item].title,
-        "description": props.items[item].description,
-        "image": props.items[item].image,
+        "title": props.questConfig.items[item].title,
+        "description": props.questConfig.items[item].description,
+        "image": props.questConfig.items[item].image,
         "visibleMenu": false,
         "marker": false
       })
@@ -26,6 +26,12 @@ const Inventory = ({props, ctx}) => {
       
   }, [questState.inventory]);
 
+/*
+  useEffect(() => {
+    console.log("*****rREEEPE: ", props)
+    
+}, []);
+*/
 
   const [items, setItems] = useState([])
 
@@ -55,14 +61,14 @@ const Inventory = ({props, ctx}) => {
       title: 'Ver',
       action: (item, index) =>  {
         hideMenu(index)
-//        context.setObjectVisualize(item.view)
-//        context.setObjectDescription(
-//          {
-//            title: item.title,
-//            description: item.description
-//          })
-//        context.handleSnapPress(0)
-//        context.setVisibleDescription(true)
+//        context.setObjectVisualize(item.view) 
+          props.ctx.setObjectDescription(
+            {
+              title: item.title,
+              description: item.description,
+              visible: true
+           })
+          props.ctx.handleSnapPress(0)
       }
     },
     {

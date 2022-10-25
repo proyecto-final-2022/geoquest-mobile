@@ -11,6 +11,7 @@ import Inventory from "./inventory/Inventory"
 export default function ARView({route}) {
   const [ showHint, setShowHint ] = useState(false);
   const [ hintText, setHintText ] = useState("");
+  const [description, setObjectDescription] = useState({title: "", description: "", visible: false});
   const snapPoints = ["3%", "45%"];
   const sheetRef = useRef(null);
 
@@ -20,15 +21,15 @@ export default function ARView({route}) {
     setShowHint(true);
   };
 
-  const globalCtx = { 
-    hint,
-  };
-
-  const arViewCtx = {handleSnapPress};
-
   const handleSnapPress = useCallback((index) => {
     sheetRef.current?.snapToIndex(index);
   })
+
+  const globalCtx = { 
+    hint,
+    setObjectDescription,
+    handleSnapPress
+  };
 
   useEffect(() => {
     handleSnapPress(0)  
@@ -50,7 +51,7 @@ export default function ARView({route}) {
         ref={sheetRef}
         snapPoints={snapPoints}>
         <BottomSheetView>
-          <Inventory props={route.params.questConfig} ctx={arViewCtx} />
+          <Inventory props={{questConfig: route.params.questConfig, ctx: globalCtx}} />
         </BottomSheetView>
       </BottomSheet>
 
