@@ -57,14 +57,8 @@
               ],
               [
                 {
-                  "name": "grabItem",
-                  "params": ["2"]
-                }
-              ],
-              [
-                {
                   "name": "nextScene",
-                  "params": []
+                  "params": ["2"]
                 }
               ]
             ]
@@ -102,17 +96,6 @@
                 {
                   "name": "grabItem",
                   "params": ["1"]
-                }
-              ],
-              [
-                {
-                  "name": "showHint",
-                  "params": [
-                    {
-                      "short": "Me fui... jijiji",
-                      "long": "Ejemplo bla bla"
-                    }
-                  ]
                 }
               ]
             ]
@@ -153,14 +136,8 @@
               ],
               [
                 {
-                  "name": "grabItem",
-                  "params": ["3"]
-                }
-              ],
-              [
-                {
                   "name": "nextScene",
-                  "params": []
+                  "params": ["3"]
                 }
               ]
             ]

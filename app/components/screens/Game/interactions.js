@@ -16,10 +16,14 @@ export default {
     }
   },
 
-  "nextScene": (ctx) => {
+  "nextScene": (ctx, id) => {
+
+    ctx.global.hint("Objecto recolectado");
+
     return {
       ...ctx.state,
       scene: ctx.state.scene + 1,
+      inventory: [...ctx.state.inventory, id],
       objects: {}
     };
   }
