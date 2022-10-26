@@ -25,6 +25,10 @@ export default function App() {
       navigationRef.current?.navigate("Wait Room", {questID, teamID, userID});
     };
 
+    const forwardToQuestUpdate = (questID) => {
+      navigationRef.current?.navigate("Game", {questID});
+    };
+
     const forwardToFriendsList = () => {
       Storage.getObject("user")
         .then(user => navigationRef.current?.navigate("Friends List", user));
@@ -151,6 +155,24 @@ export default function App() {
               ]
             );
             break;
+          
+          case "Quest Update":
+            Alert.alert(
+              title,
+              "",
+              [
+                {
+                  text: "Cancel",
+                  style: "cancel"
+                },
+                { text: "OK", onPress: () => { 
+                  forwardToQuestUpdate(
+                    remoteMessage.data.questID, 
+                  )    
+                }}
+              ]
+            );
+              break;
           }
         }
 

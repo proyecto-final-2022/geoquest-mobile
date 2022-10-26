@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import exampleQuest from "../../../../res/exampleQuest.json";
 
 
-function useQuestSetup(questID) {
+function useQuestSetup(route, questID) {
   const [config, setConfig] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +36,7 @@ function useQuestSetup(questID) {
     });
     const cleanUp = setUpdateListener();
     return cleanUp;
-  }, [questID]);
+  }, [route]);
 
   return {
     loading: loading,
@@ -47,8 +47,8 @@ function useQuestSetup(questID) {
 
 const Tab = createBottomTabNavigator();
 
-export default function Game({questID}) {
-  const {loading, questConfig } = useQuestSetup(questID);
+export default function Game({route, questID}) {
+  const {loading, questConfig } = useQuestSetup(route, questID);
 
   if(loading)
     return <View><Text>Loading...</Text></View>;
