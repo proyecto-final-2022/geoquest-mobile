@@ -7,11 +7,12 @@ import HintModal from "./HintModal";
 import Scene from "./Scene";
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet'
 import Inventory from "./inventory/Inventory"
+import DescriptionModal from "./DescriptionModal";
 
 export default function ARView({route}) {
   const [ showHint, setShowHint ] = useState(false);
   const [ hintText, setHintText ] = useState("");
-  const [description, setObjectDescription] = useState({title: "", description: "", visible: false});
+  const [description, setObjectDescription] = useState({title: "", description: "", image: 0, visible: false});
   const snapPoints = ["3%", "45%"];
   const sheetRef = useRef(null);
 
@@ -54,6 +55,8 @@ export default function ARView({route}) {
           <Inventory props={{questConfig: route.params.questConfig, ctx: globalCtx}} />
         </BottomSheetView>
       </BottomSheet>
+      <DescriptionModal
+        props={{ctx: globalCtx, itemDescription: description}}/>
 
     </View>
   );
