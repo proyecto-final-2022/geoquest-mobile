@@ -4,13 +4,19 @@ import { View, Text } from "react-native";
 import ARView from "./ARView";
 import QuestLog from "./QuestLog";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+import { useSelector, useDispatch } from "react-redux";
 import exampleQuest from "../../../../res/exampleQuest.json";
-
+import Quest from "../../../redux/slices/quest"
+import Config from "../../../../config.json"
 
 function useQuestSetup(route, questID) {
+  const questState = useSelector(state => state.quest);
+  const dispatch = useDispatch();
   const [config, setConfig] = useState();
   const [loading, setLoading] = useState(true);
+
+  //TODO: des-hardcodear url
+  const url = Config.appUrl + "quests/1" 
 
   const initQuest = async () => {
     console.log("Init quest");
@@ -19,6 +25,24 @@ function useQuestSetup(route, questID) {
     setConfig(exampleQuest);
     // If there is a session download current state.
     // If not, create a session and initialize with returned initial state:
+
+    fetch(url)
+    .then((response) => response.json())
+    .then((json) => 
+    {  
+      if(json.scene != 0) {
+        dispatch(Quest.actions.set(
+          {...questState,
+          inventory: json.inventory,
+          scene: json.scene}
+          ));
+      }
+
+    }
+    
+    )
+    .catch((error) => console.error(error))
+
   };
 
   const setUpdateListener = () => {
