@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, BackHandler, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import { useIsFocused } from '@react-navigation/native'
 import {Avatar} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native'
+import {useFocusEffect} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
-import Tags from "react-native-tags"
-import CustomButton from '../commons/CustomButton'
 
 import userImage_1 from '../../../assets/userImages/userImage_1.png'
 import userImage_2 from '../../../assets/userImages/userImage_2.png'
@@ -21,8 +19,6 @@ import userImage_9 from '../../../assets/userImages/userImage_9.png'
 import goldMedal from '../../../assets/medals/gold.png'
 import silverMedal from '../../../assets/medals/silver.png'
 import bronzeMedal from '../../../assets/medals/bronze.png'
-
-const {width} = Dimensions.get('screen')
 
 export default Ranking = ({route, navigation}) => {
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
@@ -41,32 +37,31 @@ export default Ranking = ({route, navigation}) => {
 
   useEffect(() => {
     fetch(url)
-    .then((response) => 
-    {
-      if (response.ok)
+    .then((response) => {
+      if (response.ok){
         response.json()
-        .then((json) => {setRanking(json)})
-        .catch((error) => 
-        
-        console.error(error))
+        .then((json) => {
+          setRanking(json)
+        })
+        .catch((error) => console.error(error))
         .finally(()=>setLoading(false))
-    }
-    )
+      }
+    })
+    .catch((error) => console.log(error))
   }, [isFocused])
 
   useEffect(() => {
     fetch(urlTeam)
-    .then((response) => 
-    {
+    .then((response) => {
       if (response.ok)
         response.json()
-        .then((json) => {setTeamRanking(json)})
-        .catch((error) => 
-        
-        console.error(error))
+        .then((json) => {
+          setTeamRanking(json)
+        })
+        .catch((error) => console.error(error))
         .finally(()=>setLoading(false))
-    }
-    )
+    })
+    .catch((error) => console.log(error))
   }, [isFocused])
   
   useEffect(() => {
@@ -79,18 +74,31 @@ export default Ranking = ({route, navigation}) => {
     })
   })
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate('Quest Visualizer', {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName})
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
+
   const listCategories = () => {
     const categoryList = ['Individual', 'Equipos']
     
-    return <View style={styles.categoryListContainer}>
-      {categoryList.map((category, index) => (
-        <Pressable
-          key={index}
-          onPress={() => {setSelectedCategoryIndex(index)}}>
-          <Text style={[styles.categoryListText, (index == selectedCategoryIndex && styles.activeCategoryListText)]}>{category}</Text>        
-        </Pressable>
-      ))}
+    return (
+      <View style={styles.categoryListContainer}>
+        {categoryList.map((category, index) => (
+          <Pressable
+            key={index}
+            onPress={() => {setSelectedCategoryIndex(index)}}>
+            <Text style={[styles.categoryListText, (index == selectedCategoryIndex && styles.activeCategoryListText)]}>{category}</Text>        
+          </Pressable>
+        ))}
       </View>
+    )
   }
 
   const getUserImage = (imageNumber) => { 
@@ -98,29 +106,14 @@ export default Ranking = ({route, navigation}) => {
     return userImages[imageNumber-1];
   }
 
-  const Ranking = ({data, index}) => {
-
+  const Ranking = ({data: user, index}) => {
     return(
       <View style={styles.rankingContainer}>
         <View style={styles.rankingItemPos}>
           {
-            index == 1 ? 
+            index == 1 || index == 2 || index == 3 ? 
               <Image
-                source = {goldMedal}
-                size= {100}
-                style={[styles.logo]}
-              />
-            :
-            index == 2 ?
-              <Image
-                source = {silverMedal}
-                size= {100}
-                style={[styles.logo]}
-              />
-            :
-            index == 3 ? 
-              <Image
-                source = {bronzeMedal}
+                source = {[goldMedal,silverMedal,bronzeMedal][index-1]}
                 size= {100}
                 style={[styles.logo]}
               />
@@ -130,110 +123,92 @@ export default Ranking = ({route, navigation}) => {
         </View>
         <View style={styles.rankingItemImage}>
           <Avatar.Image 
-            source={getUserImage(data.image)}
+            source={getUserImage(user.image)}
             size={50}
             marginTop={5}
           />
         </View>
         <View style={styles.rankingItemUsername}>
-          <Text style={{fontSize: 20, color:'#a52a2a', fontWeight: 'bold'}}>{data.username}</Text>
-        </View>
-        <View style={styles.rankingItemClock}>
-          <FontAwesome name ='clock-o' color={'#1A515B'} size={32}/>
+          <Text style={{fontSize: 20, color:'#a52a2a', fontWeight: 'bold'}}>{user.username}</Text>
         </View>
         <View style={styles.rankingItemTime}>
-          <Text style={{fontSize: 15, fontWeight: 'bold', color:'#a52a2a'}}>{data.hours + "h " + data.minutes + "m " + data.seconds + "s "}</Text>
+          <FontAwesome name ='clock-o' color={'#1A515B'} size={32}/>
+          <Text style={{fontSize: 15, fontWeight: 'bold', color:'#a52a2a'}}>{user.hours+"h "+user.minutes+"m\n"+user.seconds+"s"}</Text>
         </View>
       </View>
-      )
+    )
   }
 
   const TeamRanking = ({data, index}) => {
     return(
-        <View style={styles.teamRankingContainer}>
-          <View style={styles.rankingItemPos}>
+      <View style={[styles.teamRankingContainer, {height: data.users.length*70}]}>
+        <View style={styles.rankingItemPos}>
+        {
+          index == 1 || index == 2 || index == 3 ? 
+            <Image
+              source = {[goldMedal,silverMedal,bronzeMedal][index-1]}
+              size= {100}
+              style={[styles.logo]}
+            />
+          :
+            <Text style={{fontSize: 20, marginLeft: 10, fontWeight: 'bold'}}>{index}</Text> 
+        }
+        </View>
+        <View style={styles.teamRankingContainerItem}>
           {
-            index == 1 ? 
-              <Image
-                source = {goldMedal}
-                size= {100}
-                style={[styles.logo]}
-              />
-            :
-            index == 2 ?
-              <Image
-                source = {silverMedal}
-                size= {100}
-                style={[styles.logo]}
-              />
-            :
-            index == 3 ? 
-              <Image
-                source = {bronzeMedal}
-                size= {100}
-                style={[styles.logo]}
-              />
-            :
-              <Text style={{fontSize: 20, marginLeft: 10, fontWeight: 'bold'}}>{index}</Text> 
-          }
-          </View>
-          
-          <View style={styles.teamRankingContainerItem}>
-            {data.users.map((user) =>
-                <View style={{flexDirection: 'row'}}>
-                  <View style={styles.rankingItemImage}>
-                    <Avatar.Image 
-                      source={getUserImage(user.image)}
-                      size={50}
-                      marginTop={5}
+            data.users.map((user, index) =>
+              <View key={index} style={{flexDirection: 'row',justifyContent: "space-between",alignItems: "center"}}>
+                <View style={styles.rankingItemImage}>
+                  <Avatar.Image 
+                    source={getUserImage(user.image)}
+                    size={50}
+                    marginTop={5}
                   />
-                  </View>
-                  <View style={styles.rankingTeamUsername}>         
-                    <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{user.username}</Text>
-                  </View>
                 </View>
+                <View style={styles.rankingTeamUsername}>
+                  <Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{user.username.substring(0,33)}</Text>
+                </View>
+              </View>
             )
           }
-          </View>
-        <View style={styles.rankingItemClock}>
-          <FontAwesome name ='clock-o' color={'#1A515B'} size={32}/>
         </View>
         <View style={styles.rankingItemTime}>
-          <Text style={{fontSize: 15, fontWeight: 'bold', color:'#a52a2a'}}>{data.hours + "h " + data.minutes + "m " + data.seconds + "s "}</Text>
-        </View>  
+          <FontAwesome name ='clock-o' color={'#1A515B'} size={32}/>
+          <Text style={{fontSize: 15, fontWeight: 'bold', color:'#a52a2a'}}>{data.hours+"h "+data.minutes+"m\n"+data.seconds+"s"}</Text>
+        </View>
       </View>
-      )
+    )
   }
 
   return (
-
-    <ScrollView style={styles.view}> 
+    <View style={styles.view}> 
       {listCategories()}
       { 
         selectedCategoryIndex == 0 ?           
         <FlatList
-          contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+          contentContainerStyle={{paddingHorizontal: 5, paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
           data={ranking}
-          renderItem={({item, index}) => <Ranking data={item} index= {index+1}/>
-        }
-        ></FlatList> :           
+          keyExtractor={(item, index) => index}
+          renderItem={({item, index}) => <Ranking data={item} index={index+1}/>
+        }/> :           
         <FlatList
-          contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+          contentContainerStyle={{paddingHorizontal: 5, paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
           data={teamRanking}
-          renderItem={({item, index}) => <TeamRanking data={item} index= {index+1}/>
-        }></FlatList>
+          keyExtractor={(item, index) => index}
+          renderItem={({item, index}) => <TeamRanking data={item} index={index+1}/>
+        }/>
       }
-    </ScrollView>
-
-    )
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
   view: {
     flex: 1,
     backgroundColor: '#FFF9CA',
+    flexDirection: 'column',
   },
   categoryListContainer: {
     flexDirection: 'row',
@@ -252,36 +227,27 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   rankingContainer: {
+    flex: 1,
     backgroundColor:'antiquewhite',
     marginTop: 5,
     height: 70,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   rankingItemPos: {
-    flexBasis: 40,
-    flexShrink: 0,
-    flexGrow: 0,
+    flex: 1.5,
   },
   rankingItemImage: {
-    flexBasis: 60,
-    flexShrink: 0,
-    flexGrow: 0,
+    flex: 2
   },
   rankingItemUsername: {
-    flexBasis: 120,
-    flexShrink: 0,
-    flexGrow: 0,
+    flex: 4
   },
   rankingItemTime: {
-    flexBasis: 150,
-    flexShrink: 0,
-    flexGrow: 0,
-  },
-  rankingItemClock: {
-    flexBasis: 35,
-    flexShrink: 0,
-    flexGrow: 0,
+    flex: 4,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   },
   logo: {
     width: '100%',
@@ -289,22 +255,22 @@ const styles = StyleSheet.create({
     maxHeight: 40,
   },
   teamRankingContainer: {
-    height: 270,
+    flex: 1,
+    // height: 270, changed to dynamic height
     marginTop: 5,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor:'antiquewhite',
   },
   teamRankingContainerItem: {
+    flex: 7,
     marginTop: 2,
     flexDirection: 'column',
     alignItems: 'center'
   },
   rankingTeamUsername: {
-    flexBasis: 100,
-    flexShrink: 0,
-    flexGrow: 0,
+    flex: 4
   }
 });
 
