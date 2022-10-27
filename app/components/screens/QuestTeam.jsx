@@ -30,11 +30,10 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const url = Config.appUrl + "users/" + user.id + "/friends"
 
   useEffect(() => {
-    //setInvited([])
-    //setInvitedIDs([])
+    setInvited([])
+    setInvitedIDs([])
     fetch(url)
-    .then((response) => 
-    {
+    .then((response) => {
       if (response.ok)
         response.json()
         .then((json) => {
@@ -43,8 +42,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
           setFilteredData(json)
         })
         .catch((error) => console.error(error))
-    }
-    )
+    })
   }, [route]) 
 
   const [view, setView] = useState(false)
@@ -103,8 +101,9 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
                   'Content-Type': 'application/json'},
                 body: JSON.stringify({ 
                   sender_name: senderName
-                }) 
+                })
               })
+              .catch((error) => console.error(error))
             )
             .then(
               Storage.getObject('user').then(user => forwardToWaitRoom(id, teamId, user.id)))
