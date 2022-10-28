@@ -2,6 +2,11 @@
 export default {
   "showHint": (ctx, hint) => {
     ctx.global.hint(hint.short);
+    const logs = ctx.state["logs"] ?? [];
+    return {
+      ...ctx.state,
+      logs: logs + [hint.long]
+    };
   },
 
   "nextScene": (ctx) => {

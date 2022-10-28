@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   scene: 0,
-  objects: {}
+  objects: {},
+  logs: [
+    "Una nota loca bla bla",
+    "Una segunda nota loca, memememememe"
+  ]
 };
 
 

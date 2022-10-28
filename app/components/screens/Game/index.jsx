@@ -54,18 +54,18 @@ export default function Game({questID}) {
     return <View><Text>Loading...</Text></View>;
 
   return (
-    <Tab.Navigator>
-      <Tab.Screen 
-        name="Camara" 
-        component={ARView} 
-        initialParams={{questConfig}} 
-        options={{headerShown: false}} 
-      />
+    <Tab.Navigator detachInactiveScreens={false}>
       <Tab.Screen 
         name="Mis Notas" 
         component={QuestLog} 
         initialParams={{questConfig}} 
         options={{headerShown: false}}
+      />
+      <Tab.Screen 
+        name="Camara" 
+        component={ARView} 
+        initialParams={{questConfig}} 
+        options={{headerShown: false}} 
       />
     </Tab.Navigator>
   );

@@ -25,7 +25,7 @@ const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
   return(                
-    <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
+    <Drawer.Navigator detachInactiveScreens={false} screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen name="Game" component={Game} options={{ headerShown: false, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>
       <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>
