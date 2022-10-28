@@ -10,7 +10,8 @@ import Interactions from "../interactions";
 import { ViroAnimations } from "@viro-community/react-viro/components/Animation/ViroAnimations";
 import { useSelector, useDispatch } from "react-redux";
 import Quest from "../../../../redux/slices/quest";
-
+import Config from "../../../../../config.json"
+const questID = "1"
 
 export default function WithImageRecognition({id, typeProps, globalCtx}) {
   const questState = useSelector(state => state.quest);
@@ -35,33 +36,35 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
 
   const hasInteractionsLeft = (state) => {
     const objectState = state.objects[id] ?? 0;
+    console.log("**********OBJ STATE: ", objectState)
     const interactionN = interactions.length;
     return interactionN - 1  >= objectState;
   };
 
-  ViroARTrackingTargets.createTargets({
-    "images.exampleImage": {
-      source: require('../../../../../res/images/exampleImage.jpg'),
-      orientation: "Up",
-      physicalWidth: 0.2 // real world width in meters  
-    },
-    "images.duende": {
-      source: require('../../../../../res/images/duende.jpg'),
-      orientation: "Up",
-      physicalWidth: 0.2 // real world width in meters  
-    },
-    "images.boquita": {
-      source: require('../../../../../res/images/boquita.jpg'),
-      orientation: "Up",
-      physicalWidth: 0.2 // real world width in meters  
-    },
-    "images.argentina": {
-      source: require('../../../../../res/images/argentina.jpg'),
-      orientation: "Up",
-      physicalWidth: 0.2 // real world width in meters  
-    }
-  
-  });
+  const sendUpdate = (state) => {
+    fetch(Config.appUrl + "quests/" + questID, {
+      method: 'PUT',
+      headers: { 
+        'Content-Type': 'application/json'},
+      body: JSON.stringify(state) 
+    }).catch(error => {
+      console.log('Error sending update: '+error);
+    })
+    .then(
+      fetch(Config.appNotificationsUrl + "notifications/quest_update", {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          quest_id: questID
+        }) 
+      }).catch(error => {
+        console.log('Error sending notification: '+error);
+      })
+    )
+    
+  }
+
 
   useEffect(() => {
     if(!hasInteractionsLeft(questState)) {
@@ -80,6 +83,24 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     };
     */
   }, [questState.scene]);
+
+  useEffect(() => {
+    if(!hasInteractionsLeft(questState)) {
+      setIsVisible(false);
+    }
+
+    /* 
+    const targets = {};
+    targets[targetID] = targetProps;
+    console.log("Creating:", targetID);
+    ViroARTrackingTargets.createTargets(targets);
+
+    return () => {
+      console.log("Removing:", targetID);
+      ViroARTrackingTargets.deleteTarget(targetID);
+    };
+    */
+  }, [questState]);
 
   const onClick = () => {
     if(!hasInteractionsLeft(questState)) {
@@ -112,6 +133,12 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
       setRunFade(true);
     }
 
+    if (newState.sendUpdate) {
+      console.log("****************************State send: ", newState)
+      newState.sendUpdate = false
+      sendUpdate(newState)
+    }
+
     dispatch(Quest.actions.set(newState));
   };
 
@@ -137,6 +164,29 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
   );
 }
 
+ViroARTrackingTargets.createTargets({
+  "images.exampleImage": {
+    source: require('../../../../../res/images/exampleImage.jpg'),
+    orientation: "Up",
+    physicalWidth: 0.2 // real world width in meters  
+  },
+  "images.duende": {
+    source: require('../../../../../res/images/duende.jpg'),
+    orientation: "Up",
+    physicalWidth: 0.2 // real world width in meters  
+  },
+  "images.boquita": {
+    source: require('../../../../../res/images/boquita.jpg'),
+    orientation: "Up",
+    physicalWidth: 0.2 // real world width in meters  
+  },
+  "images.argentina": {
+    source: require('../../../../../res/images/argentina.jpg'),
+    orientation: "Up",
+    physicalWidth: 0.2 // real world width in meters  
+  }
+
+});
 
 ViroAnimations.registerAnimations({
   fade: {

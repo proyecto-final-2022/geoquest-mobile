@@ -9,22 +9,20 @@ export default {
     const inventory = currentState.inventory;    
     const newInventory = [...inventory, id]
 
-    ctx.global.hint("Objecto recolectado");
-
     return {...currentState,
       inventory: newInventory,
+      sendUpdate: true
     }
   },
 
   "nextScene": (ctx, id) => {
 
-    ctx.global.hint("Objecto recolectado");
-
     return {
       ...ctx.state,
       scene: ctx.state.scene + 1,
       inventory: [...ctx.state.inventory, id],
-      objects: {}
+      objects: {},
+      sendUpdate: true
     };
   }
 };

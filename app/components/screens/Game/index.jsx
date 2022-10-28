@@ -19,7 +19,7 @@ function useQuestSetup(route, questID) {
   const url = Config.appUrl + "quests/1" 
 
   const initQuest = async () => {
-    console.log("Init quest");
+    console.log("*******Init quest: ", questState);
     // TODO
     // Download config and:
     setConfig(exampleQuest);
@@ -30,14 +30,12 @@ function useQuestSetup(route, questID) {
     .then((response) => response.json())
     .then((json) => 
     {  
-      if(json.scene != 0) {
         dispatch(Quest.actions.set(
           {...questState,
           inventory: json.inventory,
-          scene: json.scene}
+          scene: json.scene,
+          objects: json.objects ?? {}}
           ));
-      }
-
     }
     
     )
