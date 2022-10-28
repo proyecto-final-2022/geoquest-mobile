@@ -5,7 +5,7 @@ export default {
     const logs = ctx.state["logs"] ?? [];
     return {
       ...ctx.state,
-      logs: logs + [hint.long]
+      logs: [...logs, hint.long]
     };
   },
 

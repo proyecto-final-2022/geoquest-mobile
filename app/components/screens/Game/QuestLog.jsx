@@ -15,6 +15,7 @@ export default function QuestLog() {
     return null;
   }
 
+  /* console.log(questLogs); */
   return (
     <ImageBackground style={styles.view} source={backgroundImage}>
       <View style={styles.container}>
