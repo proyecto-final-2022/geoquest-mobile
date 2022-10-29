@@ -29,7 +29,7 @@ function useQuestSetup(route, questID) {
     fetch(url)
     .then((response) => response.json())
     .then((json) => 
-    {  
+    {   
         dispatch(Quest.actions.set(
           {...questState,
           inventory: json.inventory,

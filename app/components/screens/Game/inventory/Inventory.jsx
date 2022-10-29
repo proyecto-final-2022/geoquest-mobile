@@ -17,6 +17,7 @@ const Inventory = ({props}) => {
         "title": props.questConfig.items[item].title,
         "description": props.questConfig.items[item].description,
         "image": props.questConfig.items[item].image,
+        "questItemID": item,
         "visibleMenu": false,
         "marker": false
       })
@@ -64,6 +65,7 @@ const Inventory = ({props}) => {
 //        context.setObjectVisualize(item.view) 
           props.ctx.setObjectDescription(
             {
+              itemID: item.questItemID,
               title: item.title,
               description: item.description,
               image: item.image,
@@ -86,7 +88,6 @@ const Inventory = ({props}) => {
 
 
   const Item = ({item, index}) => {
-    console.log("ITEM:", item)
     return (
             
       <View style={styles.container}>

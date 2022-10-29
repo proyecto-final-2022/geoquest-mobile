@@ -6,21 +6,48 @@
       "description": "Hoja Hoja Hoja Hoja Hoja Hoja",
       "questItemID": 1,
       "image": "1",
-      "view": 1
+      "view": 1,
+      "model": {
+        "source": "models.page.model",
+        "type": "VRX",
+        "position": [0,0.5,-3],
+        "scale": [0.2,0.2,0.2],
+        "rotation": [0,180,0],
+        "resources": [
+        ]
+      }
     },
     "2": {
       "title": "Llave",
       "description": "Llave llave llave llave llave llave",
       "questItemID": 2,
       "image": "2",
-      "view": 2
+      "view": 2,
+      "model": {
+        "source": "models.key.model",
+        "type": "VRX",
+        "position": [0,0.5,-3],
+        "scale": [0.2,0.2,0.2],
+        "rotation": [0,180,0],
+        "resources": [
+        ]
+      }
     },
     "3": {
       "title": "Carpeta",
       "description": "Carpeta carpeta carpeta carpeta carpeta carpeta",
       "questItemID": 3,
       "image": "3",
-      "view": 3
+      "view": 3,
+      "model": {
+        "source": "models.folder.model",
+        "type": "VRX",
+        "position": [0,1.0,-3],
+        "scale": [0.2,0.2,0.2],
+        "rotation": [0,180,0],
+        "resources": [
+        ]
+      }
     }
   },
   "scenes": [

@@ -5,6 +5,7 @@ import {
 import { View, StyleSheet } from "react-native";
 import HintModal from "./HintModal";
 import Scene from "./Scene";
+import SceneView from "./SceneView";
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet'
 import Inventory from "./inventory/Inventory"
 import DescriptionModal from "./DescriptionModal";
@@ -12,10 +13,10 @@ import DescriptionModal from "./DescriptionModal";
 export default function ARView({route}) {
   const [ showHint, setShowHint ] = useState(false);
   const [ hintText, setHintText ] = useState("");
-  const [description, setObjectDescription] = useState({title: "", description: "", image: 0, visible: false});
+  const [description, setObjectDescription] = useState({title: "", questItemID: "", description: "", image: 0, visible: null});
   const snapPoints = ["3%", "45%"];
   const sheetRef = useRef(null);
-
+  const navigatorRef = useRef();
 
   const hint = (text) => {
     setHintText(text);
@@ -29,16 +30,30 @@ export default function ARView({route}) {
   const globalCtx = { 
     hint,
     setObjectDescription,
-    handleSnapPress
+    handleSnapPress,
+    description
   };
 
   useEffect(() => {
     handleSnapPress(0)  
   }, []);
+
+  useEffect(() => {
+    console.log("****************Description: ", description)
+    
+    if (description.visible == true && description.visible != undefined) {
+      navigatorRef.current.jump({scene: SceneView})
+    }
+    if (description.visible == false) {
+      navigatorRef.current.jump({scene: Scene})
+    }
+    
+  }, [description.visible]);
 //          <Inventory ctx={arViewCtx} />
   return (
     <View style={{height: "100%", width: "100%"}}>
       <ViroARSceneNavigator 
+        ref={navigatorRef}
         initialScene={{scene: Scene}} 
         viroAppProps={{questConfig: route.params.questConfig, globalCtx}}
       />

@@ -88,18 +88,6 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     if(!hasInteractionsLeft(questState)) {
       setIsVisible(false);
     }
-
-    /* 
-    const targets = {};
-    targets[targetID] = targetProps;
-    console.log("Creating:", targetID);
-    ViroARTrackingTargets.createTargets(targets);
-
-    return () => {
-      console.log("Removing:", targetID);
-      ViroARTrackingTargets.deleteTarget(targetID);
-    };
-    */
   }, [questState]);
 
   const onClick = () => {

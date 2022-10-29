@@ -1,16 +1,18 @@
-import React from "react";
-import WithImageRecognition from "./objects/WithImageRecognition";
+import ObjectView from "./visualization/visualize"
 
+export function parseItems(items) {
+  var itemsList = Object.values(items)
 
-export function parseScene(scene) {
   return (props) => {
-    return scene.objects.map((o, key) => parseObject(o, {...props, key, id: key}));
+    return itemsList.map((item, key) => parseObjectView(item, props.globalCtx, {id: key}));
   };
 }
 
 
-function parseObject(object, props) {
-  console.log("********Props: ", props)
+function parseObjectView(item, ctx, props) {
+  return ObjectView(item, ctx)
+
+/*
   const components = {
     "WithImageRecognition": WithImageRecognition
   };
@@ -20,9 +22,11 @@ function parseObject(object, props) {
     throw Error(`Invalid object type: ${object.type}`);
 
   return <ARObject component={component} {...props} {...object} />;
+  */
 }
 
-
+/*
 function ARObject({component, ...props}) {
   return React.createElement(component, props);
 }
+*/
