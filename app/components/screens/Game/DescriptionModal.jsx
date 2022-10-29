@@ -44,7 +44,7 @@ export default function DescriptionModal({props}) {
             <View style={{flexDirection: 'row-reverse'}}>
               <Pressable onPress={() => {
 //                ctx.setObjectVisualize(0)
-                props.ctx.setObjectDescription({visible: false})}}>
+                props.ctx.setObjectDescription({visible: false, questItemID: ""})}}>
                 <Ionicons name='close' size={35}/>
               </Pressable>
             </View>

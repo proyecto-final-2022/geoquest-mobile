@@ -38,18 +38,7 @@ export default function ARView({route}) {
     handleSnapPress(0)  
   }, []);
 
-  useEffect(() => {
-    console.log("****************Description: ", description)
-    /*
-    if (description.visible == true && description.visible != undefined) {
-      navigatorRef.current.jump({scene: SceneView})
-    }
-    if (description.visible == false) {
-      navigatorRef.current.jump({scene: Scene})
-    }
-    */
-  }, [description.visible]);
-//          <Inventory ctx={arViewCtx} />
+
   return (
     <View style={{height: "100%", width: "100%"}}>
       <ViroARSceneNavigator 

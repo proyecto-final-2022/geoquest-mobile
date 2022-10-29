@@ -91,6 +91,14 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     }
   }, [questState]);
 
+  useEffect(() => {
+    if(globalCtx.description.questItemID != "") {
+      setIsVisible(false);
+    } else {
+      setIsVisible(true)
+    }
+  }, [globalCtx.description]);
+
   const onClick = () => {
     if(!hasInteractionsLeft(questState)) {
       return;

@@ -56,6 +56,7 @@
         {
           "type": "WithImageRecognition",
           "typeProps": { 
+            "questItemID": 2,
             "target": {
               "source": "images.boquita",
               "physicalWidth": 0.2,
@@ -98,6 +99,7 @@
         {
           "type": "WithImageRecognition",
           "typeProps": { 
+            "questItemID": 1,
             "target": {
               "source": "images.duende",
               "physicalWidth": 0.2,
@@ -139,6 +141,7 @@
         {
           "type": "WithImageRecognition",
           "typeProps": { 
+            "questItemID": 3,
             "target": {
               "source": "images.exampleImage",
               "physicalWidth": 0.2,
@@ -184,7 +187,8 @@
       "objects": [
         {
           "type": "WithImageRecognition",
-          "typeProps": { 
+          "typeProps": {
+            "questItemID": 4, 
             "target": {
               "source": "images.argentina",
               "physicalWidth": 0.2,
