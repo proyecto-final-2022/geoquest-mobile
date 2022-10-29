@@ -1,21 +1,22 @@
 import React, { View, Text, ImageBackground, FlatList, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import backgroundImage from "../../../../assets/logs_background.jpg";
+import titleFont from "../../../../assets/fonts/OldMe-vmyZy.otf";
+import notesFont from "../../../../assets/fonts/HandNote-rg3gB.otf";
 import { useFonts } from "expo-font";
 
 
 export default function QuestLog() {
   const questLogs = useSelector(state => state.quest.logs);
   const [fontsLoaded] = useFonts({
-    "Title-Font": require("../../../../assets/fonts/OldMe-vmyZy.otf"),
-    "Notes-Font": require("../../../../assets/fonts/HandNote-rg3gB.otf")
+    "Title-Font": titleFont,
+    "Notes-Font": notesFont
   });
 
   if (!fontsLoaded) {
     return null;
   }
 
-  /* console.log(questLogs); */
   return (
     <ImageBackground style={styles.view} source={backgroundImage}>
       <View style={styles.container}>

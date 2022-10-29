@@ -4,6 +4,7 @@ import { View, Text } from "react-native";
 import ARView from "./ARView";
 import QuestLog from "./QuestLog";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { AntDesign, Feather } from "@expo/vector-icons";
 
 import exampleQuest from "../../../../res/exampleQuest.json";
 
@@ -70,11 +71,21 @@ export default function Game({questID}) {
         name="Mis Notas" 
         component={QuestLog} 
         initialParams={{questConfig}}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <AntDesign name="book" color={color} size={size} />
+          ),
+        }}
       />
       <Tab.Screen 
         name="Camara" 
         component={ARView} 
         initialParams={{questConfig}}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Feather name="camera" color={color} size={size} />
+          ),
+        }}
       />
     </Tab.Navigator>
   );
