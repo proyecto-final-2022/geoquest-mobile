@@ -27,12 +27,6 @@ const Inventory = ({props}) => {
       
   }, [questState.inventory]);
 
-/*
-  useEffect(() => {
-    console.log("*****rREEEPE: ", props)
-    
-}, []);
-*/
 
   const [items, setItems] = useState([])
 

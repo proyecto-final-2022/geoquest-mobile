@@ -10,11 +10,6 @@ import Resources from "../../../../utils/resources.js";
 
 export default function ObjectView(item, ctx) {
 
-    console.log("********Condition: ", (ctx.description.itemID == item.questItemID))
-    console.log("********ItemID: ", (ctx.description.itemID))
-    console.log("********QuestItemID: ", (item.questItemID))
-    console.log("********CTX: ", ctx)
-
   return (  
         <Viro3DObject
           visible={(ctx.description.itemID == item.questItemID)}
