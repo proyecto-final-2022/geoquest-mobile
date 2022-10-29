@@ -5,6 +5,8 @@ import ARView from "./ARView";
 import QuestLog from "./QuestLog";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector, useDispatch } from "react-redux";
+import { AntDesign, Feather } from "@expo/vector-icons";
+
 import exampleQuest from "../../../../res/exampleQuest.json";
 import Quest from "../../../redux/slices/quest"
 import Config from "../../../../config.json"
@@ -76,18 +78,37 @@ export default function Game({route, questID}) {
     return <View><Text>Loading...</Text></View>;
 
   return (
-    <Tab.Navigator>
-      <Tab.Screen 
-        name="Camara" 
-        component={ARView} 
-        initialParams={{questConfig}} 
-        options={{headerShown: false}} 
-      />
+    <Tab.Navigator 
+      detachInactiveScreens={false}
+      screenOptions={(_props) => ({
+        unmountOnBlur: true,
+        headerShown: false,
+        tabBarActiveTintColor: "#664C0F",
+        tabBarInactiveTintColor: "#B3AA98",
+        tabBarStyle: {
+          backgroundColor: "#FFF9CA",
+        }
+      })}
+    >
       <Tab.Screen 
         name="Mis Notas" 
         component={QuestLog} 
-        initialParams={{questConfig}} 
-        options={{headerShown: false}}
+        initialParams={{questConfig}}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <AntDesign name="book" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Camara" 
+        component={ARView} 
+        initialParams={{questConfig}}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Feather name="camera" color={color} size={size} />
+          ),
+        }}
       />
     </Tab.Navigator>
   );
