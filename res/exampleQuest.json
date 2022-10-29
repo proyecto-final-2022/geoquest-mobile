@@ -26,10 +26,13 @@
                 {
                   "name": "showHint",
                   "params": [
-                    {
-                      "short": "Buenas, me llamo 'Kubone' y soy hincha de River",
-                      "long": "Me encontre con kubone en '<lugar>' y me dijo que <bla bla>."
-                    }
+                    "Buenas, me llamo 'Kubone' y soy hincha de River"
+                  ]
+                },
+                {
+                  "name": "log",
+                  "params": [
+                    "Me encontre con kubone en '<lugar>' y me dijo que <bla bla>."
                   ]
                 }
               ],

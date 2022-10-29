@@ -1,11 +1,14 @@
 
 export default {
   "showHint": (ctx, hint) => {
-    ctx.global.hint(hint.short);
+    ctx.global.hint(hint);
+  },
+
+  "log": (ctx, msg) => {
     const logs = ctx.state["logs"] ?? [];
     return {
       ...ctx.state,
-      logs: [...logs, hint.long]
+      logs: [...logs, msg]
     };
   },
 
