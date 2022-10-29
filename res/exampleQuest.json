@@ -10,8 +10,8 @@
       "model": {
         "source": "models.page.model",
         "type": "VRX",
-        "position": [0,0.5,-3],
-        "scale": [0.2,0.2,0.2],
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
         "resources": [
         ]
@@ -26,8 +26,8 @@
       "model": {
         "source": "models.key.model",
         "type": "VRX",
-        "position": [0,0.5,-3],
-        "scale": [0.2,0.2,0.2],
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
         "resources": [
         ]
@@ -42,8 +42,8 @@
       "model": {
         "source": "models.folder.model",
         "type": "VRX",
-        "position": [0,1.0,-3],
-        "scale": [0.2,0.2,0.2],
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
         "resources": [
         ]
