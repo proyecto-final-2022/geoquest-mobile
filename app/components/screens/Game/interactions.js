@@ -1,8 +1,7 @@
 
 export default {
   "showHint": (ctx, hint) => {
-    console.log("******Hint: ", hint)
-    ctx.global.hint(hint.short);
+    ctx.global.hint(hint);
   },
 
   "log": (ctx, msg) => {

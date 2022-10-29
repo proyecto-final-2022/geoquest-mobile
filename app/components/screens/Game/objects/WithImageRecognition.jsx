@@ -92,7 +92,7 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
   }, [questState]);
 
   useEffect(() => {
-    if(globalCtx.description.questItemID != "") {
+    if(globalCtx.description.questItemID != "" || !hasInteractionsLeft(questState)) {
       setIsVisible(false);
     } else {
       setIsVisible(true)

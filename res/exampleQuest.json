@@ -76,13 +76,13 @@
                 {
                   "name": "showHint",
                   "params": [
-                    "Buenas, me llamo 'Kubone' y soy hincha de River"
+                    "Una llave! Con ella es posible abrir un cofre"
                   ]
                 },
                 {
                   "name": "log",
                   "params": [
-                    "Me encontre con kubone en '<lugar>' y me dijo que <bla bla>."
+                    "Me encontre con una llave en '<lugar>' y puedo usarla para abrir un cofre."
                   ]
                 }
               ],
@@ -112,7 +112,7 @@
               "source": "models.page.model",
               "type": "VRX",
               "position": [0,0,0],
-              "scale": [0.1,0.1,0.1],
+              "scale": [0.05,0.05,0.05],
               "rotation": [0,0,0],
               "resources": []
             },
@@ -120,11 +120,15 @@
               [
                 {
                   "name": "showHint",
+                  "params": 
+                    [
+                      "Una hoja! Tiene un codigo escrito" 
+                    ]
+                  } ,
+                  {
+                  "name": "log",
                   "params": [
-                    {
-                      "short": "Buenas, me llamo 'Kubone' y soy alto duende",
-                      "long": "Me encontre con kubone en '<lugar>' y me dijo que <bla bla>."
-                    }
+                    "Me encontre con una hoja en '<lugar>' y tiene un código <bla bla>."
                   ]
                 }
               ],
@@ -154,7 +158,7 @@
               "source": "models.folder.model",
               "type": "VRX",
               "position": [0,0,0],
-              "scale": [0.1,0.1,0.1],
+              "scale": [0.05,0.05,0.05],
               "rotation": [0,0,0],
               "resources": [
               ]
@@ -163,14 +167,19 @@
               [
                 {
                   "name": "showHint",
+                  "params": 
+                    [
+                      "Encuentras una carpeta!"
+                    ]
+                },
+                {
+                  "name": "log",
                   "params": [
-                    {
-                      "short": "Apa, me encontraste en la escena 2!",
-                      "long": "Me encontre con kubone en '<lugar>' y me dijo que <bla bla>."
-                    }
+                    "Me encontre una carpeta en '<lugar>' y adentro pueden guardarse hojas"
                   ]
-                }
-              ],
+                }    
+              ]
+              ,
               [
                 {
                   "name": "grabItem",
@@ -201,7 +210,7 @@
               "source": "models.box.model",
               "type": "VRX",
               "position": [0,0,0],
-              "scale": [0.1,0.1,0.1],
+              "scale": [0.05,0.05,0.05],
               "rotation": [0,0,0],
               "resources": [
               ]
@@ -210,13 +219,17 @@
               [
                 {
                   "name": "showHint",
-                  "params": [
+                  "params": 
+                    [
+                      "Encuentras un cofre!"
+                    ]
+                  },
                     {
-                      "short": "Apa, me encontraste en la escena 3!",
-                      "long": "Me encontre con kubone en '<lugar>' y me dijo que <bla bla>."
+                      "name": "log",
+                      "params": [
+                        "Me encontre con un cofre en '<lugar>', si lo abro con una llave encontraré algo bonito"
+                      ]
                     }
-                  ]
-                }
               ]
             ]
           }
