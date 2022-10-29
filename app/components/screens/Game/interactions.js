@@ -15,12 +15,11 @@ export default {
     }
   },
 
-  "nextScene": (ctx, id) => {
+  "nextScene": (ctx) => {
 
     return {
       ...ctx.state,
       scene: ctx.state.scene + 1,
-      inventory: [...ctx.state.inventory, id],
       objects: {},
       sendUpdate: true
     };
