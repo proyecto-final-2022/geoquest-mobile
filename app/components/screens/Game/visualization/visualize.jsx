@@ -15,9 +15,7 @@ export default function ObjectView(item, ctx) {
     console.log("********QuestItemID: ", (item.questItemID))
     console.log("********CTX: ", ctx)
 
-  return (
-      <ViroARCamera>  
-      <ViroAmbientLight color="#ffffff"/>
+  return (  
         <Viro3DObject
           visible={(ctx.description.itemID == item.questItemID)}
           source={Resources.get(item.model.source)}
@@ -27,7 +25,6 @@ export default function ObjectView(item, ctx) {
           animation={{name: "loopRotate", run: true, loop: true}}
           type={item.model.type}
         />
-      </ViroARCamera>  
   );
 }
 

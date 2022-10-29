@@ -5,6 +5,7 @@ import {
 } from "@viro-community/react-viro/components/AR/ViroARTrackingTargets";
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 import { Viro3DObject } from "@viro-community/react-viro/components/Viro3DObject";
+import { ViroARCamera } from "@viro-community/react-viro/components/AR/ViroARCamera";
 import Resources from "../../../../utils/resources.js";
 import Interactions from "../interactions";
 import { ViroAnimations } from "@viro-community/react-viro/components/Animation/ViroAnimations";
@@ -137,17 +138,17 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
       pauseUpdates={pauseUpdates}
     >
       <ViroAmbientLight color="#ffffff"/>
-      <Viro3DObject 
-        visible={visible} 
-        onClick={onClick} 
-        {...modelProps} 
-        animation={{
-          name: "fade", 
-          run: runFade, 
-          loop: false, 
+        <Viro3DObject 
+          visible={visible} 
+          onClick={onClick} 
+          {...modelProps} 
+          animation={{
+            name: "fade", 
+            run: runFade, 
+            loop: false, 
           onFinish: () => {setIsVisible(false);}
         }}
-      />
+        />
     </ViroARImageMarker>
   );
 }

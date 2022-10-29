@@ -40,14 +40,14 @@ export default function ARView({route}) {
 
   useEffect(() => {
     console.log("****************Description: ", description)
-    
+    /*
     if (description.visible == true && description.visible != undefined) {
       navigatorRef.current.jump({scene: SceneView})
     }
     if (description.visible == false) {
       navigatorRef.current.jump({scene: Scene})
     }
-    
+    */
   }, [description.visible]);
 //          <Inventory ctx={arViewCtx} />
   return (

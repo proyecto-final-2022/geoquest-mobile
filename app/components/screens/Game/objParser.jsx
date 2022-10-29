@@ -11,22 +11,4 @@ export function parseItems(items) {
 
 function parseObjectView(item, ctx, props) {
   return ObjectView(item, ctx)
-
-/*
-  const components = {
-    "WithImageRecognition": WithImageRecognition
-  };
-  const component = components[object.type] ?? undefined;
-
-  if (!component)
-    throw Error(`Invalid object type: ${object.type}`);
-
-  return <ARObject component={component} {...props} {...object} />;
-  */
 }
-
-/*
-function ARObject({component, ...props}) {
-  return React.createElement(component, props);
-}
-*/

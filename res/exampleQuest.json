@@ -65,7 +65,7 @@
               "source": "models.key.model",
               "type": "VRX",
               "position": [0,0,0],
-              "scale": [0.1,0.1,0.1],
+              "scale": [0.05,0.05,0.05],
               "rotation": [0,0,0],
               "resources": [
               ]
