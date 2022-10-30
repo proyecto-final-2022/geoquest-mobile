@@ -24,6 +24,12 @@ export const resources = {
     },
     box: {
       model: require("../../res/models/SmallBoxWithKeyhole/model.vrx")
+    },
+    keyCopy: {
+      model: require("../../res/models/KeyCopy/model.vrx")
+    },
+    pageCopy: {
+      model: require("../../res/models/PageCopy/model.vrx")
     }
   }
 };

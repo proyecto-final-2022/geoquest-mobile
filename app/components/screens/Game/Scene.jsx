@@ -17,7 +17,7 @@ export default function Scene(props) {
   const objectsView = parseItems(questConfigItems)(sceneProps);
 
   console.log("Secene:", sceneNum, "Objects:", objects.length);
-
+//      
   return (
     <ViroARScene>
       {objects}

@@ -8,7 +8,7 @@
       "image": "1",
       "view": 1,
       "model": {
-        "source": "models.page.model",
+        "source": "models.pageCopy.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
@@ -24,7 +24,7 @@
       "image": "2",
       "view": 2,
       "model": {
-        "source": "models.key.model",
+        "source": "models.keyCopy.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
