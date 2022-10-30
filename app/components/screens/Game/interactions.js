@@ -8,7 +8,8 @@ export default {
     const logs = ctx.state["logs"] ?? [];
     return {
       ...ctx.state,
-      logs: [...logs, msg]
+      logs: [...logs, msg],
+      sendUpdate: true,
     };
   },
 
@@ -19,7 +20,8 @@ export default {
 
     return {...currentState,
       inventory: newInventory,
-      sendUpdate: true
+      sendUpdate: true,
+      sendNotification: true
     }
   },
 
@@ -29,7 +31,8 @@ export default {
       ...ctx.state,
       scene: ctx.state.scene + 1,
       objects: {},
-      sendUpdate: true
+      sendUpdate: true,
+      sendNotification:true
     };
   }
 };

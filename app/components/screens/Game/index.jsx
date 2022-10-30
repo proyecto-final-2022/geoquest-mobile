@@ -36,7 +36,8 @@ function useQuestSetup(route, questID) {
           {...questState,
           inventory: json.inventory,
           scene: json.scene,
-          objects: json.objects ?? {}}
+          objects: json.objects ?? {},
+          logs: json.logs ?? []}
           ));
     }
     

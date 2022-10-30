@@ -10,7 +10,6 @@ export function parseScene(scene) {
 
 
 function parseObject(object, props) {
-  console.log("********Props: ", props)
   const components = {
     "WithImageRecognition": WithImageRecognition
   };

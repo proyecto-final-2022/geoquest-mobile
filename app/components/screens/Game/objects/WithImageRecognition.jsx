@@ -42,6 +42,30 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     return interactionN - 1  >= objectState;
   };
 
+  const updateState = (state) => {
+    fetch(Config.appUrl + "quests/" + questID, {
+      method: 'PUT',
+      headers: { 
+        'Content-Type': 'application/json'},
+      body: JSON.stringify(state) 
+    }).catch(error => {
+      console.log('Error sending update: '+error);
+    })
+  }
+
+  const sendNotification = () => {
+    fetch(Config.appNotificationsUrl + "notifications/quest_update", {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        quest_id: questID
+      }) 
+    }).catch(error => {
+      console.log('Error sending notification: '+error);
+    })
+  }
+/*
   const sendUpdate = (state) => {
     fetch(Config.appUrl + "quests/" + questID, {
       method: 'PUT',
@@ -65,7 +89,7 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     )
     
   }
-
+*/
 
   useEffect(() => {
     if(!hasInteractionsLeft(questState)) {
@@ -129,11 +153,17 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     if(!hasInteractionsLeft(newState)) {
       setRunFade(true);
     }
-
+    
     if (newState.sendUpdate) {
-      console.log("****************************State send: ", newState)
+
+      if (newState.sendNotification) {
+        updateState(newState).then(sendNotification())
+        newState.sendNotification = false
+      } else {
+        updateState(newState)
+      }
+
       newState.sendUpdate = false
-      sendUpdate(newState)
     }
 
     dispatch(Quest.actions.set(newState));
