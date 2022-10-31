@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, Alert, BackHandler, Text, View, Dimensions, FlatList} from 'react-native';
 import {Avatar} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native'
-import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
+import {useFocusEffect} from '@react-navigation/native'
+import {Ionicons} from '@expo/vector-icons'
 import Config from '../../../config.json'
-import Tags from "react-native-tags"
-import CustomButton from '../commons/CustomButton'
 import CustomButton2 from '../commons/CustomButton2'
-import Storage from '../../../app/utils/storage/storage'
 
 import userImage_1 from '../../../assets/userImages/userImage_1.png'
 import userImage_2 from '../../../assets/userImages/userImage_2.png'
@@ -61,50 +58,44 @@ export default WaitRoom = ({route, navigation}) => {
       Config.appUrl+'teams/' + teamID + '/users/' + userID, {
       method: 'DELETE',      
       headers: { 'Content-Type': 'application/json'}
-      })
+    })
     .then(navigation.navigate('Quest Navigator'))
+    .catch((error) => console.error(error))
   }
 
   useEffect(() => {    
     fetch(url)
     .then((response) => response.json())
-    .then((json) => {
-      setPlayersAccepted(json)
-      })
+    .then((json) => {setPlayersAccepted(json)})
     .catch((error) => console.error(error))
-    .finally(()=>setLoading(false))
-    }, [route])   
+    // .finally(()=>setLoading(false))
+  }, [route])   
 
-    useEffect(() => {    
-      fetch(urlTeam)
-      .then((response) => response.json())
-      .then((json) => {
-        setPlayersTeam(json)
-        })
-      .catch((error) => console.error(error))
-      .finally(()=>setLoading(false))
-      }, [route])   
+  useEffect(() => {    
+    fetch(urlTeam)
+    .then((response) => response.json())
+    .then((json) => {setPlayersTeam(json)})
+    .catch((error) => console.error(error))
+    // .finally(()=>setLoading(false))
+  }, [route])   
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        areYousureLeave();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
 
   useEffect(() => {
     navigation.setOptions({
       headerTitle: 'Sala de Espera',
       headerTintColor: '#a52a2a',
       headerRight: () => (
-        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => 
-          Alert.alert(
-            "Abandonar grupo de busqueda?",
-            "",
-          [
-            {
-              text: "Cancelar",
-              style: "Cancelar"
-            },
-            { text: "OK", onPress: () => {HandleCancel()} }
-          ]
-        )
-        }          
-          />
+        <Ionicons color='#a52a2a' name ='arrow-back' size={30} onPress={() => areYousureLeave()}/>
       ),
       headerSearchBarOptions: {
         placeholder: "Search",
@@ -112,32 +103,48 @@ export default WaitRoom = ({route, navigation}) => {
     })
   })
 
-  return (
-    <ScrollView style={styles.view}> 
+  const areYousureLeave = () => {
+    Alert.alert(
+      "Abandonar grupo de busqueda?",
+      "",
+      [
+        {
+          text: "Si",
+          onPress: () => {HandleCancel()},
+        },
+        {
+          text: "No",
+          onPress: () => null,
+        },
+      ]
+    );
+  }
 
-      <ScrollView style={styles.containerWaitRoom}>
-        <Text style={{marginTop: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{'En espera (' + (playersAccepted.length > 0 ? playersAccepted.length: 0) + '/' + playersTeam.length +')'}</Text>
+  return (
+    <View style={styles.view}> 
+
+      <View style={styles.containerWaitRoom}>
+        <Text style={{marginVertical: 10, marginLeft: 5, fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>
+          {'En espera (' + (playersAccepted.length > 0 ? playersAccepted.length: 0) + '/' + playersTeam.length +')'}
+        </Text>
         <FlatList
           horizontal= {false}
-          contentContainerStyle={{paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
           data={playersAccepted}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item, index) => index}
           renderItem={({item}) => <Player player={item}/>}>      
         </FlatList> 
-      </ScrollView>
+      </View>
 
       <View style={styles.teamButtonsContainer}> 
-
         <CustomButton2 
           onPress = {() => console.log('Comenzar')}
           icon = "arrow-forward-circle"
           bgColor= {(playersAccepted.length == playersTeam.length && playersTeam.length != 0) ? 'darkseagreen' : 'beige'}
           fgColor = 'white'
         />
-            
       </View>
-    </ScrollView>
+    </View>
   )
 }
 
@@ -147,9 +154,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF9CA',
   },
   containerWaitRoom:{
-    height: 600,
+    flex: 4.5,
     backgroundColor: '#ffefd5',
-    marginTop:20,
+    marginTop:10,
     padding: 15, 
   },
   buttonContainer: {
@@ -168,6 +175,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   teamButtonsContainer: {
+    flex: 1,
+    marginTop: 10,
     flexDirection: 'column',
     alignItems: 'center'
   },

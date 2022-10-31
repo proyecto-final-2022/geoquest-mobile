@@ -47,7 +47,7 @@ export const loginManual = async (email, password) => {
   )
 }
 
-export const signUpManual = async (email, name, username, password) => {
+export const signUpManual = async (email, name, username, password, firebaseToken) => {
   try {
     await fetch(
       Config.appUrl+'users/', {
@@ -57,7 +57,8 @@ export const signUpManual = async (email, name, username, password) => {
           email: email,
           name: name,
           username: username, 
-          password: password
+          password: password,
+          firebaseToken: firebaseToken
         })
       })
       .then(response => {
@@ -77,7 +78,7 @@ export const signUpManual = async (email, name, username, password) => {
   }
 }
 
-export const postLoginGoogle = async (email, name, username, token) => {
+export const postLoginGoogle = async (email, name, username, token, firebaseToken) => {
   try {
     await fetch(
       Config.appUrl+'users/sessions/google', {
@@ -89,7 +90,8 @@ export const postLoginGoogle = async (email, name, username, token) => {
         body: JSON.stringify({ 
           email: email, 
           name: name,
-          username: username
+          username: username,
+          firebaseToken: firebaseToken
         })
       })
       .then(response => {
@@ -111,7 +113,7 @@ export const postLoginGoogle = async (email, name, username, token) => {
   }
 }
 
-export const postLoginFacebook = async (email, name, username, token) => {
+export const postLoginFacebook = async (email, name, username, token, firebaseToken) => {
   try {
     await fetch(
       Config.appUrl+'users/sessions/facebook', {
@@ -123,7 +125,8 @@ export const postLoginFacebook = async (email, name, username, token) => {
         body: JSON.stringify({ 
           email: email, 
           name: name,
-          username: username
+          username: username,
+          firebaseToken: firebaseToken
         })
       })
       .then(response => {

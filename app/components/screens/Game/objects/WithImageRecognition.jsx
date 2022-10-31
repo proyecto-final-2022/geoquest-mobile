@@ -101,6 +101,11 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     const newState = interactions[objectState].reduce((prevState, int) => {
       return interact(int.name, prevState, int.params) || prevState;
     }, inputState);
+    
+    if (newState.addInteraction != undefined && newState.addInteraction != "" && newState.addInteraction) {
+      interactions.push([{"name": "grabItemCondition", "params": [newState.addInteraction]}])
+      newState.addInteraction = ""
+    }
 
     if(!hasInteractionsLeft(newState)) {
       setRunFade(true);

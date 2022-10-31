@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, TextInput, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity} from 'react-native';
+import { StyleSheet, BackHandler, TextInput, Alert, ActivityIndicator, Text, View, Dimensions, Pressable, FlatList} from 'react-native';
 import {Avatar} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native'
-import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
-import CustomInput from '../../components/commons/CustomInput'
-import CustomButton2 from '../commons/CustomButton2'
+import {useFocusEffect} from '@react-navigation/native'
+import {Ionicons, AntDesign} from '@expo/vector-icons'
 import Config from '../../../config.json'
-import Tags from "react-native-tags"
-import CustomButton from '../commons/CustomButton'
 import Storage from '../../../app/utils/storage/storage'
 
 import userImage_1 from '../../../assets/userImages/userImage_1.png'
@@ -27,7 +23,7 @@ export default FriendsSearch = ({route, navigation}) => {
   const {friends} = route.params
 
   const [user, setUser] = useState([])
-  const [data, setData] = useState([])
+  const [dbUsers, setData] = useState([])
   const [invitedIDs, setInvitedIDs] = useState([])
 	const [text, setText] = useState('')
 	const [filteredData, setFilteredData] = useState([])
@@ -48,14 +44,24 @@ export default FriendsSearch = ({route, navigation}) => {
     })
   })
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        Storage.getObject('user').then(user => navigation.navigate('Friends List', user))
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
 
   useEffect(() => {
     setInvitedIDs([])
     Storage.getObject('user').then(user => setUser(user))
     fetch(url)
     .then((response) => response.json())
-    .then((json) => setData(json))
     .catch((error) => console.error(error))
+    .then((json) => setData(json))
     .catch((error) => console.error(error))
     
   }, [route])
@@ -65,7 +71,7 @@ export default FriendsSearch = ({route, navigation}) => {
   const getUserImage = (imageNumber) => { 
     const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
     return userImages[imageNumber-1];
-   }
+  }
 
 
   const sendNotification = (friend) => {
@@ -73,124 +79,117 @@ export default FriendsSearch = ({route, navigation}) => {
     fetch(Config.appUrl + "users/" + friend.id + '/notifications', {
       method: 'POST',
       body: JSON.stringify({ 
-      sender_id: user.id,
-      type: 'friend_request'
-    })
+        sender_id: user.id,
+        type: 'friend_request'
+      })
     })
     .catch((error) => console.error(error))
     .then(
       fetch(Config.appNotificationsUrl + "notifications/friend_request", {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ 
           sender_name: user.username,
           sender_id: user.id
         }) 
       })
-      )
+    )
     .catch((error) => console.error(error))
   }
 
   const Friend = ({friend}) => {
     return (
-      <View style={{marginTop: 5, height: 70, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
-        <View style={styles.friendProfilePicture}>
+      <View style={{flex: 1, marginTop: 5, height: 70, backgroundColor:'antiquewhite', alignItems: 'center', flexDirection: 'row'}}>
+        <View style={{flex: 1, marginLeft: 5}}>
           <Avatar.Image 
             source={getUserImage(friend.image)}
             size={50}
             marginTop={5}
           />
         </View>
-				<View style={styles.userInfoContainer}>
+				<View style={{flex: 6, marginLeft: 20}}>
 					<Text style={{fontSize: 20, fontWeight: 'bold', color:'#a52a2a'}}>{friend.name}</Text>
 					<Text style={{fontSize: 15, color:'#a52a2a'}}>{friend.email}</Text>
         </View>
-        <View style={styles.friendAddIcon}>
+        <View style={{flex: 1}}>
           <Pressable onPress={() => 
-            {
-              Alert.alert(
-                "Enviar solicitud de amistad a " + friend.username +" ?",
-                "",
-                [
-                  {
-                    text: "Cancel",
-                    style: "cancel"
-                  },
-                  { text: "OK", onPress: () => {          
-                    setFilteredData(filteredData.filter((user) => user.id != friend.id))  
-                    setInvitedIDs([...invitedIDs, friend.id])
-                    sendNotification(friend)} }
-                ]
-              );
-
-          }
-            }
-          >
+              {
+                Alert.alert(
+                  "Enviar solicitud de amistad a " + friend.username +" ?",
+                  "",
+                  [
+                    {
+                      text: "Cancel",
+                      style: "cancel"
+                    },
+                    { text: "OK", onPress: () => {          
+                      setFilteredData(filteredData.filter((user) => user.id != friend.id))  
+                      setInvitedIDs([...invitedIDs, friend.id])
+                      sendNotification(friend)}
+                    }
+                  ]
+                );
+              }}>
 						<AntDesign style={{color:'darkgreen'}} size={35} name ='adduser'/>  
           </Pressable>
-        </View>              
-
+        </View>
       </View>
     ) 
   }
 
 	const filterSearch = (text, friendIDs) => {
-    if (text) {
-    const newData = data.filter((search) => 
-    !(invitedIDs.includes(search.id) || friendIDs.includes(search.id) || user.id == search.id)
-    ).filter((user) => {
-      const userData = user.name ? user.name.toUpperCase() : ''.toUpperCase()
-      const textData = text.toUpperCase()
-      return userData.indexOf(textData) > -1
-    })
-    setFilteredData(newData)
+    if(text) {
+      setFilteredData(
+        dbUsers
+        .filter((dbUser) => {
+          const userData = dbUser.name ? dbUser.name.toUpperCase() : ''
+          return userData.indexOf(text.toUpperCase()) > -1 && !(invitedIDs.includes(dbUser.id) || friendIDs.includes(dbUser.id) || user.id == dbUser.id)
+        })
+      )
     } else {
-    setFilteredData("")
-    } 
+      setFilteredData("")
+    }
   }
 
 
   return (
     <View style={styles.view}>
-      <View style={styles.container}> 
-					<View style={styles.searchContainer}>
-						<View style={styles.searchContainerText}>
-					  	<TextInput
-								fontSize={20}
-//            	value={value}
-								onChangeText={(text) => setText(text)}
-   //         	onBlur={onBlur}
-            		placeholder={"Buscar..."}
-     //       	style={styles.input}  
-  	        	/>
-						</View>
-					
-						<View style={styles.searchContainerIcon}>
-							<Ionicons color='#a52a2a' name ='search-circle' size={40} onPress={() => 
-                {
-                  var friendIDs = []
-                  friends.forEach((friend) => friendIDs.push(friend.id))
-                  filterSearch(text, friendIDs)}
-                }/>
-						</View>
-				
- 	        
-					</View>
-
-        <FlatList
-          horizontal= {false}
-          contentContainerStyle={{
-            backgroundColor: '#ffefd5',
-            paddingVertical: 10}}
-          showsHorizontalScrollIndicator = {false}
-          data={filteredData}
-          keyExtractor={(item, index) => item.id}
-          renderItem={({item}) => <Friend friend={item}/>}>      
-        </FlatList>
-        
+      <View style={{backgroundColor:'antiquewhite', alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row'}}>
+        <View style={{flex: 1, marginLeft: 5, backgroundColor: 'white'}}>
+          <TextInput
+            fontSize={20}
+            //value={value}
+            onChangeText={(newText) => {
+              setText(newText)
+              var friendIDs = []
+              friends.forEach((friend) => friendIDs.push(friend.id))
+              filterSearch(newText, friendIDs)
+            }}
+            //onBlur={onBlur}
+            placeholder={"Buscar..."}
+            //style={styles.input}  
+          />
+        </View>
+      
+        <View>
+          <Ionicons color='#a52a2a' name ='search-circle' size={40} onPress={() => {
+              var friendIDs = []
+              friends.forEach((friend) => friendIDs.push(friend.id))
+              filterSearch(text, friendIDs)
+            }}/>
+        </View>
       </View>
 
+      <FlatList
+        horizontal= {false}
+        contentContainerStyle={{
+          backgroundColor: '#ffefd5',
+          paddingVertical: 5}}
+        showsHorizontalScrollIndicator = {true}
+        data={filteredData}
+        keyExtractor={(item, index) => index}
+        renderItem={({item}) => <Friend friend={item}/>}>      
+      </FlatList>
     </View>
   )
 }
@@ -199,65 +198,7 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     backgroundColor: '#FFF9CA',
-  },
-  container:{
     flexDirection: 'column',
-    alignItems: 'center',
     height: 650,
-  },
-  containerHeader:{
-    paddingVertical: 10,
-    backgroundColor: '#FFF9CA',
-    flexDirection: 'row',
-  },
-  containerHeaderIcon:{
-    flexBasis: 50,
-    flexShrink: 0,
-    flexGrow: 0,
-  },
-  containerHeaderText:{
-    flexBasis: 320,
-    flexShrink: 0,
-    flexGrow: 0
-  },
-  friendProfilePicture: {
-    flexBasis: 50,
-    flexShrink: 0,
-    flexGrow: 0
-  },
-  friendUsernameText: {
-    flexBasis: 300,
-    flexShrink: 0,
-    flexGrow: 0
-  },
-  friendAddIcon: {
-    flexBasis: 40,
-    flexShrink: 0,
-    flexGrow: 0
-  },
-	searchContainer: {
-		flexDirection: 'row',
-		height: 40,
-		marginTop: 20
-  },
-	searchContainerText: {
-		flexBasis: 300,
-		backgroundColor: 'white',
-		marginLeft: 10,
-    flexShrink: 0,
-    flexGrow: 1
-  },
-	searchContainerIcon: {
-		flexBasis: 10,
-    flexShrink: 0,
-    flexGrow: 1
-  },
-	userInfoContainer: {
-		flexDirection: 'column',
-		marginLeft: 10,
-		// flexBasis: 300,
-    // flexShrink: 0,
-    // flexGrow: 0
-	}
-
+  }
 });

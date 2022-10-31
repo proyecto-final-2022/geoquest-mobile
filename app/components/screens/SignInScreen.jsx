@@ -38,7 +38,7 @@ const SignInScreen = () => {
         setLoggingIn(false);
       })
     }
-}
+  }
 
   const onForgotPasswordPressed = () => {
     console.warn('Forgot Password');
@@ -137,7 +137,7 @@ const SignInScreen = () => {
         }
       </View>
     </ScrollView>
-    )
+  )
 }
 
 const styles = StyleSheet.create({

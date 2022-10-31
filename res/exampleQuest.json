@@ -230,6 +230,14 @@
                         "Me encontre con un cofre en '<lugar>', si lo abro con una llave encontraré algo bonito"
                       ]
                     }
+              ],
+              [
+              {
+                "name": "grabItemCondition",
+                "params": [
+                  "2"
+                ]
+              }
               ]
             ]
           }

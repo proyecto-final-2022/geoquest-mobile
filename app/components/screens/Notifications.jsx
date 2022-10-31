@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
-import { useIsFocused } from '@react-navigation/native'
+import { StyleSheet, BackHandler, Alert, Modal, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native'
 import {Avatar} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native'
 import {FontAwesome, Entypo, Ionicons, AntDesign} from '@expo/vector-icons'
 import Config from '../../../config.json'
 import Tags from "react-native-tags"
@@ -23,7 +22,16 @@ const {width} = Dimensions.get('screen')
 
 export default Notifications = ({route, navigation}) => {
   
-  const isFocused = useIsFocused()
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate('Quest Navigator')
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress',onBackPress);
+      return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
+    }, []),
+  );
 
   const user = route.params
 
@@ -75,8 +83,9 @@ export default Notifications = ({route, navigation}) => {
       fetch(url)
       .then((response) => response.json())
       .then((json) => {
-        setNotifications(json)
-        })
+        setNotifications(json);
+        Storage.setObjectField('user', 'notifications', json.length);
+      })
       .catch((error) => console.error(error))
       .finally(()=>setLoading(false))
     )
@@ -88,27 +97,27 @@ export default Notifications = ({route, navigation}) => {
       Config.appUrl+'teams/waitrooms/'+ teamID + '/users/' + user.id, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json'}
-      })
+      }
+    )
     .then(
       fetch(
         Config.appUrl+'users/' + user.id + '/notifications/'+ notificationID, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json'}
         })
-      )
-      .then(
-        fetch(Config.appNotificationsUrl + "notifications/quest_accept", {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json'},
-          body: JSON.stringify({ 
-            sender_name: user.username,
-            quest_id: questID,
-            team_id: teamID,
-          }) 
-        })
-        )
-
+    )
+    .then(
+      fetch(Config.appNotificationsUrl + "notifications/quest_accept", {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+          sender_name: user.username,
+          quest_id: questID,
+          team_id: teamID,
+        }) 
+      })
+    )
     .then(
       Storage.getObject('user').then(user => forwardToWaitRoom(questID, teamID, user.id))      
     )
@@ -182,11 +191,12 @@ export default Notifications = ({route, navigation}) => {
     fetch(url)
     .then((response) => response.json())
     .then((json) => {
-      setNotifications(json)
-      })
+      setNotifications(json);
+      Storage.setObjectField('user', 'notifications', json.length);
+    })
     .catch((error) => console.error(error))
     .finally(()=>setLoading(false))
-    }, [route])    
+  }, [route])    
 
 
   useEffect(() => {
@@ -211,57 +221,60 @@ export default Notifications = ({route, navigation}) => {
         </View>
         <View style={styles.description}>
           {notification.type == 'quest_invite' ? 
-          <View> 
-            <Text style={{fontWeight: 'bold', fontSize: 18}}>{notification.sender_name}</Text>
-            <Text style={{fontSize: 16}}>{'Te ha invitado a: '}</Text>
-            <Text style={{fontWeight: 'bold', fontSize: 18}}>{notification.quest_name}</Text>
-          </View>
-          :
-          <View> 
-            <Text style={{fontWeight: 'bold', fontSize: 20}}>{notification.sender_name}</Text>
-            <Text style={{fontSize: 16}}>{'Quiere sumarte a amigos!'}</Text>
-          </View>
+            <View> 
+              <Text style={{fontWeight: 'bold', fontSize: 18}}>{notification.sender_name}</Text>
+              <Text style={{fontSize: 16}}>{'Te ha invitado a:'}</Text>
+              <Text style={{fontWeight: 'bold', fontSize: 18}}>{notification.quest_name}</Text>
+            </View>
+            :
+            <View> 
+              <Text style={{fontWeight: 'bold', fontSize: 20}}>{notification.sender_name}</Text>
+              <Text style={{fontSize: 16}}>{'Quiere sumarte a amigos!'}</Text>
+            </View>
           }
         </View>
 
         <View style={styles.optionsContainer}>          
         
-        <View style={styles.options}>
-          <Ionicons color='firebrick' name ='md-close-circle' size={40} onPress={() => notification.type == "quest_invite" ? Storage.getObject('user').then(user => 
-            {Alert.alert("Invitacion rechazada")
-            HandleCancel(notification.team_id, user.id, notification.id, notification.quest_id)
-            .then(
-            fetch(Config.appNotificationsUrl + "notifications/quest_deny", {
-              method: 'POST',
-              headers: { 
-                'Content-Type': 'application/json'},
-              body: JSON.stringify({ 
-                sender_name: user.username,
-                quest_id: notification.quest_id,
-                team_id: notification.team_id,
-              }) 
-            })
-          )}
-          ) : handleCancelFriendRequest(notification.id) }/> 
-        </View>
+          <View style={styles.options}>
+            <Ionicons color='green' name ='ios-checkmark-circle' size={40} onPress={() => {
+              notification.type == "quest_invite" ? 
+                handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : 
+                handleAcceptFriendRequest(notification.sender_id, notification.id)
+            }}/>
+          </View>
 
-        <View style={styles.options}>
-          <Ionicons color='green' name ='ios-checkmark-circle' size={40} onPress={() => notification.type == "quest_invite" ? handleAcceptQuest(notification.team_id, notification.id, notification.quest_id) : handleAcceptFriendRequest(notification.sender_id, notification.id)}/>
+          <View style={styles.options}>
+            <Ionicons color='firebrick' name ='md-close-circle' size={40} onPress={() => notification.type == "quest_invite" ? Storage.getObject('user').then(user => {
+              Alert.alert("Invitacion rechazada")
+              HandleCancel(notification.team_id, user.id, notification.id, notification.quest_id)
+              .then(
+                fetch(Config.appNotificationsUrl + "notifications/quest_deny", {
+                  method: 'POST',
+                  headers: { 
+                    'Content-Type': 'application/json'},
+                  body: JSON.stringify({ 
+                    sender_name: user.username,
+                    quest_id: notification.quest_id,
+                    team_id: notification.team_id,
+                  })
+                })
+              )
+            }
+            ) : handleCancelFriendRequest(notification.id) }/> 
+          </View>
         </View>
-          
-        </View>
-
       </View>
     )
   
-      }
+  }
 
   return (
     <View style={styles.view}>
       <FlatList
         horizontal= {false}
-        contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
-        showsHorizontalScrollIndicator = {false}
+        contentContainerStyle={{paddingLeft: 10, paddingRight: 10}}
+        showsHorizontalScrollIndicator = {true}
         data={notifications}
         renderItem={({item}) => <Notification notification={item}/>}>      
       </FlatList>
@@ -275,20 +288,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF9CA',
   },
   options: {
-    justifyContent: 'flex-end',
-    flexBasis: 60,
-    flexShrink: 1,
-    flexGrow: 0
+    // justifyContent: 'flex-end',
+    // flexBasis: 60,
+    // flexShrink: 1,
+    // flexGrow: 0
   },
   optionsContainer: {
-    flexDirection: 'row-reverse'
+    flex: 1.3,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   description: {
+    flex:3,
     flexBasis: 100,
     flexShrink: 0,
     flexGrow: 1,
   },
   notificationContainer:{
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -300,9 +317,7 @@ const styles = StyleSheet.create({
     padding: 15, 
   },
   notificationUserImage: {
-    flexBasis: 60,
-    flexShrink: 0,
-    flexGrow: 0
+    flex: 1
   },
 });
 

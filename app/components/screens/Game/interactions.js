@@ -25,6 +25,17 @@ export default {
     }
   },
 
+  "grabItemCondition": (ctx, id) => {    
+    if (id == ctx.global.selectedItem.questItemID) {
+    } else {
+      if (ctx.global.selectedItem.questItemID != "") {
+        ctx.global.hint("Con " + ctx.global.selectedItem.title + " no puedes abrir el cofre");
+      }
+      return {...ctx.state,
+      addInteraction: id}
+    }
+  },
+
   "nextScene": (ctx) => {
 
     return {

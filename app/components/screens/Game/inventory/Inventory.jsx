@@ -70,7 +70,10 @@ const Inventory = ({props}) => {
     },
     {
       title: 'Usar',
-      action: () => {console.log("Los items son: ", items)}
+      action: (item, index) => {
+        props.ctx.setSelectedItem({title: item.title, questItemID: item.questItemID})
+        hideMenu(index)
+      }
     }
   ]
   

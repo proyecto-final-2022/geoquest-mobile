@@ -206,11 +206,19 @@ export default function App() {
 
     const getInitialNotification = 
     messaging()
-      .getInitialNotification()
-      .then(remoteMessage => {
-        console.log("Notification caused app to open from quit state: ", remoteMessage);
-        processNotification(remoteMessage, true);
-      });
+    .getInitialNotification()
+    .then(remoteMessage => {
+        console.log('Notification caused app to open from quit state: ', remoteMessage)
+        processNotification(remoteMessage, true)
+    })
+    .catch(error => console.log(error))
+
+    messaging()
+    .getToken()
+    .then((token) => {
+      Storage.setObject('firebaseToken', token);
+    })
+    .catch(error => console.log(error))
     
     /*
     const topicSubscriber = messaging()

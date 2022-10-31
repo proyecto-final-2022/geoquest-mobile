@@ -14,6 +14,7 @@ export default function ARView({route}) {
   const [ showHint, setShowHint ] = useState(false);
   const [ hintText, setHintText ] = useState("");
   const [description, setObjectDescription] = useState({title: "", questItemID: "", description: "", image: 0, visible: null});
+  const [selectedItem, setSelectedItem] = useState({title: "", questItemID: ""});
   const snapPoints = ["3%", "45%"];
   const sheetRef = useRef(null);
   const navigatorRef = useRef();
@@ -31,12 +32,18 @@ export default function ARView({route}) {
     hint,
     setObjectDescription,
     handleSnapPress,
-    description
+    description,
+    selectedItem,
+    setSelectedItem
   };
 
   useEffect(() => {
     handleSnapPress(0)  
   }, []);
+
+  useEffect(() => {
+    console.log("****Selected item: ", selectedItem)
+  }, [selectedItem]);
 
 
   return (

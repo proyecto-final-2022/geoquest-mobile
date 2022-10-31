@@ -4,7 +4,6 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import QuestNavigator from "../screens/QuestNavigator";
-import HomeScreen from "../screens/HomeScreen";
 import QuestVisualizer from "../screens/QuestVisualizer";
 import Scene from "../scenes/HelloUser";
 import ClientQuests from "../screens/ClientQuests";
@@ -18,6 +17,7 @@ import Coupons from "../screens/Coupons";
 import Profile from "../screens/ProfileScreen";
 import Game from "../screens/Game";
 import { DrawerContent } from "../screens/DrawerContent";
+import QuestCompleted from '../screens/QuestCompleted'
 
 
 const Drawer = createDrawerNavigator();
@@ -29,7 +29,6 @@ export default function Navigation() {
       <Drawer.Screen name="Game" component={Game} options={{ headerShown: false, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>
       <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>
-      <Drawer.Screen name="Home" component={HomeScreen} options={{ headerShown: true, headerTitle: "" }}/>
       <Drawer.Screen name="Quest Navigator" component={QuestNavigator} options={{ headerShown: true, headerTitle: "Elige tu lugar de búsqueda", headerTintColor: "#a52a2a", headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Client Quests" component={ClientQuests} options={{headerShown: true, headerTitle: "Búsquedas", headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Scene" component={Scene} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
@@ -42,6 +41,7 @@ export default function Navigation() {
       <Drawer.Screen name="Friends Search" component={FriendsSearch} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Coupons" component={Coupons} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Profile" component={Profile} options={{ headerShown: true, headerTitle: "", headerStyle: {backgroundColor: "#FFF9CA"}}}/>
+      <Drawer.Screen name="Quest Completed" component={QuestCompleted} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
     </Drawer.Navigator>
   );
 }
