@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Text, StyleSheet, Pressable} from 'react-native'
 import {FontAwesome, Ionicons} from '@expo/vector-icons'
 
-export default CustomButton2 = ({onPress, text, type = "PRIMARY", bgColor, fgColor, icon, style = {}, textStyle = {}, iconStyle = {}}) => {
+export default CustomButton2 = ({onPress, text, type = "PRIMARY", bgColor, fgColor, icon, style = {}, textStyle = {}, iconStyle = {}, iconColor = 'white'}) => {
   return (
 		<Pressable onPress={onPress} >  
       <View style={[
@@ -20,7 +20,7 @@ export default CustomButton2 = ({onPress, text, type = "PRIMARY", bgColor, fgCol
             fgColor ? {color: fgColor} : {},
             textStyle
           ]}>{text}</Text>
-        <Ionicons name ={icon} style={[styles.icon, iconStyle]} color={'white'} size={30}/>
+        <Ionicons name ={icon} style={[styles.icon, iconStyle]} color={iconColor} size={30}/>
     
       </View>
 		</Pressable>

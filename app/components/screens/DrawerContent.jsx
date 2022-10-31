@@ -104,81 +104,107 @@ export function DrawerContent(props) {
             />)}
               label="Búsquedas"
               onPress={() => { navigation.navigate('Quest Navigator') }}/>
-                        <DrawerItem 
-                            icon={({color, size}) => (
-                                <Icon 
-                                  name="account-group" 
-                                  color={color}
-                                  size={size}
-                                />
-                            )}
-                            label="Amigos"
-                            onPress={() => {
-                              Storage.getObject('user').
-                              then(user => navigation.navigate('Friends List', user))
-                            }}
+                  <DrawerItem 
+                      icon={({color, size}) => (
+                          <Icon 
+                            name="account-group" 
+                            color={color}
+                            size={size}
+                          />
+                      )}
+                      label="Amigos"
+                      onPress={() => {
+                        Storage.getObject('user').
+                        then(user => navigation.navigate('Friends List', user))
+                      }}
+                  />
+                  <DrawerItem 
+                      icon={({color, size}) => (
+                          <Icon 
+                            name="account-cog" 
+                            color={color}
+                            size={size}
+                          />
+                      )}
+                      label="Perfil"
+                      onPress={() => {
+                        navigation.navigate('Profile')
+                      }}
+                  />
+                  <DrawerItem 
+                      icon={({color, size}) => (
+                        <Icon 
+                          name="ticket-percent" 
+                          color={color}
+                          size={size}
                         />
-                        <DrawerItem 
-                            icon={({color, size}) => (
-                                <Icon 
-                                  name="account-cog" 
-                                  color={color}
-                                  size={size}
-                                />
-                            )}
-                            label="Perfil"
-                            onPress={() => {
-                              navigation.navigate('Profile')
-                            }}
+                      )}
+                      label="Cupones"
+                      onPress={() => {
+                        Storage.getObject('user').
+                        then(user => navigation.navigate('Coupons', user))
+                      }}
+                  />
+                  <DrawerItem 
+                      icon={({color, size}) => (
+                        <Icon 
+                          name={notifications != 0? "bell-badge" : "bell"}
+                          color={color}
+                          size={size}
                         />
-                        <DrawerItem 
-                            icon={({color, size}) => (
-                              <Icon 
-                                name="ticket-percent" 
-                                color={color}
-                                size={size}
-                              />
-                            )}
-                            label="Cupones"
-                            onPress={() => {
-                              Storage.getObject('user').
-                              then(user => navigation.navigate('Coupons', user))
-                            }}
+                      )}
+                      label="Notificaciones"
+                      onPress={() => {
+                        Storage.getObject('user').
+                        then(user => navigation.navigate('Notifications', user))
+                      }}
+                  />
+                  <DrawerItem 
+                      icon={({color, size}) => (
+                        <Icon 
+                          name={"flag-checkered"}
+                          color={color}
+                          size={size}
                         />
-                        <DrawerItem 
-                            icon={({color, size}) => (
-                              <Icon 
-                                name={notifications != 0? "bell-badge" : "bell"}
-                                color={color}
-                                size={size}
-                              />
-                            )}
-                            label="Notificaciones"
-                            onPress={() => {
-                              Storage.getObject('user').
-                              then(user => navigation.navigate('Notifications', user))
-                            }}
-                        />
-                    </Drawer.Section>
-                </View>
-            </DrawerContentScrollView>
-            <Drawer.Section style={styles.bottomDrawerSection}>
-                <DrawerItem 
-                    icon={({color, size}) => (
-                      <Icon 
-                        name="exit-to-app" 
-                        color={color}
-                        size={size}
-                      />
-                    )}
-                    label="Cerrar Sesión"
-                    onPress={() => {
-                      areYouSureAlert({navigation});
-                    }}
+                      )}
+                      label="Test finalizar búsqueda"
+                      onPress={() => {
+                        navigation.navigate('Quest Completed', 
+                        {
+                          questId: 1, 
+                          questName: "Nombre de la Búsqueda",
+                          questScore: 12345678,
+                          questTime: "3:12:23.123",
+                          questDifficulty: "Dificil",
+                          questDuration: "Media",
+                          qr: {
+                            id: 1,
+                            user_id: 2,
+                            description: "hola esto es una descripcion"
+                          }
+                        })
+                      }}
+                  />
+              </Drawer.Section>
+          </View>
+      </DrawerContentScrollView>
+      <Drawer.Section style={styles.bottomDrawerSection}>
+          <DrawerItem 
+              icon={({color, size}) => (
+                <Icon 
+                  name="exit-to-app" 
+                  color={color}
+                  size={size}
                 />
-            </Drawer.Section>
-        </View>
-    );
+              )}
+              label="Cerrar Sesión"
+              onPress={() => {
+                areYouSureAlert({navigation});
+              }}
+          />
+      </Drawer.Section>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
