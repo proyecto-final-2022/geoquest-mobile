@@ -4,6 +4,18 @@ export default {
     ctx.global.hint(hint);
   },
 
+  "addPoints": (ctx, points) => {
+    var timestamp = new Date().getTime()
+    //hours difference
+    var diff = (timestamp - ctx.state.startTime) / (1000 * 60 * 60 * 24)
+    var add = parseFloat((points/diff).toFixed(2))
+    console.log("*****Puntos", ctx.state.points + add)
+    return {
+      ...ctx.state,
+      points: ctx.state.points + add,
+    };
+  },
+
   "log": (ctx, msg) => {
     const logs = ctx.state["logs"] ?? [];
     return {
@@ -29,7 +41,7 @@ export default {
     if (id == ctx.global.selectedItem.questItemID) {
     } else {
       if (ctx.global.selectedItem.questItemID != "") {
-        ctx.global.hint("Con " + ctx.global.selectedItem.title + " no puedes abrir el cofre");
+        ctx.global.hint("No es posible abrir el cofre con: " + ctx.global.selectedItem.title);
       }
       return {...ctx.state,
       addInteraction: id}

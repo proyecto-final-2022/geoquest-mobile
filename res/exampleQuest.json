@@ -80,6 +80,12 @@
                   ]
                 },
                 {
+                  "name": "addPoints",
+                  "params": [
+                    10
+                  ]
+                },
+                {
                   "name": "log",
                   "params": [
                     "Me encontre con una llave en '<lugar>' y puedo usarla para abrir un cofre."
@@ -118,6 +124,12 @@
             },
             "interactions": [
               [
+                {
+                  "name": "addPoints",
+                  "params": [
+                    10
+                  ]
+                },
                 {
                   "name": "showHint",
                   "params": 
@@ -165,6 +177,12 @@
             },
             "interactions": [
               [
+                {
+                  "name": "addPoints",
+                  "params": [
+                    10
+                  ]
+                },
                 {
                   "name": "showHint",
                   "params": 
@@ -217,6 +235,12 @@
             },
             "interactions": [
               [
+                {
+                  "name": "addPoints",
+                  "params": [
+                    10
+                  ]
+                },
                 {
                   "name": "showHint",
                   "params": 

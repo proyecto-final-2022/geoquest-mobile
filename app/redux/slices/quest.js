@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  scene: 0,
+  scene: parseFloat(0),
   inventory: [],
   objects: {},
+  startTime: new Date().getTime(),
   logs: [
     "Una nota loca bla bla",
     "Una segunda nota loca, memememememe"
