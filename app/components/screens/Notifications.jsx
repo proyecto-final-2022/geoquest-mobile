@@ -234,7 +234,7 @@ export default Notifications = ({route, navigation}) => {
           }
         </View>
 
-        <View style={styles.optionsContainer}>          
+        <View style={styles.optionsContainer}>
         
           <View style={styles.options}>
             <Ionicons color='green' name ='ios-checkmark-circle' size={40} onPress={() => {
