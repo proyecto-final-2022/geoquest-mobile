@@ -95,7 +95,7 @@ const ProfileScreen = ({navigation}) => {
         setName(user.name);
         setEmail(user.email);
         setUsername(user.username);
-        formatAchivements(user.achivements);
+        formatAchivements(user.achivements? user.achivements : []);
     }
     
     const userImages = [userImage_1, userImage_2, userImage_3, userImage_4, userImage_5, userImage_6, userImage_7, userImage_8, userImage_9];
