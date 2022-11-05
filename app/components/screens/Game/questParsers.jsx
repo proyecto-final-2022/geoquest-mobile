@@ -1,6 +1,6 @@
 import React from "react";
 import WithImageRecognition from "./objects/WithImageRecognition";
-
+import WithoutImageRecognition from "./objects/WithoutImageRecognition";
 
 export function parseScene(scene) {
   return (props) => {
@@ -11,7 +11,8 @@ export function parseScene(scene) {
 
 function parseObject(object, props) {
   const components = {
-    "WithImageRecognition": WithImageRecognition
+    "WithImageRecognition": WithImageRecognition,
+    "WithoutImageRecognition": WithoutImageRecognition
   };
   const component = components[object.type] ?? undefined;
 

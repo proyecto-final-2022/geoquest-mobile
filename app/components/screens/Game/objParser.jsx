@@ -1,4 +1,5 @@
 import ObjectView from "./visualization/visualize"
+import VisualizeFolder from "./visualization/visualizeFolder"
 
 export function parseItems(items) {
   var itemsList = Object.values(items)
@@ -10,5 +11,8 @@ export function parseItems(items) {
 
 
 function parseObjectView(item, ctx, props) {
+  if (item.visualizeFunction == "VisualizeFolder") {
+    return VisualizeFolder(item, ctx)
+  }
   return ObjectView(item, ctx)
 }

@@ -68,6 +68,10 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
   }, [questState]);
 
   useEffect(() => {
+    console.log("***************Model props: ", modelProps)
+  }, []);
+
+  useEffect(() => {
     if(globalCtx.description.questItemID != "" || !hasInteractionsLeft(questState)) {
       setIsVisible(false);
     } else {
@@ -199,8 +203,25 @@ ViroARTrackingTargets.createTargets({
     source: require('../../../../../res/images/argentina.jpg'),
     orientation: "Up",
     physicalWidth: 0.2 // real world width in meters  
+  },
+  "images.aula": {
+    source: require('../../../../../res/images/aula_621_crop.jpg'),
+    orientation: "Up",
+    physicalWidth: 0.2 // real world width in meters  
+  },
+  "images.cuadro": {
+    source: require('../../../../../res/images/cuadro.jpg'),
+    orientation: "Up",
+    physicalWidth: 0.2 // real world width in meters  
+  },
+  "images.graduados": {
+    source: require('../../../../../res/images/graduados.jpg'),
+    orientation: "Up",
+    physicalWidth: 0.2 // real world width in meters  
   }
 
+
+//aula_621_crop
 });
 
 ViroAnimations.registerAnimations({

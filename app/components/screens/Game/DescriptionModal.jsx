@@ -13,44 +13,39 @@ export default function DescriptionModal({props}) {
     return itemImages[imageNumber-1];
   }
 
-  return (        
-      <Modal
-        animationType="slide"
-        onDismiss={() => console.log('close')}
-        onShow={() => console.log('show')}
-        transparent
-        visible={props.itemDescription.visible}
-      >
+  return (
+    <View>        
+      {/* // <Modal
+      //   animationType="slide"
+      //   onDismiss={() => console.log('close')}
+      //   onShow={() => console.log('show')}
+      //   transparent={true}
+      //   visible={props.itemDescription.visible}
+      // > */}
             <View
-          style={{
-            flex: 1,
-            marginTop: 200,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+          // style={{
+          //   flex: 1,
+          //   marginTop: 200,
+          //   flexDirection: 'column',
+          //   justifyContent: 'center',
+          //   alignItems: 'center',
+          // }}
         >
           <View
-            style={{
-              height:'40%', 
-              width: '90%',
-              flexDirection: 'column',
-              justifyContent: 'space-evenly',
-              backgroundColor: 'linen',
-              borderWidth: 5,
-              borderColor: '#a52a2a', 
-            }}  
+            // style={{
+            //   height:'40%', 
+            //   width: '90%',
+            //   flexDirection: 'column',
+            //   justifyContent: 'space-evenly',
+            //   backgroundColor: 'linen',
+            //   borderWidth: 5,
+            //   borderColor: '#a52a2a', 
+            // }}  
           >
-            <View style={{flexDirection: 'row-reverse'}}>
-              <Pressable onPress={() => {
-//                ctx.setObjectVisualize(0)
-                props.ctx.setObjectDescription({visible: false, questItemID: ""})}}>
-                <Ionicons name='close' size={35}/>
-              </Pressable>
-            </View>
 
 
-            <ScrollView>
+
+            {/* <ScrollView>
                 <View style={{flexDirection: 'column', justifyContent: 'space-around'}}>
           
                   <Text style={{fontWeight: 'bold', color: 'darkred', fontSize: 20}}>{props.itemDescription.title}</Text>
@@ -70,13 +65,13 @@ export default function DescriptionModal({props}) {
                                         
                   </View>
                 </View>
-            </ScrollView>
+            </ScrollView> */}
 
   
           </View>
         </View>
-      
-      </Modal>
+        </View>
+      // </Modal>
   );
 }
 

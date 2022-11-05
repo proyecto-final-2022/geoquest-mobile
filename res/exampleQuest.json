@@ -35,6 +35,7 @@
     },
     "3": {
       "title": "Carpeta",
+      "visualizeFunction": "VisualizeFolder",
       "description": "Carpeta carpeta carpeta carpeta carpeta carpeta",
       "questItemID": 3,
       "image": "3",
@@ -54,29 +55,28 @@
     {
       "objects": [
         {
-          "type": "WithImageRecognition",
+          "type": "WithoutImageRecognition",
           "typeProps": { 
             "questItemID": 2,
             "target": {
-              "source": "images.boquita",
-              "physicalWidth": 0.2,
+              "source": "images.graduados",
+              "physicalWidth": 0.5,
               "orientation": "Up"
             },
             "model": {
-              "source": "models.key.model",
+              "source": "models.folder.model",
               "type": "VRX",
-              "position": [0,0,0],
+              "position": [0,0,-0.5],
               "scale": [0.05,0.05,0.05],
-              "rotation": [0,0,0],
-              "resources": [
-              ]
+              "rotation": [180,0,180],
+              "resources": []
             },
             "interactions": [
               [
                 {
                   "name": "showHint",
                   "params": [
-                    "Una llave! Con ella es posible abrir un cofre"
+                    "Es la carpeta de tu TP!?"
                   ]
                 },
                 {
@@ -88,14 +88,12 @@
                 {
                   "name": "log",
                   "params": [
-                    "Me encontre con una llave en '<lugar>' y puedo usarla para abrir un cofre."
+                    "Me encontre con una carpeta en '<lugar>' y puedo probar abrirla"
                   ]
-                }
-              ],
-              [
+                },
                 {
                   "name": "grabItem",
-                  "params": ["2"]
+                  "params": ["3"]
                 },
                 {
                   "name": "nextScene",
@@ -110,7 +108,7 @@
           "typeProps": { 
             "questItemID": 1,
             "target": {
-              "source": "images.duende",
+              "source": "images.cuadro",
               "physicalWidth": 0.2,
               "orientation": "Up"
             },
@@ -220,7 +218,7 @@
           "typeProps": {
             "questItemID": 4, 
             "target": {
-              "source": "images.argentina",
+              "source": "images.boquita",
               "physicalWidth": 0.2,
               "orientation": "Up"
             },
