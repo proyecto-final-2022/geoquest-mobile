@@ -58,7 +58,7 @@
           "typeProps": { 
             "questItemID": 2,
             "target": {
-              "source": "images.boquita",
+              "source": "images.aula",
               "physicalWidth": 0.2,
               "orientation": "Up"
             },

@@ -5,7 +5,8 @@ export const resources = {
     duende: require("../../res/images/duende.jpg"),
     argentina: require("../../res/images/argentina.jpg"),
     boquita: require("../../res/images/boquita.jpg"),
-    mate: require("../../res/images/mate.jpg")
+    mate: require("../../res/images/mate.jpg"),
+    aula: require("../../res/images/cuadro.jpg"),
   },
 
   models: {

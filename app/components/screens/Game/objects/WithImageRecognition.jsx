@@ -160,7 +160,9 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
   return (
     <ViroARImageMarker 
       target={targetID}
-      onAnchorFound={() => {setPauseUpdates(true);}}
+      onAnchorFound={() => {
+        console.log("*********************************************+Hola")
+        setPauseUpdates(true);}}
       pauseUpdates={pauseUpdates}
     >
       <ViroAmbientLight color="#ffffff"/>
@@ -199,6 +201,12 @@ ViroARTrackingTargets.createTargets({
     source: require('../../../../../res/images/argentina.jpg'),
     orientation: "Up",
     physicalWidth: 0.2 // real world width in meters  
+  },
+  "images.aula": {
+    source: require('../../../../../res/images/cuadro.jpg'),
+    orientation: "Up",
+    physicalWidth: 0.2, // real world width in meters
+    type: "Image"  
   }
 
 });
