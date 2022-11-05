@@ -32,7 +32,7 @@ export const resources = {
       model: require("../../res/models/Page/model.vrx")
     },
     box: {
-      model: require("../../res/models/SmallBoxWithKeyhole/model.vrx")
+      model: require("../../res/models/BoxWithKeyhole/model.vrx")
     },
     keyCopy: {
       model: require("../../res/models/KeyCopy/model.vrx")

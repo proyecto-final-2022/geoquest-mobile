@@ -99,7 +99,7 @@ const Clue0 = useState({
   onRotate:undefined,
   onPinch:undefined,
   onDrag:undefined,
-  onClick:Clue0OnClick,
+//  onClick:Clue0OnClick,
   visible:true,
   interactable:false, //TODO(fran): interactable after Folder is opened
   interactions_accurate_collision_detection:true,
@@ -141,17 +141,18 @@ const Clue0 = useState({
   function NoteOnClick(){
     const note = Note[0], setnote = Note[1];
     const clue = Clue0[0], setclue = Clue0[1];
-
     //TODO(fran)
     setnote(prevState => ({...prevState, visible:false}));
+    setclue(prevState => ({...prevState, interactable:true}));
     //cambiar hardcodeo
-    console.log("***************Quest state inventory, ", questState)
     dispatch(Quest.actions.set({...questState, inventory: [...questState.inventory, "1"]}));
 
   }
 
   function Clue0OnClick(){
-
+    const clue = Clue0[0], setclue = Clue0[1];
+    setclue(prevState => ({...prevState, visible:false}));
+    dispatch(Quest.actions.set({...questState, inventory: [...questState.inventory, "1"]}));
   }
 
   return (  
@@ -195,7 +196,7 @@ const Clue0 = useState({
           scale={Clue0[0].scale}
           animation={{name: Clue0[0].animation, run: Clue0[0].animate, loop: Clue0[0].loop_animation, interruptible:Clue0[0].anim_interruptible, onFinish:Clue0[0].anim_on_finish}}
           onRotate={makeOnRotate(Node)}
-          onClick={Clue0[0].onClick}
+          onClick={Clue0OnClick}
           visible={Clue0[0].visible}
           ignoreEventHandling={!Clue0[0].interactable}
           highAccuracyEvents={Clue0[0].interactions_accurate_collision_detection}
@@ -203,12 +204,3 @@ const Clue0 = useState({
   </ViroNode>
   );
 }
-
-// ViroAnimations.registerAnimations({
-//   loopRotate:{
-//     properties:{
-//       rotateZ: "+=45"
-//     }, 
-//     duration:1000
-//   },
-// });

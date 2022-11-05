@@ -84,7 +84,7 @@ export const FolderAnimation = {
     Close: "Folder_Close"
 }
 
-export const PageAnimation = {
+ export const PageAnimation = {
     Idle: "Page_Idle",
     IdleClosed: "Page_IdleClosed",
     Open: "Page_Open",

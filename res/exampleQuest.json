@@ -49,7 +49,25 @@
         "resources": [
         ]
       }
+    },
+    "4": {
+      "title": "Caja",
+      "visualizeFunction": "VisualizeBox",
+      "description": "Caja cajeta",
+      "questItemID": 4,
+      "image": "3",
+      "view": 3,
+      "model": {
+        "source": "models.box.model",
+        "type": "VRX",
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
+        "rotation": [0,180,0],
+        "resources": [
+        ]
+      }
     }
+
   },
   "scenes": [
     {
@@ -160,12 +178,12 @@
           "typeProps": { 
             "questItemID": 3,
             "target": {
-              "source": "images.exampleImage",
+              "source": "images.graduados",
               "physicalWidth": 0.2,
               "orientation": "Up"
             },
             "model": {
-              "source": "models.folder.model",
+              "source": "models.key.model",
               "type": "VRX",
               "position": [0,0,0],
               "scale": [0.05,0.05,0.05],
@@ -185,7 +203,7 @@
                   "name": "showHint",
                   "params": 
                     [
-                      "Encuentras una carpeta!"
+                      "Encuentras una llave! con ella es posible abrir un cofre"
                     ]
                 },
                 {
@@ -193,13 +211,10 @@
                   "params": [
                     "Me encontre una carpeta en '<lugar>' y adentro pueden guardarse hojas"
                   ]
-                }    
-              ]
-              ,
-              [
+                },
                 {
                   "name": "grabItem",
-                  "params": ["3"]
+                  "params": ["2"]
                 },
                 {
                   "name": "nextScene",
@@ -218,7 +233,7 @@
           "typeProps": {
             "questItemID": 4, 
             "target": {
-              "source": "images.boquita",
+              "source": "images.aula",
               "physicalWidth": 0.2,
               "orientation": "Up"
             },
@@ -255,9 +270,9 @@
               ],
               [
               {
-                "name": "grabItemCondition",
+                "name": "grabItem",
                 "params": [
-                  "2"
+                  "4"
                 ]
               }
               ]
