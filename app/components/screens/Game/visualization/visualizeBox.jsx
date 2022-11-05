@@ -191,6 +191,8 @@ function onClickPage6(){
 }
 
 function handleOnClick(){
+    console.log("****Ctx: ", ctx)
+    if ("2" == ctx.selectedItem.questItemID) {
     console.log("FUCK"*200);
     //smallTODO(fran): I cant get the animation to play again after the first time (even if I dont disable the trigger), why?
     //TODO(fran): sometimes the box opening animation at the end doesnt play, why?
@@ -273,6 +275,7 @@ function handleOnClick(){
         //TODO(fran): make page interactive only after the box has completely opened
     }}))
     setpage(prevState => ({...prevState,visible:true})) //make page visible
+    }
 }
 
 ViroMaterials.createMaterials({
