@@ -4,6 +4,7 @@
 //   } from "@viro-community/react-viro"
 import { ViroOmniLight } from "@viro-community/react-viro/components/ViroOmniLight";
 import { ViroSpotLight } from "@viro-community/react-viro/components/ViroSpotLight";
+import "./VectorOperations"
 
 
 export const yaw = [0,1,0]
