@@ -32,14 +32,14 @@ function useQuestSetup(route, questID) {
     .then((response) => response.json())
     .then((json) => 
     {   
-        dispatch(Quest.actions.set(
-          {...questState,
-          inventory: json.inventory,
-          scene: json.scene,
-          objects: json.objects ?? {},
-          logs: json.logs ?? [],
-          points: json.points ?? parseFloat(0)}
-          ));
+        // dispatch(Quest.actions.set(
+        //   {...questState,
+        //   inventory: json.inventory,
+        //   scene: json.scene,
+        //   objects: json.objects ?? {},
+        //   logs: json.logs ?? [],
+        //   points: json.points ?? parseFloat(0)}
+        //   ));
     }
     
     )

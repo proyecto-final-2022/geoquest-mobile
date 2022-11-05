@@ -158,6 +158,8 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
       newState.sendUpdate = false
     }
 
+    console.log("**************new state: ", newState)
+
     dispatch(Quest.actions.set(newState));
   };
 

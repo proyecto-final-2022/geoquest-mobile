@@ -10,6 +10,7 @@ const Inventory = ({props}) => {
   const questState = useSelector(state => state.quest);
 
     useEffect(() => {
+      console.log("**********Inventory: ", questState.inventory)
       var inventory =  questState.inventory ?? []
 
       var inventoryItems = inventory.map(item => 

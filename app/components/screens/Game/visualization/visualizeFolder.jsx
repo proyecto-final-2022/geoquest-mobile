@@ -8,10 +8,17 @@ import { ViroARCamera } from "@viro-community/react-viro/components/AR/ViroARCam
 import { ViroOmniLight } from "@viro-community/react-viro/components/ViroOmniLight";
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 import Resources from "../../../../utils/resources.js";
+import Quest from "../../../../redux/slices/quest"
+import { useSelector, useDispatch } from "react-redux";
 import {BoxAnimation, FolderAnimation, PageAnimation, makeOnPinch, makeOnRotate, makeOnDrag, MapToViro3DObject, Lighting} from "../GameModelsCommon"
 
 export default function VisualizeFolder(item, ctx) {
+  const questState = useSelector(state => state.quest);
+  const dispatch = useDispatch();
 
+  useEffect(
+    () => console.log("*****Quest state:", questState)
+    , [questState])
   const GameState = {
     folder_opened:false, //TODO(fran): I dont like this logic at all
   };
@@ -67,7 +74,7 @@ export default function VisualizeFolder(item, ctx) {
     onRotate:undefined,
     onPinch:undefined,
     onDrag:undefined,
-    onClick:NoteOnClick,
+//    onClick:NoteOnClick,
     visible:true,
     interactable:false, //TODO(fran): interactable after Folder is opened
     interactions_accurate_collision_detection:true,
@@ -137,6 +144,10 @@ const Clue0 = useState({
 
     //TODO(fran)
     setnote(prevState => ({...prevState, visible:false}));
+    //cambiar hardcodeo
+    console.log("***************Quest state inventory, ", questState)
+    dispatch(Quest.actions.set({...questState, inventory: [...questState.inventory, "1"]}));
+
   }
 
   function Clue0OnClick(){
@@ -170,7 +181,7 @@ const Clue0 = useState({
           onRotate={makeOnRotate(Node)}
           onPinch={makeOnPinch(Node)}
           onDrag={makeOnDrag()}
-          onClick={Note[0].onClick}
+          onClick={NoteOnClick}
           visible={Note[0].visible}
           ignoreEventHandling={!Note[0].interactable}
           highAccuracyEvents={Note[0].interactions_accurate_collision_detection}
