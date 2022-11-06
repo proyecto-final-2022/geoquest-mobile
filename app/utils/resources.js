@@ -28,6 +28,9 @@ export const resources = {
     folder: {
       model: require("../../res/models/Folder/model.vrx")
     },
+    folderCopy: {
+      model: require("../../res/models/FolderCopy/model.vrx")
+    },
     page: {
       model: require("../../res/models/Page/model.vrx")
     },

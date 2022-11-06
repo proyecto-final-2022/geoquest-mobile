@@ -41,7 +41,7 @@
       "image": "3",
       "view": 3,
       "model": {
-        "source": "models.folder.model",
+        "source": "models.folderCopy.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
@@ -261,20 +261,18 @@
                       "Encuentras un cofre!"
                     ]
                   },
-                    {
-                      "name": "log",
-                      "params": [
-                        "Me encontre con un cofre en '<lugar>', si lo abro con una llave encontraré algo bonito"
-                      ]
-                    }
-              ],
-              [
-              {
-                "name": "grabItem",
-                "params": [
-                  "4"
-                ]
-              }
+                  {
+                    "name": "log",
+                    "params": [
+                      "Me encontre con un cofre en '<lugar>', si lo abro con una llave encontraré algo bonito"
+                    ]
+                  },
+                  {
+                    "name": "grabItem",
+                    "params": [
+                      "4"
+                    ]
+                  }
               ]
             ]
           }
