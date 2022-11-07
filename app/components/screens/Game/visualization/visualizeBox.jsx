@@ -191,9 +191,7 @@ function onClickPage6(){
 }
 
 function handleOnClick(){
-    console.log("****Ctx: ", ctx)
-    if ("2" == ctx.selectedItem.questItemID) {
-    console.log("FUCK"*200);
+    if (ctx.selectedItem.questItemID == "2") { // Key equipped
     //smallTODO(fran): I cant get the animation to play again after the first time (even if I dont disable the trigger), why?
     //TODO(fran): sometimes the box opening animation at the end doesnt play, why?
     const box = Box[0], setbox = Box[1];

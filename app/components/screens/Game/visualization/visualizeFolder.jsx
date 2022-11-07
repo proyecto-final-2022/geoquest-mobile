@@ -22,6 +22,9 @@ export default function VisualizeFolder(item, ctx) {
   }
 
     , [questState])
+
+  const modelspath = "../../../../../res/models";
+
   const GameState = {
     folder_opened:false, //TODO(fran): I dont like this logic at all
   };
@@ -54,11 +57,11 @@ export default function VisualizeFolder(item, ctx) {
   });
 
   const Note = useState({ 
-    source:require("../../../../../res/models/Note/model.vrx"),
-    resources:[require('../../../../../res/models/Note/note-atlas_d.png'),
-               require('../../../../../res/models/Note/note-atlas_r.png'),
-               require('../../../../../res/models/Note/note-atlas_n.png'),
-               require('../../../../../res/models/Note/note-atlas_ao.png'),
+    source:require(modelspath+"/Note/model.vrx"),
+    resources:[require(modelspath+'/Note/note-atlas_d.png'),
+               require(modelspath+'/Note/note-atlas_r.png'),
+               require(modelspath+'/Note/note-atlas_n.png'),
+               require(modelspath+'/Note/note-atlas_ao.png'),
                ],
     position:[-.1,0,.005], //X:left-right, Y:height, Z:depth
     rotation:item.model.rotation,
@@ -117,24 +120,96 @@ const Clue0 = useState({
     loop_animation:false,
   });
 
+  const PageData = { 
+    source:require(modelspath+"/Page/model.vrx"),
+    resources:[require(modelspath+'/Page/page-atlas_d.png'),
+               require(modelspath+'/Page/page-atlas_r.png'),
+               require(modelspath+'/Page/page-atlas_n.png'),
+               ],
+    position:[1,0,-.01], //X:left-right, Y:height, Z:depth
+    rotation:item.model.rotation,
+    scale:item.model.scale,
+    prev_scale_factor:1,
+    prev_rotation_factor:1,
+    rotation_axis:[0,1,0], //[roll,yaw,pitch]
+    animation:undefined,
+    animate:false,
+    loop_animation:false,
+    anim_interruptible:false,
+    anim_on_finish:undefined,
+    onRotate:undefined,
+    onPinch:undefined,
+    onDrag:undefined,
+    onClick:undefined,
+    visible:false,
+    interactable:false, //TODO(fran): interactable after Folder is opened
+    interactions_accurate_collision_detection:false,
+}
+
+  const Page0 = useState(PageData);
+  const Page1 = useState(PageData);
+  const Page2 = useState(PageData);
+
+  var x = 0;
+
   function FolderOnClick(){
 
     const folder = Folder[0], setfolder = Folder[1];
     const note = Note[0], setnote = Note[1];
-    
-    GameState.folder_opened=!GameState.folder_opened;
+    const page0 = Page0[0], setpage0 = Page0[1];
 
-    setfolder(prevState => ({...prevState,
-        interactable:false,
-        animation:GameState.folder_opened?FolderAnimation.Open:FolderAnimation.Close,
-        animate:true,
-        loop_animation:false,
-        anim_interruptible:false,
-        anim_on_finish:()=>{
-            setnote(prevState => ({...prevState, interactable:GameState.folder_opened}));
-            setfolder(prevState => ({...prevState, interactable:true}));
-        },
-    }))
+    if (x++==1 /*TODO(pablo):check Page is equipped*/) { //Page equipped
+    //if (ctx.selectedItem.questItemID == "1") { //couldnt get this to work, only to break the other path
+    //TODO(pablo): remove Page from inventory
+
+      //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
+
+      if(GameState.folder_opened){
+        ViroAnimations.registerAnimations({
+          page_addtofolder1:{ //appear page
+            properties:{
+                scaleX: PageData.scale.x(),
+                scaleY: PageData.scale.y(),
+                scaleZ: PageData.scale.z(),
+          },
+          easing:"EaseInEaseOut", 
+          duration: 1000
+          },
+          page_addtofolder2:{ //move page inside folder
+            properties:{
+                positionX: "-=1",
+          },
+          easing:"EaseInEaseOut", 
+          duration: 1000
+          },
+          page_addtofolder:[["page_addtofolder1","page_addtofolder2"]],
+        })
+
+        setpage0(prevState => ({...prevState,
+          visible:true,
+          scale:[0,0,0],
+          animation:"page_addtofolder",
+          animate:true,
+          loop_animation:false,
+          anim_interruptible:false,
+        }))
+      }
+    }
+    else{
+      GameState.folder_opened=!GameState.folder_opened;
+  
+      setfolder(prevState => ({...prevState,
+          interactable:false,
+          animation:GameState.folder_opened?FolderAnimation.Open:FolderAnimation.Close,
+          animate:true,
+          loop_animation:false,
+          anim_interruptible:false,
+          anim_on_finish:()=>{
+              setnote(prevState => ({...prevState, interactable:GameState.folder_opened}));
+              setfolder(prevState => ({...prevState, interactable:true}));
+          },
+      }))
+    }
 
   }
 
@@ -200,6 +275,20 @@ const Clue0 = useState({
           visible={Clue0[0].visible}
           ignoreEventHandling={!Clue0[0].interactable}
           highAccuracyEvents={Clue0[0].interactions_accurate_collision_detection}
+      />
+      <Viro3DObject
+          source={Page0[0].source}
+          resources={Page0[0].resources}
+          type="VRX"
+          position={Page0[0].position}
+          rotation={Page0[0].rotation}
+          scale={Page0[0].scale}
+          animation={{name: Page0[0].animation, run: Page0[0].animate, loop: Page0[0].loop_animation, interruptible:Page0[0].anim_interruptible, onFinish:Page0[0].anim_on_finish}}
+          onRotate={makeOnRotate(Node)}
+          onClick={Page0[0].onClick}
+          visible={Page0[0].visible}
+          ignoreEventHandling={!Page0[0].interactable}
+          highAccuracyEvents={Page0[0].interactions_accurate_collision_detection}
       />
   </ViroNode>
   );
