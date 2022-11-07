@@ -13,8 +13,7 @@
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": [
-        ]
+        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
       }
     },
     "2": {
@@ -29,8 +28,7 @@
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": [
-        ]
+        "resources": ["resources.keyDiffuse", "resources.keyMetallic", "resources.keyRoughness"]
       }
     },
     "3": {
@@ -46,8 +44,7 @@
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": [
-        ]
+        "resources": ["resources.folderDiffuse", "resources.folderNormal", "resources.folderRoughness"]
       }
     },
     "4": {
@@ -63,8 +60,7 @@
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": [
-        ]
+        "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
       }
     }
 
@@ -87,7 +83,7 @@
               "position": [0,0,-0.5],
               "scale": [0.05,0.05,0.05],
               "rotation": [180,0,180],
-              "resources": []
+              "resources": ["resources.folderDiffuse", "resources.folderNormal", "resources.folderRoughness"]
             },
             "interactions": [
               [
@@ -136,7 +132,7 @@
               "position": [0,0,0],
               "scale": [0.05,0.05,0.05],
               "rotation": [0,0,0],
-              "resources": []
+              "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
             },
             "interactions": [
               [
@@ -188,8 +184,7 @@
               "position": [0,0,0],
               "scale": [0.05,0.05,0.05],
               "rotation": [0,0,0],
-              "resources": [
-              ]
+              "resources": ["resources.keyDiffuse", "resources.keyMetallic", "resources.keyRoughness"]
             },
             "interactions": [
               [
@@ -243,8 +238,7 @@
               "position": [0,0,0],
               "scale": [0.05,0.05,0.05],
               "rotation": [0,0,0],
-              "resources": [
-              ]
+              "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
             },
             "interactions": [
               [

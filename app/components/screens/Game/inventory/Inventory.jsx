@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 
 const Inventory = ({props}) => {
   const questState = useSelector(state => state.quest);
+  const questLocal = useSelector(state => state.questLocal);
 
     useEffect(() => {
       console.log("**********Inventory: ", questState.inventory)

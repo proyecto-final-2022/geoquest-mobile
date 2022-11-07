@@ -17,7 +17,10 @@ export default function VisualizeFolder(item, ctx) {
   const dispatch = useDispatch();
 
   useEffect(
-    () => console.log("*****Quest state:", questState)
+    () => {console.log("*****Quest state:", questState)
+  console.log("****Item: ", item)
+  }
+
     , [questState])
   const GameState = {
     folder_opened:false, //TODO(fran): I dont like this logic at all
@@ -29,10 +32,7 @@ export default function VisualizeFolder(item, ctx) {
     rotation:item.model.rotation,
     type:item.model.type,
     // source:require("../../res/GameModels/Folder/model.vrx"),
-    // resources:[require('../../res/GameModels/Folder/folder-atlas_d.png'),
-    //            require('../../res/GameModels/Folder/folder-atlas_r.png'),
-    //            require('../../res/GameModels/Folder/folder-atlas_n.png'),
-    //            ],
+    resources:item.model.resources.map(r => Resources.get(r)),
     // position:[0,0,0], //X:left-right, Y:height, Z:depth
     // rotation:[90,180,0],
     // scale:[1,1,1],
