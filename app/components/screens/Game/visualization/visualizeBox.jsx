@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {BoxAnimation, FolderAnimation, PageAnimation, makeOnPinch, makeOnRotate, makeOnDrag, MapToViro3DObject, Lighting} from "../GameModelsCommon"
 
 export default function VisualizeBox(item, ctx) {
-  const questState = useSelector(state => state.quest);
+  const questLocal = useSelector(state => state.questLocal);
   const dispatch = useDispatch();
 
   const modelspath = "../../../../../res/models";
@@ -191,7 +191,7 @@ function onClickPage6(){
 }
 
 function handleOnClick(){
-    if (ctx.selectedItem.questItemID == "2") { // Key equipped
+    if (questLocal.inventory.selectedItem.itemID == "2") { // Key equipped
     //smallTODO(fran): I cant get the animation to play again after the first time (even if I dont disable the trigger), why?
     //TODO(fran): sometimes the box opening animation at the end doesnt play, why?
     const box = Box[0], setbox = Box[1];
@@ -288,7 +288,7 @@ return (
     <>
     <ViroAmbientLight color="#ffffff" intensity={200}/>
     <Lighting/>
-    <ViroNode visible={(ctx.description.itemID == item.questItemID)} position={Node[0].position} rotation={Node[0].rotation} scale={Node[0].scale} onRotate={makeOnRotate(Node)}>
+    <ViroNode visible={(questLocal.visualizer.itemID == item.questItemID)} position={Node[0].position} rotation={Node[0].rotation} scale={Node[0].scale} onRotate={makeOnRotate(Node)}>
         <Viro3DObject
             //{...MapToViro3DObject(Box[0])} //TODO(fran): this forgets the individual values and when the box gets updated it updates the whole thing, thus restarting it to its original position every time, instead we'd want to use a macro that aumatically writes what's below this text
             source={Box[0].source}

@@ -16,6 +16,7 @@ const questID = "1"
 
 export default function WithImageRecognition({id, typeProps, globalCtx}) {
   const questState = useSelector(state => state.quest);
+  const questLocalState = useSelector(state => state.questLocal);
   const dispatch = useDispatch();
   const [pauseUpdates, setPauseUpdates] = useState(false);
   const [visible, setIsVisible] = useState(true);
@@ -72,7 +73,7 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
   }, []);
 
   useEffect(() => {
-    if(globalCtx.description.questItemID != "" || !hasInteractionsLeft(questState)) {
+    if(questLocalState.visualizer.itemID != undefined || !hasInteractionsLeft(questState)) {
       setIsVisible(false);
     } else {
       setIsVisible(true)

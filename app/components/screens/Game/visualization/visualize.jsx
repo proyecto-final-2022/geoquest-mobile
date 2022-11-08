@@ -6,13 +6,15 @@ import { ViroAnimations } from "@viro-community/react-viro/components/Animation/
 import { ViroARCamera } from "@viro-community/react-viro/components/AR/ViroARCamera";
 import { ViroOmniLight } from "@viro-community/react-viro/components/ViroOmniLight";
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
+import {useSelector} from "react-redux";
 import Resources from "../../../../utils/resources.js";
 
 export default function ObjectView(item, ctx) {
+  const questLocal = useSelector(state => state.questLocal);
 
   return (  
         <Viro3DObject
-          visible={(ctx.description.itemID == item.questItemID)}
+          visible={(questLocal.visualizer.itemID == item.questItemID)}
           source={Resources.get(item.model.source)}
           position={item.model.position}
           scale={item.model.scale}

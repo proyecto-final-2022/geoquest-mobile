@@ -14,14 +14,14 @@ import {BoxAnimation, FolderAnimation, PageAnimation, makeOnPinch, makeOnRotate,
 
 export default function VisualizeFolder(item, ctx) {
   const questState = useSelector(state => state.quest);
+  const questLocal = useSelector(state => state.questLocal);
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {console.log("*****Quest state:", questState)
-  console.log("****Item: ", item)
-  }
-
-    , [questState])
+  useEffect(() => {
+    if (questLocal.inventory.selectedItem.itemID == "1") {
+      console.log("******************Buenas", questLocal)
+    }
+    }, [questLocal])
 
   const modelspath = "../../../../../res/models";
 
@@ -154,14 +154,15 @@ const Clue0 = useState({
 
   function FolderOnClick(){
 
+    console.log("*************Entré acá")
+
     const folder = Folder[0], setfolder = Folder[1];
     const note = Note[0], setnote = Note[1];
     const page0 = Page0[0], setpage0 = Page0[1];
 
-    if (x++==1 /*TODO(pablo):check Page is equipped*/) { //Page equipped
-    //if (ctx.selectedItem.questItemID == "1") { //couldnt get this to work, only to break the other path
+    if (questLocal.inventory.selectedItem.itemID == "1") { //Page equipped
+      console.log("**********Entré con la hoja equipada")
     //TODO(pablo): remove Page from inventory
-
       //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
 
       if(GameState.folder_opened){
@@ -231,7 +232,7 @@ const Clue0 = useState({
   }
 
   return (  
-    <ViroNode visible={(ctx.description.itemID == item.questItemID)} position={Node[0].position} rotation={Node[0].rotation} scale={Node[0].scale} onRotate={makeOnRotate(Node)} >
+    <ViroNode visible={(questLocal.visualizer.itemID == item.questItemID)} position={Node[0].position} rotation={Node[0].rotation} scale={Node[0].scale} onRotate={makeOnRotate(Node)} >
       <Viro3DObject
           source={Folder[0].source}
           resources={Folder[0].resources}

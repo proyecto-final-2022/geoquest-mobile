@@ -1,5 +1,7 @@
+import {useSelector, useDispatch} from "react-redux";
 
 export default {
+
   "showHint": (ctx, hint) => {
     ctx.global.hint(hint);
   },
@@ -37,11 +39,12 @@ export default {
     }
   },
 
-  "grabItemCondition": (ctx, id) => {    
-    if (id == ctx.global.selectedItem.questItemID) {
+  "grabItemCondition": (ctx, id) => {
+    const questLocal = useSelector(state => state.questLocal);    
+    if (id == questLocal.inventory.selectedItem.itemID) {
     } else {
-      if (ctx.global.selectedItem.questItemID != "") {
-        ctx.global.hint("No es posible abrir el cofre con: " + ctx.global.selectedItem.title);
+      if (questLocal.inventory.selectedItem.itemID != "") {
+        ctx.global.hint("No es posible abrir el cofre con: " + questLocal.inventory.selectedItem.name);
       }
       return {...ctx.state,
       addInteraction: id}

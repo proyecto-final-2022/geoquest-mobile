@@ -8,7 +8,10 @@ const initialState = {
         image: 0    
     },
     inventory: {
-        selectedItemID: undefined
+        selectedItem: {
+            itemID: undefined,
+            name: ""
+        }
     }
 };
 

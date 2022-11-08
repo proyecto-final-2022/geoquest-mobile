@@ -59,33 +59,26 @@ const Inventory = ({props}) => {
       title: 'Ver',
       action: (item, index) =>  {
         hideMenu(index)
-        console.log("****Quest local: ", questState)
-//        context.setObjectVisualize(item.view) 
-        props.ctx.setObjectDescription(
-        {
-          itemID: item.questItemID,
-          title: item.title,
-          description: item.description,
-          image: item.image,
-          visible: true
-        })
-        /*
-          const action = QuestLocal.actions.setVisualizer(
-            {
-              itemID: item.questItemID,
-              title: item.title,
-              description: item.description,
-              image: item.image
-           })
-          dispatch(action) 
-          */
-          props.ctx.handleSnapPress(0)
+        const action = QuestLocal.actions.setVisualizer(
+          {
+            itemID: item.questItemID,
+            title: item.title,
+            description: item.description,
+            image: item.image
+          })
+        dispatch(action)   
+        props.ctx.handleSnapPress(0)
       }
     },
     {
       title: 'Usar',
       action: (item, index) => {
-        props.ctx.setSelectedItem({title: item.title, questItemID: item.questItemID})
+        const action = QuestLocal.actions.selectItem(
+          {
+            itemID: item.questItemID,
+            name: item.title
+          })
+        dispatch(action)  
         hideMenu(index)
       }
     }
