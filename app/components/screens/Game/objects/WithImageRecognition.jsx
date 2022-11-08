@@ -115,51 +115,8 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     if(!hasInteractionsLeft(newState)) {
       setRunFade(true);
     }
-    
-    if (newState.sendUpdate) {
 
-      if (newState.sendNotification) {
-
-        fetch(Config.appUrl + "quests/" + questID, {
-          method: 'PUT',
-          headers: { 
-            'Content-Type': 'application/json'},
-          body: JSON.stringify(newState) 
-        }).catch(error => {
-          console.log('Error sending update: '+error);
-        })
-        .then(
-          fetch(Config.appNotificationsUrl + "notifications/quest_update", {
-            method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              quest_id: questID
-            }) 
-          }).catch(error => {
-            console.log('Error sending notification: '+error);
-          })
-        )
-        
-        newState.sendNotification = false
-      
-      } else {
-
-        fetch(Config.appUrl + "quests/" + questID, {
-          method: 'PUT',
-          headers: { 
-            'Content-Type': 'application/json'},
-          body: JSON.stringify(newState) 
-        }).catch(error => {
-          console.log('Error sending update: '+error);
-        })
-
-      }
-
-      newState.sendUpdate = false
-    }
-
-    console.log("**************new state: ", newState)
+//    console.log("**************new state: ", newState)
 
     dispatch(Quest.actions.set(newState));
   };

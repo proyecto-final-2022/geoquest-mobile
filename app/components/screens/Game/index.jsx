@@ -18,7 +18,7 @@ function useQuestSetup(route, questID) {
   const [loading, setLoading] = useState(true);
 
   //TODO: des-hardcodear url
-  const url = Config.appUrl + "quests/1" 
+  const url = Config.appUrl + "quests/1/progressions/112" 
 
   const initQuest = async () => {
     console.log("*******Init quest: ", questState);
@@ -32,14 +32,15 @@ function useQuestSetup(route, questID) {
     .then((response) => response.json())
     .then((json) => 
     {   
-        // dispatch(Quest.actions.set(
-        //   {...questState,
-        //   inventory: json.inventory,
-        //   scene: json.scene,
-        //   objects: json.objects ?? {},
-        //   logs: json.logs ?? [],
-        //   points: json.points ?? parseFloat(0)}
-        //   ));
+      console.log("***Progress: ", json)
+         dispatch(Quest.actions.set(
+           {...questState,
+           inventory: json.inventory,
+           scene: json.scene,
+           objects: json.objects ?? {},
+           logs: json.logs ?? [],
+           points: json.points ?? parseFloat(0)}
+           ));
     }
     
     )
@@ -63,6 +64,62 @@ function useQuestSetup(route, questID) {
     const cleanUp = setUpdateListener();
     return cleanUp;
   }, [route]);
+
+  useEffect(() => {    
+    //des-hardcodear
+    fetch(Config.appUrl + "quests/1/progressions/112", {
+      method: 'PUT',
+      headers: { 
+        'Content-Type': 'application/json'},
+      body: JSON.stringify(questState) 
+    }).catch(error => {
+      console.log('Error sending update: '+error);
+    })
+/*
+    if (newState.sendUpdate) {
+
+      if (newState.sendNotification) {
+
+        fetch(Config.appUrl + "quests/" + questID, {
+          method: 'PUT',
+          headers: { 
+            'Content-Type': 'application/json'},
+          body: JSON.stringify(newState) 
+        }).catch(error => {
+          console.log('Error sending update: '+error);
+        })
+        .then(
+          fetch(Config.appNotificationsUrl + "notifications/quest_update", {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              quest_id: questID
+            }) 
+          }).catch(error => {
+            console.log('Error sending notification: '+error);
+          })
+        )
+        
+        newState.sendNotification = false
+      
+      } else {
+
+        fetch(Config.appUrl + "quests/" + questID, {
+          method: 'PUT',
+          headers: { 
+            'Content-Type': 'application/json'},
+          body: JSON.stringify(newState) 
+        }).catch(error => {
+          console.log('Error sending update: '+error);
+        })
+
+      }
+
+      newState.sendUpdate = false
+    }
+*/
+  }, [questState]);
 
   return {
     loading: loading,

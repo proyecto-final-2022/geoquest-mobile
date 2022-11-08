@@ -23,7 +23,6 @@ export default {
     return {
       ...ctx.state,
       logs: [...logs, msg],
-      sendUpdate: true,
     };
   },
 
@@ -34,8 +33,6 @@ export default {
 
     return {...currentState,
       inventory: newInventory,
-      sendUpdate: true,
-      sendNotification: true
     }
   },
 
@@ -57,8 +54,6 @@ export default {
       ...ctx.state,
       scene: ctx.state.scene + 1,
       objects: {},
-      sendUpdate: true,
-      sendNotification:true
     };
   }
 };
