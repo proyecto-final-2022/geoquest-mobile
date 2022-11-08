@@ -3,12 +3,13 @@ import { StyleSheet, SafeAreaView, ScrollView, ActivityIndicator, Text, View, Di
 import itemImage_1 from '../../../../../assets/questItems/paper.png'
 import itemImage_2 from '../../../../../assets/questItems/key.png'
 import itemImage_3 from '../../../../../assets/questItems/folder.png'
-import {useSelector} from "react-redux";
+import QuestLocal from '../../../../redux/slices/questLocal'
+import {useSelector, useDispatch} from "react-redux";
 
 
 const Inventory = ({props}) => {
   const questState = useSelector(state => state.quest);
-  const questLocal = useSelector(state => state.questLocal);
+  const dispatch = useDispatch();
 
     useEffect(() => {
       console.log("**********Inventory: ", questState.inventory)
@@ -58,15 +59,26 @@ const Inventory = ({props}) => {
       title: 'Ver',
       action: (item, index) =>  {
         hideMenu(index)
+        console.log("****Quest local: ", questState)
 //        context.setObjectVisualize(item.view) 
-          props.ctx.setObjectDescription(
+        props.ctx.setObjectDescription(
+        {
+          itemID: item.questItemID,
+          title: item.title,
+          description: item.description,
+          image: item.image,
+          visible: true
+        })
+        /*
+          const action = QuestLocal.actions.setVisualizer(
             {
               itemID: item.questItemID,
               title: item.title,
               description: item.description,
-              image: item.image,
-              visible: true
+              image: item.image
            })
+          dispatch(action) 
+          */
           props.ctx.handleSnapPress(0)
       }
     },

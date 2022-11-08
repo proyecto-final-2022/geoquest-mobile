@@ -9,9 +9,13 @@ import SceneView from "./SceneView";
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet'
 import Inventory from "./inventory/Inventory"
 import DescriptionModal from "./DescriptionModal";
+import QuestLocal from "../../../redux/slices/questLocal"
+import {useSelector} from "react-redux";
 import {Ionicons} from '@expo/vector-icons'
 
 export default function ARView({route}) {
+  const quest = useSelector(state => state.quest);
+  const questLocal = useSelector(state => state.questLocal);
   const [ showHint, setShowHint ] = useState(false);
   const [ hintText, setHintText ] = useState("");
   const [description, setObjectDescription] = useState({title: "", questItemID: "", description: "", image: 0, visible: null});
@@ -46,6 +50,13 @@ export default function ARView({route}) {
     console.log("****Selected item: ", selectedItem)
   }, [selectedItem]);
 
+  useEffect(() => {
+    //questLocal.visualizer.itemID != undefined
+    console.log("****Quest local: ", questLocal)
+    console.log("****Quest: ", quest)
+    console.log("****ehhhhhhhhhhhhhhh??")
+  }, [questLocal]);
+
 
   return (
     <View style={{height: "100%", width: "100%"}}>
@@ -61,8 +72,9 @@ export default function ARView({route}) {
         <Text>Descripcion del objeto</Text>
         <View style={{flex: 1/* , flexDirection: 'row-reverse'*/}}>
               <Pressable onPress={() => {
-//                ctx.setObjectVisualize(0)
-                setObjectDescription({visible: false, questItemID: ""})}}>
+                setObjectDescription({visible: false, questItemID: ""})
+                //QuestLocal.actions.setVisualizer({itemID: undefined})
+                }}>
                 <Ionicons name='close' size={35}/>
               </Pressable>
           </View>

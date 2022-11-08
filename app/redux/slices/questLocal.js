@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     visualizer: {
         title: "", 
-        questItemID: undefined, 
+        itemID: undefined, 
         description: "", 
         image: 0    
     },

@@ -4,8 +4,8 @@ import QuestLocal from "./slices/questLocal";
 
 const store = configureStore({
   reducer: {
-    quest: Quest.reducer,
-    questLocal: QuestLocal.reducer
+    questLocal: QuestLocal.reducer,
+    quest: Quest.reducer
   }
 });
   
