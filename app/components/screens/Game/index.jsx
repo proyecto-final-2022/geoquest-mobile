@@ -5,8 +5,8 @@ import ARView from "./ARView";
 import QuestLog from "./QuestLog";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector, useDispatch } from "react-redux";
-import { AntDesign, Feather } from "@expo/vector-icons";
-
+import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
+import TeamRanking from "../TeamRanking"
 import exampleQuest from "../../../../res/exampleQuest.json";
 import Quest from "../../../redux/slices/quest"
 import Config from "../../../../config.json"
@@ -166,6 +166,16 @@ export default function Game({route, questID}) {
         options={{
           tabBarIcon: ({color, size}) => (
             <Feather name="camera" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Podio" 
+        component={TeamRanking} 
+        initialParams={{questConfig}}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Ionicons name="ios-podium-sharp" color={color} size={size} />
           ),
         }}
       />

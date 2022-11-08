@@ -8,6 +8,7 @@ import QuestVisualizer from "../screens/QuestVisualizer";
 import Scene from "../scenes/HelloUser";
 import ClientQuests from "../screens/ClientQuests";
 import Ranking from "../screens/Ranking";
+import TeamRanking from "../screens/Ranking";
 import QuestTeam from "../screens/QuestTeam";
 import Notifications from "../screens/Notifications";
 import FriendsList from "../screens/FriendsList";
@@ -34,6 +35,7 @@ export default function Navigation() {
       <Drawer.Screen name="Scene" component={Scene} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Quest Visualizer" component={QuestVisualizer} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Ranking" component={Ranking} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
+      <Drawer.Screen name="TeamRanking" component={TeamRanking} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Quest Team" component={QuestTeam} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Notifications" component={Notifications} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Wait Room" component={WaitRoom} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
