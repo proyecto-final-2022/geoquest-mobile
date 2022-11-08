@@ -26,7 +26,7 @@ export default function VisualizeFolder(item, ctx) {
   const modelspath = "../../../../../res/models";
 
   const GameState = {
-    folder_opened:false, //TODO(fran): I dont like this logic at all
+    folder_opened:true, //TODO(fran): I dont like this logic at all
   };
   const Folder = useState({
     source:Resources.get(item.model.source),
@@ -166,6 +166,7 @@ const Clue0 = useState({
       //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
 
       if(GameState.folder_opened){
+        console.log("***animacion?")
         ViroAnimations.registerAnimations({
           page_addtofolder1:{ //appear page
             properties:{
