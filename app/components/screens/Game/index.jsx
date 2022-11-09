@@ -11,14 +11,12 @@ import exampleQuest from "../../../../res/exampleQuest.json";
 import Quest from "../../../redux/slices/quest"
 import Config from "../../../../config.json"
 
-function useQuestSetup(route, questID) {
+function useQuestSetup(route, teamID) {
   const questState = useSelector(state => state.quest);
   const dispatch = useDispatch();
   const [config, setConfig] = useState();
   const [loading, setLoading] = useState(true);
 
-  //TODO: des-hardcodear url
-  const url = Config.appUrl + "quests/1/progressions/112" 
 
   const initQuest = async () => {
     console.log("*******Init quest: ", questState);
@@ -27,6 +25,8 @@ function useQuestSetup(route, questID) {
     setConfig(exampleQuest);
     // If there is a session download current state.
     // If not, create a session and initialize with returned initial state:
+  //TODO: des-hardcodear url
+    const url = Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID 
 
     fetch(url)
     .then((response) => response.json())
@@ -67,7 +67,7 @@ function useQuestSetup(route, questID) {
 
   useEffect(() => {    
     //des-hardcodear
-    fetch(Config.appUrl + "quests/1/progressions/112", {
+    fetch(Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID, {
       method: 'PUT',
       headers: { 
         'Content-Type': 'application/json'},
@@ -130,8 +130,9 @@ function useQuestSetup(route, questID) {
 
 const Tab = createBottomTabNavigator();
 
-export default function Game({route, questID}) {
-  const {loading, questConfig } = useQuestSetup(route, questID);
+export default function Game({route, teamID}) {
+  //des-hardcodear
+  const {loading, questConfig } = useQuestSetup(route, 112);
 
   if(loading)
     return <View><Text>Loading...</Text></View>;

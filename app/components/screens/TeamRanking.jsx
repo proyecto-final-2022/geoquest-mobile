@@ -24,11 +24,16 @@ export default TeamRanking = ({route, navigation}) => {
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
 
   //des hardcodear
-  const urlTeam = Config.appUrl + "quests/1/progression/rankings" 
+  const urlTeam = Config.appUrl + "quests/" + route.params.questConfig.id + "/progression/rankings" 
 
 
   const [teamRanking, setTeamRanking] = useState([])
   const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    console.log("*****route: ", route)
+
+  }, [route])
 
   const isFocused = useIsFocused()
 
