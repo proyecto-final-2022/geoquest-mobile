@@ -10,11 +10,13 @@ import TeamRanking from "../TeamRanking"
 import exampleQuest from "../../../../res/exampleQuest.json";
 import Quest from "../../../redux/slices/quest"
 import Config from "../../../../config.json"
+import Storage from "../../../utils/storage/storage"
 
 function useQuestSetup(route, teamID) {
   const questState = useSelector(state => state.quest);
   const dispatch = useDispatch();
   const [config, setConfig] = useState();
+  const [userID, setUserID] = useState(72);
   const [loading, setLoading] = useState(true);
 
 
@@ -48,6 +50,13 @@ function useQuestSetup(route, teamID) {
 
   };
 
+  //IMPORTANTE!! HAY QUE ESTAR LOGUEADO PARA QUE ESTO FUNQUE
+  /*
+  useEffect( () => {
+    Storage.getObject('user').
+    then(user => setUserID(user.id) )
+  }, [])
+*/
   const setUpdateListener = () => {
     console.log("Listener set");
     // TODO: On update notification update state.
@@ -66,22 +75,20 @@ function useQuestSetup(route, teamID) {
   }, [route]);
 
   useEffect(() => {
-    if (questState.sendUpdate.lastFoundItemID != undefined) {
-      console.log("******************que tal: ", questState.sendUpdate.lastFoundItemID)
-      fetch(Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID, {
-        method: 'PUT',
-        headers: { 
-          'Content-Type': 'application/json'},
-        body: JSON.stringify(questState) 
-      }).catch(error => {
-        console.log('Error sending update: '+error);
-      })
-  
-      dispatch(Quest.actions.set(
-        {...questState,
-           }
-        ));
-    }
+      if (questState.sendUpdate.lastFoundItemID != undefined) {
+        const questRequest = {...questState, item_name: exampleQuest.items[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
+
+        fetch(Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID, {
+          method: 'PUT',
+          headers: { 
+            'Content-Type': 'application/json'},
+          body: JSON.stringify(questRequest) 
+        }).catch(error => {
+          console.log('Error sending update: '+error);
+        })
+
+      }
+      
   } 
    , [questState.sendUpdate])
 /*
