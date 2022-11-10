@@ -8,7 +8,10 @@ const initialState = {
   logs: [
     "Una nota loca bla bla",
     "Una segunda nota loca, memememememe"
-  ]
+  ],
+  sendUpdate: {
+    lastFoundItemID: undefined
+  }
 };
 
 

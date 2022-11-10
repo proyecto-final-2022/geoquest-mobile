@@ -36,11 +36,11 @@ const questLocalSlice = createSlice({
     },
     clearVisualizer: (state, _action) => {
         //      state.visualizer = {...action.payload}  
-            return {
-                ...state, 
-                visualizer: initialState.visualizer
-            };
-        }
+        return {
+            ...state, 
+            visualizer: initialState.visualizer
+        };
+    },
   }
 });
 

@@ -65,7 +65,36 @@ function useQuestSetup(route, teamID) {
     return cleanUp;
   }, [route]);
 
-  useEffect(() => {    
+  useEffect(() => {
+    if (questState.sendUpdate.lastFoundItemID != undefined) {
+      console.log("******************que tal: ", questState.sendUpdate.lastFoundItemID)
+      fetch(Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID, {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json'},
+        body: JSON.stringify(questState) 
+      }).catch(error => {
+        console.log('Error sending update: '+error);
+      })
+  
+      dispatch(Quest.actions.set(
+        {...questState,
+           }
+        ));
+    }
+  } 
+   , [questState.sendUpdate])
+/*
+  useEffect(() => {
+
+    console.log("******************************State actual: ", questState)
+
+    console.log("******************************Send update: ", questState.sendUpdate.lastItemID)
+    
+    if (questState.sendUpdate.lastItemID != undefined) {
+      console.log("******************que tal: ", questState.sendUpdate.lastItemID)
+    }
+
     //des-hardcodear
     fetch(Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID, {
       method: 'PUT',
@@ -75,6 +104,11 @@ function useQuestSetup(route, teamID) {
     }).catch(error => {
       console.log('Error sending update: '+error);
     })
+
+    dispatch(Quest.actions.set(
+      {...questState,
+         }
+      ));
 /*
     if (newState.sendUpdate) {
 
@@ -118,9 +152,9 @@ function useQuestSetup(route, teamID) {
 
       newState.sendUpdate = false
     }
-*/
-  }, [questState]);
 
+  }, [questState]);
+  */
   return {
     loading: loading,
     questConfig: config

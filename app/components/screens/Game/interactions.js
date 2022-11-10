@@ -1,7 +1,6 @@
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 
 export default {
-
   "showHint": (ctx, hint) => {
     ctx.global.hint(hint);
   },
@@ -33,6 +32,9 @@ export default {
 
     return {...currentState,
       inventory: newInventory,
+      sendUpdate: {
+        lastFoundItemID: id
+      }
     }
   },
 

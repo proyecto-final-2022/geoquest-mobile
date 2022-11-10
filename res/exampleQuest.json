@@ -106,12 +106,12 @@
                   ]
                 },
                 {
-                  "name": "grabItem",
-                  "params": ["3"]
-                },
-                {
                   "name": "nextScene",
                   "params": [""]
+                },
+                {
+                  "name": "grabItem",
+                  "params": ["3"]
                 }
               ]
             ]
@@ -204,17 +204,17 @@
                 {
                   "name": "log",
                   "params": [
-                    "Me encontre una carpeta en '<lugar>' y adentro pueden guardarse hojas"
+                    "Me encontre una llave en '<lugar>' y puedo usarla para abrir un cofre"
                   ]
-                },
-                {
-                  "name": "grabItem",
-                  "params": ["2"]
                 },
                 {
                   "name": "nextScene",
                   "params": [""]
-                }
+                },
+                {
+                  "name": "grabItem",
+                  "params": ["2"]
+                } 
               ]
             ]
           }

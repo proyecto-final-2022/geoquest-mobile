@@ -116,9 +116,7 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
       setRunFade(true);
     }
 
-//    console.log("**************new state: ", newState)
-
-    dispatch(Quest.actions.set(newState));
+    dispatch(Quest.actions.set({...newState}));
   };
 
   return (
