@@ -66,7 +66,14 @@ export default function ARView({route}) {
                       itemID: undefined,
                       name: ""
                     }}))
-                  navigation.navigate("Quest Navigator")
+                  navigation.navigate("Quest Completed",
+                  {
+                    questId: route.params.questConfig.id,
+                    questName: route.params.questConfig.name,
+                    questScore: 99999,
+                    questDifficulty: "Dificil",
+                    questDuration: "Media"
+                  })
                 }else{
                   dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
                 } 
