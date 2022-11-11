@@ -31,7 +31,7 @@ const questLocalSlice = createSlice({
 //      state.visualizer = {...action.payload}  
         return {
             ...state, 
-            inventory: {selectedItem: action.payload}
+            inventory: {...action.payload}
         };
     },
     clearVisualizer: (state, _action) => {

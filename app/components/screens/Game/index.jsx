@@ -41,7 +41,8 @@ function useQuestSetup(route, teamID) {
            scene: json.scene,
            objects: json.objects ?? {},
            logs: json.logs ?? [],
-           points: json.points ?? parseFloat(0)}
+           points: json.points ?? parseFloat(0),
+           finished: json.finished}
            ));
     }
     

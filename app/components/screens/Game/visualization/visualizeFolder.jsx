@@ -9,7 +9,6 @@ import { ViroOmniLight } from "@viro-community/react-viro/components/ViroOmniLig
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 import Resources from "../../../../utils/resources.js";
 import Quest from "../../../../redux/slices/quest"
-import {useNavigation} from '@react-navigation/native'
 import { useSelector, useDispatch } from "react-redux";
 import {BoxAnimation, FolderAnimation, PageAnimation, makeOnPinch, makeOnRotate, makeOnDrag, MapToViro3DObject, Lighting} from "../GameModelsCommon"
 
@@ -18,7 +17,6 @@ export default function VisualizeFolder(item, ctx) {
   const questLocal = useSelector(state => state.questLocal);
   const [folderOpened, setFolderOpened] = useState(true)
   const dispatch = useDispatch();
-  const navigation = useNavigation()
 
   const modelspath = "../../../../../res/models";
 
@@ -150,7 +148,6 @@ const Clue0 = useState({
   var x = 0;
 
   function FolderOnClick(){
-    console.log("***Last interaction: ", folderOpened)
     // console.log("***Last interaction: ", questLocal.inventory.selectedItem.itemID)
     // if (questState.finished == true) {
     //   navigation.navigate("Quest Navigator")

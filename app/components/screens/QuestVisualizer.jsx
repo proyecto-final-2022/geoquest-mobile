@@ -145,7 +145,14 @@ export default function QuestVisualizer({route, navigation}) {
    
       <View style={styles.teamButtonsContainer}> 
         <CustomButton2 
-          onPress = {() => console.log("Comenzar")}
+          onPress = {() => 
+            fetch(Config.appUrl + "quests/1/progressions/112", {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json'},
+            }).then(navigation.navigate("Game", {teamID: 112}))
+            
+          }
           icon = "arrow-forward-circle"
           bgColor= 'darkseagreen'
           fgColor = 'white'

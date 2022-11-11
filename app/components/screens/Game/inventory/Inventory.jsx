@@ -74,9 +74,10 @@ const Inventory = ({props}) => {
       title: 'Usar',
       action: (item, index) => {
         const action = QuestLocal.actions.selectItem(
-          {
-            itemID: item.questItemID,
-            name: item.title
+        { selectedItem: {
+          itemID: item.questItemID,
+          name: item.title
+          }        
           })
         dispatch(action)  
         hideMenu(index)

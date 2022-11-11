@@ -8,14 +8,17 @@ import Scene from "./Scene";
 import SceneView from "./SceneView";
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet'
 import Inventory from "./inventory/Inventory"
+import {useNavigation} from '@react-navigation/native'
 import DescriptionModal from "./DescriptionModal";
 import QuestLocal from "../../../redux/slices/questLocal"
 import {useSelector, useDispatch} from "react-redux";
 import {Ionicons} from '@expo/vector-icons'
+import Navigation from "../../navigation";
 
 export default function ARView({route}) {
-  const quest = useSelector(state => state.quest);
+  const questState = useSelector(state => state.quest);
   const dispatch = useDispatch();
+  const navigation = useNavigation()
 
   const questLocal = useSelector(state => state.questLocal);
   const [ showHint, setShowHint ] = useState(false);
@@ -55,7 +58,20 @@ export default function ARView({route}) {
               <Text style={{fontStyle: 'italic'}}>Nombre objeto</Text>
         <Text>Descripcion del objeto</Text>
         <View style={{flex: 1/* , flexDirection: 'row-reverse'*/}}>
-              <Pressable onPress={() => {dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))}}>
+              <Pressable onPress={() => {
+                if (questState.finished == true) {
+                  dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
+                  dispatch(QuestLocal.actions.selectItem(
+                    {selectedItem: {
+                      itemID: undefined,
+                      name: ""
+                    }}))
+                  navigation.navigate("Quest Navigator")
+                }else{
+                  dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
+                } 
+                }
+              }>
                 <Ionicons name='close' size={35}/>
               </Pressable>
           </View>
