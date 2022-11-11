@@ -91,77 +91,7 @@ function useQuestSetup(route, teamID) {
       
   } 
    , [questState.sendUpdate])
-/*
-  useEffect(() => {
 
-    console.log("******************************State actual: ", questState)
-
-    console.log("******************************Send update: ", questState.sendUpdate.lastItemID)
-    
-    if (questState.sendUpdate.lastItemID != undefined) {
-      console.log("******************que tal: ", questState.sendUpdate.lastItemID)
-    }
-
-    //des-hardcodear
-    fetch(Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID, {
-      method: 'PUT',
-      headers: { 
-        'Content-Type': 'application/json'},
-      body: JSON.stringify(questState) 
-    }).catch(error => {
-      console.log('Error sending update: '+error);
-    })
-
-    dispatch(Quest.actions.set(
-      {...questState,
-         }
-      ));
-/*
-    if (newState.sendUpdate) {
-
-      if (newState.sendNotification) {
-
-        fetch(Config.appUrl + "quests/" + questID, {
-          method: 'PUT',
-          headers: { 
-            'Content-Type': 'application/json'},
-          body: JSON.stringify(newState) 
-        }).catch(error => {
-          console.log('Error sending update: '+error);
-        })
-        .then(
-          fetch(Config.appNotificationsUrl + "notifications/quest_update", {
-            method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              quest_id: questID
-            }) 
-          }).catch(error => {
-            console.log('Error sending notification: '+error);
-          })
-        )
-        
-        newState.sendNotification = false
-      
-      } else {
-
-        fetch(Config.appUrl + "quests/" + questID, {
-          method: 'PUT',
-          headers: { 
-            'Content-Type': 'application/json'},
-          body: JSON.stringify(newState) 
-        }).catch(error => {
-          console.log('Error sending update: '+error);
-        })
-
-      }
-
-      newState.sendUpdate = false
-    }
-
-  }, [questState]);
-  */
   return {
     loading: loading,
     questConfig: config
