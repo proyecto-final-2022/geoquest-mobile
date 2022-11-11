@@ -9,24 +9,21 @@ import { ViroOmniLight } from "@viro-community/react-viro/components/ViroOmniLig
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 import Resources from "../../../../utils/resources.js";
 import Quest from "../../../../redux/slices/quest"
+import {useNavigation} from '@react-navigation/native'
 import { useSelector, useDispatch } from "react-redux";
 import {BoxAnimation, FolderAnimation, PageAnimation, makeOnPinch, makeOnRotate, makeOnDrag, MapToViro3DObject, Lighting} from "../GameModelsCommon"
 
 export default function VisualizeFolder(item, ctx) {
   const questState = useSelector(state => state.quest);
   const questLocal = useSelector(state => state.questLocal);
+  const [folderOpened, setFolderOpened] = useState(true)
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (questLocal.inventory.selectedItem.itemID == "1") {
-      console.log("******************Buenas", questLocal)
-    }
-    }, [questLocal])
+  const navigation = useNavigation()
 
   const modelspath = "../../../../../res/models";
 
   const GameState = {
-    folder_opened:true, //TODO(fran): I dont like this logic at all
+    folder_opened:false, //TODO(fran): I dont like this logic at all
   };
   const Folder = useState({
     source:Resources.get(item.model.source),
@@ -50,13 +47,13 @@ export default function VisualizeFolder(item, ctx) {
     onRotate:undefined,
     onPinch:undefined,
     onDrag:undefined,
-    onClick:FolderOnClick,
+//    onClick:FolderOnClick,
     visible:true,
     interactable:true,
     interactions_accurate_collision_detection:true,
   });
 
-  const Note = useState({ 
+  const Note = useState({
     source:require(modelspath+"/Note/model.vrx"),
     resources:[require(modelspath+'/Note/note-atlas_d.png'),
                require(modelspath+'/Note/note-atlas_r.png'),
@@ -120,7 +117,7 @@ const Clue0 = useState({
     loop_animation:false,
   });
 
-  const PageData = { 
+  const PageData = {
     source:require(modelspath+"/Page/model.vrx"),
     resources:[require(modelspath+'/Page/page-atlas_d.png'),
                require(modelspath+'/Page/page-atlas_r.png'),
@@ -153,8 +150,11 @@ const Clue0 = useState({
   var x = 0;
 
   function FolderOnClick(){
-
-    console.log("*************Entré acá")
+    console.log("***Last interaction: ", folderOpened)
+    // console.log("***Last interaction: ", questLocal.inventory.selectedItem.itemID)
+    // if (questState.finished == true) {
+    //   navigation.navigate("Quest Navigator")
+    // }
 
     const folder = Folder[0], setfolder = Folder[1];
     const note = Note[0], setnote = Note[1];
@@ -165,8 +165,7 @@ const Clue0 = useState({
     //TODO(pablo): remove Page from inventory
       //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
 
-      if(GameState.folder_opened){
-        console.log("***animacion?")
+//      if(GameState.folder_opened){
         ViroAnimations.registerAnimations({
           page_addtofolder1:{ //appear page
             properties:{
@@ -174,14 +173,14 @@ const Clue0 = useState({
                 scaleY: PageData.scale.y(),
                 scaleZ: PageData.scale.z(),
           },
-          easing:"EaseInEaseOut", 
+          easing:"EaseInEaseOut",
           duration: 1000
           },
           page_addtofolder2:{ //move page inside folder
             properties:{
                 positionX: "-=1",
           },
-          easing:"EaseInEaseOut", 
+          easing:"EaseInEaseOut",
           duration: 1000
           },
           page_addtofolder:[["page_addtofolder1","page_addtofolder2"]],
@@ -195,19 +194,21 @@ const Clue0 = useState({
           loop_animation:false,
           anim_interruptible:false,
         }))
-      }
+        dispatch(Quest.actions.set({...questState, finished: true}));
+//      }
     }
     else{
-      GameState.folder_opened=!GameState.folder_opened;
-  
+      setFolderOpened(!folderOpened)
+//      GameState.folder_opened=!GameState.folder_opened;
+
       setfolder(prevState => ({...prevState,
-          interactable:false,
-          animation:GameState.folder_opened?FolderAnimation.Open:FolderAnimation.Close,
+//          interactable:false,
+          animation:folderOpened?FolderAnimation.Open:FolderAnimation.Close,
           animate:true,
           loop_animation:false,
           anim_interruptible:false,
           anim_on_finish:()=>{
-              setnote(prevState => ({...prevState, interactable:GameState.folder_opened}));
+              setnote(prevState => ({...prevState, interactable:folderOpened}));
               setfolder(prevState => ({...prevState, interactable:true}));
           },
       }))
@@ -232,7 +233,7 @@ const Clue0 = useState({
     dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "1"}, inventory: [...questState.inventory, "1"]}));
   }
 
-  return (  
+  return (
     <ViroNode visible={(questLocal.visualizer.itemID == item.questItemID)} position={Node[0].position} rotation={Node[0].rotation} scale={Node[0].scale} onRotate={makeOnRotate(Node)} >
       <Viro3DObject
           source={Folder[0].source}
@@ -243,7 +244,7 @@ const Clue0 = useState({
           scale={Folder[0].scale}
           animation={{name: Folder[0].animation, run: Folder[0].animate, loop: Folder[0].loop_animation, interruptible:Folder[0].anim_interruptible, onFinish:Folder[0].anim_on_finish}}
           onRotate={makeOnRotate(Node)}
-          onClick={Folder[0].onClick}
+          onClick={FolderOnClick}
           visible={Folder[0].visible}
           ignoreEventHandling={!Folder[0].interactable}
           highAccuracyEvents={Folder[0].interactions_accurate_collision_detection}

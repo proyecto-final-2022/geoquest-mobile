@@ -5,13 +5,11 @@ const initialState = {
   inventory: [],
   objects: {},
   startTime: new Date().getTime(),
-  logs: [
-    "Una nota loca bla bla",
-    "Una segunda nota loca, memememememe"
-  ],
+  logs: [],
   sendUpdate: {
     lastFoundItemID: undefined
-  }
+  },
+  finished: false
 };
 
 
