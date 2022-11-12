@@ -4,7 +4,7 @@ const initialState = {
   scene: parseFloat(0),
   inventory: [],
   objects: {},
-  startTime: new Date().getTime(),
+  start_time: Math.floor(Date.now() / 1000),
   logs: [],
   sendUpdate: {
     lastFoundItemID: undefined

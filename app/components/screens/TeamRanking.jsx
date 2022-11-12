@@ -30,11 +30,6 @@ export default TeamRanking = ({route, navigation}) => {
   const [teamRanking, setTeamRanking] = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    console.log("*****route: ", route)
-
-  }, [route])
-
   const isFocused = useIsFocused()
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import {useSelector} from "react-redux";
+import Config from "../../../../config.json"
 
 export default {
   "showHint": (ctx, hint) => {
@@ -6,15 +7,37 @@ export default {
   },
 
   "addPoints": (ctx, points) => {
-    var timestamp = new Date().getTime()
+    
+    const url = Config.appUrl + "quests/" + 1 + "/progressions/" + 112  + "/timestamp"
+
+    var timestamp = Math.floor(Date.now() / 1000)
     //hours difference
-    var diff = (timestamp - ctx.state.startTime) / (1000 * 60 * 60 * 24)
+    var diff = (timestamp - ctx.state.start_time) 
+    console.log("***********diff", diff)
     var add = parseFloat((points/diff).toFixed(2))
     console.log("*****Puntos", ctx.state.points + add)
+
+    fetch(url)
+  .then((response) => response.json())
+  .then((json) =>
+    {
+      timestamp = json.timestamp
+      console.log("****timestamp response: ", timestamp)
+      //hours difference
+      add = parseFloat((points/timestamp).toFixed(2))
+      console.log("*****Puntos", ctx.state.points + add)
+    }
+  )
+  .catch((error) => 
+  {
+      console.log("Failed request")
+  }
+  );
     return {
       ...ctx.state,
       points: ctx.state.points + add,
     };
+    
   },
 
   "log": (ctx, msg) => {
@@ -59,3 +82,35 @@ export default {
     };
   }
 };
+
+async function getPoints() {
+  fetch(url)
+  .then((response) => response.json())
+  .then((json) =>
+    {
+      var timestamp = json.timestamp
+      console.log("****timestamp response: ", timestamp)
+      //hours difference
+      var add = parseFloat((points/timestamp).toFixed(2))
+      console.log("*****Puntos", ctx.state.points + add)
+      return {
+        ...ctx.state,
+        points: ctx.state.points + add,
+      };
+    }
+  )
+  .catch((error) => 
+  {
+      var timestamp = Math.floor(Date.now() / 1000)
+      //hours difference
+      var diff = (timestamp - ctx.state.startTime) 
+      console.log("***********diff", diff)
+      var add = parseFloat((points/diff).toFixed(2))
+      console.log("*****Puntos", ctx.state.points + add)
+      return {
+        ...ctx.state,
+        points: ctx.state.points + add,
+      };
+  }
+  );
+}

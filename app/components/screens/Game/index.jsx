@@ -60,7 +60,8 @@ function useQuestSetup(route, teamID) {
              objects: json.objects ?? {},
              logs: json.logs ?? [],
              points: json.points ?? parseFloat(0),
-             finished: json.finished}
+             finished: json.finished,
+             start_time: json.start_time ?? Math.floor(Date.now() / 1000)}
             ));
         }    
     }

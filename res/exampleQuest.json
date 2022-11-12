@@ -96,7 +96,7 @@
                 {
                   "name": "addPoints",
                   "params": [
-                    10
+                    100
                   ]
                 },
                 {
@@ -191,7 +191,7 @@
                 {
                   "name": "addPoints",
                   "params": [
-                    10
+                    150
                   ]
                 },
                 {
@@ -245,7 +245,7 @@
                 {
                   "name": "addPoints",
                   "params": [
-                    10
+                    200
                   ]
                 },
                 {
