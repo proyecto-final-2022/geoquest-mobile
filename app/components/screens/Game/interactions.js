@@ -8,31 +8,10 @@ export default {
 
   "addPoints": (ctx, points) => {
     
-    const url = Config.appUrl + "quests/" + 1 + "/progressions/" + 112  + "/timestamp"
-
     var timestamp = Math.floor(Date.now() / 1000)
-    //hours difference
     var diff = (timestamp - ctx.state.start_time) 
-    console.log("***********diff", diff)
     var add = parseFloat((points/diff).toFixed(2))
-    console.log("*****Puntos", ctx.state.points + add)
 
-    fetch(url)
-  .then((response) => response.json())
-  .then((json) =>
-    {
-      timestamp = json.timestamp
-      console.log("****timestamp response: ", timestamp)
-      //hours difference
-      add = parseFloat((points/timestamp).toFixed(2))
-      console.log("*****Puntos", ctx.state.points + add)
-    }
-  )
-  .catch((error) => 
-  {
-      console.log("Failed request")
-  }
-  );
     return {
       ...ctx.state,
       points: ctx.state.points + add,
