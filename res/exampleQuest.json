@@ -64,7 +64,6 @@
         "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
       }
     }
-
   },
   "scenes": [
     {
@@ -274,5 +273,9 @@
         }
       ]
     }
-  ]
+  ],
+  "lastItem": {
+    "id": "5",
+    "title": "TP perdido"
+  }
 }

@@ -9,16 +9,18 @@ import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import TeamRanking from "../TeamRanking"
 import exampleQuest from "../../../../res/exampleQuest.json";
 import Quest from "../../../redux/slices/quest"
+import QuestLocal from "../../../redux/slices/questLocal"
 import Config from "../../../../config.json"
+import {useNavigation} from '@react-navigation/native'
 import Storage from "../../../utils/storage/storage"
 
 function useQuestSetup(route, teamID) {
   const questState = useSelector(state => state.quest);
   const dispatch = useDispatch();
+  const navigation = useNavigation()
   const [config, setConfig] = useState();
   const [userID, setUserID] = useState(72);
   const [loading, setLoading] = useState(true);
-
 
   const initQuest = async () => {
     console.log("*******Init quest: ", questState);
@@ -35,15 +37,32 @@ function useQuestSetup(route, teamID) {
     .then((json) => 
     {   
       console.log("***Progress: ", json)
-         dispatch(Quest.actions.set(
-           {...questState,
-           inventory: json.inventory,
-           scene: json.scene,
-           objects: json.objects ?? {},
-           logs: json.logs ?? [],
-           points: json.points ?? parseFloat(0),
-           finished: json.finished}
-           ));
+        if (json.finished == true) {
+          dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
+          dispatch(QuestLocal.actions.selectItem(
+          {selectedItem: {
+            itemID: undefined,
+            name: ""
+          }}))
+          navigation.navigate("Quest Completed",
+          {
+            questId: exampleQuest.id,
+            questName: exampleQuest.name,
+            questScore: 99999,
+            questDifficulty: "Dificil",
+            questDuration: "Media"
+          })
+        } else {
+          dispatch(Quest.actions.set(
+            {...questState,
+             inventory: json.inventory,
+             scene: json.scene,
+             objects: json.objects ?? {},
+             logs: json.logs ?? [],
+             points: json.points ?? parseFloat(0),
+             finished: json.finished}
+            ));
+        }    
     }
     
     )
@@ -76,20 +95,25 @@ function useQuestSetup(route, teamID) {
   }, [route]);
 
   useEffect(() => {
-      if (questState.sendUpdate.lastFoundItemID != undefined) {
-        const questRequest = {...questState, item_name: exampleQuest.items[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
 
-        fetch(Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID, {
-          method: 'PUT',
-          headers: { 
-            'Content-Type': 'application/json'},
-          body: JSON.stringify(questRequest) 
-        }).catch(error => {
-          console.log('Error sending update: '+error);
-        })
-
+    if (questState.sendUpdate.lastFoundItemID != undefined) {
+        if (questState.finished == true) {
+          const questRequest = {...questState, item_name: exampleQuest.lastItem.title, user_id: userID}
+          sendUpdate(questRequest, teamID)
+          navigation.navigate("Quest Completed",
+          {
+            questId: exampleQuest.id,
+            questName: exampleQuest.name,
+            questScore: 99999,
+            questDifficulty: "Dificil",
+            questDuration: "Media"
+          })
+        }
+        else{
+          const questRequest = {...questState, item_name: exampleQuest.items[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
+          sendUpdate(questRequest, teamID)  
+        }
       }
-      
   } 
    , [questState.sendUpdate])
 
@@ -154,4 +178,15 @@ export default function Game({route, teamID}) {
       />
     </Tab.Navigator>
   );
+}
+
+function sendUpdate(questRequest, teamID) {
+  fetch(Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID, {
+    method: 'PUT',
+    headers: { 
+      'Content-Type': 'application/json'},
+    body: JSON.stringify(questRequest) 
+  }).catch(error => {
+    console.log('Error sending update: '+error);
+  })
 }

@@ -10,6 +10,7 @@ import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet'
 import Inventory from "./inventory/Inventory"
 import {useNavigation} from '@react-navigation/native'
 import DescriptionModal from "./DescriptionModal";
+import QuestState from "../../../redux/slices/quest"
 import QuestLocal from "../../../redux/slices/questLocal"
 import {useSelector, useDispatch} from "react-redux";
 import {Ionicons} from '@expo/vector-icons'
@@ -62,19 +63,16 @@ export default function ARView({route}) {
                 if (questState.finished == true) {
                   dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
                   dispatch(QuestLocal.actions.selectItem(
-                    {selectedItem: {
-                      itemID: undefined,
-                      name: ""
-                    }}))
-                  navigation.navigate("Quest Completed",
-                  {
-                    questId: route.params.questConfig.id,
-                    questName: route.params.questConfig.name,
-                    questScore: 99999,
-                    questDifficulty: "Dificil",
-                    questDuration: "Media"
-                  })
-                }else{
+                  {selectedItem: {
+                  itemID: undefined,
+                  name: ""
+                  }}))
+                   dispatch(QuestState.actions.set(
+                      {...questState,
+                        sendUpdate: {
+                        lastFoundItemID: route.params.questConfig.lastItem.id,
+                      }}))
+                 }else{
                   dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
                 } 
                 }
