@@ -56,8 +56,8 @@ export default function ARView({route}) {
       {questLocal.visualizer.itemID != undefined && <View style={{backgroundColor: 'linen',
               height:'40%', 
               width: '90%',borderWidth: 5,borderColor: '#a52a2a'}}>
-              <Text style={{fontStyle: 'italic'}}>Nombre objeto</Text>
-        <Text>Descripcion del objeto</Text>
+              <Text style={{fontStyle: 'italic'}}>{questLocal.visualizer.title}</Text>
+         <Text>{questLocal.visualizer.description}</Text> 
         <View style={{flex: 1/* , flexDirection: 'row-reverse'*/}}>
               <Pressable onPress={() => {
                 if (questState.finished == true) {

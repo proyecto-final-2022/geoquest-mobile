@@ -10,7 +10,8 @@ const initialState = {
     inventory: {
         selectedItem: {
             itemID: undefined,
-            name: ""
+            name: "",
+            description: ""
         }
     }
 };

@@ -3,40 +3,10 @@
   "name": "El TP Perdido 2",
   "items": {
     "1": {
-      "title": "Hoja",
-      "description": "Hoja Hoja Hoja Hoja Hoja Hoja",
-      "questItemID": 1,
-      "image": "1",
-      "view": 1,
-      "model": {
-        "source": "models.pageCopy.model",
-        "type": "VRX",
-        "position": [0,0,-3],
-        "scale": [0.3,0.3,0.3],
-        "rotation": [0,180,0],
-        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
-      }
-    },
-    "2": {
-      "title": "Llave",
-      "description": "Llave llave llave llave llave llave",
-      "questItemID": 2,
-      "image": "2",
-      "view": 2,
-      "model": {
-        "source": "models.keyCopy.model",
-        "type": "VRX",
-        "position": [0,0,-3],
-        "scale": [0.3,0.3,0.3],
-        "rotation": [0,180,0],
-        "resources": ["resources.keyDiffuse", "resources.keyMetallic", "resources.keyRoughness"]
-      }
-    },
-    "3": {
       "title": "Carpeta",
       "visualizeFunction": "VisualizeFolder",
-      "description": "Carpeta carpeta carpeta carpeta carpeta carpeta",
-      "questItemID": 3,
+      "description": "Es la carpeta de tu TP, aquí deberías ingresar las hojas que encuentres",
+      "questItemID": 1,
       "image": "3",
       "view": 3,
       "model": {
@@ -48,11 +18,86 @@
         "resources": ["resources.folderDiffuse", "resources.folderNormal", "resources.folderRoughness"]
       }
     },
+    "2": {
+      "title": "Nota",
+      "description": "Oh no! Te encontrabas a punto de entregar tu Trabajo Práctico Final de Sistemas y Organizaciones cuando tu malvado compañero, el Duende, lo robó de tus manos y desperdigó las hojas por toda la facultad! Debés apurarte y entregar el trabajo completo a tiempo o sino tendrás que recursar la materia. Por suerte el Duende ha sido generoso y te ha dejado algunas pistas para guiarte en tu aventura. Asegurate de revisar bien cada objeto que encuentres, nunca se sabe donde este Duende puede haber escondido más pistas.",
+      "questItemID": 2,
+      "image": "1",
+      "view": 1,
+      "model": {
+        "source": "models.noteCopy.model",
+        "type": "VRX",
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
+        "rotation": [0,180,0],
+        "resources": ["resources.noteNormal"]
+      }
+    },
+    "3": {
+      "title": "Pista 0",
+      "description": "Que onda, el Duende por acá, te la he puesto fácil para esta primera pista, pero los primeros alumnos que pasaron por esta universidad no la tuvieron nada fácil, vos ni siquiera necesitás moverte de este piso para encontrarlos brillando en dorado.",
+        "questItemID": 3,
+        "image": "1",
+        "view": 1,
+        "model": {
+          "source": "models.clue0Copy.model",
+          "type": "VRX",
+          "position": [0,0,-3],
+          "scale": [0.3,0.3,0.3],
+          "rotation": [0,180,0],
+          "resources": ["resources.clue0Diffuse", "resources.clue0Roughness"]
+        }
+    },
     "4": {
-      "title": "Caja",
-      "visualizeFunction": "VisualizeBox",
-      "description": "Caja cajeta",
+      "title": "Llave",
+      "description": "Llave llave llave llave llave llave",
       "questItemID": 4,
+      "image": "2",
+      "view": 2,
+      "model": {
+        "source": "models.keyCopy.model",
+        "type": "VRX",
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
+        "rotation": [0,180,0],
+        "resources": ["resources.keyDiffuse", "resources.keyMetallic", "resources.keyRoughness"]
+      }
+    },
+    "5": {
+      "title": "Pista 6",
+      "description": "Imaginate lo que debía ser subir <br/> hasta el 6º piso en esos tiempos, ¿sabías que cambiaron las escaleras? Me comentaron que antes era todavía más difícil llegar hasta allá, no que yo sepa, nunca fui tan arriba, si algún día pasas por ahí contame cuál es el número más grande que podés encontrar.",
+      "questItemID": 5,
+      "image": "1",
+      "view": 3,
+      "model": {
+        "source": "models.clue6.model",
+        "type": "VRX",
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
+        "rotation": [0,180,0],
+        "resources": ["resources.clue6Diffuse", "resources.clue6Roughness"]
+      }
+    },
+    "6": {
+      "title": "Pista 2 (opcional)",
+      "description": "La verdad no sé qué hago acá, yo siempre quise ser artista. Ja! imaginate que bien te vendría uno ahora mismo para que te pinte afuera de esta situación… Bueno bueno relajate, no te pongas naranja",
+      "questItemID": 6,
+      "image": "1",
+      "view": 3,
+      "model": {
+        "source": "models.clueOpt2.model",
+        "type": "VRX",
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
+        "rotation": [0,180,0],
+        "resources": ["resources.clueOpt2Diffuse", "resources.clueOpt2Roughness"]
+      }
+    },
+    "7": {
+      "title": "Placa",
+      "visualizeFunction": "VisualizeBox",
+      "description": "Placa del aula 621, parece bastante pesada!",
+      "questItemID": 7,
       "image": "3",
       "view": 3,
       "model": {
@@ -63,6 +108,51 @@
         "rotation": [0,180,0],
         "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
       }
+    }
+  },
+  "8": {
+    "title": "Hoja 1 del TP",
+    "description": "Contiene el inicio, desarrollo y conclusión del TP! Es suficiente para entregarlo aunque no vas a llegar al 10",
+    "questItemID": 8,
+    "image": "1",
+    "view": 1,
+    "model": {
+      "source": "models.pageCopy.model",
+      "type": "VRX",
+      "position": [0,0,-3],
+      "scale": [0.3,0.3,0.3],
+      "rotation": [0,180,0],
+      "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+    }
+  },
+  "9": {
+    "title": "Hoja 2 del TP",
+    "description": "Contiene la bibliografía del TP",
+    "questItemID": 9,
+    "image": "1",
+    "view": 1,
+    "model": {
+      "source": "models.pageCopy2.model",
+      "type": "VRX",
+      "position": [0,0,-3],
+      "scale": [0.3,0.3,0.3],
+      "rotation": [0,180,0],
+      "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+    }
+  },
+  "10": {
+    "title": "Primer hoja del TP",
+    "description": "Contiene el índice del TP",
+    "questItemID": 10,
+    "image": "1",
+    "view": 1,
+    "model": {
+      "source": "models.pageCopy3.model",
+      "type": "VRX",
+      "position": [0,0,-3],
+      "scale": [0.3,0.3,0.3],
+      "rotation": [0,180,0],
+      "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
     }
   },
   "scenes": [
@@ -102,61 +192,13 @@
                 {
                   "name": "log",
                   "params": [
-                    "Me encontre con una carpeta en '<lugar>' y puedo probar abrirla"
+                    "Me encontre con una carpeta y tiene algunas cosas adentro"
                   ]
                 },
                 {
                   "name": "nextScene",
                   "params": [""]
                 },
-                {
-                  "name": "grabItem",
-                  "params": ["3"]
-                }
-              ]
-            ]
-          }
-        },
-        {
-          "type": "WithImageRecognition",
-          "typeProps": { 
-            "questItemID": 1,
-            "target": {
-              "source": "images.cuadro",
-              "physicalWidth": 0.2,
-              "orientation": "Up"
-            },
-            "model": {
-              "source": "models.page.model",
-              "type": "VRX",
-              "position": [0,0,0],
-              "scale": [0.05,0.05,0.05],
-              "rotation": [0,0,0],
-              "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
-            },
-            "interactions": [
-              [
-                {
-                  "name": "addPoints",
-                  "params": [
-                    10
-                  ]
-                },
-                {
-                  "name": "showHint",
-                  "params": 
-                    [
-                      "Una hoja! Tiene un codigo escrito" 
-                    ]
-                  } ,
-                  {
-                  "name": "log",
-                  "params": [
-                    "Me encontre con una hoja en '<lugar>' y tiene un código <bla bla>."
-                  ]
-                }
-              ],
-              [
                 {
                   "name": "grabItem",
                   "params": ["1"]
@@ -166,113 +208,260 @@
           }
         }
       ]
-    },
-    {
-      "objects": [
-        {
-          "type": "WithImageRecognition",
-          "typeProps": { 
-            "questItemID": 3,
-            "target": {
-              "source": "images.graduados",
-              "physicalWidth": 0.2,
-              "orientation": "Up"
-            },
-            "model": {
-              "source": "models.key.model",
-              "type": "VRX",
-              "position": [0,0,0],
-              "scale": [0.05,0.05,0.05],
-              "rotation": [0,0,0],
-              "resources": ["resources.keyDiffuse", "resources.keyMetallic", "resources.keyRoughness"]
-            },
-            "interactions": [
-              [
-                {
-                  "name": "addPoints",
-                  "params": [
-                    150
+  },
+  {
+    "objects": [
+      {
+        "type": "WithImageRecognition",
+        "typeProps": { 
+          "questItemID": 1,
+          "target": {
+            "source": "images.silla",
+            "physicalWidth": 0.2,
+            "orientation": "Up"
+          },
+          "model": {
+            "source": "models.page.model",
+            "type": "VRX",
+            "position": [0,0,0],
+            "scale": [0.05,0.05,0.05],
+            "rotation": [90,0,0],
+            "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+          },
+          "interactions": [
+            [
+              {
+                "name": "addPoints",
+                "params": [
+                  10
+                ]
+              },
+              {
+                "name": "showHint",
+                "params": 
+                  [
+                    "Una hoja de tu TP!" 
                   ]
-                },
+                } ,
                 {
-                  "name": "showHint",
-                  "params": 
-                    [
-                      "Encuentras una llave! con ella es posible abrir un cofre"
-                    ]
-                },
-                {
-                  "name": "log",
-                  "params": [
-                    "Me encontre una llave en '<lugar>' y puedo usarla para abrir un cofre"
-                  ]
-                },
-                {
-                  "name": "nextScene",
-                  "params": [""]
-                },
-                {
-                  "name": "grabItem",
-                  "params": ["2"]
-                } 
-              ]
+                "name": "log",
+                "params": [
+                  "Me encontré con una hoja en la sala de arte del segundo piso"
+                ]
+              },
+              {
+                "name": "grabItem",
+                "params": ["10"]
+              }
             ]
-          }
+          ]
         }
-      ]
-    },
-    {
-      "objects": [
-        {
-          "type": "WithImageRecognition",
-          "typeProps": {
-            "questItemID": 4, 
-            "target": {
-              "source": "images.aula",
-              "physicalWidth": 0.2,
-              "orientation": "Up"
-            },
-            "model": {
-              "source": "models.box.model",
-              "type": "VRX",
-              "position": [0,0,0],
-              "scale": [0.05,0.05,0.05],
-              "rotation": [0,0,0],
-              "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
-            },
-            "interactions": [
-              [
-                {
-                  "name": "addPoints",
-                  "params": [
-                    200
+      },
+      {
+        "type": "WithImageRecognition",
+        "typeProps": { 
+          "questItemID": 1,
+          "target": {
+            "source": "images.cosowifi",
+            "physicalWidth": 0.2,
+            "orientation": "Up"
+          },
+          "model": {
+            "source": "models.page.model",
+            "type": "VRX",
+            "position": [0,0,0],
+            "scale": [0.05,0.05,0.05],
+            "rotation": [90,0,0],
+            "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+          },
+          "interactions": [
+            [
+              {
+                "name": "addPoints",
+                "params": [
+                  10
+                ]
+              },
+              {
+                "name": "showHint",
+                "params": 
+                  [
+                    "Una hoja de tu TP!" 
                   ]
-                },
+                } ,
                 {
-                  "name": "showHint",
-                  "params": 
-                    [
-                      "Encuentras un cofre!"
-                    ]
-                  },
-                  {
-                    "name": "log",
-                    "params": [
-                      "Me encontre con un cofre en '<lugar>', si lo abro con una llave encontraré algo bonito"
-                    ]
-                  },
-                  {
-                    "name": "grabItem",
-                    "params": [
-                      "4"
-                    ]
-                  }
-              ]
+                "name": "log",
+                "params": [
+                  "Me encontré con una hoja en la sala de arte del segundo piso"
+                ]
+              },
+              {
+                "name": "grabItem",
+                "params": ["10"]
+              }
             ]
-          }
+          ]
         }
+      },
+      {
+        "type": "WithImageRecognition",
+        "typeProps": { 
+          "questItemID": 3,
+          "target": {
+            "source": "images.graduados",
+            "physicalWidth": 0.2,
+            "orientation": "Up"
+          },
+          "model": {
+            "source": "models.key.model",
+            "type": "VRX",
+            "position": [0,0,0],
+            "scale": [0.05,0.05,0.05],
+            "rotation": [-90,0,0],
+            "resources": ["resources.keyDiffuse", "resources.keyMetallic", "resources.keyRoughness"]
+          },
+          "interactions": [
+            [
+              {
+                "name": "addPoints",
+                "params": [
+                  150
+                ]
+              },
+              {
+                "name": "showHint",
+                "params": 
+                  [
+                    "Encuentras una llave!"
+                  ]
+              },
+              {
+                "name": "log",
+                "params": [
+                  "Me encontre una llave en planta baja y puedo usarla para abrir algo"
+                ]
+              },
+              {
+                "name": "nextScene",
+                "params": [""]
+              },
+              {
+                "name": "grabItem",
+                "params": ["4"]
+              },
+              {
+                "name": "grabItem",
+                "params": ["5"]
+              },
+              {
+                "name": "grabItem",
+                "params": ["6"]
+              }
+            ]
+          ]
+        }
+      }
+    ]
+  },
+{
+"objects": [
+  {
+    "type": "WithImageRecognition",
+    "typeProps": {
+      "questItemID": 4, 
+      "target": {
+        "source": "images.aula",
+        "physicalWidth": 0.2,
+        "orientation": "Up"
+      },
+      "model": {
+        "source": "models.box.model",
+        "type": "VRX",
+        "position": [0,0,0],
+        "scale": [0.05,0.05,0.05],
+        "rotation": [0,0,0],
+        "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
+      },
+      "interactions": [
+        [
+          {
+            "name": "addPoints",
+            "params": [
+              200
+            ]
+          },
+          {
+            "name": "showHint",
+            "params": 
+              [
+                "Una placa emergió de la pared! parece ser mas profunda de lo que aparenta"
+              ]
+            },
+            {
+              "name": "log",
+              "params": [
+                "Me encontré con una placa que emergió de la pared. Parece ser mas profunda de lo que aparenta"
+              ]
+            },
+            {
+              "name": "grabItem",
+              "params": [
+                "4"
+              ]
+            }
+        ]
       ]
     }
+  },
+  {
+    "type": "WithImageRecognition",
+    "typeProps": { 
+      "questItemID": 1,
+      "target": {
+        "source": "images.cuadro",
+        "physicalWidth": 0.2,
+        "orientation": "Up"
+      },
+      "model": {
+        "source": "models.page.model",
+        "type": "VRX",
+        "position": [0,0,0],
+        "scale": [0.05,0.05,0.05],
+        "rotation": [90,0,0],
+        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+      },
+      "interactions": [
+        [
+          {
+            "name": "addPoints",
+            "params": [
+              10
+            ]
+          },
+          {
+            "name": "showHint",
+            "params": 
+              [
+                "Una hoja de tu TP!" 
+              ]
+            } ,
+            {
+            "name": "log",
+            "params": [
+              "Me encontré con una hoja en la sala de arte del segundo piso"
+            ]
+          },
+          {
+            "name": "grabItem",
+            "params": ["9"]
+          }
+        ]
+      ]
+    }
+  }
+
+  ]
+  }
   ],
   "lastItem": {
     "id": "5",

@@ -73,6 +73,7 @@ const Inventory = ({props}) => {
     {
       title: 'Usar',
       action: (item, index) => {
+        console.log("*******Item: ", item)
         const action = QuestLocal.actions.selectItem(
         { selectedItem: {
           itemID: item.questItemID,
@@ -124,23 +125,43 @@ const Inventory = ({props}) => {
   }
 
   return (
-    <View style={styles.view}>
-      <FlatList
-        contentContainerStyle={{alignItems: 'center'}}
-        extraData={items}
-        showsHorizontalScrollIndicator = {false}
-        horizontal={true}
-        data={items}
-        renderItem={({item, index}) => <Item item={item} index={index}/>}>      
-      </FlatList>   
-    </View> 
+    //  <ScrollView horizontal>
+    //    <FlatList
+    //     contentContainerStyle={{alignItems: 'center'}}
+    //      extraData={items}
+    //      showsHorizontalScrollIndicator = {false}
+    //     horizontal={true}
+    //      showsVerticalScrollIndicator={false} 
+    //     data={items}
+    //     renderItem={({item, index}) => <Item item={item} index={index}/>}>      
+    //  </FlatList>   
+    //  </ScrollView>
+
+//   const listData = props.data ?? [];
+//const numColumns = Math.ceil(listData.length / 2);
+        <ScrollView
+          style={styles.view}
+          horizontal
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingVertical: 20 }}
+          >
+          <FlatList
+            contentContainerStyle={{paddingVertical: 100}}
+            scrollEnabled={false}
+            numColumns={5}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            data={items}
+            renderItem={({item, index}) => <Item item={item} index={index}/>}
+          />
+        </ScrollView> 
     )
 }
 
 const styles = StyleSheet.create({
   view: {
     backgroundColor: 'linen',
-    alignItems: 'center',
     height: '100%'
   },
   container: {

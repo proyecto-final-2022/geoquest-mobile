@@ -220,14 +220,14 @@ const Clue0 = useState({
     setnote(prevState => ({...prevState, visible:false}));
     setclue(prevState => ({...prevState, interactable:true}));
     //cambiar hardcodeo
-    dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "1"}, inventory: [...questState.inventory, "1"]}));
+    dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "2"}, inventory: [...questState.inventory, "2"]}));
 
   }
 
   function Clue0OnClick(){
     const clue = Clue0[0], setclue = Clue0[1];
     setclue(prevState => ({...prevState, visible:false}));
-    dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "1"}, inventory: [...questState.inventory, "1"]}));
+    dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "3"}, inventory: [...questState.inventory, "3"]}));
   }
 
   return (

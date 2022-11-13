@@ -176,8 +176,17 @@ ViroARTrackingTargets.createTargets({
     source: require('../../../../../res/images/graduados.jpg'),
     orientation: "Up",
     physicalWidth: 0.2 // real world width in meters  
+  },
+  "images.silla": {
+    source: require('../../../../../res/images/silla.jpg'),
+    orientation: "Up",
+    physicalWidth: 0.2 // real world width in meters  
+  },
+  "images.graduados": {
+    source: require('../../../../../res/images/cosowifi.jpg'),
+    orientation: "Up",
+    physicalWidth: 0.2 // real world width in meters  
   }
-
 
 //aula_621_crop
 });
