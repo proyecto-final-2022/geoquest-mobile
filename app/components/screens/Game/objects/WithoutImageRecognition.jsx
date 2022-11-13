@@ -23,12 +23,6 @@ export default function WithoutImageRecognition({id, typeProps, globalCtx}) {
   const [runFade, setRunFade] = useState(false);
 
   const {target, model, interactions} = typeProps;
-  const targetID = target.source;
-
-  const targetProps = {
-    ...target,
-    source: Resources.get(target.source)
-  };
 
   const modelProps = {
     ...model,

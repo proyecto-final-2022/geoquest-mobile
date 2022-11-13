@@ -3,6 +3,7 @@ import { StyleSheet, SafeAreaView, ScrollView, ActivityIndicator, Text, View, Di
 import itemImage_1 from '../../../../../assets/questItems/paper.png'
 import itemImage_2 from '../../../../../assets/questItems/key.png'
 import itemImage_3 from '../../../../../assets/questItems/folder.png'
+import itemImage_4 from '../../../../../assets/questItems/621.png'
 import QuestLocal from '../../../../redux/slices/questLocal'
 import {useSelector, useDispatch} from "react-redux";
 
@@ -88,7 +89,7 @@ const Inventory = ({props}) => {
   
     
   const getItemImage = (imageNumber) => { 
-    const itemImages = [itemImage_1, itemImage_2, itemImage_3];
+    const itemImages = [itemImage_1, itemImage_2, itemImage_3, itemImage_4];
     return itemImages[imageNumber-1];
   }
 

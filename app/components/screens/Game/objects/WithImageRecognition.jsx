@@ -182,7 +182,7 @@ ViroARTrackingTargets.createTargets({
     orientation: "Up",
     physicalWidth: 0.2 // real world width in meters  
   },
-  "images.graduados": {
+  "images.cosowifi": {
     source: require('../../../../../res/images/cosowifi.jpg'),
     orientation: "Up",
     physicalWidth: 0.2 // real world width in meters  

@@ -98,7 +98,7 @@
       "visualizeFunction": "VisualizeBox",
       "description": "Placa del aula 621, parece bastante pesada!",
       "questItemID": 7,
-      "image": "3",
+      "image": "4",
       "view": 3,
       "model": {
         "source": "models.box.model",
@@ -108,51 +108,66 @@
         "rotation": [0,180,0],
         "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
       }
-    }
-  },
-  "8": {
-    "title": "Hoja 1 del TP",
-    "description": "Contiene el inicio, desarrollo y conclusión del TP! Es suficiente para entregarlo aunque no vas a llegar al 10",
-    "questItemID": 8,
-    "image": "1",
-    "view": 1,
-    "model": {
-      "source": "models.pageCopy.model",
-      "type": "VRX",
-      "position": [0,0,-3],
-      "scale": [0.3,0.3,0.3],
-      "rotation": [0,180,0],
-      "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
-    }
-  },
-  "9": {
-    "title": "Hoja 2 del TP",
-    "description": "Contiene la bibliografía del TP",
-    "questItemID": 9,
-    "image": "1",
-    "view": 1,
-    "model": {
-      "source": "models.pageCopy2.model",
-      "type": "VRX",
-      "position": [0,0,-3],
-      "scale": [0.3,0.3,0.3],
-      "rotation": [0,180,0],
-      "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
-    }
-  },
-  "10": {
-    "title": "Primer hoja del TP",
-    "description": "Contiene el índice del TP",
-    "questItemID": 10,
-    "image": "1",
-    "view": 1,
-    "model": {
-      "source": "models.pageCopy3.model",
-      "type": "VRX",
-      "position": [0,0,-3],
-      "scale": [0.3,0.3,0.3],
-      "rotation": [0,180,0],
-      "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+    },
+    "8": {
+      "title": "Hoja 1 del TP",
+      "description": "Contiene el inicio, desarrollo y conclusión del TP! Es suficiente para entregarlo aunque no vas a llegar al 10",
+      "questItemID": 8,
+      "image": "1",
+      "view": 1,
+      "model": {
+        "source": "models.pageCopy.model",
+        "type": "VRX",
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
+        "rotation": [0,180,0],
+        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+      }
+    },
+    "9": {
+      "title": "Hoja 2 del TP",
+      "description": "Contiene la bibliografía del TP",
+      "questItemID": 9,
+      "image": "1",
+      "view": 1,
+      "model": {
+        "source": "models.pageCopy2.model",
+        "type": "VRX",
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
+        "rotation": [0,180,0],
+        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+      }
+    },
+    "10": {
+      "title": "Primer hoja del TP",
+      "description": "Contiene el índice del TP",
+      "questItemID": 10,
+      "image": "1",
+      "view": 1,
+      "model": {
+        "source": "models.pageCopy3.model",
+        "type": "VRX",
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
+        "rotation": [0,180,0],
+        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+      }
+    },
+    "11": {
+      "title": "Ultima hoja del TP",
+      "description": "Contiene los agradecimientos especiales",
+      "questItemID": 10,
+      "image": "1",
+      "view": 1,
+      "model": {
+        "source": "models.pageCopy4.model",
+        "type": "VRX",
+        "position": [0,0,-3],
+        "scale": [0.3,0.3,0.3],
+        "rotation": [0,180,0],
+        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+      }
     }
   },
   "scenes": [
@@ -161,12 +176,6 @@
         {
           "type": "WithoutImageRecognition",
           "typeProps": { 
-            "questItemID": 2,
-            "target": {
-              "source": "images.graduados",
-              "physicalWidth": 0.5,
-              "orientation": "Up"
-            },
             "model": {
               "source": "models.folder.model",
               "type": "VRX",
@@ -211,98 +220,6 @@
   },
   {
     "objects": [
-      {
-        "type": "WithImageRecognition",
-        "typeProps": { 
-          "questItemID": 1,
-          "target": {
-            "source": "images.silla",
-            "physicalWidth": 0.2,
-            "orientation": "Up"
-          },
-          "model": {
-            "source": "models.page.model",
-            "type": "VRX",
-            "position": [0,0,0],
-            "scale": [0.05,0.05,0.05],
-            "rotation": [90,0,0],
-            "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
-          },
-          "interactions": [
-            [
-              {
-                "name": "addPoints",
-                "params": [
-                  10
-                ]
-              },
-              {
-                "name": "showHint",
-                "params": 
-                  [
-                    "Una hoja de tu TP!" 
-                  ]
-                } ,
-                {
-                "name": "log",
-                "params": [
-                  "Me encontré con una hoja en la sala de arte del segundo piso"
-                ]
-              },
-              {
-                "name": "grabItem",
-                "params": ["10"]
-              }
-            ]
-          ]
-        }
-      },
-      {
-        "type": "WithImageRecognition",
-        "typeProps": { 
-          "questItemID": 1,
-          "target": {
-            "source": "images.cosowifi",
-            "physicalWidth": 0.2,
-            "orientation": "Up"
-          },
-          "model": {
-            "source": "models.page.model",
-            "type": "VRX",
-            "position": [0,0,0],
-            "scale": [0.05,0.05,0.05],
-            "rotation": [90,0,0],
-            "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
-          },
-          "interactions": [
-            [
-              {
-                "name": "addPoints",
-                "params": [
-                  10
-                ]
-              },
-              {
-                "name": "showHint",
-                "params": 
-                  [
-                    "Una hoja de tu TP!" 
-                  ]
-                } ,
-                {
-                "name": "log",
-                "params": [
-                  "Me encontré con una hoja en la sala de arte del segundo piso"
-                ]
-              },
-              {
-                "name": "grabItem",
-                "params": ["10"]
-              }
-            ]
-          ]
-        }
-      },
       {
         "type": "WithImageRecognition",
         "typeProps": { 
@@ -364,104 +281,195 @@
     ]
   },
 {
-"objects": [
-  {
-    "type": "WithImageRecognition",
-    "typeProps": {
-      "questItemID": 4, 
-      "target": {
-        "source": "images.aula",
-        "physicalWidth": 0.2,
-        "orientation": "Up"
-      },
-      "model": {
-        "source": "models.box.model",
-        "type": "VRX",
-        "position": [0,0,0],
-        "scale": [0.05,0.05,0.05],
-        "rotation": [0,0,0],
-        "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
-      },
-      "interactions": [
-        [
-          {
-            "name": "addPoints",
-            "params": [
-              200
-            ]
-          },
-          {
-            "name": "showHint",
-            "params": 
-              [
-                "Una placa emergió de la pared! parece ser mas profunda de lo que aparenta"
+  "objects": [
+    {
+      "type": "WithImageRecognition",
+      "typeProps": {
+        "questItemID": 4, 
+        "target": {
+          "source": "images.aula",
+          "physicalWidth": 0.2,
+          "orientation": "Up"
+        },
+        "model": {
+          "source": "models.box.model",
+          "type": "VRX",
+          "position": [0,0,0],
+          "scale": [0.05,0.05,0.05],
+          "rotation": [0,0,0],
+          "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
+        },
+        "interactions": [
+          [
+            {
+              "name": "addPoints",
+              "params": [
+                200
               ]
             },
             {
+              "name": "showHint",
+              "params": 
+                [
+                  "Una placa emergió de la pared! parece ser mas profunda de lo que aparenta"
+                ]
+              },
+              {
+                "name": "log",
+                "params": [
+                  "Me encontré con una placa que emergió de la pared. Parece ser mas profunda de lo que aparenta"
+                ]
+              },
+              {
+                "name": "grabItem",
+                "params": [
+                  "7"
+                ]
+              }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "WithImageRecognition",
+      "typeProps": { 
+        "questItemID": 1,
+        "target": {
+          "source": "images.cuadro",
+          "physicalWidth": 0.2,
+          "orientation": "Up"
+        },
+        "model": {
+          "source": "models.page.model",
+          "type": "VRX",
+          "position": [0,0,0],
+          "scale": [0.05,0.05,0.05],
+          "rotation": [90,0,0],
+          "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+        },
+        "interactions": [
+          [
+            {
+              "name": "addPoints",
+              "params": [
+                10
+              ]
+            },
+            {
+              "name": "showHint",
+              "params": 
+                [
+                  "Una hoja de tu TP!" 
+                ]
+              } ,
+              {
               "name": "log",
               "params": [
-                "Me encontré con una placa que emergió de la pared. Parece ser mas profunda de lo que aparenta"
+                "Me encontré con una hoja en la sala de arte del segundo piso"
               ]
             },
             {
               "name": "grabItem",
-              "params": [
-                "4"
-              ]
+              "params": ["9"]
             }
+          ]
         ]
-      ]
-    }
-  },
-  {
-    "type": "WithImageRecognition",
-    "typeProps": { 
-      "questItemID": 1,
-      "target": {
-        "source": "images.cuadro",
-        "physicalWidth": 0.2,
-        "orientation": "Up"
-      },
-      "model": {
-        "source": "models.page.model",
-        "type": "VRX",
-        "position": [0,0,0],
-        "scale": [0.05,0.05,0.05],
-        "rotation": [90,0,0],
-        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
-      },
-      "interactions": [
-        [
-          {
-            "name": "addPoints",
-            "params": [
-              10
-            ]
-          },
-          {
-            "name": "showHint",
-            "params": 
-              [
-                "Una hoja de tu TP!" 
-              ]
-            } ,
+      }
+    },
+    {
+      "type": "WithImageRecognition",
+      "typeProps": { 
+        "questItemID": 1,
+        "target": {
+          "source": "images.boquita",
+          "physicalWidth": 0.2,
+          "orientation": "Up"
+        },
+        "model": {
+          "source": "models.page.model",
+          "type": "VRX",
+          "position": [0,0,0],
+          "scale": [0.05,0.05,0.05],
+          "rotation": [90,0,0],
+          "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+        },
+        "interactions": [
+          [
             {
-            "name": "log",
-            "params": [
-              "Me encontré con una hoja en la sala de arte del segundo piso"
-            ]
-          },
-          {
-            "name": "grabItem",
-            "params": ["9"]
-          }
+              "name": "addPoints",
+              "params": [
+                10
+              ]
+            },
+            {
+              "name": "showHint",
+              "params": 
+                [
+                  "Una hoja de tu TP!" 
+                ]
+              } ,
+              {
+              "name": "log",
+              "params": [
+                "Me encontré con una hoja en la sala de arte del segundo piso"
+              ]
+            },
+            {
+              "name": "grabItem",
+              "params": ["10"]
+            }
+          ]
         ]
-      ]
+      }
+    },
+    {
+      "type": "WithImageRecognition",
+      "typeProps": { 
+        "questItemID": 1,
+        "target": {
+          "source": "images.duende",
+          "physicalWidth": 0.2,
+          "orientation": "Up"
+        },
+        "model": {
+          "source": "models.page.model",
+          "type": "VRX",
+          "position": [0,0,0],
+          "scale": [0.05,0.05,0.05],
+          "rotation": [90,0,0],
+          "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness"]
+        },
+        "interactions": [
+          [
+            {
+              "name": "addPoints",
+              "params": [
+                10
+              ]
+            },
+            {
+              "name": "showHint",
+              "params": 
+                [
+                  "Una hoja de tu TP!" 
+                ]
+              } ,
+              {
+              "name": "log",
+              "params": [
+                "Me encontré con una hoja en la sala de arte del segundo piso"
+              ]
+            },
+            {
+              "name": "grabItem",
+              "params": ["11"]
+            }
+          ]
+        ]
+      }
     }
-  }
-
-  ]
-  }
+    ]
+    }
   ],
   "lastItem": {
     "id": "5",

@@ -157,8 +157,7 @@ const Clue0 = useState({
     const note = Note[0], setnote = Note[1];
     const page0 = Page0[0], setpage0 = Page0[1];
 
-    if (questLocal.inventory.selectedItem.itemID == "1") { //Page equipped
-      console.log("**********Entré con la hoja equipada")
+    if (questLocal.inventory.selectedItem.itemID == "8") { //Page equipped
     //TODO(pablo): remove Page from inventory
       //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
 

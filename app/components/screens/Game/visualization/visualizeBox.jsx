@@ -108,7 +108,7 @@ const Page6 = useState({
                ],
     onRotate:makeOnRotate(Node),
     onPinch:makeOnPinch(Node),
-    onClick:onClickPage6,
+//    onClick:onClickPage6,
     interactable:false,
     interactions_precise_collision_detection:true,
 });
@@ -116,7 +116,8 @@ const Page6 = useState({
 function onClickPage6(){
     const box = Box[0], setbox = Box[1];
     const page = Page6[0], setpage = Page6[1];//NOTE: we assume there can be multiple pages on a scene, each with different behaviours
-
+ //   console.log("*************y que hacemos")
+ //   Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "8"}, inventory: [...questState.inventory, "8"]})
     ViroAnimations.registerAnimations({
         page6_open1:{ //move out of the box
             properties:{
@@ -187,7 +188,6 @@ function onClickPage6(){
         }}))
 
     }}))
-
 
     /*Register 'Page 6' has been collected*/
 }
@@ -313,7 +313,7 @@ return (
             rotation={Page6[0].rotation}
             scale={Page6[0].scale}
             onRotate={makeOnRotate(Node)}
-            onClick={Page6[0].onClick}
+            onClick={onClickPage6}
             highAccuracyEvents={Page6[0].interactions_precise_collision_detection}
             animation={{name: Page6[0].animation, run: Page6[0].animate, loop: Page6[0].loop_animation, onFinish:Page6[0].anim_on_finish}}
             ignoreEventHandling={!Page6[0].interactable}

@@ -68,6 +68,9 @@ export const resources = {
     pageCopy3: {
       model: require("../../res/models/Page/modelCopy3.vrx")
     },
+    pageCopy4: {
+      model: require("../../res/models/Page/modelCopy4.vrx")
+    },
     box: {
       model: require("../../res/models/BoxWithKeyhole/model.vrx")
     },
