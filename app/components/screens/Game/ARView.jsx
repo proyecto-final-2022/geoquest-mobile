@@ -43,7 +43,7 @@ export default function ARView({route}) {
   };
 
   useEffect(() => {
-    handleSnapPress(0)  
+    handleSnapPress(0)
   }, []);
 
   return (
@@ -61,18 +61,20 @@ export default function ARView({route}) {
         <View style={{flex: 1/* , flexDirection: 'row-reverse'*/}}>
               <Pressable onPress={() => {
                 if (questState.finished == true) {
+                  console.log("*********quest finished")
                   dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
                   dispatch(QuestLocal.actions.selectItem(
                   {selectedItem: {
                   itemID: undefined,
                   name: ""
                   }}))
-                   dispatch(QuestState.actions.set(
-                      {...questState,
-                        sendUpdate: {
-                        lastFoundItemID: route.params.questConfig.lastItem.id,
-                      }}))
+                  dispatch(QuestState.actions.set(
+                    {...questState,
+                      sendUpdate: {
+                      lastFoundItemID: route.params.questConfig.lastItem.id,
+                    }}))
                  }else{
+                  console.log("*****set visualizer false")
                   dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
                 } 
                 }

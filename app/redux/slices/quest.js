@@ -4,6 +4,7 @@ const initialState = {
   scene: parseFloat(0),
   inventory: [],
   objects: {},
+  points: parseFloat(0),
   start_time: Math.floor(Date.now() / 1000),
   logs: [],
   sendUpdate: {
@@ -22,6 +23,13 @@ const questSlice = createSlice({
         ...action.payload
       };
     },
+    setStartTime: (state, action) => {
+      //      state.visualizer = {...action.payload}  
+      return {
+        ...state, 
+        start_time: action.payload
+      };
+    }
   }
 });
 

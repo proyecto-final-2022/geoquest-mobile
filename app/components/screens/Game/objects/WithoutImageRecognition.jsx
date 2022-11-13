@@ -32,7 +32,6 @@ export default function WithoutImageRecognition({id, typeProps, globalCtx}) {
 
   const hasInteractionsLeft = (state) => {
     const objectState = state.objects[id] ?? 0;
-    console.log("**********OBJ STATE: ", objectState)
     const interactionN = interactions.length;
     return interactionN - 1  >= objectState;
   };
@@ -109,7 +108,7 @@ export default function WithoutImageRecognition({id, typeProps, globalCtx}) {
     if(!hasInteractionsLeft(newState)) {
       setRunFade(true);
     }
-    
+    console.log("***without image recognition dispatch")    
     dispatch(Quest.actions.set({...newState}));
   };
 

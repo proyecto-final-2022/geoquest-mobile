@@ -10,7 +10,10 @@ export default {
     
     var timestamp = Math.floor(Date.now() / 1000)
     var diff = (timestamp - ctx.state.start_time) 
-    var add = parseFloat((points/diff).toFixed(2))
+    var add = parseFloat((1/diff).toFixed(2)) * parseFloat(points)
+    console.log("************Diff: ", diff)
+    console.log("************Points: ", points)
+    console.log("************Add: ", add)
 
     return {
       ...ctx.state,

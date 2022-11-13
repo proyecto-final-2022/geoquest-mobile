@@ -183,6 +183,7 @@ function onClickPage6(){
         setpage(prevState => ({...prevState,animation:PageAnimation.Open,loop_animation:false,animate:true}))
 
         setpage(prevState => ({...prevState,anim_on_finish:()=>{
+            console.log("***********on finish animation")
             setpage(prevState => ({...prevState,animation:"page6_open_pt2",loop_animation:false,animate:true}))
             setpage(prevState => ({...prevState,anim_on_finish:()=>{    dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "8"}, inventory: [...questState.inventory, "8"]}));}}))
         }}))

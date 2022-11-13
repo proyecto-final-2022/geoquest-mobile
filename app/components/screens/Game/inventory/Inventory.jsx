@@ -67,6 +67,7 @@ const Inventory = ({props}) => {
             description: item.description,
             image: item.image
           })
+        console.log("***Actualizar ver")
         dispatch(action)   
         props.ctx.handleSnapPress(0)
       }
@@ -81,6 +82,7 @@ const Inventory = ({props}) => {
           name: item.title
           }        
           })
+        console.log("****dispatch usar")
         dispatch(action)  
         hideMenu(index)
       }

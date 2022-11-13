@@ -190,7 +190,10 @@ const Clue0 = useState({
           loop_animation:false,
           anim_interruptible:false,
         }))
-        dispatch(Quest.actions.set({...questState, finished: true}));
+        var newInventory = []
+        newInventory = questState.inventory
+        console.log("*********actualizando inventario post guardar hoja")
+        dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != "8"), finished: true}));
 //      }
     }
     else{
@@ -218,6 +221,7 @@ const Clue0 = useState({
     //TODO(fran)
     setnote(prevState => ({...prevState, visible:false}));
     setclue(prevState => ({...prevState, interactable:true}));
+    console.log("****note on click")
     //cambiar hardcodeo
     dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "2"}, inventory: [...questState.inventory, "2"]}));
 
@@ -225,6 +229,7 @@ const Clue0 = useState({
 
   function Clue0OnClick(){
     const clue = Clue0[0], setclue = Clue0[1];
+    console.log("***********Clue 0 on click")
     setclue(prevState => ({...prevState, visible:false}));
     dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "3"}, inventory: [...questState.inventory, "3"]}));
   }

@@ -33,44 +33,65 @@ function useQuestSetup(route, teamID) {
     const url = Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID 
 
     fetch(url)
-    .then((response) => response.json())
-    .then((json) => 
-    {   
-      console.log("***Progress: ", json)
-        if (json.finished == true) {
-          dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
-          dispatch(QuestLocal.actions.selectItem(
-          {selectedItem: {
-            itemID: undefined,
-            name: ""
-          }}))
-          navigation.navigate("Quest Completed",
-          {
-            questId: exampleQuest.id,
-            questName: exampleQuest.name,
-            questScore: 99999,
-            questDifficulty: "Dificil",
-            questDuration: "Media"
-          })
-        } else {
-          dispatch(Quest.actions.set(
-            {...questState,
-             inventory: json.inventory,
-             scene: json.scene,
-             objects: json.objects ?? {},
-             logs: json.logs ?? [],
-             points: json.points ?? parseFloat(0),
-             finished: json.finished,
-             start_time: json.start_time ?? Math.floor(Date.now() / 1000)}
-            ));
-        }    
-    }
-    
-    )
-    .catch((error) => console.error(error))
-
-  };
-
+    .then((response) => {
+      if(!response.ok) throw new console.warn(response.status)
+      else
+      response.json().then((json) => 
+      {
+        console.log("***Progress: ", json)
+          if (json.finished == true) {
+            console.log("******finished")
+            dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
+            dispatch(QuestLocal.actions.selectItem(
+            {selectedItem: {
+              itemID: undefined,
+              name: ""
+            }}))
+            dispatch(Quest.actions.set(
+              {...questState,
+               inventory: [],
+               scene: parseFloat(0),
+               objects: {},
+               logs: [],
+               points: parseFloat(0),
+               finished: false,
+               start_time: Math.floor(Date.now() / 1000)}
+              ));
+            navigation.navigate("Quest Completed",
+            {
+              questId: exampleQuest.id,
+              questName: exampleQuest.name,
+              questScore: 99999,
+              questDifficulty: "Dificil",
+              questDuration: "Media"
+            })
+          } else {
+            console.log("*******actualizacion de estado")
+            
+            if (json.started == true) {
+              console.log("*******actualizacion de estado started")
+              dispatch(Quest.actions.set(
+                {...questState,
+                 inventory: json.inventory,
+                 scene: json.scene,
+                 objects: json.objects,
+                 logs: json.logs,
+                 points: json.points,
+                 finished: json.finished,
+                 start_time: json.start_time}
+                ));
+            } else {
+              console.log("*********actualizacion de estado startn'7")
+              dispatch(Quest.actions.setStartTime(json.start_time))
+            } 
+            }   
+      }
+      
+      )
+      .catch((error) => console.error(error))  
+    })
+    .catch((error) => console.error(error))  
+  }
   //IMPORTANTE!! HAY QUE ESTAR LOGUEADO PARA QUE ESTO FUNQUE
   /*
   useEffect( () => {
@@ -101,6 +122,16 @@ function useQuestSetup(route, teamID) {
         if (questState.finished == true) {
           const questRequest = {...questState, item_name: exampleQuest.lastItem.title, user_id: userID}
           sendUpdate(questRequest, teamID)
+          dispatch(Quest.actions.set(
+            {...questState,
+             inventory: [],
+             scene: parseFloat(0),
+             objects: {},
+             logs: [],
+             points: parseFloat(0),
+             finished: false,
+             start_time: Math.floor(Date.now() / 1000)}
+            ));
           navigation.navigate("Quest Completed",
           {
             questId: exampleQuest.id,
