@@ -12,7 +12,31 @@ const QuestNavigator = () => {
 
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0)
 
-  const [data, setData] = useState([])
+  const [data, setData] = useState([{
+    "ID": 1,
+    "name": "UTN FRBA Medrano",
+    "image": "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"
+    },
+    {
+    "ID": 2,
+    "name": "Museo de Bellas Artes",
+    "image": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/QHRKHASXJBB2FI6NNLIAY3WMYA.jpg"
+    },
+    {
+    "ID": 3,
+    "name": "Museo de Ciencias Naturales",
+    "image": "https://esperanza.tur.ar/turismo/wp-content/uploads/2015/09/images_museosycasasdearte_CIENCIAS_MUSEO_CIENCIAS_NATURALES_ESPERANZA_4.jpg"
+    },
+    {
+    "ID": 4,
+    "name": "Temaiken",
+    "image": "https://www.turismodebolsillo.com.ar/media/novedades/1582646945_Temaiken%2013.JPG"
+    },
+    {
+    "ID": 5,
+    "name": "Parque de la Costa",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/26/b5/a7/parque-de-la-costa.jpg?w=1200&h=-1&s=1"
+    }])
   const [quests, setDataQuests] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -61,11 +85,11 @@ const QuestNavigator = () => {
   }
 
   useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error))
-      .finally(()=>setLoading(false))
+    // fetch(url)
+    //   .then((response) => response.json())
+    //   .then((json) => setData(json))
+    //   .catch((error) => console.error(error))
+    //   .finally(()=>setLoading(false))
 
     fetch(urlQuests)
       .then((response) => response.json())

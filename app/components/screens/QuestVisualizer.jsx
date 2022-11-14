@@ -18,6 +18,7 @@ export default function QuestVisualizer({route, navigation}) {
 
   const {id: questId, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params;
   const colors = ["sandybrown", "indianred", "darksalmon", "darkseagreen"];
+  const [userID, setUserID] = useState()
 
   const Tag = ({tag, index}) => {
     return (
@@ -61,6 +62,13 @@ export default function QuestVisualizer({route, navigation}) {
       }
     });
   });
+
+  useEffect(() => {
+    Storage.getObject('user').
+    then(user => {
+        setUserID(user.id);
+    })
+}, []);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
@@ -146,13 +154,36 @@ export default function QuestVisualizer({route, navigation}) {
       <View style={styles.teamButtonsContainer}> 
         <CustomButton2 
           onPress = {() => 
-            fetch(Config.appUrl + "quests/1/progressions/112", {
+            fetch(
+              Config.appUrl+'teams/', {
               method: 'POST',
-              headers: { 
-                'Content-Type': 'application/json'},
-            }).then(navigation.navigate("Game", {teamID: 112}))
-            
-          }
+              headers: { 'Content-Type': 'application/json'},
+              body: JSON.stringify({ 
+                user_ids: [userID],
+                quest_id: questId})
+              }).then(response => response.json()).catch(error => console.log(error))
+              .then(teamID => 
+                fetch(
+                  Config.appUrl+'quests/' + questId + '/progressions/' + teamID, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json'},
+                  }).then(navigation.navigate("Game", {teamID: teamID}))
+                  ).catch(error => console.log(error)) 
+            }
+
+          //     then(response => {
+          //       if(!response.ok) throw new Error(response.status);
+          //       else 
+          //       response.json().then(teamID => {
+          //         fetch(Config.appUrl + "quests/1/progressions/" + teamID, {
+          //           method: 'POST',
+          //           headers: { 
+          //           'Content-Type': 'application/json'},
+          //       }).catch(error => console.log(error))
+          //     }).then(navigation.navigate("Game", {teamID: 112})).catch(error => console.log(error))
+          //     }
+          //     ).catch(error => console.log(error))
+          // }
           icon = "arrow-forward-circle"
           bgColor= 'darkseagreen'
           fgColor = 'white'
