@@ -30,22 +30,21 @@ export default TeamRanking = ({route, navigation}) => {
   const [teamRanking, setTeamRanking] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const isFocused = useIsFocused()
-
   useEffect(() => {
+    console.log("*****Que onda esto")
     fetch(urlTeam)
     .then((response) => {
       if (response.ok)
         response.json()
         .then((json) => {
-          console.log("********Ranking: ", json)
+//          console.log("********Ranking: ", json)
           setTeamRanking(json)
         })
         .catch((error) => console.error(error))
         .finally(()=>setLoading(false))
     })
     .catch((error) => console.log(error))
-  }, [isFocused])
+  }, [route])
   
   useEffect(() => {
     navigation.setOptions({

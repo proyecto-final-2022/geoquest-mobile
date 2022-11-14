@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import ARView from "./ARView";
 import QuestLog from "./QuestLog";
+import Exit from "./Exit";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector, useDispatch } from "react-redux";
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
@@ -205,6 +206,16 @@ export default function Game({route, teamID}) {
         options={{
           tabBarIcon: ({color, size}) => (
             <Ionicons name="ios-podium-sharp" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Salir"
+        component={Exit} 
+        initialParams={{userID: 72, teamID: 112}}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Ionicons name="exit" color={color} size={size} />
           ),
         }}
       />
