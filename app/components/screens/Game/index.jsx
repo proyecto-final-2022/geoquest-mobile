@@ -20,7 +20,7 @@ function useQuestSetup(route, teamID) {
   const dispatch = useDispatch();
   const navigation = useNavigation()
   const [config, setConfig] = useState();
-  const [userID, setUserID] = useState(72);
+  const [userID, setUserID] = useState();
   const [loading, setLoading] = useState(true);
 
   const initQuest = async () => {
@@ -60,11 +60,14 @@ function useQuestSetup(route, teamID) {
               ));
             navigation.navigate("Quest Completed",
             {
+              clientId: exampleQuest.clientId,
+              userId: userID,
               questId: exampleQuest.id,
               questName: exampleQuest.name,
-              questScore: 99999,
+              questScore: questState.points,
               questDifficulty: "Dificil",
-              questDuration: "Media"
+              questDuration: "Media",
+              startTime: questState.start_time
             })
           } else {
             console.log("*******actualizacion de estado")
@@ -107,6 +110,8 @@ function useQuestSetup(route, teamID) {
   };
 
   useEffect(() => {
+    Storage.getObject('user').
+    then(user => setUserID(user.id))
     initQuest().then(() => { 
       setLoading(false);
     }).catch((err) => {

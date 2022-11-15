@@ -111,13 +111,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
               .catch((error) => console.error(error))
             )
             .then(
-            fetch(
-              Config.appUrl+'quests/' + id + '/progressions/' + teamId, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json'},
-              }).then(navigation.navigate("Game", {teamID: teamId}))
-              .catch(error => console.log(error)))
-            .then(
               Storage.getObject('user').then(user => forwardToWaitRoom(id, teamId, user.id)))
             .catch((error) => console.error(error))
           })
