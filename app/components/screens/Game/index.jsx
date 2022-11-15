@@ -135,11 +135,14 @@ function useQuestSetup(route, teamID) {
             ));
           navigation.navigate("Quest Completed",
           {
+            clientId: exampleQuest.clientId,
+            userId: userID,
             questId: exampleQuest.id,
             questName: exampleQuest.name,
-            questScore: 99999,
+            questScore: questState.points,
             questDifficulty: "Dificil",
-            questDuration: "Media"
+            questDuration: "Media",
+            startTime: questState.start_time
           })
         }
         else{

@@ -18,14 +18,18 @@ import PirateGroup from '../../../assets/PirateGroup.png'
 export default QuestCompleted = ({route, navigation}) => {
 
   const { height, width } = useWindowDimensions();
+  const [questDuration, setQuestDuration] = useState();
+  const [qr, setQR] = useState();
+
   const {
+    clientId,
+    userId,
     questId, 
     questName,
     questScore,
     questTime,
     questDifficulty,
-    questDuration,
-    qr = {},
+    startTime,
     isConfettiVisible = true
   } = route.params;
 
@@ -52,6 +56,23 @@ export default QuestCompleted = ({route, navigation}) => {
       }
     })
   })
+
+  useEffect(() => {
+    fetch(
+      Config.appUrl+'coupons/' + clientId + "/completions/" + userId, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ 
+        points: questScore,
+        start_time: startTime})
+      }).then(response => response.json()).catch(error => console.log(error))
+      .then(questResult =>
+        { 
+          setQuestDuration(questResult.quest_duration)
+          setQR(questResult.coupon)
+        }
+      )
+  }, [route])
 
   const exitScreen = () => {
     navigation.navigate('Quest Navigator');

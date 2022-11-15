@@ -155,7 +155,7 @@ export default function QuestVisualizer({route, navigation}) {
         <CustomButton2 
           onPress = {() => 
             fetch(
-              Config.appUrl+'teams/', {
+              Config.appUrl+'teams/' + userID, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json'},
               body: JSON.stringify({ 
