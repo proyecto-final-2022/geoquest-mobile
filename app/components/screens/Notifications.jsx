@@ -42,7 +42,7 @@ export default Notifications = ({route, navigation}) => {
   const [call, setCall] = useState(false);
 
   const forwardToWaitRoom = (questID, teamID, userID) => {
-    navigation.navigate('Wait Room', {questID, teamID, userID})
+    navigation.navigate('Wait Room', {questID, teamID, userID, rol: "guest"})
   }
 
   const forwardToFriendList = () => {

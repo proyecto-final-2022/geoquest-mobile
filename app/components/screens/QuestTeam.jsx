@@ -31,7 +31,6 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const url = Config.appUrl + "users/" + user.id + "/friends"
 
   useEffect(() => {
-    
     Storage.getObject('user').
     then(user => setUserID(user.id))
     .catch((error) => console.error(error))
@@ -61,7 +60,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const [playerFriends, setplayerFriends] = useState(friends)
 
   const forwardToWaitRoom = (questID, teamID, userID) => {
-    navigation.navigate('Wait Room', {questID, teamID, userID})
+    navigation.navigate('Wait Room', {questID, teamID, userID, rol: "host"})
   }
 
   const getUserImage = (imageNumber) => { 

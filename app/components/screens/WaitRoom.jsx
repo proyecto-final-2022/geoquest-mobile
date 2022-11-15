@@ -20,7 +20,7 @@ const {width} = Dimensions.get('screen')
 
 export default WaitRoom = ({route, navigation}) => {
 
-  const {questID, teamID, userID} = route.params
+  const {questID, teamID, userID, rol} = route.params
 
   const url = Config.appUrl + "teams/waitrooms/" + teamID + "/quests/" + questID
 
@@ -63,7 +63,8 @@ export default WaitRoom = ({route, navigation}) => {
     .catch((error) => console.error(error))
   }
 
-  useEffect(() => {    
+  useEffect(() => {
+    console.log("***************rol: ", rol)    
     fetch(url)
     .then((response) => response.json())
     .then((json) => {setPlayersAccepted(json.users)})
@@ -137,24 +138,51 @@ export default WaitRoom = ({route, navigation}) => {
       </View>
 
       <View style={styles.teamButtonsContainer}> 
-        <CustomButton2 
-          onPress = {() => 
+        {
+          rol == "host" ? 
+          <CustomButton2 
+            onPress = {() => 
             fetch(url)
             .then((response) => response.json())
             .then((json) => {
-              if (json.accepted == playersTeam.length) {
-                navigation.navigate("Game", {teamID: teamID})
-              }else {
-                Alert.alert("No todos los jugadores han aceptado aún!")
-              }
-              }
+            if (json.accepted == playersTeam.length) {
+              fetch(
+                Config.appUrl+'quests/' + questID + '/progressions/' + teamID, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                }).then(navigation.navigate("Game", {teamID: teamID}))
+            }else {
+              Alert.alert("No todos los jugadores han aceptado aún!")
+            }
+            }
             )
             .catch((error) => console.error(error))
-          }
-          icon = "arrow-forward-circle"
-          bgColor= {(playersAccepted.length == playersTeam.length && playersTeam.length != 0) ? 'darkseagreen' : 'beige'}
-          fgColor = 'white'
-        />
+            }
+            icon = "arrow-forward-circle"
+            bgColor= {(playersAccepted.length == playersTeam.length && playersTeam.length != 0) ? 'darkseagreen' : 'beige'}
+            fgColor = 'white'
+            />
+            :   
+            <CustomButton2 
+            onPress = {() => 
+            fetch(url)
+            .then((response) => response.json())
+            .then((json) => {
+            if (json.accepted == playersTeam.length) {
+              navigation.navigate("Game", {teamID: teamID})
+            }else {
+              Alert.alert("No todos los jugadores han aceptado aún!")
+            }
+            }
+            )
+            .catch((error) => console.error(error))
+            }
+            icon = "arrow-forward-circle"
+            bgColor= {(playersAccepted.length == playersTeam.length && playersTeam.length != 0) ? 'darkseagreen' : 'beige'}
+            fgColor = 'white'
+            />
+        }
+
       </View>
     </View>
   )

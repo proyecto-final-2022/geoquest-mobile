@@ -170,20 +170,6 @@ export default function QuestVisualizer({route, navigation}) {
                   }).then(navigation.navigate("Game", {teamID: teamID}))
                   ).catch(error => console.log(error)) 
             }
-
-          //     then(response => {
-          //       if(!response.ok) throw new Error(response.status);
-          //       else 
-          //       response.json().then(teamID => {
-          //         fetch(Config.appUrl + "quests/1/progressions/" + teamID, {
-          //           method: 'POST',
-          //           headers: { 
-          //           'Content-Type': 'application/json'},
-          //       }).catch(error => console.log(error))
-          //     }).then(navigation.navigate("Game", {teamID: 112})).catch(error => console.log(error))
-          //     }
-          //     ).catch(error => console.log(error))
-          // }
           icon = "arrow-forward-circle"
           bgColor= 'darkseagreen'
           fgColor = 'white'
