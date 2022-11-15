@@ -23,6 +23,7 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, user} = route.params
 
   const [friends, setFriends] = useState([])
+  const [userID, setUserID] = useState()
 
   //sendID field is for test if you wanna try invite yourself to make a group
   const sendID = 72 
@@ -30,6 +31,11 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
   const url = Config.appUrl + "users/" + user.id + "/friends"
 
   useEffect(() => {
+    
+    Storage.getObject('user').
+    then(user => setUserID(user.id))
+    .catch((error) => console.error(error))
+
     setInvited([])
     setInvitedIDs([])
     fetch(url)
@@ -67,11 +73,11 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
     console.log("InvitedIDs: ", invitedIDs)
     
     fetch(
-      Config.appUrl+'teams/', {
+      Config.appUrl+'teams/' + userID, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ 
-        user_ids: invitedIDs,
+        user_ids: [...invitedIDs, userID],
         quest_id: id})
       })
       .then(response => {
@@ -101,10 +107,17 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
                   'Content-Type': 'application/json'},
                 body: JSON.stringify({ 
                   sender_name: senderName
-                })
+                 })
               })
               .catch((error) => console.error(error))
             )
+            .then(
+            fetch(
+              Config.appUrl+'quests/' + id + '/progressions/' + teamId, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json'},
+              }).then(navigation.navigate("Game", {teamID: teamId}))
+              .catch(error => console.log(error)))
             .then(
               Storage.getObject('user').then(user => forwardToWaitRoom(id, teamId, user.id)))
             .catch((error) => console.error(error))

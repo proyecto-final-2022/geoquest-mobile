@@ -66,7 +66,7 @@ export default WaitRoom = ({route, navigation}) => {
   useEffect(() => {    
     fetch(url)
     .then((response) => response.json())
-    .then((json) => {setPlayersAccepted(json)})
+    .then((json) => {setPlayersAccepted(json.users)})
     .catch((error) => console.error(error))
     // .finally(()=>setLoading(false))
   }, [route])   
@@ -138,7 +138,19 @@ export default WaitRoom = ({route, navigation}) => {
 
       <View style={styles.teamButtonsContainer}> 
         <CustomButton2 
-          onPress = {() => console.log('Comenzar')}
+          onPress = {() => 
+            fetch(url)
+            .then((response) => response.json())
+            .then((json) => {
+              if (json.accepted == playersTeam.length) {
+                navigation.navigate("Game", {teamID: teamID})
+              }else {
+                Alert.alert("No todos los jugadores han aceptado aún!")
+              }
+              }
+            )
+            .catch((error) => console.error(error))
+          }
           icon = "arrow-forward-circle"
           bgColor= {(playersAccepted.length == playersTeam.length && playersTeam.length != 0) ? 'darkseagreen' : 'beige'}
           fgColor = 'white'
