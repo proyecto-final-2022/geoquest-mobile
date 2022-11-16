@@ -209,7 +209,7 @@ export default function QuestVisualizer({route, navigation}) {
           icon = "star"
           bgColor= '#CA955C'
           fgColor = 'white'
-          text = 'Calificar busqueda'
+          text = 'Calificar Búsqueda'
           style={styles.buttonStyle}
           textStyle={styles.buttonTextStyle}
           iconStyle={styles.iconStyle}/>
