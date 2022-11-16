@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, ScrollView, Text, View, Dimensions, Image, Pressable, TouchableOpacity, BackHandler} from "react-native";
+import { StyleSheet, ScrollView, Text, View, useWindowDimensions, Image} from "react-native";
 import CustomButton2 from "../../commons/CustomButton2";
 import Config from "../../../../config.json";
+import PirateImage from '../../../../assets/Pirate2.png'
+import { color } from "react-native-reanimated";
 
 export default function Exit({route, navigation}) {
   const {userID: userID, teamID: teamID} = route.params;
+  const { height, width } = useWindowDimensions();
 
   return (
     <ScrollView style={styles.view}> 
-      <Text>Está seguro que desea abandonar la búsqueda? Todo tu progreso se perderá y no subirás más posiciones en el ranking</Text>
+      <Image
+        source = {PirateImage}
+        style={{margin: 5, width: width * 0.5, zIndex: -1, alignSelf: 'center'}}
+        resizeMode="contain"
+      />
+      <Text style={{
+        margin: 10, 
+        fontWeight: 'bold', 
+        alignSelf: 'center'
+      }}>
+        {'¿Está seguro que desea abandonar la búsqueda?\nTodo tu progreso se perderá y no subirás más posiciones en el ranking'}
+      </Text>
    
       <View style={styles.teamButtonsContainer}> 
         <CustomButton2 
@@ -90,7 +104,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#CA955C"
   },
   teamButtonsContainer: {
-    marginTop: 15,
+    marginTop: 60,
     flexDirection: "column",
     alignItems: "center"
   },

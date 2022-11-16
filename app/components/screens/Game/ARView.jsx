@@ -53,36 +53,46 @@ export default function ARView({route}) {
         initialScene={{scene: Scene}} 
         viroAppProps={{questConfig: route.params.questConfig, globalCtx}}
       />
-      {questLocal.visualizer.itemID != undefined && <View style={{backgroundColor: 'linen',
-              height:'40%', 
-              width: '90%',borderWidth: 5,borderColor: '#a52a2a'}}>
-              <Text style={{fontStyle: 'italic'}}>{questLocal.visualizer.title}</Text>
-         <Text>{questLocal.visualizer.description}</Text> 
-        <View style={{flex: 1/* , flexDirection: 'row-reverse'*/}}>
-              <Pressable onPress={() => {
-                if (questState.finished == true) {
-                  console.log("*********quest finished")
-                  dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
-                  dispatch(QuestLocal.actions.selectItem(
-                  {selectedItem: {
+      {questLocal.visualizer.itemID != undefined && <View style={{
+        backgroundColor: 'linen',
+        height:'40%', 
+        width: '100%',
+        borderWidth: 3,
+        borderColor: '#CA955C'}}>
+          <View style={{
+            flex: 1,
+            flexDirection: 'row',
+            marginTop: 10,
+            marginHorizontal: 10}}>
+            <Text style={{fontStyle: 'italic', flex: 1, fontWeight: 'bold', fontSize: 20}}>{questLocal.visualizer.title}</Text>
+            <Pressable onPress={() => {
+              if (questState.finished == true) {
+                console.log("*********quest finished")
+                dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
+                dispatch(QuestLocal.actions.selectItem({selectedItem: {
                   itemID: undefined,
                   name: ""
-                  }}))
-                  dispatch(QuestState.actions.set(
-                    {...questState,
-                      sendUpdate: {
+                }}))
+                dispatch(QuestState.actions.set(
+                  {...questState,
+                    sendUpdate: {
                       lastFoundItemID: route.params.questConfig.lastItem.id,
-                    }}))
-                 }else{
-                  console.log("*****set visualizer false")
-                  dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
-                } 
-                }
-              }>
-                <Ionicons name='close' size={35}/>
-              </Pressable>
+                    }
+                  }))
+              }else{
+                console.log("*****set visualizer false")
+                dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
+              } 
+            }}>
+              <Ionicons name='close' size={35}/>
+            </Pressable>
           </View>
-      </View>}
+          <Text style={{
+            flex: 4.5,
+            marginHorizontal: 10,
+            textAlign: 'justify'}}>{questLocal.visualizer.description}</Text> 
+        </View>
+      }
       <HintModal 
         style={styles.hintModal} 
         visible={showHint} 

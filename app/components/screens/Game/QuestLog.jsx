@@ -1,4 +1,4 @@
-import React, { View, Text, ImageBackground, FlatList, StyleSheet } from "react-native";
+import React, { View, Text, ImageBackground, FlatList, StyleSheet, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 import backgroundImage from "../../../../assets/logs_background.jpg";
 import titleFont from "../../../../assets/fonts/OldMe-vmyZy.otf";
@@ -35,7 +35,8 @@ export default function QuestLog() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: "5%"
+    padding: "5%",
+    marginBottom: 100
   },
   view: {
     height: "100%",
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
-    fontFamily: "Notes-Font"
+    fontFamily: "Notes-Font",
+    marginBottom: 20
   }
 });

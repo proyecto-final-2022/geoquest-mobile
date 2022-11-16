@@ -66,7 +66,7 @@
     },
     "5": {
       "title": "Pista 6",
-      "description": "Imaginate lo que debía ser subir <br/> hasta el 6º piso en esos tiempos, ¿sabías que cambiaron las escaleras? Me comentaron que antes era todavía más difícil llegar hasta allá, no que yo sepa, nunca fui tan arriba, si algún día pasas por ahí contame cuál es el número más grande que podés encontrar.",
+      "description": "Imaginate lo que debía ser subir hasta el 6º piso en esos tiempos, ¿sabías que cambiaron las escaleras? Me comentaron que antes era todavía más difícil llegar hasta allá, no que yo sepa, nunca fui tan arriba, si algún día pasas por ahí contame cuál es el número más grande que podés encontrar.",
       "questItemID": 5,
       "image": "1",
       "view": 3,
@@ -202,7 +202,7 @@
                 {
                   "name": "log",
                   "params": [
-                    "Me encontre con una carpeta y tiene algunas cosas adentro"
+                    "Me encontré con una carpeta y tiene algunas cosas adentro"
                   ]
                 },
                 {
@@ -256,7 +256,7 @@
               {
                 "name": "log",
                 "params": [
-                  "Me encontre una llave en planta baja y puedo usarla para abrir algo"
+                  "Me encontré una llave en planta baja y puedo usarla para abrir algo"
                 ]
               },
               {
