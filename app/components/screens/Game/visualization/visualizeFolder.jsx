@@ -10,7 +10,7 @@ import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbi
 import Resources from "../../../../utils/resources.js";
 import Quest from "../../../../redux/slices/quest"
 import { useSelector, useDispatch } from "react-redux";
-import {BoxAnimation, FolderAnimation, PageAnimation, makeOnPinch, makeOnRotate, makeOnDrag, MapToViro3DObject, Lighting} from "../GameModelsCommon"
+import {BoxAnimation, FolderAnimation, PageAnimation, makeOnPinch, makeOnRotate, makeOnDrag, MapToViro3DObject, Lighting, DisappearModel} from "../GameModelsCommon"
 
 export default function VisualizeFolder(item, ctx) {
   const questState = useSelector(state => state.quest);
@@ -144,8 +144,7 @@ const Clue0 = useState({
   const Page0 = useState(PageData);
   const Page1 = useState(PageData);
   const Page2 = useState(PageData);
-
-  var x = 0;
+  const Page3 = useState(PageData);
 
   function FolderOnClick(){
     // console.log("***Last interaction: ", questLocal.inventory.selectedItem.itemID)
@@ -155,10 +154,13 @@ const Clue0 = useState({
 
     const folder = Folder[0], setfolder = Folder[1];
     const note = Note[0], setnote = Note[1];
-    const page0 = Page0[0], setpage0 = Page0[1];
-
-    if (questLocal.inventory.selectedItem.itemID == "8") { //Page equipped
-    //TODO(pablo): remove Page from inventory
+    
+    const page_idx = questLocal.inventory.selectedItem.itemID - 8; //pages go from ["8","9","10","11"]
+    
+    if (page_idx=>0 && page_idx<4) { //Page equipped
+      const Pages = [Page0,Page1,Page2,Page3];
+      const Page = Pages[page_idx];
+      const page = Page[0], setpage = Page[1];
       //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
 
 //      if(GameState.folder_opened){
@@ -182,7 +184,7 @@ const Clue0 = useState({
           page_addtofolder:[["page_addtofolder1","page_addtofolder2"]],
         })
 
-        setpage0(prevState => ({...prevState,
+        setpage(prevState => ({...prevState,
           visible:true,
           scale:[0,0,0],
           animation:"page_addtofolder",
@@ -192,8 +194,10 @@ const Clue0 = useState({
         }))
         var newInventory = []
         newInventory = questState.inventory
+        const id_to_remove = questLocal.inventory.selectedItem.itemID;
+        const finish_quest = "8" == questLocal.inventory.selectedItem.itemID;
         console.log("*********actualizando inventario post guardar hoja")
-        dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != "8"), finished: true}));
+        dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != id_to_remove), finished: finish_quest}));
 //      }
     }
     else{
@@ -219,7 +223,8 @@ const Clue0 = useState({
     const note = Note[0], setnote = Note[1];
     const clue = Clue0[0], setclue = Clue0[1];
     //TODO(fran)
-    setnote(prevState => ({...prevState, visible:false}));
+    DisappearModel(Note);
+    //setnote(prevState => ({...prevState, visible:false}));
     setclue(prevState => ({...prevState, interactable:true}));
     console.log("****note on click")
     //cambiar hardcodeo
@@ -230,7 +235,8 @@ const Clue0 = useState({
   function Clue0OnClick(){
     const clue = Clue0[0], setclue = Clue0[1];
     console.log("***********Clue 0 on click")
-    setclue(prevState => ({...prevState, visible:false}));
+    //setclue(prevState => ({...prevState, visible:false}));
+    DisappearModel(Clue0);
     dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "3"}, inventory: [...questState.inventory, "3"]}));
   }
 
@@ -294,6 +300,49 @@ const Clue0 = useState({
           ignoreEventHandling={!Page0[0].interactable}
           highAccuracyEvents={Page0[0].interactions_accurate_collision_detection}
       />
+      <Viro3DObject
+          source={Page1[0].source}
+          resources={Page1[0].resources}
+          type="VRX"
+          position={Page1[0].position}
+          rotation={Page1[0].rotation}
+          scale={Page1[0].scale}
+          animation={{name: Page1[0].animation, run: Page1[0].animate, loop: Page1[0].loop_animation, interruptible:Page1[0].anim_interruptible, onFinish:Page1[0].anim_on_finish}}
+          onRotate={makeOnRotate(Node)}
+          onClick={Page1[0].onClick}
+          visible={Page1[0].visible}
+          ignoreEventHandling={!Page1[0].interactable}
+          highAccuracyEvents={Page1[0].interactions_accurate_collision_detection}
+      />
+      <Viro3DObject
+          source={Page2[0].source}
+          resources={Page2[0].resources}
+          type="VRX"
+          position={Page2[0].position}
+          rotation={Page2[0].rotation}
+          scale={Page2[0].scale}
+          animation={{name: Page2[0].animation, run: Page2[0].animate, loop: Page2[0].loop_animation, interruptible:Page2[0].anim_interruptible, onFinish:Page2[0].anim_on_finish}}
+          onRotate={makeOnRotate(Node)}
+          onClick={Page2[0].onClick}
+          visible={Page2[0].visible}
+          ignoreEventHandling={!Page2[0].interactable}
+          highAccuracyEvents={Page2[0].interactions_accurate_collision_detection}
+      />
+      <Viro3DObject
+          source={Page3[0].source}
+          resources={Page3[0].resources}
+          type="VRX"
+          position={Page3[0].position}
+          rotation={Page3[0].rotation}
+          scale={Page3[0].scale}
+          animation={{name: Page3[0].animation, run: Page3[0].animate, loop: Page3[0].loop_animation, interruptible:Page3[0].anim_interruptible, onFinish:Page3[0].anim_on_finish}}
+          onRotate={makeOnRotate(Node)}
+          onClick={Page3[0].onClick}
+          visible={Page3[0].visible}
+          ignoreEventHandling={!Page3[0].interactable}
+          highAccuracyEvents={Page3[0].interactions_accurate_collision_detection}
+      />
   </ViroNode>
   );
 }
+//TODO(fran): ask the boyz if there's some way to add an animation to the interactions

@@ -4,6 +4,7 @@
 //   } from "@viro-community/react-viro"
 import { ViroOmniLight } from "@viro-community/react-viro/components/ViroOmniLight";
 import { ViroSpotLight } from "@viro-community/react-viro/components/ViroSpotLight";
+import { ViroAnimations } from "@viro-community/react-viro/components/Animation/ViroAnimations";
 import "./VectorOperations"
 
 
@@ -166,3 +167,28 @@ export const Lighting = () => {
         </>
     )
 }
+
+export const DisappearModel = (Model) => {
+    const model = Model[0], setmodel = Model[1];
+
+    ViroAnimations.registerAnimations({
+      disappearModel: {
+        properties: {
+          // opacity: 0,
+          scaleX:0,
+          scaleY:0,
+          scaleZ:0,
+        },
+        duration: 400
+      }
+    });
+
+    setmodel(prevState => ({...prevState,
+        interactable:false,
+        animation:"disappearModel",
+        animate:true,
+        loop_animation:false,
+        anim_interruptible:false,
+        anim_on_finish:()=>{setmodel(prevState => ({...prevState,visible:false,}))}
+    }))
+  };

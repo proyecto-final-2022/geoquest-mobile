@@ -19,8 +19,6 @@ export default function WithoutImageRecognition({id, typeProps, globalCtx}) {
   const questLocalState = useSelector(state => state.questLocal);
   const dispatch = useDispatch();
   const [pauseUpdates, setPauseUpdates] = useState(false);
-  const [visible, setIsVisible] = useState(true);
-  const [runFade, setRunFade] = useState(false);
 
   const {target, model, interactions} = typeProps;
 
@@ -29,6 +27,25 @@ export default function WithoutImageRecognition({id, typeProps, globalCtx}) {
     source: Resources.get(model.source),
     resources: model.resources.map(r => Resources.get(r))
   };
+  
+  ViroAnimations.registerAnimations({
+    appearModel: {
+      properties: {
+        opacity: 1,
+      },
+      duration: 1000
+    }
+  });
+
+  const Model = useState({
+    visible:false,
+    opacity:0,
+    animation:"appearModel",
+    animate:true,
+    loop_animation:false,
+    anim_interruptible:false,
+    anim_on_finish:undefined,
+  });
 
   const hasInteractionsLeft = (state) => {
     const objectState = state.objects[id] ?? 0;
@@ -36,10 +53,42 @@ export default function WithoutImageRecognition({id, typeProps, globalCtx}) {
     return interactionN - 1  >= objectState;
   };
 
+  const setModelVisible = (visible) => {
+    const model = Model[0], setmodel = Model[1];
+
+    setmodel(prevState => ({...prevState,
+        visible:visible,
+    }))
+  }
+
+  const disappearModel = () => {
+    const model = Model[0], setmodel = Model[1];
+
+    ViroAnimations.registerAnimations({
+      disappearModel: {
+        properties: {
+          // opacity: 0,
+          scaleX:0,
+          scaleY:0,
+          scaleZ:0,
+        },
+        duration: 400
+      }
+    });
+
+    setmodel(prevState => ({...prevState,
+        animation:"disappearModel",
+        animate:true,
+        loop_animation:false,
+        anim_interruptible:false,
+        anim_on_finish:()=>{setModelVisible(false)}
+    }))
+  };
+
 
   useEffect(() => {
     if(!hasInteractionsLeft(questState)) {
-      setIsVisible(false);
+      disappearModel();
     }
 
     /* 
@@ -57,19 +106,19 @@ export default function WithoutImageRecognition({id, typeProps, globalCtx}) {
 
   useEffect(() => {
     if(!hasInteractionsLeft(questState)) {
-      setIsVisible(false);
+      disappearModel();
     }
   }, [questState]);
 
-  useEffect(() => {
-    console.log("***************Model props: ", modelProps)
-  }, []);
+  // useEffect(() => {
+  //   console.log("***************Model props: ", modelProps)
+  // }, []);
 
   useEffect(() => {
     if(questLocalState.visualizer.itemID != undefined || !hasInteractionsLeft(questState)) {
-      setIsVisible(false);
+      disappearModel();
     } else {
-      setIsVisible(true)
+      setModelVisible(true)
     }
   }, [globalCtx.description]);
 
@@ -106,7 +155,8 @@ export default function WithoutImageRecognition({id, typeProps, globalCtx}) {
     }
 
     if(!hasInteractionsLeft(newState)) {
-      setRunFade(true);
+      disappearModel();
+      //setRunFade(true);
     }
     console.log("***without image recognition dispatch")    
     dispatch(Quest.actions.set({...newState}));
@@ -115,26 +165,14 @@ export default function WithoutImageRecognition({id, typeProps, globalCtx}) {
   return (
     <>
     <ViroAmbientLight color="#ffffff"/>
-        <Viro3DObject 
-          visible={visible} 
-          onClick={onClick} 
-          {...modelProps} 
-          animation={{
-            name: "fade", 
-            run: runFade, 
-            loop: false, 
-          onFinish: () => {setIsVisible(false);}
-        }}
-        />
+    <Viro3DObject 
+      {...modelProps}
+      visible={Model[0].visible} 
+      onClick={onClick}
+      opacity={Model[0].opacity}
+      animation={{name:Model[0].animation, run:Model[0].animate, loop:Model[0].loop_animation, interruptible:Model[0].anim_interruptible, onFinish:Model[0].anim_on_finish}}
+      // TODO(fran): it'd be nice if we could show the disappearModel animation before moving to the next scene
+    />
     </>
   );
 }
-
-ViroAnimations.registerAnimations({
-  fade: {
-    properties: {
-      opacity: "-=1"
-    },
-    duration: 2000
-  }
-});

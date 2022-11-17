@@ -113,7 +113,7 @@ const Page6 = useState({
     interactions_precise_collision_detection:true,
 });
 
-function onClickPage6(){
+function Page6OnClick(){
     const box = Box[0], setbox = Box[1];
     const page = Page6[0], setpage = Page6[1];//NOTE: we assume there can be multiple pages on a scene, each with different behaviours
  //   console.log("*************y que hacemos")
@@ -193,7 +193,7 @@ function onClickPage6(){
     /*Register 'Page 6' has been collected*/
 }
 
-function handleOnClick(){
+function BoxKeyholeOnClick(){
     if (questLocal.inventory.selectedItem.itemID == "4") { // Key equipped
     //smallTODO(fran): I cant get the animation to play again after the first time (even if I dont disable the trigger), why?
     //TODO(fran): sometimes the box opening animation at the end doesnt play, why?
@@ -269,7 +269,7 @@ function handleOnClick(){
     setkey(prevState => ({...prevState,animate:true,anim_interruptible:false,loop_animation:false}))
     setkey(prevState => ({...prevState,animation:"key_openbox"}))
     setkey(prevState => ({...prevState,anim_on_finish:()=>{
-        setbox(prevState => ({...prevState,animation:BoxAnimation.Open,loop_animation:false,animate:true}))
+        setbox(prevState => ({...prevState,animation:BoxAnimation.Open,loop_animation:false,animate:true,interactable:false}))
         //TODO(fran): animate the page inside falling due to gravity
 
         setpage(prevState => ({...prevState,interactable:true}))//make page inside box interactable
@@ -314,7 +314,7 @@ return (
             rotation={Page6[0].rotation}
             scale={Page6[0].scale}
             onRotate={makeOnRotate(Node)}
-            onClick={onClickPage6}
+            onClick={Page6OnClick}
             highAccuracyEvents={Page6[0].interactions_precise_collision_detection}
             animation={{name: Page6[0].animation, run: Page6[0].animate, loop: Page6[0].loop_animation, onFinish:Page6[0].anim_on_finish}}
             ignoreEventHandling={!Page6[0].interactable}
@@ -339,7 +339,7 @@ return (
             position={KeyholeTrigger[0].position}
             materials={"trigger_color"} 
             onRotate={makeOnRotate(Node)}
-            onClick={handleOnClick}/> 
+            onClick={BoxKeyholeOnClick}/> 
         
     </ViroNode>
     </>

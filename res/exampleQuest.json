@@ -51,7 +51,7 @@
     },
     "4": {
       "title": "Llave",
-      "description": "Llave llave llave llave llave llave",
+      "description": "Ahora solo falta encontrar una cerradura",
       "questItemID": 4,
       "image": "2",
       "view": 2,
@@ -158,7 +158,7 @@
     "11": {
       "title": "Ultima hoja del TP",
       "description": "Contiene los agradecimientos especiales",
-      "questItemID": 10,
+      "questItemID": 11,
       "image": "1",
       "view": 1,
       "model": {
@@ -297,7 +297,7 @@
           "type": "VRX",
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],
-          "rotation": [0,0,0],
+          "rotation": [0,180,0],
           "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
         },
         "interactions": [

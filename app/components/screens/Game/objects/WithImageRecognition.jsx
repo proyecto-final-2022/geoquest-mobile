@@ -19,23 +19,40 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
   const questLocalState = useSelector(state => state.questLocal);
   const dispatch = useDispatch();
   const [pauseUpdates, setPauseUpdates] = useState(false);
-  const [visible, setIsVisible] = useState(true);
-  const [runFade, setRunFade] = useState(false);
 
+  
   const {target, model, interactions} = typeProps;
   const targetID = target.source;
-
+  
   const targetProps = {
     ...target,
     source: Resources.get(target.source)
   };
-
+  
   const modelProps = {
     ...model,
     source: Resources.get(model.source),
     resources: model.resources.map(r => Resources.get(r))
   };
+  
+  const Model = useState({
+    visible:false,
+    opacity:0,
+    animation:undefined,
+    animate:false,
+    loop_animation:false,
+    anim_interruptible:false,
+    anim_on_finish:undefined,
+  });
 
+  const setModelVisible = (visible) => {
+    const model = Model[0], setmodel = Model[1];
+
+    setmodel(prevState => ({...prevState,
+        visible:visible,
+    }))
+  }
+  
   const hasInteractionsLeft = (state) => {
     const objectState = state.objects[id] ?? 0;
     const interactionN = interactions.length;
@@ -45,7 +62,8 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
 
   useEffect(() => {
     if(!hasInteractionsLeft(questState)) {
-      setIsVisible(false);
+      //setModelVisible(false);
+      disappearModel();
     }
 
     /* 
@@ -63,19 +81,20 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
 
   useEffect(() => {
     if(!hasInteractionsLeft(questState)) {
-      setIsVisible(false);
+      disappearModel();
+      //setModelVisible(false);
     }
   }, [questState]);
 
-  useEffect(() => {
-    console.log("***************Model props: ", modelProps)
-  }, []);
+  // useEffect(() => {
+  //   console.log("***************Model props: ", modelProps)
+  // }, []);
 
   useEffect(() => {
     if(questLocalState.visualizer.itemID != undefined || !hasInteractionsLeft(questState)) {
-      setIsVisible(false);
+      setModelVisible(false);
     } else {
-      setIsVisible(true)
+      setModelVisible(true)
     }
   }, [globalCtx.description]);
 
@@ -112,29 +131,71 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
     }
 
     if(!hasInteractionsLeft(newState)) {
-      setRunFade(true);
+      disappearModel();
     }
     console.log("****with image recognition dispatch")
     dispatch(Quest.actions.set({...newState}));
   };
 
+  const appearModel = () => {
+    const model = Model[0], setmodel = Model[1];
+
+    ViroAnimations.registerAnimations({
+      appearModel: {
+        properties: {
+          opacity: 1,
+        },
+        duration: 1000
+      }
+    });
+
+    setmodel(prevState => ({...prevState,
+        visible:true,
+        animation:"appearModel",
+        animate:true,
+        loop_animation:false,
+        anim_interruptible:false,
+        anim_on_finish:undefined,
+    }))
+  };
+
+  const disappearModel = () => {
+    const model = Model[0], setmodel = Model[1];
+
+    ViroAnimations.registerAnimations({
+      disappearModel: {
+        properties: {
+          // opacity: 0,
+          scaleX:0,
+          scaleY:0,
+          scaleZ:0,
+        },
+        duration: 400
+      }
+    });
+
+    setmodel(prevState => ({...prevState,
+        animation:"disappearModel",
+        animate:true,
+        loop_animation:false,
+        anim_interruptible:false,
+        anim_on_finish:()=>{setModelVisible(false)}
+    }))
+  };
+
   return (
     <ViroARImageMarker 
       target={targetID}
-      onAnchorFound={() => {setPauseUpdates(true);}}
+      onAnchorFound={() => {setPauseUpdates(true); appearModel()}}
       pauseUpdates={pauseUpdates}
     >
       <ViroAmbientLight color="#ffffff"/>
         <Viro3DObject 
-          visible={visible} 
-          onClick={onClick} 
-          {...modelProps} 
-          animation={{
-            name: "fade", 
-            run: runFade, 
-            loop: false, 
-          onFinish: () => {setIsVisible(false);}
-        }}
+          {...modelProps}
+          visible={Model[0].visible} 
+          onClick={onClick}
+          opacity={Model[0].opacity}
+          animation={{name:Model[0].animation, run:Model[0].animate, loop:Model[0].loop_animation, interruptible:Model[0].anim_interruptible, onFinish:Model[0].anim_on_finish}}
         />
     </ViroARImageMarker>
   );
@@ -188,13 +249,4 @@ ViroARTrackingTargets.createTargets({
   }
 
 //aula_621_crop
-});
-
-ViroAnimations.registerAnimations({
-  fade: {
-    properties: {
-      opacity: "-=1"
-    },
-    duration: 2000
-  }
 });
