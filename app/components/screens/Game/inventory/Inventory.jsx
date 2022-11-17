@@ -160,6 +160,7 @@ const Inventory = ({props}) => {
             scrollEnabled={true}
             numColumns={5}
             data={items}
+            keyExtractor={(item, index) => index}
             renderItem={({item, index}) => <Item item={item} index={index}/>}
           />
         </View> 
