@@ -10,6 +10,7 @@ const initialState = {
   sendUpdate: {
     lastFoundItemID: undefined
   },
+  can_finish: false,
   finished: false
 };
 

@@ -201,7 +201,7 @@ const Clue0 = useState({
         const id_to_remove = questLocal.inventory.selectedItem.itemID;
         const finish_quest = "8" == questLocal.inventory.selectedItem.itemID;
         console.log("*********actualizando inventario post guardar hoja")
-        dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != id_to_remove), finished: finish_quest}));
+        dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != id_to_remove), can_finish: finish_quest}));
 //      }
     }
     else{
