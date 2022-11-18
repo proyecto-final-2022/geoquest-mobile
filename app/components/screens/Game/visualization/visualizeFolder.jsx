@@ -146,6 +146,7 @@ const Clue0 = useState({
   const Page2 = useState(PageData);
   const Page3 = useState(PageData);
 
+
   function FolderOnClick(){
     // console.log("***Last interaction: ", questLocal.inventory.selectedItem.itemID)
     // if (questState.finished == true) {
@@ -154,12 +155,15 @@ const Clue0 = useState({
 
     const folder = Folder[0], setfolder = Folder[1];
     const note = Note[0], setnote = Note[1];
+
+    const selected = questLocal.inventory.selectedItem.itemID ?? 0
     
-    const page_idx = questLocal.inventory.selectedItem.itemID - 8; //pages go from ["8","9","10","11"]
+    const page_idx = selected - 8; //pages go from ["8","9","10","11"]
     
-    if (page_idx=>0 && page_idx<4) { //Page equipped
+    if (page_idx>=0 && page_idx<4) { //Page equipped
       const Pages = [Page0,Page1,Page2,Page3];
       const Page = Pages[page_idx];
+      console.log("*******Page IDX:" , page_idx)
       const page = Page[0], setpage = Page[1];
       //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
 

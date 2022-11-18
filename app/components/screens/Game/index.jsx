@@ -169,6 +169,14 @@ const Tab = createBottomTabNavigator();
 
 export default function Game({route}) {
   const {teamID: teamID} = route.params;
+  const [userID, setUserID] = useState();
+
+  useEffect(() => {
+    Storage.getObject('user').
+    then(user => setUserID(user.id))
+  }
+   , [route])
+
   //des-hardcodear
   //teamID: 112
   const {loading, questConfig } = useQuestSetup(route, teamID);
@@ -222,7 +230,7 @@ export default function Game({route}) {
       <Tab.Screen
         name="Salir"
         component={Exit} 
-        initialParams={{userID: 72, teamID: teamID}}
+        initialParams={{userID: userID, teamID: teamID}}
         options={{
           tabBarIcon: ({color, size}) => (
             <Ionicons name="exit" color={color} size={size} />
