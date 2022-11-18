@@ -168,10 +168,12 @@ function useQuestSetup(route, teamID) {
 const Tab = createBottomTabNavigator();
 
 export default function Game({route}) {
+  const DEBUG = false; if(DEBUG) route = {params:112}
   const {teamID: teamID} = route.params;
   //des-hardcodear
   //teamID: 112
   const {loading, questConfig } = useQuestSetup(route, teamID);
+  const questState = useSelector(state => state.quest);
 
   if(loading)
     return <View><Text>Loading...</Text></View>;
@@ -209,6 +211,16 @@ export default function Game({route}) {
           ),
         }}
       />
+      {questState.can_finish && <Tab.Screen 
+        name="Finalizar!" 
+        component={ARView} //TODO(alguien q sepa): Clickear en este item debería setear questState.finished en true y así triggerear el fin de la búsqueda
+        initialParams={{questConfig}}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Feather name="camera" color={color} size={size} />
+          ),
+        }}
+      />}
       <Tab.Screen 
         name="Podio" 
         component={TeamRanking} 
