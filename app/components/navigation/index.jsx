@@ -22,7 +22,7 @@ import Game from "../screens/Game";
 import { DrawerContent } from "../screens/DrawerContent";
 import QuestCompleted from '../screens/QuestCompleted';
 import QuestTutorial from "../screens/QuestTutorial";
-import DEBUG from "../screens/Game/DEBUG"
+import {DEBUG} from "../screens/Game/DEBUG"
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();

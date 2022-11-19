@@ -14,7 +14,7 @@ import QuestLocal from "../../../redux/slices/questLocal"
 import Config from "../../../../config.json"
 import {useNavigation} from '@react-navigation/native'
 import Storage from "../../../utils/storage/storage"
-import DEBUG from "./DEBUG"
+import {DEBUG} from "./DEBUG"
 
 function useQuestSetup(route, teamID) {
   const questState = useSelector(state => state.quest);
