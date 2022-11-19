@@ -22,9 +22,11 @@ import Detective from '../../../res/images/tutorial/detective.png'
 import Menu from '../../../res/images/tutorial/menu.jpg'
 import MenuInventory from '../../../res/images/tutorial/menuInventory.jpg'
 import Carpeta from '../../../res/images/tutorial/carpeta.jpg'
+import Config from '../../../config.json'
 
 const QuestTutorial = ({route, navigation}) => {
   const { height, width } = useWindowDimensions();
+  const {questID, teamID} = route.params
 
   useFocusEffect(
     React.useCallback(() => {
@@ -51,7 +53,22 @@ const QuestTutorial = ({route, navigation}) => {
   })
 
   const redirectToQuest = () => {
-    navigation.navigate('Quest Navigator');
+    fetch(Config.appUrl + "quests/" + questID + "/progressions/" + teamID, {
+      method: 'PUT',
+      headers: { 
+        'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        inventory: [],
+        scene: parseFloat(0),
+        objects: {},
+        logs: [],
+        points: parseFloat(0),
+        finished: false,
+        can_finish: false,
+        start_time: Math.floor(Date.now() / 1000)}) 
+    }).catch(error => {
+      console.log('Error sending update: '+error);
+    }).then(navigation.navigate('Game', {teamID: teamID})).catch(error => console.log(error))
   };
 
   const RenderItem = ({ item }) => {
@@ -75,8 +92,8 @@ const QuestTutorial = ({route, navigation}) => {
     <AppIntroSlider
         data={slides}
         renderItem={RenderItem}
-        onDone={redirectToQuest}
-        onSkip={redirectToQuest}
+        onDone={() => {redirectToQuest(questID, teamID)}}
+        onSkip={() => {redirectToQuest(questID, teamID)}}
         showSkipButton
         showPrevButton
         renderNextButton={() => 
@@ -93,7 +110,7 @@ const QuestTutorial = ({route, navigation}) => {
         </View>}
         renderDoneButton={() => 
         <View>
-            <Text style={styles.introTextStyle}>Comenzar</Text>
+              <Text style={styles.introTextStyle}>Comenzar</Text>
         </View>}
         activeDotStyle={{backgroundColor: 'black'}}
     />

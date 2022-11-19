@@ -137,7 +137,7 @@ function useQuestSetup(route, teamID) {
              logs: [],
              points: parseFloat(0),
              finished: false,
-             can_finish: finish_quest,
+             can_finish: false,
              start_time: Math.floor(Date.now() / 1000)}
             ));
             fetch(
@@ -184,7 +184,7 @@ function useQuestSetup(route, teamID) {
 const Tab = createBottomTabNavigator();
 
 export default function Game({route}) {
-  if(DEBUG) route = {params:112};
+//  if(DEBUG) route = {params:112};
   const {teamID: teamID} = route.params;
   const [userID, setUserID] = useState();
 
@@ -260,7 +260,7 @@ export default function Game({route}) {
                 lastFoundItemID: exampleQuest.lastItem.id,
               },
                 finished: true,
-                can_finish: finish_quest
+                can_finish: true
             }))
             fetch(
               Config.appUrl+'coupons/' + exampleQuest.clientId + "/completions/" + userID, {
@@ -286,6 +286,17 @@ export default function Game({route}) {
                   })
                 }
               )
+              dispatch(Quest.actions.set(
+                {...questState,
+                 inventory: [],
+                 scene: parseFloat(0),
+                 objects: {},
+                 logs: [],
+                 points: parseFloat(0),
+                 finished: false,
+                 can_finish: false,
+                 start_time: Math.floor(Date.now() / 1000)}
+                ))
           },
         })}
       />}

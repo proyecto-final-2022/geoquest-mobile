@@ -150,7 +150,7 @@ export default WaitRoom = ({route, navigation}) => {
                 Config.appUrl+'quests/' + questID + '/progressions/' + teamID, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
-                }).then(navigation.navigate("Game", {teamID: teamID}))
+                }).then(navigation.navigate("Quest Tutorial", {questID: questID, teamID: teamID}))
             }else {
               Alert.alert("No todos los jugadores han aceptado aún!")
             }

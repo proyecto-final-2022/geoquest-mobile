@@ -167,7 +167,7 @@ export default function QuestVisualizer({route, navigation}) {
                   Config.appUrl+'quests/' + questId + '/progressions/' + teamID, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json'},
-                  }).then(navigation.navigate("Game", {teamID: teamID}))
+                  }).then(navigation.navigate("Quest Tutorial", {questID: questId, teamID: teamID}))
                   ).catch(error => console.log(error)) 
             }
           icon = "arrow-forward-circle"
