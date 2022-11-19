@@ -121,7 +121,7 @@ const Clue0 = useState({
                require(modelspath+'/Page/page-atlas_r.png'),
                require(modelspath+'/Page/page-atlas_n.png'),
                ],
-    position:[1,0,-.01], //X:left-right, Y:height, Z:depth
+    position:[1,0,-.014], //X:left-right, Y:height, Z:depth
     rotation:item.model.rotation,
     scale:item.model.scale,
     prev_scale_factor:1,
