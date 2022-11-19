@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import ARView from "./ARView";
 import QuestLog from "./QuestLog";
 import Exit from "./Exit";
@@ -18,6 +18,7 @@ import {DEBUG} from "./DEBUG"
 
 function useQuestSetup(route, teamID) {
   const questState = useSelector(state => state.quest);
+  const questStateLocal = useSelector(state => state.questStateLocal);
   const dispatch = useDispatch();
   const navigation = useNavigation()
   const [config, setConfig] = useState();
@@ -26,6 +27,7 @@ function useQuestSetup(route, teamID) {
 
   const initQuest = async () => {
     console.log("*******Init quest: ", questState);
+    Alert.alert("*************init quest")
     // TODO
     // Download config and:
     setConfig(exampleQuest);
@@ -72,8 +74,14 @@ function useQuestSetup(route, teamID) {
             })
           } else {
             console.log("*******actualizacion de estado")
-            
-            if (json.started == true) {
+            Alert.alert("****actualizo estado")
+            var selectedItem  
+            if (questStateLocal.inventory === undefined) {
+              selectedItem = false
+            } else {
+              selectedItem = questStateLocal.inventory.selectedItem.itemID == "8"
+            }
+            if (json.started == true && selectedItem) {
               console.log("*******actualizacion de estado started")
               dispatch(Quest.actions.set(
                 {...questState,
@@ -137,6 +145,7 @@ function useQuestSetup(route, teamID) {
              logs: [],
              points: parseFloat(0),
              finished: false,
+             can_finish: false,
              start_time: Math.floor(Date.now() / 1000)}
             ));
             fetch(
@@ -183,7 +192,7 @@ function useQuestSetup(route, teamID) {
 const Tab = createBottomTabNavigator();
 
 export default function Game({route}) {
-  if(DEBUG) route = {params:112};
+//  if(DEBUG) route = {params:112};
   const {teamID: teamID} = route.params;
   const [userID, setUserID] = useState();
 
@@ -258,7 +267,8 @@ export default function Game({route}) {
                 sendUpdate: {
                 lastFoundItemID: exampleQuest.lastItem.id,
               },
-                finished: true
+                finished: true,
+                can_finish: true
             }))
             fetch(
               Config.appUrl+'coupons/' + exampleQuest.clientId + "/completions/" + userID, {
@@ -284,6 +294,17 @@ export default function Game({route}) {
                   })
                 }
               )
+              dispatch(Quest.actions.set(
+                {...questState,
+                 inventory: [],
+                 scene: parseFloat(0),
+                 objects: {},
+                 logs: [],
+                 points: parseFloat(0),
+                 finished: false,
+                 can_finish: false,
+                 start_time: Math.floor(Date.now() / 1000)}
+                ))
           },
         })}
       />}

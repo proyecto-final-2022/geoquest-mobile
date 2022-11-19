@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Alert} from 'react-native';
 import { ViroARScene } from "@viro-community/react-viro/components/AR/ViroARScene";
 import { Viro3DObject } from "@viro-community/react-viro/components/Viro3DObject";
 import { ViroNode } from "@viro-community/react-viro/components/ViroNode";
@@ -8,7 +8,7 @@ import { ViroARCamera } from "@viro-community/react-viro/components/AR/ViroARCam
 import { ViroOmniLight } from "@viro-community/react-viro/components/ViroOmniLight";
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 import Resources from "../../../../utils/resources.js";
-import Quest from "../../../../redux/slices/quest"
+import Quest from "../../../../redux/slices/quest";
 import { useSelector, useDispatch } from "react-redux";
 import {BoxAnimation, FolderAnimation, PageAnimation, makeOnPinch, makeOnRotate, makeOnDrag, MapToViro3DObject, Lighting, DisappearModel} from "../GameModelsCommon"
 
@@ -172,6 +172,7 @@ const Clue0 = useState({
     const note = Note[0], setnote = Note[1];
 
     const selected = questLocal.inventory.selectedItem.itemID ?? 0
+    console.log("***************BFDAUSFBASDFIB")
     
     const page_idx = selected - 8; //pages go from ["8","9","10","11"]
     
@@ -179,6 +180,7 @@ const Clue0 = useState({
       const Pages = [Page0,Page1,Page2,Page3];
       const Page = Pages[page_idx];
       const page = Page[0], setpage = Page[1];
+      console.log("******aaaaaaaaaaaaa: ", questLocal.inventory.selectedItem.itemID)
       //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
 
       if(folderOpened) OpenOrCloseFolder();
@@ -212,11 +214,13 @@ const Clue0 = useState({
           anim_interruptible:false,
         }))
         var newInventory = []
+        var filteredInventory = []
         newInventory = questState.inventory
         const id_to_remove = questLocal.inventory.selectedItem.itemID;
         const finish_quest = "8" == questLocal.inventory.selectedItem.itemID;
-        console.log("*********actualizando inventario post guardar hoja")
-        dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != id_to_remove), can_finish: finish_quest}));
+        filteredInventory = newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID)
+        console.log("CONCHAAAAAAAAAAAAAAAAAAAAAAAAAA: ", filteredInventory)
+        dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID), can_finish: finish_quest}));
     }
     else{
       OpenOrCloseFolder()
@@ -227,22 +231,47 @@ const Clue0 = useState({
     const note = Note[0], setnote = Note[1];
     const clue = Clue0[0], setclue = Clue0[1];
     //TODO(fran)
-    DisappearModel(Note);
+    DisappearModelAndSaveInInventory(Note, "2");
     //setnote(prevState => ({...prevState, visible:false}));
     setclue(prevState => ({...prevState, interactable:true}));
     console.log("****note on click")
     //cambiar hardcodeo
-    dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "2"}, inventory: [...questState.inventory, "2"]}));
-
   }
 
   function Clue0OnClick(){
     const clue = Clue0[0], setclue = Clue0[1];
     console.log("***********Clue 0 on click")
     //setclue(prevState => ({...prevState, visible:false}));
-    DisappearModel(Clue0);
-    dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "3"}, inventory: [...questState.inventory, "3"]}));
+    DisappearModelAndSaveInInventory(Clue0, "3");
   }
+
+  function DisappearModelAndSaveInInventory(Model, id){
+    const model = Model[0], setmodel = Model[1];
+
+    ViroAnimations.registerAnimations({
+      disappearModel: {
+        properties: {
+          // opacity: 0,
+          scaleX:0,
+          scaleY:0,
+          scaleZ:0,
+        },
+        duration: 400
+      }
+    });
+
+    setmodel(prevState => ({...prevState,
+        interactable:false,
+        animation:"disappearModel",
+        animate:true,
+        loop_animation:false,
+        anim_interruptible:false,
+        anim_on_finish:()=>{
+          setmodel(prevState => ({...prevState,visible:false,}))
+          dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: id}, inventory: [...questState.inventory, id]}));
+        }
+    }))
+  };
 
   return (
    <ViroNode visible={(questLocal.visualizer.itemID == item.questItemID)}>
@@ -275,7 +304,7 @@ const Clue0 = useState({
           onPinch={makeOnPinch(Node)}
           onDrag={makeOnDrag()}
           onClick={NoteOnClick}
-          visible={Note[0].visible}
+          visible={!questState.inventory.includes("2") ?? true}
           ignoreEventHandling={!Note[0].interactable}
           highAccuracyEvents={Note[0].interactions_accurate_collision_detection}
           />
@@ -290,7 +319,7 @@ const Clue0 = useState({
           animation={{name: Clue0[0].animation, run: Clue0[0].animate, loop: Clue0[0].loop_animation, interruptible:Clue0[0].anim_interruptible, onFinish:Clue0[0].anim_on_finish}}
           onRotate={makeOnRotate(Node)}
           onClick={Clue0OnClick}
-          visible={Clue0[0].visible}
+          visible={!questState.inventory.includes("3") ?? true}
           ignoreEventHandling={!Clue0[0].interactable}
           highAccuracyEvents={Clue0[0].interactions_accurate_collision_detection}
           />
