@@ -163,7 +163,6 @@ const Clue0 = useState({
     if (page_idx>=0 && page_idx<4) { //Page equipped
       const Pages = [Page0,Page1,Page2,Page3];
       const Page = Pages[page_idx];
-      console.log("*******Page IDX:" , page_idx)
       const page = Page[0], setpage = Page[1];
       //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
 

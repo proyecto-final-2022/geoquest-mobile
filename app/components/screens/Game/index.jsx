@@ -123,7 +123,7 @@ function useQuestSetup(route, teamID) {
   }, [route]);
 
   useEffect(() => {
-
+    console.log("***********aló: ", questState.finished)
     if (questState.sendUpdate.lastFoundItemID != undefined) {
         if (questState.finished == true) {
           const questRequest = {...questState, item_name: exampleQuest.lastItem.title, user_id: userID}
@@ -182,6 +182,7 @@ export default function Game({route}) {
   //teamID: 112
   const {loading, questConfig } = useQuestSetup(route, teamID);
   const questState = useSelector(state => state.quest);
+  const dispatch = useDispatch();
 
   if(loading)
     return <View><Text>Loading...</Text></View>;
@@ -228,6 +229,24 @@ export default function Game({route}) {
             <Feather name="camera" color={color} size={size} />
           ),
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            // Prevent default action
+            e.preventDefault();
+            dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
+                dispatch(QuestLocal.actions.selectItem({selectedItem: {
+                  itemID: undefined,
+                  name: ""
+            }}))
+            dispatch(Quest.actions.set(
+              {...questState,
+                sendUpdate: {
+                lastFoundItemID: exampleQuest.lastItem.id,
+              },
+                finished: true
+            }))
+          },
+        })}
       />}
       <Tab.Screen 
         name="Podio" 
