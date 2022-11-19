@@ -57,7 +57,7 @@ export default function VisualizeFolder(item, ctx) {
                require(modelspath+'/Note/note-atlas_ao.png'),
                ],
     position:[-.1,0,.005], //X:left-right, Y:height, Z:depth
-    rotation:item.model.rotation,
+    rotation:[0,0,0],
     scale:item.model.scale,
     prev_scale_factor:1,
     prev_rotation_factor:1,
@@ -77,9 +77,9 @@ export default function VisualizeFolder(item, ctx) {
 });
 
 const Clue0 = useState({
-  source:require("../../../../../res/models/ClueCard/0/model.vrx"),
-  resources:[require('../../../../../res/models/ClueCard/0/cluecard-atlas_d.png'),
-             require('../../../../../res/models/ClueCard/0/cluecard-atlas_r.png'),
+  source:require(modelspath+"/ClueCard/0/model.vrx"),
+  resources:[require(modelspath+'/ClueCard/0/cluecard-atlas_d.png'),
+             require(modelspath+'/ClueCard/0/cluecard-atlas_r.png'),
              ],
   position:[-.1,-.04,0], //X:left-right, Y:height, Z:depth
   rotation:item.model.rotation,
@@ -118,6 +118,7 @@ const Clue0 = useState({
     resources:[require(modelspath+'/Page/page-atlas_d.png'),
                require(modelspath+'/Page/page-atlas_r.png'),
                require(modelspath+'/Page/page-atlas_n.png'),
+               require(modelspath+'/Page/page-atlas_m.png'),
                ],
     position:[1,0,-.014], //X:left-right, Y:height, Z:depth
     rotation:item.model.rotation,

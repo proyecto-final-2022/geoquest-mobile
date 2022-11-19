@@ -27,6 +27,7 @@ export const resources = {
     pageDiffuse: require("../../res/models/Page/page-atlas_d.png"),
     pageNormal: require("../../res/models/Page/page-atlas_n.png"),
     pageRoughness: require("../../res/models/Page/page-atlas_r.png"),
+    pageMetallic: require("../../res/models/Page/page-atlas_m.png"),
     noteDiffuse: require("../../res/models/Note/note-atlas_d.png"),
     noteNormal: require("../../res/models/Note/note-atlas_n.png"),
     noteRoughness: require("../../res/models/Note/note-atlas_r.png"),

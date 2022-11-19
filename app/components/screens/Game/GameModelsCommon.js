@@ -135,23 +135,22 @@ const ObjectPrototype = {
 };
 
 export const Lighting = ({visible}) => {
-    const omnilight = true;
     return (
         <>
-            { omnilight && <ViroOmniLight //TODO(fran): move lighting to separate function so it can be reused for all scenes
+            <ViroOmniLight
                 color="#FFFFFF"
                 position={[0, 5, -10]}
-                intensity={visible?700:0}
+                intensity={visible?100:0}
                 attenuationStartDistance={5}
                 attenuationEndDistance={30}
-            /> }
-            { omnilight && <ViroOmniLight
+            />
+            <ViroOmniLight
                 color="#FFFFFF"
-                position={[0, 0.3, 3]}
-                intensity={visible?700:0}
+                position={[1, 0.3, 3]}
+                intensity={visible?100:0}
                 attenuationStartDistance={5}
                 attenuationEndDistance={30}
-            /> }
+            />
         </>
     )
 }

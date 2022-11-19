@@ -105,6 +105,7 @@ const Page6 = useState({
     resources:[require(modelspath+'/Page/page-atlas_d.png'),
                require(modelspath+'/Page/page-atlas_r.png'),
                require(modelspath+'/Page/page-atlas_n.png'),
+               require(modelspath+'/Page/page-atlas_m.png'),
                ],
     onRotate:makeOnRotate(Node),
     onPinch:makeOnPinch(Node),
