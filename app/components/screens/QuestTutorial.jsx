@@ -150,8 +150,8 @@ const styles = StyleSheet.create({
 const slides = [
   {
     key: 's1',
-    text: 'Un día te dirigias a Medrano para entregar tu Trabajo Práctico Final de Sistemas y Organizaciones.\n'+
-    'En la puerta te encontrás con uno de tus compañeros y te pones a hablar un rato cuando de repente...',
+    text: 'Un día te dirigías a Medrano para entregar tu Trabajo Práctico Final de Sistemas y Organizaciones.\n'+
+    'En la puerta te encontrás con uno de tus compañeros y te ponés a hablar un rato cuando de repente...',
     title: 'El TP Perdido',
     image: {
       uri:
@@ -178,7 +178,7 @@ const slides = [
     key: 's3',
     title: '',
     text: 'Luego de reirse el duende desaparece en una cortina de humo.\n'+
-    'Parece que lo único que podes hacer es seguir las pistas que el duende te dejo para poder entregar el TP a tiempo.',
+    'Parece que lo único que podés hacer es seguir las pistas que el duende te dejó para poder entregar el TP a tiempo.',
     image: Puff,
     imageStyle: {
         width: 250,
@@ -189,7 +189,7 @@ const slides = [
   {
     key: 's4',
     title: 'Instrucciones',
-    text: 'En esta búsqueda deberás seguir las pistas para encontrar las hojas perdidas.\n'+
+    text: 'En esta búsqueda deberás seguir las pistas para encontrar las dos hojas perdidas.\n'+
     'Estas hojas pueden estar escondidas en cualquier lugar de la facultad.',
     image: Detective,
     imageStyle: {
@@ -203,9 +203,9 @@ const slides = [
     title: 'Instrucciones - Menú',
     text: 'Este será tu menú durante la búsqueda.\n'+
     '"Mis Notas" es un log con todos los avances que hiciste en la búsqueda.\n'+
-    'La "Camara" será tu herramienta para encontrar las hojas perdidas.\n'+
+    'La "Cámara" será tu herramienta para encontrar las hojas perdidas.\n'+
     '¡Cuando crees haber encontrado el lugar de una pista apuntalo con la cámara a ver si aparece!\n'+
-    'En "Podio" podrás ver tu puntaje actual, como tambien el de las demás personas.',
+    'En "Podio" podrás ver tu puntaje actual, como también el de las demás personas.',
     textStyle: {
         fontSize: 17,
         textAlign: 'left',
@@ -220,7 +220,7 @@ const slides = [
   {
     key: 's6',
     title: 'Instrucciones - Inventario',
-    text: 'Los objetos que encuentres en la búsqueda se agregarán automaticamente al inventario.\n'+
+    text: 'Los objetos que encuentres en la búsqueda se agregarán automáticamente al inventario.\n'+
     'Lo podrás ver cuando estés usando la cámara como un submenú desplegable hacia arriba.\n'+
     'Para ver un objeto haz click en la opción "Ver"\n'+
     'Para usar un objeto haz click en la opción "Usar".\n'+'El objeto tendrá un marco rojo.\n'+
@@ -241,7 +241,7 @@ const slides = [
     key: 's7',
     title: '¡Comenzar la búsqueda!',
     text: 'Ya estás listo para comenzar la búsqueda\n'+
-    'Presioná el botón "Comenzar" y activa la camara para agregar la carpeta que el duende le robó las hojas.\n'+
+    'Andá a planta baja y presioná el botón "Comenzar" y activa la cámara para agarrar la carpeta a la que el duende le robó las hojas.\n'+
     'Luego ve al inventario y presiona "Ver" en la carpeta para recolectar tus primeras pistas.\n\n'+
     '¡MUCHA SUERTE!\n',
     textStyle: {

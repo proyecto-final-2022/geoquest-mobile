@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    color: "grey",
+    color: "black",
     fontWeight: "bold",
     fontSize: 30
   },
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 
   closeButton: {
     borderRadius: 25,
-    backgroundColor: "lightblue",
+    backgroundColor: "#CA955C",
     height: 50,
     width: "50%",
     alignSelf: "center",

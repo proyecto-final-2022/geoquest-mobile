@@ -205,7 +205,8 @@ const Clue0 = useState({
           },
           page_addtofolder:[["page_addtofolder1","page_addtofolder2"]],
         })
-
+        
+        const finish_quest = "8" == questLocal.inventory.selectedItem.itemID;
         setpage(prevState => ({...prevState,
           visible:true,
           scale:[0,0,0],
@@ -213,12 +214,17 @@ const Clue0 = useState({
           animate:true,
           loop_animation:false,
           anim_interruptible:false,
+          anim_on_finish:()=>{
+            if (finish_quest)
+              //TODO(fran): check whether more pages are really still left to be found and placed in the folder
+              ctx.hint("¡Felicidades! Ya tenés suficientes hojas para entregar tu TP. Si te quedaste con ganás de más, todavía quedan más hojas por encontrar para obtener un mejor premio.")
+          }
         }))
         var newInventory = []
         var filteredInventory = []
         newInventory = questState.inventory
         const id_to_remove = questLocal.inventory.selectedItem.itemID;
-        const finish_quest = "8" == questLocal.inventory.selectedItem.itemID;
+        
         filteredInventory = newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID)
         console.log("CONCHAAAAAAAAAAAAAAAAAAAAAAAAAA: ", filteredInventory)
         if (finish_quest) {

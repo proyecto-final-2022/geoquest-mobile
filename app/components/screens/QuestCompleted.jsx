@@ -220,7 +220,7 @@ export default QuestCompleted = ({route, navigation}) => {
               <FontAwesome name ='clock-o' color={'black'} size={25} style={{marginLeft:5}}/>
             </View>
             <Text style={styles.scoreValue}>
-              {questDuration}
+              {questDuration.substring(0,questDuration.indexOf("."))+"s"/* {Date.parse(questDuration).toString()} */}
             </Text>
           </View>
         </View>

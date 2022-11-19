@@ -141,9 +141,12 @@ export default function QuestVisualizer({route, navigation}) {
             <Text style={{fontWeight: "bold"}}>{duration}</Text>
           </View>
         </View>
-        <View style={styles.description}>
-          <Text style={{fontSize: 20}}>{description}</Text>
-        </View>
+        <ScrollView style={styles.description}>
+          <Text style={{
+//            flex: 3,
+            marginHorizontal: 0,
+            textAlign: 'justify'}}>{description}</Text>
+        </ScrollView>
   
         <View style={styles.tagContainer}>
           {tags.map((tag, index) => <Tag tag={tag} key={index} index={index}/>)}
@@ -255,6 +258,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginTop:0,
     padding: 15, 
+    flex: 1
   },
   questInfoContainer: {
     flex: 1,
@@ -268,6 +272,7 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   description: {
+    marginBottom: 25,
     flex: 2  
   },
   tagContainer:{

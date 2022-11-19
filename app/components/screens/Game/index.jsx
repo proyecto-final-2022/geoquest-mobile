@@ -51,16 +51,16 @@ function useQuestSetup(route, teamID) {
               itemID: undefined,
               name: ""
             }}))
-            dispatch(Quest.actions.set(
-              {...questState,
-               inventory: [],
-               scene: parseFloat(0),
-               objects: {},
-               logs: [],
-               points: parseFloat(0),
-               finished: false,
-               start_time: Math.floor(Date.now() / 1000)}
-              ));
+            // dispatch(Quest.actions.set(
+            //   {...questState,
+            //    inventory: [],
+            //    scene: parseFloat(0),
+            //    objects: {},
+            //    logs: [],
+            //    points: parseFloat(0),
+            //    finished: false,
+            //    start_time: Math.floor(Date.now() / 1000)}
+            //   ));
             navigation.navigate("Quest Completed",
             {
               clientId: exampleQuest.clientId,
@@ -291,17 +291,17 @@ export default function Game({route}) {
                   })
                 }
               )
-              dispatch(Quest.actions.set(
-                {...questState,
-                 inventory: [],
-                 scene: parseFloat(0),
-                 objects: {},
-                 logs: [],
-                 points: parseFloat(0),
-                 finished: false,
-                 can_finish: false,
-                 start_time: Math.floor(Date.now() / 1000)}
-                ))
+              // dispatch(Quest.actions.set(
+              //   {...questState,
+              //    inventory: [],
+              //    scene: parseFloat(0),
+              //    objects: {},
+              //    logs: [],
+              //    points: parseFloat(0),
+              //    finished: false,
+              //    can_finish: false,
+              //    start_time: Math.floor(Date.now() / 1000)}
+              //   ))
           },
         })}
       />}

@@ -69,16 +69,18 @@ const QuestNavigator = () => {
             }}>
             <Text style={{fontSize: 16, fontWeight: 'bold'}}>{quest.name}</Text>
           </View>
-          <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
-          <View style={{marginTop: 10, flexDirection: 'row'}}>
+          <ScrollView>
+            <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
+          </ScrollView>
+          <View style={{marginTop: 10, flexDirection: 'row', flex: 1}}>
             <View style={styles.questInfo}>
               <FontAwesome name ='clock-o' size={18}/>
               <Text style={styles.questInfoText}>{quest.duration}</Text>
             </View>
-            <View style={styles.questInfo}>
+            <ScrollView style={styles.questInfo}>
               <Entypo name ='gauge' size={18}/>
               <Text style={styles.questInfoText}>{quest.difficulty}</Text>
-            </View>
+            </ScrollView>
           </View>
       </View>
     )
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   card:{
-    height: 320,
+    height: 350,
     backgroundColor: '#ffefd5',
     elevation: 10,
     width: width - 65,
@@ -227,7 +229,7 @@ const styles = StyleSheet.create({
   },
   questInfo: {
     flexDirection: 'row',
-    marginRight: 15
+    marginRight: 15,
   },
   questInfoText: {
     marginLeft: 5,
