@@ -269,7 +269,7 @@ function BoxKeyholeOnClick(){
     setkey(prevState => ({...prevState,animate:true,anim_interruptible:false,loop_animation:false}))
     setkey(prevState => ({...prevState,animation:"key_openbox"}))
     setkey(prevState => ({...prevState,anim_on_finish:()=>{
-        setbox(prevState => ({...prevState,animation:BoxAnimation.Open,loop_animation:false,animate:true,interactable:false}))
+        setbox(prevState => ({...prevState,animation:BoxAnimation.Open,loop_animation:false,animate:true})) //interactable:false
         //TODO(fran): animate the page inside falling due to gravity
 
         setpage(prevState => ({...prevState,interactable:true}))//make page inside box interactable
@@ -288,10 +288,10 @@ ViroMaterials.createMaterials({
 });
 
 return (
-    <>
-    <ViroAmbientLight color="#ffffff" intensity={200}/>
-    <Lighting/>
-    <ViroNode visible={(questLocal.visualizer.itemID == item.questItemID)} position={Node[0].position} rotation={Node[0].rotation} scale={Node[0].scale} onRotate={makeOnRotate(Node)}>
+  <ViroNode visible={(questLocal.visualizer.itemID == item.questItemID)}>
+    {/* <ViroAmbientLight color="#ffffff" intensity={200}/> */}
+    {/* <Lighting/> */}
+    <ViroNode position={Node[0].position} rotation={Node[0].rotation} scale={Node[0].scale} onRotate={makeOnRotate(Node)}>
         <Viro3DObject
             //{...MapToViro3DObject(Box[0])} //TODO(fran): this forgets the individual values and when the box gets updated it updates the whole thing, thus restarting it to its original position every time, instead we'd want to use a macro that aumatically writes what's below this text
             source={Box[0].source}
@@ -339,9 +339,10 @@ return (
             position={KeyholeTrigger[0].position}
             materials={"trigger_color"} 
             onRotate={makeOnRotate(Node)}
-            onClick={BoxKeyholeOnClick}/> 
+            onClick={BoxKeyholeOnClick}
+            /> 
         
     </ViroNode>
-    </>
+  </ViroNode>
 )
 }

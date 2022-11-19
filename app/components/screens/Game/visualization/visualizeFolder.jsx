@@ -19,10 +19,7 @@ export default function VisualizeFolder(item, ctx) {
   const dispatch = useDispatch();
 
   const modelspath = "../../../../../res/models";
-
-  const GameState = {
-    folder_opened:false, //TODO(fran): I dont like this logic at all
-  };
+  
   const Folder = useState({
     source:Resources.get(item.model.source),
     position:[0,0,0],
@@ -146,6 +143,23 @@ const Clue0 = useState({
   const Page2 = useState(PageData);
   const Page3 = useState(PageData);
 
+  function OpenOrCloseFolder(){
+    const folder = Folder[0], setfolder = Folder[1];
+    const note = Note[0], setnote = Note[1];
+
+    setFolderOpened(!folderOpened)  
+    setfolder(prevState => ({...prevState,
+        interactable:false,
+        animation:folderOpened?FolderAnimation.Open:FolderAnimation.Close,
+        animate:true,
+        loop_animation:false,
+        anim_interruptible:false,
+        anim_on_finish:()=>{
+            setnote(prevState => ({...prevState, interactable:folderOpened}));
+            setfolder(prevState => ({...prevState, interactable:true}));
+        },
+    }))
+  }
 
   function FolderOnClick(){
     // console.log("***Last interaction: ", questLocal.inventory.selectedItem.itemID)
@@ -166,7 +180,8 @@ const Clue0 = useState({
       const page = Page[0], setpage = Page[1];
       //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
 
-//      if(GameState.folder_opened){
+      if(folderOpened) OpenOrCloseFolder();
+
         ViroAnimations.registerAnimations({
           page_addtofolder1:{ //appear page
             properties:{
@@ -201,25 +216,10 @@ const Clue0 = useState({
         const finish_quest = "8" == questLocal.inventory.selectedItem.itemID;
         console.log("*********actualizando inventario post guardar hoja")
         dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != id_to_remove), can_finish: finish_quest}));
-//      }
     }
     else{
-      setFolderOpened(!folderOpened)
-//      GameState.folder_opened=!GameState.folder_opened;
-
-      setfolder(prevState => ({...prevState,
-//          interactable:false,
-          animation:folderOpened?FolderAnimation.Open:FolderAnimation.Close,
-          animate:true,
-          loop_animation:false,
-          anim_interruptible:false,
-          anim_on_finish:()=>{
-              setnote(prevState => ({...prevState, interactable:folderOpened}));
-              setfolder(prevState => ({...prevState, interactable:true}));
-          },
-      }))
+      OpenOrCloseFolder()
     }
-
   }
 
   function NoteOnClick(){
@@ -244,7 +244,9 @@ const Clue0 = useState({
   }
 
   return (
-    <ViroNode visible={(questLocal.visualizer.itemID == item.questItemID)} position={Node[0].position} rotation={Node[0].rotation} scale={Node[0].scale} onRotate={makeOnRotate(Node)} >
+   <ViroNode visible={(questLocal.visualizer.itemID == item.questItemID)}>
+    {/* <Lighting/> */}
+    <ViroNode position={Node[0].position} rotation={Node[0].rotation} scale={Node[0].scale} onRotate={makeOnRotate(Node)}>
       <Viro3DObject
           source={Folder[0].source}
           resources={Folder[0].resources}
@@ -258,7 +260,8 @@ const Clue0 = useState({
           visible={Folder[0].visible}
           ignoreEventHandling={!Folder[0].interactable}
           highAccuracyEvents={Folder[0].interactions_accurate_collision_detection}
-      />
+          />
+
       <Viro3DObject
           source={Note[0].source}
           resources={Note[0].resources}
@@ -274,7 +277,8 @@ const Clue0 = useState({
           visible={Note[0].visible}
           ignoreEventHandling={!Note[0].interactable}
           highAccuracyEvents={Note[0].interactions_accurate_collision_detection}
-      />
+          />
+
       <Viro3DObject
           source={Clue0[0].source}
           resources={Clue0[0].resources}
@@ -288,7 +292,8 @@ const Clue0 = useState({
           visible={Clue0[0].visible}
           ignoreEventHandling={!Clue0[0].interactable}
           highAccuracyEvents={Clue0[0].interactions_accurate_collision_detection}
-      />
+          />
+
       <Viro3DObject
           source={Page0[0].source}
           resources={Page0[0].resources}
@@ -302,7 +307,8 @@ const Clue0 = useState({
           visible={Page0[0].visible}
           ignoreEventHandling={!Page0[0].interactable}
           highAccuracyEvents={Page0[0].interactions_accurate_collision_detection}
-      />
+          />
+
       <Viro3DObject
           source={Page1[0].source}
           resources={Page1[0].resources}
@@ -316,7 +322,8 @@ const Clue0 = useState({
           visible={Page1[0].visible}
           ignoreEventHandling={!Page1[0].interactable}
           highAccuracyEvents={Page1[0].interactions_accurate_collision_detection}
-      />
+          />
+
       <Viro3DObject
           source={Page2[0].source}
           resources={Page2[0].resources}
@@ -330,7 +337,8 @@ const Clue0 = useState({
           visible={Page2[0].visible}
           ignoreEventHandling={!Page2[0].interactable}
           highAccuracyEvents={Page2[0].interactions_accurate_collision_detection}
-      />
+          />
+
       <Viro3DObject
           source={Page3[0].source}
           resources={Page3[0].resources}
@@ -344,8 +352,9 @@ const Clue0 = useState({
           visible={Page3[0].visible}
           ignoreEventHandling={!Page3[0].interactable}
           highAccuracyEvents={Page3[0].interactions_accurate_collision_detection}
-      />
-  </ViroNode>
+          />
+    </ViroNode>
+   </ViroNode>
   );
 }
 //TODO(fran): ask the boyz if there's some way to add an animation to the interactions

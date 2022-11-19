@@ -12,6 +12,9 @@ import { ViroAnimations } from "@viro-community/react-viro/components/Animation/
 import { useSelector, useDispatch } from "react-redux";
 import Quest from "../../../../redux/slices/quest";
 import Config from "../../../../../config.json"
+import { ViroNode } from "@viro-community/react-viro/components/ViroNode";
+import { Lighting } from "../GameModelsCommon.js";
+
 const questID = "1"
 
 export default function WithImageRecognition({id, typeProps, globalCtx}) {
@@ -189,14 +192,16 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
       onAnchorFound={() => {setPauseUpdates(true); appearModel()}}
       pauseUpdates={pauseUpdates}
     >
-      <ViroAmbientLight color="#ffffff"/>
+      <ViroNode visible={Model[0].visible}>
+        <ViroAmbientLight color="#ffffff" intensity={Model[0].visible?200:0}/>
+        <Lighting visible={Model[0].visible}/>
         <Viro3DObject 
           {...modelProps}
-          visible={Model[0].visible} 
           onClick={onClick}
           opacity={Model[0].opacity}
           animation={{name:Model[0].animation, run:Model[0].animate, loop:Model[0].loop_animation, interruptible:Model[0].anim_interruptible, onFinish:Model[0].anim_on_finish}}
-        />
+          />
+      </ViroNode>
     </ViroARImageMarker>
   );
 }
