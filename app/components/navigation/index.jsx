@@ -30,10 +30,8 @@ const Stack = createNativeStackNavigator();
 export default function Navigation() {
   return(                
     <Drawer.Navigator detachInactiveScreens={false} screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
-      {/* {!DEBUG && <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>}
-      {!DEBUG && <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>} */}
-      <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>
-      <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>
+      {!DEBUG && <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>}
+      {!DEBUG && <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ swipeEnabled: false }}/>}
       <Drawer.Screen name="Game" component={Game} options={{ headerShown: false, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Quest Navigator" component={QuestNavigator} options={{ headerShown: true, headerTitle: "Elige tu lugar de búsqueda", headerTintColor: "#a52a2a", headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Client Quests" component={ClientQuests} options={{headerShown: true, headerTitle: "Búsquedas", headerStyle: {backgroundColor: "#FFF9CA"}}}/>
