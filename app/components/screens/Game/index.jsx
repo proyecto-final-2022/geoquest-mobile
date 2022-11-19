@@ -138,17 +138,31 @@ function useQuestSetup(route, teamID) {
              finished: false,
              start_time: Math.floor(Date.now() / 1000)}
             ));
-          navigation.navigate("Quest Completed",
-          {
-            clientId: exampleQuest.clientId,
-            userId: userID,
-            questId: exampleQuest.id,
-            questName: exampleQuest.name,
-            questScore: questState.points,
-            questDifficulty: "Dificil",
-            questDuration: "Media",
-            startTime: questState.start_time
-          })
+            fetch(
+              Config.appUrl+'coupons/' + exampleQuest.clientId + "/completions/" + userID, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json'},
+              body: JSON.stringify({ 
+                points: questState.points,
+                start_time: questState.start_time})
+              }).then(response => response.json()).catch(error => console.log(error))
+              .then(questResult =>
+                {
+                  navigation.navigate("Quest Completed",
+                  {
+                    clientId: exampleQuest.clientId,
+                    userId: userID,
+                    questId: exampleQuest.id,
+                    questName: exampleQuest.name,
+                    questScore: questState.points,
+                    questDifficulty: "Dificil",
+                    questDuration: questResult.quest_duration,
+                    qr: questResult.coupon,
+                    startTime: questState.start_time
+                  })
+                }
+              )
+
         }
         else{
           const questRequest = {...questState, item_name: exampleQuest.items[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
@@ -168,7 +182,7 @@ function useQuestSetup(route, teamID) {
 const Tab = createBottomTabNavigator();
 
 export default function Game({route}) {
-  const DEBUG = false; if(DEBUG) route = {params:112}
+//  const DEBUG = false; if(DEBUG) route = {params:112}
   const {teamID: teamID} = route.params;
   const [userID, setUserID] = useState();
 
@@ -245,6 +259,30 @@ export default function Game({route}) {
               },
                 finished: true
             }))
+            fetch(
+              Config.appUrl+'coupons/' + exampleQuest.clientId + "/completions/" + userID, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json'},
+              body: JSON.stringify({ 
+                points: questState.points,
+                start_time: questState.start_time})
+              }).then(response => response.json()).catch(error => console.log(error))
+              .then(questResult =>
+                {
+                  navigation.navigate("Quest Completed",
+                  {
+                    clientId: exampleQuest.clientId,
+                    userId: userID,
+                    questId: exampleQuest.id,
+                    questName: exampleQuest.name,
+                    questScore: questState.points,
+                    questDifficulty: "Dificil",
+                    questDuration: questResult.quest_duration,
+                    qr: questResult.coupon,
+                    startTime: questState.start_time
+                  })
+                }
+              )
           },
         })}
       />}
