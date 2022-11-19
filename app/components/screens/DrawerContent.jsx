@@ -185,6 +185,19 @@ export function DrawerContent(props) {
                         })
                       }}
                   />
+                  <DrawerItem 
+                      icon={({color, size}) => (
+                        <Icon 
+                          name={"flag-checkered"}
+                          color={color}
+                          size={size}
+                        />
+                      )}
+                      label="Test quest intro"
+                      onPress={() => {
+                        navigation.navigate('Quest Tutorial')
+                      }}
+                  />
               </Drawer.Section>
           </View>
       </DrawerContentScrollView>

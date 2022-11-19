@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable quotes */
 import React from "react";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
@@ -18,14 +20,14 @@ import Coupons from "../screens/Coupons";
 import Profile from "../screens/ProfileScreen";
 import Game from "../screens/Game";
 import { DrawerContent } from "../screens/DrawerContent";
-import QuestCompleted from '../screens/QuestCompleted'
-
+import QuestCompleted from '../screens/QuestCompleted';
+import QuestTutorial from "../screens/QuestTutorial";
+import {DEBUG} from "../screens/Game/DEBUG"
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
-  const DEBUG = false;
   return(                
     <Drawer.Navigator detachInactiveScreens={false} screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
       {!DEBUG && <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>}
@@ -45,6 +47,7 @@ export default function Navigation() {
       <Drawer.Screen name="Coupons" component={Coupons} options={{ headerShown: true, headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Profile" component={Profile} options={{ headerShown: true, headerTitle: "", headerStyle: {backgroundColor: "#FFF9CA"}}}/>
       <Drawer.Screen name="Quest Completed" component={QuestCompleted} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
+      <Drawer.Screen name="Quest Tutorial" component={QuestTutorial} options={{ headerShown: true, headerStyle: {backgroundColor: '#FFF9CA'}}}/>
     </Drawer.Navigator>
   );
 }

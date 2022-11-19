@@ -134,35 +134,23 @@ const ObjectPrototype = {
     interactions_accurate_collision_detection:true,
 };
 
-export const Lighting = () => {
+export const Lighting = ({visible}) => {
     const omnilight = true;
-    const spotlight = false;
     return (
         <>
             { omnilight && <ViroOmniLight //TODO(fran): move lighting to separate function so it can be reused for all scenes
                 color="#FFFFFF"
                 position={[0, 5, -10]}
-                intensity={700}
+                intensity={visible?700:0}
                 attenuationStartDistance={5}
                 attenuationEndDistance={30}
             /> }
             { omnilight && <ViroOmniLight
                 color="#FFFFFF"
                 position={[0, 0.3, 3]}
-                intensity={700}
+                intensity={visible?700:0}
                 attenuationStartDistance={5}
                 attenuationEndDistance={30}
-            /> }
-
-            { spotlight && <ViroSpotLight
-                color="#ffffff"
-                attenuationStartDistance={4}
-                attenuationEndDistance={20}
-                intensity={1000}
-                position={[0, 0, -1]}
-                direction={[0, 0, -1]}
-                innerAngle={0}
-                outerAngle={45}
             /> }
         </>
     )

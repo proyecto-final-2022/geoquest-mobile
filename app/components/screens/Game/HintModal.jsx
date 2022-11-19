@@ -21,7 +21,7 @@ export default function HintModal({style, visible, hint, onClose}) {
       <View style={styles.container}>
         <View style={styles.content}>
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>Hint</Text>
+            <Text style={styles.titleText}>Info</Text>
           </View>
           <View style={styles.bodyContainer}>
             <ScrollView>
