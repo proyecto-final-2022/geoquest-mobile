@@ -18,7 +18,7 @@ import {DEBUG} from "./DEBUG"
 
 function useQuestSetup(route, teamID) {
   const questState = useSelector(state => state.quest);
-  const questStateLocal = useSelector(state => state.questStateLocal);
+  const questStateLocal = useSelector(state => state.questLocal);
   const dispatch = useDispatch();
   const navigation = useNavigation()
   const [config, setConfig] = useState();
@@ -27,7 +27,7 @@ function useQuestSetup(route, teamID) {
 
   const initQuest = async () => {
     console.log("*******Init quest: ", questState);
-    Alert.alert("*************init quest")
+    console.log("*******quest local: ", questStateLocal) 
     // TODO
     // Download config and:
     setConfig(exampleQuest);
@@ -74,14 +74,7 @@ function useQuestSetup(route, teamID) {
             })
           } else {
             console.log("*******actualizacion de estado")
-            Alert.alert("****actualizo estado")
-            var selectedItem  
-            if (questStateLocal.inventory === undefined) {
-              selectedItem = false
-            } else {
-              selectedItem = questStateLocal.inventory.selectedItem.itemID == "8"
-            }
-            if (json.started == true && selectedItem) {
+            if (json.started == true && questStateLocal.updateState) {
               console.log("*******actualizacion de estado started")
               dispatch(Quest.actions.set(
                 {...questState,
@@ -94,6 +87,9 @@ function useQuestSetup(route, teamID) {
                  start_time: json.start_time}
                 ));
             } else {
+              if (!questStateLocal.updateState){
+                dispatch(QuestLocal.actions.setUpdateState(true));
+              }
               console.log("*********actualizacion de estado startn'7")
               dispatch(Quest.actions.setStartTime(json.start_time))
             } 
@@ -175,6 +171,7 @@ function useQuestSetup(route, teamID) {
 
         }
         else{
+          Alert.alert
           const questRequest = {...questState, item_name: exampleQuest.items[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
           sendUpdate(questRequest, teamID)  
         }

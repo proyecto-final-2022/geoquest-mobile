@@ -13,7 +13,8 @@ const initialState = {
             name: "",
             description: ""
         }
-    }
+    },
+    updateState: true
 };
 
 
@@ -35,6 +36,12 @@ const questLocalSlice = createSlice({
             inventory: {...action.payload}
         };
     },
+    setUpdateState: (state, action) => {
+        return {
+            ...state, 
+            updateState: action.payload
+          };
+      },
     clearVisualizer: (state, _action) => {
         //      state.visualizer = {...action.payload}  
         return {

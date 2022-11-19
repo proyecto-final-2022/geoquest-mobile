@@ -9,6 +9,7 @@ import { ViroOmniLight } from "@viro-community/react-viro/components/ViroOmniLig
 import { ViroAmbientLight } from "@viro-community/react-viro/components/ViroAmbientLight";
 import Resources from "../../../../utils/resources.js";
 import Quest from "../../../../redux/slices/quest";
+import QuestLocal from "../../../../redux/slices/questLocal";
 import { useSelector, useDispatch } from "react-redux";
 import {BoxAnimation, FolderAnimation, PageAnimation, makeOnPinch, makeOnRotate, makeOnDrag, MapToViro3DObject, Lighting, DisappearModel} from "../GameModelsCommon"
 
@@ -219,7 +220,12 @@ const Clue0 = useState({
         const finish_quest = "8" == questLocal.inventory.selectedItem.itemID;
         filteredInventory = newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID)
         console.log("CONCHAAAAAAAAAAAAAAAAAAAAAAAAAA: ", filteredInventory)
-        dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID), can_finish: finish_quest}));
+        if (finish_quest) {
+          dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID), can_finish: finish_quest}));
+          dispatch(QuestLocal.actions.setUpdateState(false));
+        }else{
+          dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID), can_finish: finish_quest}));
+        }
     }
     else{
       OpenOrCloseFolder()
