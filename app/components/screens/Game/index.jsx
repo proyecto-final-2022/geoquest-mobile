@@ -14,6 +14,7 @@ import QuestLocal from "../../../redux/slices/questLocal"
 import Config from "../../../../config.json"
 import {useNavigation} from '@react-navigation/native'
 import Storage from "../../../utils/storage/storage"
+import DEBUG from "./DEBUG"
 
 function useQuestSetup(route, teamID) {
   const questState = useSelector(state => state.quest);
@@ -182,7 +183,7 @@ function useQuestSetup(route, teamID) {
 const Tab = createBottomTabNavigator();
 
 export default function Game({route}) {
-//  const DEBUG = false; if(DEBUG) route = {params:112}
+  if(DEBUG) route = {params:112};
   const {teamID: teamID} = route.params;
   const [userID, setUserID] = useState();
 
@@ -240,7 +241,7 @@ export default function Game({route}) {
         initialParams={{questConfig}}
         options={{
           tabBarIcon: ({color, size}) => (
-            <Feather name="camera" color={color} size={size} />
+            <Feather name="award" color={color} size={size} />
           ),
         }}
         listeners={({ navigation }) => ({

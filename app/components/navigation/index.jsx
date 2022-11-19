@@ -22,13 +22,12 @@ import Game from "../screens/Game";
 import { DrawerContent } from "../screens/DrawerContent";
 import QuestCompleted from '../screens/QuestCompleted';
 import QuestTutorial from "../screens/QuestTutorial";
-
+import DEBUG from "../screens/Game/DEBUG"
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
-  const DEBUG = false;
   return(                
     <Drawer.Navigator detachInactiveScreens={false} screenOptions={{headerShown: false}} drawerContent={props => <DrawerContent {...props} />}>
       {!DEBUG && <Stack.Screen name="Sign In" component={SignInScreen} options={{ swipeEnabled: false }}/>}
