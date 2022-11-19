@@ -133,17 +133,17 @@ function useQuestSetup(route, teamID) {
         if (questState.finished == true) {
           const questRequest = {...questState, item_name: exampleQuest.lastItem.title, user_id: userID}
           sendUpdate(questRequest, teamID)
-          dispatch(Quest.actions.set(
-            {...questState,
-             inventory: [],
-             scene: parseFloat(0),
-             objects: {},
-             logs: [],
-             points: parseFloat(0),
-             finished: false,
-             can_finish: false,
-             start_time: Math.floor(Date.now() / 1000)}
-            ));
+          // dispatch(Quest.actions.set(
+          //   {...questState,
+          //    inventory: [],
+          //    scene: parseFloat(0),
+          //    objects: {},
+          //    logs: [],
+          //    points: parseFloat(0),
+          //    finished: false,
+          //    can_finish: false,
+          //    start_time: Math.floor(Date.now() / 1000)}
+          //   ));
             fetch(
               Config.appUrl+'coupons/' + exampleQuest.clientId + "/completions/" + userID, {
               method: 'POST',
@@ -162,6 +162,7 @@ function useQuestSetup(route, teamID) {
                     questName: exampleQuest.name,
                     questScore: questState.points,
                     questDifficulty: "Dificil",
+                    questTime: "Media",
                     questDuration: questResult.quest_duration,
                     qr: questResult.coupon,
                     startTime: questState.start_time
