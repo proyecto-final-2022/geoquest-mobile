@@ -136,6 +136,7 @@ function useQuestSetup(route, teamID) {
              logs: [],
              points: parseFloat(0),
              finished: false,
+             can_finish: finish_quest,
              start_time: Math.floor(Date.now() / 1000)}
             ));
             fetch(
@@ -257,7 +258,8 @@ export default function Game({route}) {
                 sendUpdate: {
                 lastFoundItemID: exampleQuest.lastItem.id,
               },
-                finished: true
+                finished: true,
+                can_finish: finish_quest
             }))
             fetch(
               Config.appUrl+'coupons/' + exampleQuest.clientId + "/completions/" + userID, {
