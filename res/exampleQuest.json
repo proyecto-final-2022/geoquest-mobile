@@ -341,7 +341,7 @@
           "orientation": "Up"
         },
         "model": {
-          "source": "models.page.model",
+          "source": "models.pageOpt1.model",
           "type": "VRX",
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],
@@ -387,7 +387,7 @@
           "orientation": "Up"
         },
         "model": {
-          "source": "models.page.model",
+          "source": "models.pageOpt2.model",
           "type": "VRX",
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],
@@ -433,7 +433,7 @@
           "orientation": "Up"
         },
         "model": {
-          "source": "models.page.model",
+          "source": "models.pageOpt3.model",
           "type": "VRX",
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],

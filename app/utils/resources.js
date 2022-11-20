@@ -57,8 +57,14 @@ export const resources = {
     folderCopy: {
       model: require("../../res/models/Folder/modelCopy.vrx")
     },
-    page: {
+    pageOpt1: {
       model: require("../../res/models/Page/model.vrx")
+    },
+    pageOpt2: {
+      model: require("../../res/models/Page/modelOpt2.vrx")
+    },
+    pageOpt3: {
+      model: require("../../res/models/Page/modelOpt3.vrx")
     },
     pageCopy: {
       model: require("../../res/models/Page/modelCopy.vrx")
