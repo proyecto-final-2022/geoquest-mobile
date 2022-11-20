@@ -12,7 +12,7 @@ const QuestNavigator = () => {
 
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0)
 
-  const [data, setData] = useState([{
+  const data = [{
     "ID": 1,
     "name": "UTN FRBA Medrano",
     "image": "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"
@@ -36,8 +36,54 @@ const QuestNavigator = () => {
     "ID": 5,
     "name": "Parque de la Costa",
     "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/26/b5/a7/parque-de-la-costa.jpg?w=1200&h=-1&s=1"
-    }])
-  const [quests, setDataQuests] = useState([])
+    }]
+
+    const quests = [{
+      "client_id": 1,
+      "name": "La busqueda del TP perdido",
+      "qualification": 4.5,
+      "description": "Un día te dirigías a Medrano para entregar tu Trabajo Práctico Final de Sistemas y Organizaciones. En la puerta te encontrás con uno de tus compañeros y te ponés a hablar un rato cuando de repente... ¡Oh no! Tu malvado compañero, el Duende, apareció y robó el TP de tus manos y desperdigó las hojas por toda la facultad! Debés apurarte y entregar el trabajo completo a tiempo o sino tendrás que recursar la materia. Por suerte el Duende ha sido generoso y te ha dejado algunas pistas para guiarte en tu aventura.",
+      "difficulty": "Media",
+      "duration": "Media",
+      "image": "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg",
+      "completions": 10
+    }]
+
+  // const [data, setData] = useState([{
+  //   "ID": 1,
+  //   "name": "UTN FRBA Medrano",
+  //   "image": "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg"
+  //   },
+  //   {
+  //   "ID": 2,
+  //   "name": "Museo de Bellas Artes",
+  //   "image": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/QHRKHASXJBB2FI6NNLIAY3WMYA.jpg"
+  //   },
+  //   {
+  //   "ID": 3,
+  //   "name": "Museo de Ciencias Naturales",
+  //   "image": "https://esperanza.tur.ar/turismo/wp-content/uploads/2015/09/images_museosycasasdearte_CIENCIAS_MUSEO_CIENCIAS_NATURALES_ESPERANZA_4.jpg"
+  //   },
+  //   {
+  //   "ID": 4,
+  //   "name": "Temaiken",
+  //   "image": "https://www.turismodebolsillo.com.ar/media/novedades/1582646945_Temaiken%2013.JPG"
+  //   },
+  //   {
+  //   "ID": 5,
+  //   "name": "Parque de la Costa",
+  //   "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/26/b5/a7/parque-de-la-costa.jpg?w=1200&h=-1&s=1"
+  //   }])
+  // const [quests, setDataQuests] = useState([{
+  //   "client_id": 1,
+  //   "name": "La busqueda del TP perdido",
+  //   "qualification": 4.5,
+  //   "description": "Un día te dirigías a Medrano para entregar tu Trabajo Práctico Final de Sistemas y Organizaciones. En la puerta te encontrás con uno de tus compañeros y te ponés a hablar un rato cuando de repente... ¡Oh no! Tu malvado compañero, el Duende, apareció y robó el TP de tus manos y desperdigó las hojas por toda la facultad! Debés apurarte y entregar el trabajo completo a tiempo o sino tendrás que recursar la materia. Por suerte el Duende ha sido generoso y te ha dejado algunas pistas para guiarte en tu aventura.",
+  //   "difficulty": "Media",
+  //   "duration": "Media",
+  //   "image": "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg",
+  //   "completions": 10
+  // }])
   const [loading, setLoading] = useState(true)
 
   const url = Config.appUrl + "clients/"
@@ -93,11 +139,11 @@ const QuestNavigator = () => {
     //   .catch((error) => console.error(error))
     //   .finally(()=>setLoading(false))
 
-    fetch(urlQuests)
-      .then((response) => response.json())
-      .then((json) => setDataQuests(json))
-      .catch((error) => console.error(error))
-      .finally(()=>setLoading(false))
+    // fetch(urlQuests)
+    //   .then((response) => response.json())
+    //   .then((json) => setDataQuests(json))
+    //   .catch((error) => console.error(error))
+    //   .finally(()=>setLoading(false))
   }, [])
   
   useFocusEffect(
@@ -112,9 +158,9 @@ const QuestNavigator = () => {
   );
 
   const getData = () => {
-    if (loading) {
-      return <ActivityIndicator size="large" />
-    }
+    // if (loading) {
+    //   return <ActivityIndicator size="large" />
+    // }
     return (
       data.map( (client, index) => 
         <Pressable key={index} onPress={() => {

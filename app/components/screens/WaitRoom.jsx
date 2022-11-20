@@ -146,11 +146,12 @@ export default WaitRoom = ({route, navigation}) => {
             .then((response) => response.json())
             .then((json) => {
             if (json.accepted == playersTeam.length) {
-              fetch(
-                Config.appUrl+'quests/' + questID + '/progressions/' + teamID, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
-                }).then(navigation.navigate("Quest Tutorial", {questID: questID, teamID: teamID}))
+              navigation.navigate("Quest Tutorial", {questID: questID, rol:"guest", teamID: teamID})
+              // fetch(
+              //   Config.appUrl+'quests/' + questID + '/progressions/' + teamID, {
+              //   method: 'POST',
+              //   headers: { 'Content-Type': 'application/json'},
+              //   }).then(navigation.navigate("Quest Tutorial", {questID: questID, teamID: teamID}))
             }else {
               Alert.alert("No todos los jugadores han aceptado aún!")
             }
@@ -169,7 +170,7 @@ export default WaitRoom = ({route, navigation}) => {
             .then((response) => response.json())
             .then((json) => {
             if (json.accepted == playersTeam.length) {
-              navigation.navigate("Game", {teamID: teamID})
+              navigation.navigate("Quest Tutorial", {teamID: teamID})
             }else {
               Alert.alert("No todos los jugadores han aceptado aún!")
             }

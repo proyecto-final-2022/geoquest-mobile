@@ -14,7 +14,9 @@ const initialState = {
             description: ""
         }
     },
-    updateState: true
+    updateState: {
+        update: false
+    }
 };
 
 
@@ -39,7 +41,7 @@ const questLocalSlice = createSlice({
     setUpdateState: (state, action) => {
         return {
             ...state, 
-            updateState: action.payload
+            updateState: {update: action.payload}
           };
       },
     clearVisualizer: (state, _action) => {

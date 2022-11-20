@@ -156,22 +156,23 @@ export default function QuestVisualizer({route, navigation}) {
    
       <View style={styles.teamButtonsContainer}> 
         <CustomButton2 
-          onPress = {() => 
-            fetch(
-              Config.appUrl+'teams/' + userID, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json'},
-              body: JSON.stringify({ 
-                user_ids: [userID],
-                quest_id: questId})
-              }).then(response => response.json()).catch(error => console.log(error))
-              .then(teamID => 
-                fetch(
-                  Config.appUrl+'quests/' + questId + '/progressions/' + teamID, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json'},
-                  }).then(navigation.navigate("Quest Tutorial", {questID: questId, teamID: teamID}))
-                  ).catch(error => console.log(error)) 
+          onPress = {() =>
+            navigation.navigate("Quest Tutorial", {data: {questID: questId, userID: userID,rol: "host"} })
+            // fetch(
+            //   Config.appUrl+'teams/' + userID, {
+            //   method: 'POST',
+            //   headers: { 'Content-Type': 'application/json'},
+            //   body: JSON.stringify({ 
+            //     user_ids: [userID],
+            //     quest_id: questId})
+            //   }).then(response => response.json()).catch(error => console.log(error))
+            //   .then(teamID => 
+            //     fetch(
+            //       Config.appUrl+'quests/' + questId + '/progressions/' + teamID, {
+            //       method: 'POST',
+            //       headers: { 'Content-Type': 'application/json'},
+            //       }).then(navigation.navigate("Quest Tutorial", {questID: questId, teamID: teamID}))
+            //       ).catch(error => console.log(error)) 
             }
           icon = "arrow-forward-circle"
           bgColor= 'darkseagreen'

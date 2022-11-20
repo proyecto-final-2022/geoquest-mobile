@@ -16,26 +16,19 @@ import {useNavigation} from '@react-navigation/native'
 import Storage from "../../../utils/storage/storage"
 import {DEBUG} from "./DEBUG"
 
-function useQuestSetup(route, teamID) {
+
+function useQuestSetup(route, team) {
   const questState = useSelector(state => state.quest);
   const questStateLocal = useSelector(state => state.questLocal);
-  const dispatch = useDispatch();
   const navigation = useNavigation()
+  const dispatch = useDispatch();
   const [config, setConfig] = useState();
   const [userID, setUserID] = useState();
   const [loading, setLoading] = useState(true);
 
-  const initQuest = async () => {
-    console.log("*******Init quest: ", questState);
-    console.log("*******quest local: ", questStateLocal) 
-    // TODO
-    // Download config and:
-    setConfig(exampleQuest);
-    // If there is a session download current state.
-    // If not, create a session and initialize with returned initial state:
-  //TODO: des-hardcodear url
-    const url = Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID 
+  const url = Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + team.teamID
 
+  const updateState = () => {  
     fetch(url)
     .then((response) => {
       if(!response.ok) throw new console.warn(response.status)
@@ -51,21 +44,12 @@ function useQuestSetup(route, teamID) {
               itemID: undefined,
               name: ""
             }}))
-            navigation.navigate("Quest Completed",
-            {
-              clientId: exampleQuest.clientId,
-              userId: userID,
-              questId: exampleQuest.id,
-              questName: exampleQuest.name,
-              questScore: questState.points,
-              questDifficulty: "Dificil",
-              questDuration: "Media",
-              startTime: questState.start_time
-            })
+
+
           } else {
             Alert.alert("Actualizo estado")
             console.log("*******actualizacion de estado")
-            if (json.started == true && questStateLocal.updateState) {
+            if (json.started == true) {
               console.log("*******actualizacion de estado started")
               dispatch(Quest.actions.set(
                 {...questState,
@@ -78,9 +62,6 @@ function useQuestSetup(route, teamID) {
                  start_time: json.start_time}
                 ));
             } else {
-              if (!questStateLocal.updateState){
-                dispatch(QuestLocal.actions.setUpdateState(true));
-              }
               console.log("*********actualizacion de estado startn'7")
               dispatch(Quest.actions.setStartTime(json.start_time))
             } 
@@ -91,6 +72,19 @@ function useQuestSetup(route, teamID) {
       .catch((error) => console.error(error))  
     })
     .catch((error) => console.error(error))  
+  }
+
+  const initQuest = async () => {
+    Alert.alert("Init")
+    console.log("*******Init quest: ", questState);
+    console.log("*******quest local: ", questStateLocal) 
+    // TODO
+    // Download config and:
+    setConfig(exampleQuest);
+    updateState()
+    // If there is a session download current state.
+    // If not, create a session and initialize with returned initial state:
+  //TODO: des-hardcodear url
   }
   //IMPORTANTE!! HAY QUE ESTAR LOGUEADO PARA QUE ESTO FUNQUE
   /*
@@ -116,16 +110,22 @@ function useQuestSetup(route, teamID) {
     });
     const cleanUp = setUpdateListener();
     return cleanUp;
-  }, [route]);
+  }, [team]);
+
+  // useEffect(() => {
+  //   if (questStateLocal.updateState.update == true) {
+  //     updateState()
+  //   }
+  // }, [questStateLocal.updateState]);
 
   useEffect(() => {
     if (questState.sendUpdate.lastFoundItemID != undefined) {
         if (questState.sendUpdate.combinable == true){
           const questRequest = {...questState, item_name: exampleQuest.combinable[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
-          sendUpdate(questRequest, teamID)            
+          sendUpdate(questRequest, team.teamID)            
         } else {
           const questRequest = {...questState, item_name: exampleQuest.items[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
-          sendUpdate(questRequest, teamID)
+          sendUpdate(questRequest, team.teamID)
         }
 
     }
@@ -143,7 +143,11 @@ const Tab = createBottomTabNavigator();
 
 export default function Game({route}) {
   if(DEBUG) route = {params:112};
-  const {teamID: teamID} = route.params;
+  const {team: team} = route.params;
+  const navigation = useNavigation();
+  const {loading, questConfig } = useQuestSetup(route, team);
+  const questState = useSelector(state => state.quest);
+  const dispatch = useDispatch();
   const [userID, setUserID] = useState();
 
   useEffect(() => {
@@ -152,11 +156,52 @@ export default function Game({route}) {
   }
    , [route])
 
-  //des-hardcodear
-  //teamID: 112
-  const {loading, questConfig } = useQuestSetup(route, teamID);
-  const questState = useSelector(state => state.quest);
-  const dispatch = useDispatch();
+   const url = Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + team.teamID
+   const updateState = () => {  
+    fetch(url)
+    .then((response) => {
+      if(!response.ok) throw new console.warn(response.status)
+      else
+      response.json().then((json) => 
+      {
+        console.log("***Progress: ", json)
+          if (json.finished == true) {
+            console.log("******finished")
+            dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
+            dispatch(QuestLocal.actions.selectItem(
+            {selectedItem: {
+              itemID: undefined,
+              name: ""
+            }}))
+
+     
+          } else {
+            Alert.alert("Actualizo estado")
+            console.log("*******actualizacion de estado")
+            if (json.started == true) {
+              console.log("*******actualizacion de estado started")
+              dispatch(Quest.actions.set(
+                {...questState,
+                 inventory: json.inventory,
+                 scene: json.scene,
+                 objects: json.objects,
+                 logs: json.logs,
+                 points: json.points,
+                 finished: json.finished,
+                 start_time: json.start_time}
+                ));
+            } else {
+              console.log("*********actualizacion de estado startn'7")
+              dispatch(Quest.actions.setStartTime(json.start_time))
+            } 
+            }   
+      }
+      
+      )
+      .catch((error) => console.error(error))  
+    })
+    .catch((error) => console.error(error))  
+  }
 
   if(loading)
     return <View><Text>Loading...</Text></View>;
@@ -178,6 +223,14 @@ export default function Game({route}) {
         name="Mis Notas" 
         component={QuestLog} 
         initialParams={{questConfig}}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            updateState()
+//            dispatch(QuestLocal.actions.setUpdateState(true));
+          }
+        }
+        )
+        }
         options={{
           tabBarIcon: ({color, size}) => (
             <AntDesign name="book" color={color} size={size} />
@@ -234,8 +287,9 @@ export default function Game({route}) {
                     questId: exampleQuest.id,
                     questName: exampleQuest.name,
                     questScore: questState.points,
-                    questDifficulty: "Dificil",
+                    questDifficulty: exampleQuest.difficulty,
                     questDuration: questResult.quest_duration,
+                    questTime: exampleQuest.time,
                     qr: questResult.coupon,
                     startTime: questState.start_time
                   })
@@ -268,7 +322,7 @@ export default function Game({route}) {
       <Tab.Screen
         name="Salir"
         component={Exit} 
-        initialParams={{userID: userID, teamID: teamID}}
+        initialParams={{userID: userID, teamID: team.teamID}}
         options={{
           tabBarIcon: ({color, size}) => (
             <Ionicons name="exit" color={color} size={size} />
