@@ -115,10 +115,10 @@ const Clue0 = useState({
 
   const PageData = {
     source:require(modelspath+"/Page/modelAnim.vrx"),
-    resources:[require(modelspath+'/Page/page-atlas_d.png'),
-               require(modelspath+'/Page/page-atlas_r.png'),
-               require(modelspath+'/Page/page-atlas_n.png'),
-               require(modelspath+'/Page/page-atlas_m.png'),
+    resources:[require(modelspath+'/Page/page-folder-atlas_d.png'),
+               require(modelspath+'/Page/page-folder-atlas_r.png'),
+               require(modelspath+'/Page/page-folder-atlas_n.png'),
+               require(modelspath+'/Page/page-folder-atlas_m.png'),
                ],
     position:[1,0,-.014], //X:left-right, Y:height, Z:depth
     rotation:item.model.rotation,

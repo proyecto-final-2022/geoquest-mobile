@@ -137,7 +137,7 @@
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness", "resources.pageMetallic"]
+        "resources": ["resources.page2Diffuse", "resources.page2Normal", "resources.page2Roughness", "resources.page2Metallic"]
       }
     },
     "10": {
@@ -152,7 +152,7 @@
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness", "resources.pageMetallic"]
+        "resources": ["resources.page3Diffuse", "resources.page3Normal", "resources.page3Roughness", "resources.page3Metallic"]
       }
     },
     "11": {
@@ -167,7 +167,7 @@
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness", "resources.pageMetallic"]
+        "resources": ["resources.page4Diffuse", "resources.page4Normal", "resources.page4Roughness", "resources.page4Metallic"]
       }
     }
   },
@@ -346,7 +346,7 @@
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],
           "rotation": [-90,0,0],
-          "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness", "resources.pageMetallic"]
+          "resources": ["resources.pageOpt1Diffuse", "resources.pageOpt1Normal", "resources.pageOpt1Roughness", "resources.pageOpt1Metallic"]
         },
         "interactions": [
           [
@@ -392,7 +392,7 @@
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],
           "rotation": [-90,0,0],
-          "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness", "resources.pageMetallic"]
+          "resources": ["resources.pageOpt2Diffuse", "resources.pageOpt2Normal", "resources.pageOpt2Roughness", "resources.pageOpt2Metallic"]
         },
         "interactions": [
           [
@@ -438,7 +438,7 @@
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],
           "rotation": [-90,0,0],
-          "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness", "resources.pageMetallic"]
+          "resources": ["resources.pageOpt3Diffuse", "resources.pageOpt3Normal", "resources.pageOpt3Roughness", "resources.pageOpt3Metallic"]
         },
         "interactions": [
           [
