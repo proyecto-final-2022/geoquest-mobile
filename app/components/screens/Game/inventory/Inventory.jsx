@@ -111,11 +111,13 @@ const Inventory = ({props}) => {
     return itemImages[imageNumber-1];
   }
 
-
   const Item = ({item, index}) => {
     return (
       <View style={styles.container}>
         {items[index].visibleMenu && <View style={styles.popup}>
+        <View style={{flexDirection: 'row'}}>
+            <Text style={{flex: 1, fontSize:12}}>{item.title}</Text>
+        </View>
           {options.map((op, i) => (
             <TouchableOpacity style={[styles.option, {borderBottomWidth: i === options.length - 1 ? 0 : 1}]} key={i} onPress={() => op.action(item, index)}>
               <Text>{op.title}</Text>
