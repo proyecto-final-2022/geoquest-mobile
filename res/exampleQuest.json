@@ -11,12 +11,12 @@
       "image": "3",
       "view": 3,
       "model": {
-        "source": "models.folderCopy.model",
+        "source": "models.folder0.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": ["resources.folderDiffuse", "resources.folderNormal", "resources.folderRoughness"]
+        "resources": ["resources.folder0D", "resources.folder0N", "resources.folder0R"]
       }
     },
     "2": {
@@ -26,12 +26,12 @@
       "image": "1",
       "view": 1,
       "model": {
-        "source": "models.noteCopy.model",
+        "source": "models.note0.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,0,0],
-        "resources": ["resources.noteNormal"]
+        "resources": ["resources.note0D","resources.note0N","resources.note0R","resources.note0AO"]
       }
     },
     "3": {
@@ -41,12 +41,12 @@
         "image": "1",
         "view": 1,
         "model": {
-          "source": "models.clue0Copy.model",
+          "source": "models.clue00.model",
           "type": "VRX",
           "position": [0,0,-3],
           "scale": [0.3,0.3,0.3],
           "rotation": [0,0,0],
-          "resources": ["resources.clue0Diffuse", "resources.clue0Roughness"]
+          "resources": ["resources.clue00D", "resources.clue00R"]
         }
     },
     "4": {
@@ -56,12 +56,12 @@
       "image": "2",
       "view": 2,
       "model": {
-        "source": "models.keyCopy.model",
+        "source": "models.key0.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": ["resources.keyDiffuse", "resources.keyMetallic", "resources.keyRoughness"]
+        "resources": ["resources.key0D", "resources.key0M", "resources.key0R"]
       }
     },
     "5": {
@@ -71,12 +71,12 @@
       "image": "1",
       "view": 3,
       "model": {
-        "source": "models.clue6.model",
+        "source": "models.clue60.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,0,0],
-        "resources": ["resources.clue6Diffuse", "resources.clue6Roughness"]
+        "resources": ["resources.clue60D", "resources.clue60R"]
       }
     },
     "6": {
@@ -86,12 +86,12 @@
       "image": "1",
       "view": 3,
       "model": {
-        "source": "models.clueOpt2.model",
+        "source": "models.clueOpt20.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,0,0],
-        "resources": ["resources.clueOpt2Diffuse", "resources.clueOpt2Roughness"]
+        "resources": ["resources.clueOpt20D", "resources.clueOpt20R"]
       }
     },
     "7": {
@@ -107,7 +107,7 @@
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
+        "resources": ["resources.boxD", "resources.boxN", "resources.boxM", "resources.boxR"]
       }
     },
     "8": {
@@ -117,12 +117,12 @@
       "image": "1",
       "view": 1,
       "model": {
-        "source": "models.pageCopy.model",
+        "source": "models.page0.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": ["resources.pageDiffuse", "resources.pageNormal", "resources.pageRoughness", "resources.pageMetallic"]
+        "resources": ["resources.page0D", "resources.page0N", "resources.page0R", "resources.page0M"]
       }
     },
     "9": {
@@ -132,12 +132,12 @@
       "image": "1",
       "view": 1,
       "model": {
-        "source": "models.pageCopy2.model",
+        "source": "models.page1.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": ["resources.page2Diffuse", "resources.page2Normal", "resources.page2Roughness", "resources.page2Metallic"]
+        "resources": ["resources.page1D", "resources.page1N", "resources.page1R", "resources.page1M"]
       }
     },
     "10": {
@@ -147,12 +147,12 @@
       "image": "1",
       "view": 1,
       "model": {
-        "source": "models.pageCopy3.model",
+        "source": "models.page2.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": ["resources.page3Diffuse", "resources.page3Normal", "resources.page3Roughness", "resources.page3Metallic"]
+        "resources": ["resources.page2D", "resources.page2N", "resources.page2R", "resources.page2M"]
       }
     },
     "11": {
@@ -162,12 +162,12 @@
       "image": "1",
       "view": 1,
       "model": {
-        "source": "models.pageCopy4.model",
+        "source": "models.page3.model",
         "type": "VRX",
         "position": [0,0,-3],
         "scale": [0.3,0.3,0.3],
         "rotation": [0,180,0],
-        "resources": ["resources.page4Diffuse", "resources.page4Normal", "resources.page4Roughness", "resources.page4Metallic"]
+        "resources": ["resources.page3D", "resources.page3N", "resources.page3R", "resources.page3M"]
       }
     }
   },
@@ -178,12 +178,12 @@
           "type": "WithoutImageRecognition",
           "typeProps": { 
             "model": {
-              "source": "models.folder.model",
+              "source": "models.folder1.model",
               "type": "VRX",
               "position": [0,0,-0.5],
               "scale": [0.05,0.05,0.05],
               "rotation": [180,0,180],
-              "resources": ["resources.folderDiffuse", "resources.folderNormal", "resources.folderRoughness"]
+              "resources": ["resources.folder1D", "resources.folder1N", "resources.folder1R"]
             },
             "interactions": [
               [
@@ -231,12 +231,12 @@
             "orientation": "Up"
           },
           "model": {
-            "source": "models.key.model",
+            "source": "models.key1.model",
             "type": "VRX",
             "position": [0,0,0],
             "scale": [0.05,0.05,0.05],
             "rotation": [-90,0,0],
-            "resources": ["resources.keyDiffuse", "resources.keyMetallic", "resources.keyRoughness"]
+            "resources": ["resources.key1D", "resources.key1M", "resources.key1R"]
           },
           "interactions": [
             [
@@ -298,7 +298,7 @@
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],
           "rotation": [0,180,0],
-          "resources": ["resources.boxDiffuse", "resources.boxNormal", "resources.boxMetallic", "resources.boxRoughness"]
+          "resources": ["resources.boxD", "resources.boxN", "resources.boxM", "resources.boxR"]
         },
         "interactions": [
           [
@@ -341,12 +341,12 @@
           "orientation": "Up"
         },
         "model": {
-          "source": "models.pageOpt1.model",
+          "source": "models.page4.model",
           "type": "VRX",
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],
           "rotation": [-90,0,0],
-          "resources": ["resources.pageOpt1Diffuse", "resources.pageOpt1Normal", "resources.pageOpt1Roughness", "resources.pageOpt1Metallic"]
+          "resources": ["resources.page4D", "resources.page4N", "resources.page4R", "resources.page4M"]
         },
         "interactions": [
           [
@@ -387,12 +387,12 @@
           "orientation": "Up"
         },
         "model": {
-          "source": "models.pageOpt2.model",
+          "source": "models.page5.model",
           "type": "VRX",
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],
           "rotation": [-90,0,0],
-          "resources": ["resources.pageOpt2Diffuse", "resources.pageOpt2Normal", "resources.pageOpt2Roughness", "resources.pageOpt2Metallic"]
+          "resources": ["resources.page5D", "resources.page5N", "resources.page5R", "resources.page5M"]
         },
         "interactions": [
           [
@@ -433,12 +433,12 @@
           "orientation": "Up"
         },
         "model": {
-          "source": "models.pageOpt3.model",
+          "source": "models.page6.model",
           "type": "VRX",
           "position": [0,0,0],
           "scale": [0.05,0.05,0.05],
           "rotation": [-90,0,0],
-          "resources": ["resources.pageOpt3Diffuse", "resources.pageOpt3Normal", "resources.pageOpt3Roughness", "resources.pageOpt3Metallic"]
+          "resources": ["resources.page6D", "resources.page6N", "resources.page6R", "resources.page6M"]
         },
         "interactions": [
           [

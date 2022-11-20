@@ -31,6 +31,8 @@ export default function VisualizeBox(item, ctx) {
 });
 
 const Box = useState({
+    source:Resources.get(item.model.source),
+    resources:item.model.resources.map(r => Resources.get(r)),
     position:[0,0,0], //X:left-right, Y:height, Z:depth
     scale:[1,1,1],
     rotation:[-90,180,0],
@@ -45,12 +47,6 @@ const Box = useState({
     //onClick:handleOnClick,
     onRotate:makeOnRotate(Node),
     onPinch:makeOnPinch(Node),
-    source:require(modelspath+"/BoxWithKeyhole/model.vrx"),
-    resources:[require(modelspath+'/BoxWithKeyhole/box-atlas_d.png'),
-               require(modelspath+'/BoxWithKeyhole/box-atlas_m.png'),
-               require(modelspath+'/BoxWithKeyhole/box-atlas_n.png'),
-               require(modelspath+'/BoxWithKeyhole/box-atlas_r.png'),
-               ],
     interactable:true,
     interactions_precise_collision_detection:true,
     visible:true,
@@ -68,11 +64,15 @@ const Key = useState({
     loop_animation:true,
     anim_interruptible:false,
     anim_on_finish:undefined,
-    source:require(modelspath+"/Key/model.vrx"),
-    resources:[require(modelspath+"/Key/key-atlas_d.png"),
-               require(modelspath+"/Key/key-atlas_m.png"),
-               require(modelspath+"/Key/key-atlas_r.png"),
-               ],
+
+    source:Resources.get("models.key2.model"),
+    resources:["resources.key2D","resources.key2R","resources.key2M"].map(r => Resources.get(r)),
+
+    // source:require(modelspath+"/Key/model.vrx"),
+    // resources:[require(modelspath+"/Key/key-atlas_d.png"),
+    //            require(modelspath+"/Key/key-atlas_m.png"),
+    //            require(modelspath+"/Key/key-atlas_r.png"),
+    //            ],
 });
 
 const KeyholeTrigger = useState({
@@ -101,12 +101,17 @@ const Page6 = useState({
     loop_animation:false,
     anim_on_finish:undefined,
     visible:false,
-    source:require(modelspath+"/Page/modelAnimation.vrx"),
-    resources:[require(modelspath+'/Page/page-box-atlas_d.png'),
-               require(modelspath+'/Page/page-box-atlas_r.png'),
-               require(modelspath+'/Page/page-box-atlas_n.png'),
-               require(modelspath+'/Page/page-box-atlas_m.png'),
-               ],
+
+    source:Resources.get("models.page11.model"),
+    resources:["resources.page11D","resources.page11N","resources.page11R","resources.page11M"].map(r => Resources.get(r)),
+
+    // source:require(modelspath+"/Page/modelAnimation.vrx"),
+    // resources:[require(modelspath+'/Page/page-box-atlas_d.png'),
+    //            require(modelspath+'/Page/page-box-atlas_r.png'),
+    //            require(modelspath+'/Page/page-box-atlas_n.png'),
+    //            require(modelspath+'/Page/page-box-atlas_m.png'),
+    //            ],
+
     onRotate:makeOnRotate(Node),
     onPinch:makeOnPinch(Node),
 //    onClick:onClickPage6,

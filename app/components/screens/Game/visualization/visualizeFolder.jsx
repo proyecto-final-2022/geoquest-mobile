@@ -23,15 +23,11 @@ export default function VisualizeFolder(item, ctx) {
   
   const Folder = useState({
     source:Resources.get(item.model.source),
+    resources:item.model.resources.map(r => Resources.get(r)),
     position:[0,0,0],
     scale:item.model.scale,
     rotation:item.model.rotation,
     type:item.model.type,
-    // source:require("../../res/GameModels/Folder/model.vrx"),
-    resources:item.model.resources.map(r => Resources.get(r)),
-    // position:[0,0,0], //X:left-right, Y:height, Z:depth
-    // rotation:[90,180,0],
-    // scale:[1,1,1],
     prev_scale_factor:1,
     prev_rotation_factor:1,
     rotation_axis:[0,1,0], //[roll,yaw,pitch]
@@ -50,12 +46,16 @@ export default function VisualizeFolder(item, ctx) {
   });
 
   const Note = useState({
-    source:require(modelspath+"/Note/modelAnim.vrx"),
-    resources:[require(modelspath+'/Note/note-atlas_d.png'),
-               require(modelspath+'/Note/note-atlas_r.png'),
-               require(modelspath+'/Note/note-atlas_n.png'),
-               require(modelspath+'/Note/note-atlas_ao.png'),
-               ],
+    source:Resources.get("models.note1.model"),
+    resources:["resources.note1D","resources.note1N","resources.note1R","resources.note1AO"].map(r => Resources.get(r)),
+
+    // source:require(modelspath+"/Note/modelAnim.vrx"),
+    // resources:[require(modelspath+'/Note/note-atlas_d.png'),
+    //            require(modelspath+'/Note/note-atlas_r.png'),
+    //            require(modelspath+'/Note/note-atlas_n.png'),
+    //            require(modelspath+'/Note/note-atlas_ao.png'),
+    //            ],
+
     position:[-.1,0,.005], //X:left-right, Y:height, Z:depth
     rotation:[0,0,0],
     scale:item.model.scale,
@@ -77,10 +77,14 @@ export default function VisualizeFolder(item, ctx) {
 });
 
 const Clue0 = useState({
-  source:require(modelspath+"/ClueCard/0/modelAnim.vrx"),
-  resources:[require(modelspath+'/ClueCard/0/cluecard-atlas_d.png'),
-             require(modelspath+'/ClueCard/0/cluecard-atlas_r.png'),
-             ],
+  source:Resources.get("models.clue01.model"),
+  resources:["resources.clue01D","resources.clue01R"].map(r => Resources.get(r)),
+
+  // source:require(modelspath+"/ClueCard/0/modelAnim.vrx"),
+  // resources:[require(modelspath+'/ClueCard/0/cluecard-atlas_d.png'),
+  //            require(modelspath+'/ClueCard/0/cluecard-atlas_r.png'),
+  //            ],
+
   position:[-.1,-.04,0], //X:left-right, Y:height, Z:depth
   rotation:item.model.rotation,
   scale:item.model.scale,
@@ -114,12 +118,12 @@ const Clue0 = useState({
   });
 
   const PageData = {
-    source:require(modelspath+"/Page/modelAnim.vrx"),
-    resources:[require(modelspath+'/Page/page-folder-atlas_d.png'),
-               require(modelspath+'/Page/page-folder-atlas_r.png'),
-               require(modelspath+'/Page/page-folder-atlas_n.png'),
-               require(modelspath+'/Page/page-folder-atlas_m.png'),
-               ],
+    // source:require(modelspath+"/Page/modelAnim.vrx"),
+    // resources:[require(modelspath+'/Page/page-folder-atlas_d.png'),
+    //            require(modelspath+'/Page/page-folder-atlas_r.png'),
+    //            require(modelspath+'/Page/page-folder-atlas_n.png'),
+    //            require(modelspath+'/Page/page-folder-atlas_m.png'),
+    //            ],
     position:[1,0,-.014], //X:left-right, Y:height, Z:depth
     rotation:item.model.rotation,
     scale:item.model.scale,
@@ -139,11 +143,31 @@ const Clue0 = useState({
     interactable:false, //TODO(fran): interactable after Folder is opened
     interactions_accurate_collision_detection:false,
 }
+  const PageData0 = {
+    source:Resources.get("models.page7.model"),
+    resources:["resources.page7D","resources.page7N","resources.page7R","resources.page7M"].map(r => Resources.get(r)),
+    ...PageData,
+  }
+  const PageData1 = {
+    source:Resources.get("models.page8.model"),
+    resources:["resources.page8D","resources.page8N","resources.page8R","resources.page8M"].map(r => Resources.get(r)),
+    ...PageData,
+  }
+  const PageData2 = {
+    source:Resources.get("models.page9.model"),
+    resources:["resources.page9D","resources.page9N","resources.page9R","resources.page9M"].map(r => Resources.get(r)),
+    ...PageData,
+  }
+  const PageData3 = {
+    source:Resources.get("models.page10.model"),
+    resources:["resources.page10D","resources.page10N","resources.page10R","resources.page10M"].map(r => Resources.get(r)),
+    ...PageData,
+  }
 
-  const Page0 = useState(PageData);
-  const Page1 = useState(PageData);
-  const Page2 = useState(PageData);
-  const Page3 = useState(PageData);
+  const Page0 = useState(PageData0);
+  const Page1 = useState(PageData1);
+  const Page2 = useState(PageData2);
+  const Page3 = useState(PageData3);
 
   function OpenOrCloseFolder(){
     const folder = Folder[0], setfolder = Folder[1];

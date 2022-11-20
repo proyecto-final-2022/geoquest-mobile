@@ -14,8 +14,9 @@ export default function ObjectView(item, ctx) {
 
   return (  
         <Viro3DObject
-          visible={(questLocal.visualizer.itemID == item.questItemID)}
           source={Resources.get(item.model.source)}
+          resources={item.model.resources.map(r => Resources.get(r))}
+          visible={(questLocal.visualizer.itemID == item.questItemID)}
           position={item.model.position}
           scale={item.model.scale}
           rotation={item.model.rotation}

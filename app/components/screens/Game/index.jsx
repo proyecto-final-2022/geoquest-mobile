@@ -190,7 +190,7 @@ function useQuestSetup(route, teamID) {
 const Tab = createBottomTabNavigator();
 
 export default function Game({route}) {
-//  if(DEBUG) route = {params:112};
+  if(DEBUG) route = {params:112};
   const {teamID: teamID} = route.params;
   const [userID, setUserID] = useState();
 
