@@ -159,7 +159,7 @@ export function DrawerContent(props) {
                         then(user => navigation.navigate('Notifications', user))
                       }}
                   />
-                  <DrawerItem 
+                  {/* <DrawerItem 
                       icon={({color, size}) => (
                         <Icon 
                           name={"flag-checkered"}
@@ -198,7 +198,7 @@ export function DrawerContent(props) {
                         navigation.navigate('Quest Tutorial')
                       }}
                   />
-              </Drawer.Section>
+              </Drawer.Section> */}
           </View>
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>
