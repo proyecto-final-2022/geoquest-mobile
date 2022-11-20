@@ -117,8 +117,6 @@ const Page6 = useState({
 function Page6OnClick(){
     const box = Box[0], setbox = Box[1];
     const page = Page6[0], setpage = Page6[1];//NOTE: we assume there can be multiple pages on a scene, each with different behaviours
- //   console.log("*************y que hacemos")
- //   Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "8"}, inventory: [...questState.inventory, "8"]})
     ViroAnimations.registerAnimations({
         page6_open1:{ //move out of the box
             properties:{
@@ -186,7 +184,7 @@ function Page6OnClick(){
         setpage(prevState => ({...prevState,anim_on_finish:()=>{
             console.log("***********on finish animation")
             setpage(prevState => ({...prevState,animation:"page6_open_pt2",loop_animation:false,animate:true}))
-            setpage(prevState => ({...prevState,anim_on_finish:()=>{    dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "8"}, inventory: [...questState.inventory, "8"]}));}}))
+            setpage(prevState => ({...prevState,anim_on_finish:()=>{    dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "8", combinable: false}, inventory: [...questState.inventory, "8"]}));}}))
         }}))
 
     }}))

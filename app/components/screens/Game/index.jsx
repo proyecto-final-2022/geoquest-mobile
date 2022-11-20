@@ -51,16 +51,6 @@ function useQuestSetup(route, teamID) {
               itemID: undefined,
               name: ""
             }}))
-            // dispatch(Quest.actions.set(
-            //   {...questState,
-            //    inventory: [],
-            //    scene: parseFloat(0),
-            //    objects: {},
-            //    logs: [],
-            //    points: parseFloat(0),
-            //    finished: false,
-            //    start_time: Math.floor(Date.now() / 1000)}
-            //   ));
             navigation.navigate("Quest Completed",
             {
               clientId: exampleQuest.clientId,
@@ -73,6 +63,7 @@ function useQuestSetup(route, teamID) {
               startTime: questState.start_time
             })
           } else {
+            Alert.alert("Actualizo estado")
             console.log("*******actualizacion de estado")
             if (json.started == true && questStateLocal.updateState) {
               console.log("*******actualizacion de estado started")
@@ -128,55 +119,16 @@ function useQuestSetup(route, teamID) {
   }, [route]);
 
   useEffect(() => {
-    console.log("***********aló: ", questState.finished)
     if (questState.sendUpdate.lastFoundItemID != undefined) {
-        if (questState.finished == true) {
-          const questRequest = {...questState, item_name: exampleQuest.lastItem.title, user_id: userID}
-          sendUpdate(questRequest, teamID)
-          // dispatch(Quest.actions.set(
-          //   {...questState,
-          //    inventory: [],
-          //    scene: parseFloat(0),
-          //    objects: {},
-          //    logs: [],
-          //    points: parseFloat(0),
-          //    finished: false,
-          //    can_finish: false,
-          //    start_time: Math.floor(Date.now() / 1000)}
-          //   ));
-            fetch(
-              Config.appUrl+'coupons/' + exampleQuest.clientId + "/completions/" + userID, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json'},
-              body: JSON.stringify({ 
-                points: questState.points,
-                start_time: questState.start_time})
-              }).then(response => response.json()).catch(error => console.log(error))
-              .then(questResult =>
-                {
-                  navigation.navigate("Quest Completed",
-                  {
-                    clientId: exampleQuest.clientId,
-                    userId: userID,
-                    questId: exampleQuest.id,
-                    questName: exampleQuest.name,
-                    questScore: questState.points,
-                    questDifficulty: "Dificil",
-                    questTime: "Media",
-                    questDuration: questResult.quest_duration,
-                    qr: questResult.coupon,
-                    startTime: questState.start_time
-                  })
-                }
-              )
-
-        }
-        else{
-          Alert.alert
+        if (questState.sendUpdate.combinable == true){
+          const questRequest = {...questState, item_name: exampleQuest.combinable[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
+          sendUpdate(questRequest, teamID)            
+        } else {
           const questRequest = {...questState, item_name: exampleQuest.items[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
-          sendUpdate(questRequest, teamID)  
+          sendUpdate(questRequest, teamID)
         }
-      }
+
+    }
   } 
    , [questState.sendUpdate])
 
@@ -262,9 +214,6 @@ export default function Game({route}) {
             }}))
             dispatch(Quest.actions.set(
               {...questState,
-                sendUpdate: {
-                lastFoundItemID: exampleQuest.lastItem.id,
-              },
                 finished: true,
                 can_finish: true
             }))

@@ -171,6 +171,11 @@
       }
     }
   },
+  "combinable": {
+    "1": {
+      "title": "Carpeta con hoja"
+    }
+  },
   "scenes": [
     {
       "objects": [
