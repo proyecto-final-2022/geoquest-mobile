@@ -101,7 +101,7 @@ const Page6 = useState({
     loop_animation:false,
     anim_on_finish:undefined,
     visible:false,
-    source:require(modelspath+"/Page/model.vrx"),
+    source:require(modelspath+"/Page/modelAnimation.vrx"),
     resources:[require(modelspath+'/Page/page-atlas_d.png'),
                require(modelspath+'/Page/page-atlas_r.png'),
                require(modelspath+'/Page/page-atlas_n.png'),

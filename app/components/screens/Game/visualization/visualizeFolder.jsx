@@ -50,7 +50,7 @@ export default function VisualizeFolder(item, ctx) {
   });
 
   const Note = useState({
-    source:require(modelspath+"/Note/model.vrx"),
+    source:require(modelspath+"/Note/modelAnim.vrx"),
     resources:[require(modelspath+'/Note/note-atlas_d.png'),
                require(modelspath+'/Note/note-atlas_r.png'),
                require(modelspath+'/Note/note-atlas_n.png'),
@@ -77,7 +77,7 @@ export default function VisualizeFolder(item, ctx) {
 });
 
 const Clue0 = useState({
-  source:require(modelspath+"/ClueCard/0/model.vrx"),
+  source:require(modelspath+"/ClueCard/0/modelAnim.vrx"),
   resources:[require(modelspath+'/ClueCard/0/cluecard-atlas_d.png'),
              require(modelspath+'/ClueCard/0/cluecard-atlas_r.png'),
              ],
@@ -114,7 +114,7 @@ const Clue0 = useState({
   });
 
   const PageData = {
-    source:require(modelspath+"/Page/model.vrx"),
+    source:require(modelspath+"/Page/modelAnim.vrx"),
     resources:[require(modelspath+'/Page/page-atlas_d.png'),
                require(modelspath+'/Page/page-atlas_r.png'),
                require(modelspath+'/Page/page-atlas_n.png'),

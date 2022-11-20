@@ -60,6 +60,9 @@ export const resources = {
     pageOpt1: {
       model: require("../../res/models/Page/model.vrx")
     },
+    pageAnim: {
+      model: require("../../res/models/Page/modelAnim.vrx")
+    },
     pageOpt2: {
       model: require("../../res/models/Page/modelOpt2.vrx")
     },
