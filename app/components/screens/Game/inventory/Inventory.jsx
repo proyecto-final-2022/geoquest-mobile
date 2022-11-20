@@ -1,3 +1,9 @@
+/* eslint-disable indent */
+/* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable quotes */
+/* eslint-disable linebreak-style */
+/* eslint-disable semi */
 import React, { useState, useEffect } from "react";
 import { StyleSheet, useWindowDimensions, ScrollView, Text, View, Image, Modal, TouchableOpacity, Pressable, FlatList} from "react-native";
 import itemImage_1 from '../../../../../assets/questItems/paper.png'
@@ -48,6 +54,8 @@ const Inventory = ({props}) => {
 
   const showMenu = (index) => {
     let itemsList = [...items];
+    itemsList.map((item) => item.visibleMenu = false)
+    itemsList.map((item) => item.marker = false)
     let item = {
       ...itemsList[index],
       visibleMenu: true,
@@ -112,12 +120,29 @@ const Inventory = ({props}) => {
   }
 
   const Item = ({item, index}) => {
+    const maxLenghtTitle = Math.max(...item.title.split(" ").map(item => item.length));
+    const calculatedWidth = maxLenghtTitle > 8? Math.ceil(maxLenghtTitle*7.7) : 65;
+    const numberOfLines = -100 - 14*(Math.ceil(item.title.length/(maxLenghtTitle <= 8? 8 : maxLenghtTitle))-1);
+
     return (
-      <View style={styles.container}>
-        {items[index].visibleMenu && <View style={styles.popup}>
-        <View style={{flexDirection: 'row'}}>
-            <Text style={{flex: 1, fontSize:12}}>{item.title}</Text>
-        </View>
+      <View style={{
+        flexDirection: 'column',
+        marginTop: 5
+      }}>
+        {items[index].visibleMenu && <View style={{
+          borderRadius: 8,
+          borderColor: '#333',
+          borderWidth: 1,
+          backgroundColor: '#fff',
+          paddingHorizontal: 10,
+          marginTop: numberOfLines,
+          position: 'absolute',
+          width: calculatedWidth,
+          zIndex: 5
+        }}>
+          <View style={{}}>
+              <Text style={{fontSize:12, fontWeight: 'bold'}}>{item.title}</Text>
+          </View>
           {options.map((op, i) => (
             <TouchableOpacity style={[styles.option, {borderBottomWidth: i === options.length - 1 ? 0 : 1}]} key={i} onPress={() => op.action(item, index)}>
               <Text>{op.title}</Text>
@@ -158,17 +183,16 @@ const Inventory = ({props}) => {
 
 //   const listData = props.data ?? [];
 //const numColumns = Math.ceil(listData.length / 2);
-        <View style={styles.view}>
-          <FlatList
-            contentContainerStyle={{paddingVertical: 0.15 * height, paddingHorizontal: 7}}
-            scrollEnabled={true}
-            numColumns={5}
-            data={items}
-            keyExtractor={(item, index) => index}
-            renderItem={({item, index}) => <Item item={item} index={index}/>}
-          />
-        </View> 
-    )
+    <View style={styles.view}>
+      <FlatList
+        contentContainerStyle={{paddingVertical: 0.15 * height, paddingHorizontal: 7}}
+        scrollEnabled={true}
+        numColumns={5}
+        data={items}
+        renderItem={({item, index}) => <Item item={item} key={index} index={index}/>}
+      />
+    </View> 
+  )
 }
 
 const styles = StyleSheet.create({
@@ -201,14 +225,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 5,
     marginTop: -100
-   },
-   option: {
+  },
+  option: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 7,
     borderBottomColor: '#ccc'
-   }
+  }
 });
 
 
