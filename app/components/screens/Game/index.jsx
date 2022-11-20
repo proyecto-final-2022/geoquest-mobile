@@ -44,17 +44,8 @@ function useQuestSetup(route, team) {
               itemID: undefined,
               name: ""
             }}))
-            navigation.navigate("Quest Completed",
-            {
-              clientId: exampleQuest.clientId,
-              userId: userID,
-              questId: exampleQuest.id,
-              questName: exampleQuest.name,
-              questScore: questState.points,
-              questDifficulty: "Dificil",
-              questDuration: "Media",
-              startTime: questState.start_time
-            })
+
+
           } else {
             Alert.alert("Actualizo estado")
             console.log("*******actualizacion de estado")
@@ -164,7 +155,7 @@ export default function Game({route}) {
     then(user => setUserID(user.id))
   }
    , [route])
-   
+
    const url = Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + team.teamID
    const updateState = () => {  
     fetch(url)
@@ -182,17 +173,8 @@ export default function Game({route}) {
               itemID: undefined,
               name: ""
             }}))
-            navigation.navigate("Quest Completed",
-            {
-              clientId: exampleQuest.clientId,
-              userId: userID,
-              questId: exampleQuest.id,
-              questName: exampleQuest.name,
-              questScore: questState.points,
-              questDifficulty: "Dificil",
-              questDuration: "Media",
-              startTime: questState.start_time
-            })
+
+     
           } else {
             Alert.alert("Actualizo estado")
             console.log("*******actualizacion de estado")
@@ -305,8 +287,9 @@ export default function Game({route}) {
                     questId: exampleQuest.id,
                     questName: exampleQuest.name,
                     questScore: questState.points,
-                    questDifficulty: "Dificil",
+                    questDifficulty: exampleQuest.difficulty,
                     questDuration: questResult.quest_duration,
+                    questTime: exampleQuest.time,
                     qr: questResult.coupon,
                     startTime: questState.start_time
                   })

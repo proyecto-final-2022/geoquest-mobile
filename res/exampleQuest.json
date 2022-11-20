@@ -1,6 +1,8 @@
 {
   "id": "1",
   "clientId": "1",
+  "difficulty": "Media",
+  "time": "Media",
   "name": "El TP Perdido",
   "items": {
     "1": {

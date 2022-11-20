@@ -4,6 +4,7 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable quotes */
 import React, { useState, useEffect } from 'react';
+import { Alert } from "react-native";
 import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
 import {
   useWindowDimensions,
@@ -26,7 +27,10 @@ import Config from '../../../config.json'
 
 const QuestTutorial = ({route, navigation}) => {
   const { height, width } = useWindowDimensions();
-  const {questID, teamID} = route.params
+//  const {questID, teamID} = route.params
+  const {data: data} = route.params
+  const [questID, setQuestID] = useState()
+  const [teamID, setTeamID] = useState(0)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -38,6 +42,29 @@ const QuestTutorial = ({route, navigation}) => {
       return () => { BackHandler.removeEventListener('hardwareBackPress',onBackPress) };
     }, []),
   );
+
+  useEffect(() => {
+    if (data.rol == "host") {
+      fetch(
+        Config.appUrl+'teams/' + data.userID, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+          user_ids: [data.userID],
+          quest_id: data.questID})
+        }).then(response => response.json()).catch(error => console.log(error))
+        .then(teamID => 
+          fetch(
+            Config.appUrl+'quests/' + data.questID + '/progressions/' + teamID, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            }).catch(error => console.log(error))
+            .then(setTeamID(teamID)))
+            .catch(error => console.log(error))
+    }else{
+      setTeamID(data.teamID)
+    }
+  }, [data])
 
   useEffect(() => {
     navigation.setOptions({
@@ -53,6 +80,7 @@ const QuestTutorial = ({route, navigation}) => {
   })
 
   const redirectToQuest = () => {
+    if (teamID != 0){
     fetch(Config.appUrl + "quests/" + questID + "/progressions/" + teamID, {
       method: 'PUT',
       headers: { 
@@ -69,6 +97,9 @@ const QuestTutorial = ({route, navigation}) => {
     }).catch(error => {
       console.log('Error sending update: '+error);
     }).then(navigation.navigate('Game', {team: {teamID: teamID}})).catch(error => console.log(error))
+  }else{
+    Alert.alert("Cargando datos de la búsqueda")
+  }
   };
 
   const RenderItem = ({ item }) => {
