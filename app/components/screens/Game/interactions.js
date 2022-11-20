@@ -38,7 +38,8 @@ export default {
     return {...currentState,
       inventory: newInventory,
       sendUpdate: {
-        lastFoundItemID: id
+        lastFoundItemID: id,
+        combinable: false
       }
     }
   },

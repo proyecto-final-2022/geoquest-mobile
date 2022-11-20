@@ -8,7 +8,8 @@ const initialState = {
   start_time: Math.floor(Date.now() / 1000),
   logs: [],
   sendUpdate: {
-    lastFoundItemID: undefined
+    lastFoundItemID: undefined,
+    combinable: false
   },
   can_finish: false,
   finished: false

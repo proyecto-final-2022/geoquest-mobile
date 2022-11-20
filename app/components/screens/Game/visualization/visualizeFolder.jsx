@@ -252,10 +252,12 @@ const Clue0 = useState({
         filteredInventory = newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID)
         console.log("CONCHAAAAAAAAAAAAAAAAAAAAAAAAAA: ", filteredInventory)
         if (finish_quest) {
-          dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID), can_finish: finish_quest}));
+          dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "1", combinable: true}, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID), can_finish: finish_quest}));
           dispatch(QuestLocal.actions.setUpdateState(false));
         }else{
-          dispatch(Quest.actions.set({...questState, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID), can_finish: finish_quest}));
+          dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "1", combinable: true}, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID)}));
+          //por ahora, hay que fixear el tema ese
+ //         dispatch(QuestLocal.actions.setUpdateState(false));
         }
     }
     else{
@@ -304,7 +306,7 @@ const Clue0 = useState({
         anim_interruptible:false,
         anim_on_finish:()=>{
           setmodel(prevState => ({...prevState,visible:false,}))
-          dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: id}, inventory: [...questState.inventory, id]}));
+          dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: id, combinable: false}, inventory: [...questState.inventory, id]}));
         }
     }))
   };
