@@ -197,8 +197,8 @@ export function DrawerContent(props) {
                       onPress={() => {
                         navigation.navigate('Quest Tutorial')
                       }}
-                  />
-              </Drawer.Section> */}
+                  /> */}
+              </Drawer.Section>
           </View>
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>
