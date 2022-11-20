@@ -38,7 +38,7 @@
       "title": "Pista 0",
       "description": "Que onda, el Duende por acá, te la he puesto fácil para esta primera pista, pero los primeros alumnos que pasaron por esta universidad no la tuvieron nada fácil, ni siquiera necesitás moverte de este piso para encontrarlos brillando en dorado.",
         "questItemID": 3,
-        "image": "1",
+        "image": "5",
         "view": 1,
         "model": {
           "source": "models.clue00.model",
@@ -68,7 +68,7 @@
       "title": "Pista 6",
       "description": "Imaginate lo que debía ser subir hasta el 6º piso en esos tiempos, ¿sabías que cambiaron las escaleras? Me comentaron que antes era todavía más difícil llegar hasta allá, no que yo sepa, nunca fui tan arriba, si algún día pasas por ahí contame cuál es el número más grande que podés encontrar.",
       "questItemID": 5,
-      "image": "1",
+      "image": "5",
       "view": 3,
       "model": {
         "source": "models.clue60.model",
@@ -83,7 +83,7 @@
       "title": "Pista 2 (opcional)",
       "description": "La verdad no sé qué hago acá, yo siempre quise ser artista. Ja! imaginate que bien te vendría uno ahora mismo para que te pinte afuera de esta situación… Bueno bueno relajate, no te pongas naranja.",
       "questItemID": 6,
-      "image": "1",
+      "image": "5",
       "view": 3,
       "model": {
         "source": "models.clueOpt20.model",
@@ -114,7 +114,7 @@
       "title": "Hoja 1 del TP",
       "description": "¡Estuviste semanas escribiendo en ella el inicio, desarrollo y conclusión del TP! (bueno tal vez no tanto tiempo). Es suficiente para entregarlo aunque con una sola página no vas a llegar al 10.",
       "questItemID": 8,
-      "image": "1",
+      "image": "6",
       "view": 1,
       "model": {
         "source": "models.page0.model",
@@ -129,7 +129,7 @@
       "title": "Hoja 2 del TP",
       "description": "Contiene la bibliografía del TP, ni quiero recordar la de tiempo que estuviste tratando de recordar en todas las páginas que habías buscado información.",
       "questItemID": 9,
-      "image": "1",
+      "image": "6",
       "view": 1,
       "model": {
         "source": "models.page1.model",
@@ -144,7 +144,7 @@
       "title": "Hoja con el índice del TP",
       "description": "Contiene el índice del TP, y sí, ¿qué más esperabas?",
       "questItemID": 10,
-      "image": "1",
+      "image": "6",
       "view": 1,
       "model": {
         "source": "models.page2.model",
@@ -159,7 +159,7 @@
       "title": "Hoja última del TP",
       "description": "Contiene los agradecimientos especiales.",
       "questItemID": 11,
-      "image": "1",
+      "image": "6",
       "view": 1,
       "model": {
         "source": "models.page3.model",
