@@ -68,7 +68,7 @@ const QuestTutorial = ({route, navigation}) => {
         start_time: Math.floor(Date.now() / 1000)}) 
     }).catch(error => {
       console.log('Error sending update: '+error);
-    }).then(navigation.navigate('Game', {teamID: teamID})).catch(error => console.log(error))
+    }).then(navigation.navigate('Game', {team: {teamID: teamID}})).catch(error => console.log(error))
   };
 
   const RenderItem = ({ item }) => {

@@ -253,7 +253,7 @@ const Clue0 = useState({
         console.log("CONCHAAAAAAAAAAAAAAAAAAAAAAAAAA: ", filteredInventory)
         if (finish_quest) {
           dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "1", combinable: true}, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID), can_finish: finish_quest}));
-          dispatch(QuestLocal.actions.setUpdateState(false));
+//          dispatch(QuestLocal.actions.setUpdateState(false));
         }else{
           dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "1", combinable: true}, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID)}));
           //por ahora, hay que fixear el tema ese
