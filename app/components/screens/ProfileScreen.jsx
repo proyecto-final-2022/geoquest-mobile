@@ -500,7 +500,7 @@ const ProfileScreen = ({navigation}) => {
 
             {selectedCategoryIndex == 1 && <>
                 <Text style={{paddingTop: 10, paddingRight: 10, alignSelf: 'flex-end', color: '#a52a2a', fontSize: 20, fontWeight: 'bold'}}>
-                    Obtenidos ({achivements.filter((achivement) => achivement.earned).length}/9)
+                    Obtenidos ({achivements.filter((achivement) => achivement.earned).length}/{achivements.length})
                 </Text>
                 <FlatList
                     horizontal= {false}
