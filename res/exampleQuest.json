@@ -97,7 +97,7 @@
       }
     },
     "7": {
-      "title": "Placa",
+      "title": "Placa 621",
       "visualizeFunction": "VisualizeBox",
       "description": "Placa del aula 621, ¡parece bastante pesada!",
       "questItemID": 7,
@@ -209,7 +209,7 @@
                 {
                   "name": "log",
                   "params": [
-                    "Me encontré con una Carpeta y tiene algunas cosas adentro."
+                    "Me encontre con una Carpeta y tiene algunas cosas adentro."
                   ]
                 },
                 {
@@ -263,7 +263,7 @@
               {
                 "name": "log",
                 "params": [
-                  "Me encontré una Llave en planta baja y puedo usarla para abrir alguna cerradura."
+                  "Me encontre una Llave en planta baja y puedo usarla para abrir alguna cerradura."
                 ]
               },
               {
@@ -325,7 +325,7 @@
               {
                 "name": "log",
                 "params": [
-                  "Me encontré con una Placa que emergió de la pared del 6º piso. Parece ser mas profunda de lo que aparenta."
+                  "Me encontre con una Placa que emergio de la pared del 6to piso. Parece ser mas profunda de lo que aparenta."
                 ]
               },
               {
@@ -373,7 +373,7 @@
               {
               "name": "log",
               "params": [
-                "Me encontré con la Hoja 2 de mi TP en la sala de arte del 2º piso"
+                "Me encontre con la Hoja 2 de mi TP en la sala de arte del 2º piso"
               ]
             },
             {
@@ -419,7 +419,7 @@
               {
               "name": "log",
               "params": [
-                "Me encontré con la Hoja del índice de mi TP en []"
+                "Me encontre con la Hoja del índice de mi TP en []"
               ]
             },
             {
@@ -465,7 +465,7 @@
               {
               "name": "log",
               "params": [
-                "Me encontré con la Hoja última de mi TP en []"
+                "Me encontre con la Hoja ultima de mi TP en []"
               ]
             },
             {

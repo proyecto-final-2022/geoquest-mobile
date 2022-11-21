@@ -188,16 +188,11 @@ const Clue0 = useState({
   }
 
   function FolderOnClick(){
-    // console.log("***Last interaction: ", questLocal.inventory.selectedItem.itemID)
-    // if (questState.finished == true) {
-    //   navigation.navigate("Quest Navigator")
-    // }
 
     const folder = Folder[0], setfolder = Folder[1];
     const note = Note[0], setnote = Note[1];
 
     const selected = questLocal.inventory.selectedItem.itemID ?? 0
-    console.log("***************BFDAUSFBASDFIB")
     
     const page_idx = selected - 8; //pages go from ["8","9","10","11"]
     
@@ -205,8 +200,6 @@ const Clue0 = useState({
       const Pages = [Page0,Page1,Page2,Page3];
       const Page = Pages[page_idx];
       const page = Page[0], setpage = Page[1];
-      console.log("******aaaaaaaaaaaaa: ", questLocal.inventory.selectedItem.itemID)
-      //TODO(FRAN): fix Folder animation, make it so it doesnt close so much at the end so the pages can fit inside without clipping the front flap
 
       if(folderOpened) OpenOrCloseFolder();
 
@@ -245,12 +238,9 @@ const Clue0 = useState({
           }
         }))
         var newInventory = []
-        var filteredInventory = []
         newInventory = questState.inventory
         const id_to_remove = questLocal.inventory.selectedItem.itemID;
         
-        filteredInventory = newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID)
-        console.log("CONCHAAAAAAAAAAAAAAAAAAAAAAAAAA: ", filteredInventory)
         if (finish_quest) {
           dispatch(Quest.actions.set({...questState, sendUpdate: {lastFoundItemID: "1", combinable: true}, inventory: newInventory.filter(item => item != questLocal.inventory.selectedItem.itemID), can_finish: finish_quest}));
 //          dispatch(QuestLocal.actions.setUpdateState(false));
@@ -272,7 +262,6 @@ const Clue0 = useState({
     DisappearModelAndSaveInInventory(Note, "2");
     //setnote(prevState => ({...prevState, visible:false}));
     setclue(prevState => ({...prevState, interactable:true}));
-    console.log("****note on click")
     //cambiar hardcodeo
   }
 

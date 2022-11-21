@@ -140,14 +140,14 @@ export const Lighting = ({visible}) => {
             <ViroOmniLight
                 color="#FFFFFF"
                 position={[0, 5, -10]}
-                intensity={visible?100:0}
+                intensity={visible?100:50}
                 attenuationStartDistance={5}
                 attenuationEndDistance={30}
             />
             <ViroOmniLight
                 color="#FFFFFF"
                 position={[1, 0.3, 3]}
-                intensity={visible?100:0}
+                intensity={visible?100:50}
                 attenuationStartDistance={5}
                 attenuationEndDistance={30}
             />
