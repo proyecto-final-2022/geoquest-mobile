@@ -1,3 +1,8 @@
+/* eslint-disable max-len */
+/* eslint-disable semi */
+/* eslint-disable linebreak-style */
+/* eslint-disable quotes */
+/* eslint-disable indent */
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, BackHandler} from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native'
@@ -36,18 +41,19 @@ const QuestNavigator = () => {
     "ID": 5,
     "name": "Parque de la Costa",
     "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/26/b5/a7/parque-de-la-costa.jpg?w=1200&h=-1&s=1"
-    }]
+    }
+  ]
 
-    const quests = [{
-      "client_id": 1,
-      "name": "La busqueda del TP perdido",
-      "qualification": 4.5,
-      "description": "Un día te dirigías a Medrano para entregar tu Trabajo Práctico Final de Sistemas y Organizaciones. En la puerta te encontrás con uno de tus compañeros y te ponés a hablar un rato cuando de repente... ¡Oh no! Tu malvado compañero, el Duende, apareció y robó el TP de tus manos y desperdigó las hojas por toda la facultad! Debés apurarte y entregar el trabajo completo a tiempo o sino tendrás que recursar la materia. Por suerte el Duende ha sido generoso y te ha dejado algunas pistas para guiarte en tu aventura.",
-      "difficulty": "Media",
-      "duration": "Media",
-      "image": "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg",
-      "completions": 10
-    }]
+  const quests = [{
+    "client_id": 1,
+    "name": "La busqueda del TP perdido",
+    "qualification": 4.5,
+    "description": "Un día te dirigías a Medrano para entregar tu Trabajo Práctico Final de Sistemas y Organizaciones. En la puerta te encontrás con uno de tus compañeros y te ponés a hablar un rato cuando de repente... ¡Oh no! Tu malvado compañero, el Duende, apareció y robó el TP de tus manos y desperdigó las hojas por toda la facultad! Debés apurarte y entregar el trabajo completo a tiempo o sino tendrás que recursar la materia. Por suerte el Duende ha sido generoso y te ha dejado algunas pistas para guiarte en tu aventura.",
+    "difficulty": "Media",
+    "duration": "Media",
+    "image_url": "https://www.frba.utn.edu.ar/wp-content/uploads/2016/10/Fachada-medrano-en-baja-e1462221529402-1024x427.jpg",
+    "completions": 10
+  }]
 
   // const [data, setData] = useState([{
   //   "ID": 1,
@@ -89,51 +95,36 @@ const QuestNavigator = () => {
   const url = Config.appUrl + "clients/"
   const urlQuests = Config.appUrl + "clients/quests"
 
-  const listCategories = () => {
-    const categoryList = ['Populares', 'Más jugadas']
-    return <View style={styles.categoryListContainer}>
-      {categoryList.map((category, index) => (
-        <Pressable
-          key={index}
-            onPress={
-              () => {setSelectedCategoryIndex(index)}}>
-        <Text style={[styles.categoryListText, (index == selectedCategoryIndex && styles.activeCategoryListText)]}>{category}</Text>        
-        </Pressable>
-      ))}
-    </View>
-  }
-
   const Empty = ({spacing}) => { return(<Text style={{marginTop:spacing}}> </Text>)}
   const Card = ({quest}) => {
     return (
-      <ScrollView style={styles.card}>
-        <Pressable onPress={() => {
+      <ScrollView style={styles.card} contentContainerStyle={{alignItems: 'center'}}>
+        <Pressable 
+        style={{flex: 1, width: width * 0.75}}
+        onPress={() => {
           var clientID = data[0].ID
           var clientName = data[0].name
           navigation.navigate('Client Quests', {clientID, clientName})
         }}>
-        <Image style={styles.cardImage} source={{uri: quest.image_url}} />
-        <View style={{flexDirection: 'row',justifyContent: 'space-between',marginTop: 10,}}>
-          <Text style={{fontSize: 16, fontWeight: 'bold'}}>{quest.name}</Text>
-        </View>
-        <View style={{marginTop: 10, flexDirection: 'row', flex: 1}}>
-          <View style={styles.questInfo}>
-            <FontAwesome name ='clock-o' color={'#1A515B'} size={18}/>
-            <Text style={styles.questInfoText}>{quest.duration}</Text>
-          </View>
-          <View style={styles.questInfo}>
-            <Entypo name ='gauge' color={'firebrick'} size={18}/>
-            <Text style={styles.questInfoText}>{quest.difficulty}</Text>
-          </View>
-          <View style={styles.questInfo}>
+          <Image style={styles.cardImage} source={{uri: quest.image_url}}/>
+          <Text style={{fontSize: 16, fontWeight: 'bold', marginTop: 10, flex: 1}}>{quest.name}</Text>
+          <View style={{marginTop: 10, flexDirection: 'row', flex: 1}}>
+            <View style={styles.questInfo}>
+              <FontAwesome name ='clock-o' color={'#1A515B'} size={18}/>
+              <Text style={styles.questInfoText}>{quest.duration}</Text>
+            </View>
+            <View style={styles.questInfo}>
+              <Entypo name ='gauge' color={'firebrick'} size={18}/>
+              <Text style={styles.questInfoText}>{quest.difficulty}</Text>
+            </View>
+            <View style={styles.questInfo}>
               <Entypo name ='star' color={'goldenrod'} size={18}/>
               <Text style={styles.questInfoText}>{quest.qualification}</Text>
             </View>
-          {/* //TODO(fran): qualification */}
-        </View>
-        <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
-        <Empty spacing={20}/>
-      </Pressable>
+            {/* //TODO(fran): qualification */}
+          </View>
+          <Text style={{fontSize: 14, marginVertical: 5, textAlign: 'justify', flex: 5}}>{quest.description}</Text>
+        </Pressable>
       </ScrollView>
     )
   }
@@ -169,50 +160,48 @@ const QuestNavigator = () => {
     // }
     return (
       data.map( (client, index) => 
-        <Pressable key={index} onPress={() => {
-          var clientID = client.ID
-          var clientName = client.name
-          navigation.navigate('Client Quests', {clientID, clientName})
-        }}>
-          <View  style={styles.optionCard} key = {index}>
-            <Image style={styles.optionCardImage} source={{uri: client.image}} />
-              <Text style={{textAlign: 'center', marginTop:10, fontSize:18, fontWeight: 'bold'}}>{client.name}</Text>
-          </View>        
-        </Pressable>
-          )
-        )
+        <View style={styles.optionCard} key={index}>
+          <Pressable key={index} style={{width: width * 0.38, flex: 1, alignItems: 'center'}} onPress={() => {
+            var clientID = client.ID
+            var clientName = client.name
+            navigation.navigate('Client Quests', {clientID, clientName})
+          }}>
+            <Image style={styles.optionCardImage} source={{uri: client.image}}/>
+            <Text style={{textAlign: 'center', marginTop:10, fontSize:18, fontWeight: 'bold', flex: 1}}>{client.name}</Text>
+          </Pressable>
+        </View>
+      )
+    )
   }
 
   return (
-    <View style={styles.view}> 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{height: 350}}>
-        <View style={styles.optionListContainer}>
-          {getData()}
-        </View>
-      </ScrollView> 
+    <View style={styles.view}>
+      <View style={{flex: 5}}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}>
+          <View style={styles.optionListContainer}>
+            {getData()}
+          </View>
+        </ScrollView>
+      </View>
 
-      {listCategories()}
-      { 
-        selectedCategoryIndex == 0 ?           
+      <View style={styles.categoryListContainer}>
+        {['Populares', 'Más jugadas'].map((category, index) => (
+          <Pressable key={index} onPress={() => {setSelectedCategoryIndex(index)}}>
+            <Text style={[styles.categoryListText, (index == selectedCategoryIndex && styles.activeCategoryListText)]}>{category}</Text>        
+          </Pressable>
+        ))}
+      </View>
+      <View style={{flex: 6}}>
         <FlatList
           horizontal
-          contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+          contentContainerStyle={{paddingLeft: 20}}
           showsHorizontalScrollIndicator = {false}
-          data={quests.sort((a, b) => a.qualification < b.qualification)}
-          renderItem={({item}) => <Card quest={item}/>
-        }></FlatList> :           
-        <FlatList
-          horizontal
-          contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
-          showsHorizontalScrollIndicator = {false}
-          data={quests.sort((a, b) => a.completions < b.completions)}
-          renderItem={({item}) => <Card quest={item}/>
-        }></FlatList>
-      }
-
+          data={selectedCategoryIndex == 0 ? quests.sort((a, b) => a.qualification < b.qualification) : quests.sort((a, b) => a.completions < b.completions)}
+          renderItem={({item}) => <Card quest={item}/>}
+        />
+      </View>
     </View> 
   )
 }
@@ -231,28 +220,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
-    paddingHorizontal: 20,
+    marginLeft: 20,
   },
   optionCard: {
     height: 240,
     marginRight: 10,
-    width: width/2 - 40,
+    width: width * 0.38,
     elevation: 15,
     backgroundColor: '#ffefd5',
     alignItems: 'center',
     borderRadius: 20,
     paddingTop: 5,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    flex: 1
   },
   optionCardImage: {
-    height: 140,
+    flex: 2,
     borderRadius: 10,
-    width: '100%'
+    width: width * 0.32
   },
   categoryListContainer: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 80,
+    justifyContent: 'space-evenly',
+    marginHorizontal: width * 0.15
   },
   categoryListText: {
     fontSize: 16,
@@ -266,17 +257,17 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   card:{
-    height: 350,
+    height: width * 0.85,
     backgroundColor: '#ffefd5',
     elevation: 10,
-    width: width - 65,
+    width: width * 0.85,
     marginRight:20,
     padding: 15,
-    borderRadius: 20,
+    borderRadius: 20
   },
   cardImage:{
-    width: '100%',
-    height: 120,
+    width: width * 0.75,
+    height: width * 0.35,
     borderRadius: 15,
   },
   questInfo: {
