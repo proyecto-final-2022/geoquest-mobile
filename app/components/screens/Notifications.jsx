@@ -64,6 +64,7 @@ export default Notifications = ({route, navigation}) => {
       fetch(
         Config.appUrl+'users/' + userID + '/notifications/'+ notificationID, {
         method: 'DELETE',
+        body: JSON.stringify({}),
         headers: { 'Content-Type': 'application/json'}
         })
     )
@@ -150,6 +151,7 @@ export default Notifications = ({route, navigation}) => {
         fetch(
           Config.appUrl+'users/' + user.id + '/notifications/'+ notificationID, {
           method: 'DELETE',
+          body: JSON.stringify({}),
           headers: { 'Content-Type': 'application/json'}
           })
         )
@@ -173,6 +175,7 @@ export default Notifications = ({route, navigation}) => {
         fetch(
           Config.appUrl+'users/' + user.id + '/notifications/'+ notificationID, {
           method: 'DELETE',
+          body: JSON.stringify({}),
           headers: { 'Content-Type': 'application/json'}
           })
       .catch((error) => console.error(error))  
