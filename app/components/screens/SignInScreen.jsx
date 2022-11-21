@@ -123,6 +123,9 @@ const SignInScreen = () => {
             <CustomButton 
               text='Iniciar Sesión' 
               onPress={handleSubmit(onSignInPressed)}/>
+
+            {/* This view is to replace the forgot password button */}
+            <View style={{marginTop: 30}}/>
             {/* <CustomButton 
               text='¿Olvidó su contraseña?' 
               onPress={onForgotPasswordPressed}
