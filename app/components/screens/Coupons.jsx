@@ -57,7 +57,8 @@ export default Coupons = ({route, navigation}) => {
         setQrValue(JSON.stringify(
           { 
             userId: user.id,
-            couponId: coupon.id, 
+            couponId: coupon.id,
+            clientId: coupon.client_id, 
             description: coupon.description, 
             expirationDate: coupon.expiration_date, 
             used: false
