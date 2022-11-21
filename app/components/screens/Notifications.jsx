@@ -134,7 +134,7 @@ export default Notifications = ({route, navigation}) => {
 
   const handleAcceptFriendRequest = (senderID, notificationID) => {
     Alert.alert("Solicitud aceptada")
-        fetch(Config.appUrl + "users/" + user.id + "/friends/" + senderID  , {
+        fetch(Config.appUrl + "users/" + senderID + "/friends/" + user.id  , {
            method: 'POST',
            headers: { 
              'Content-Type': 'application/json'} 
