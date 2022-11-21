@@ -166,7 +166,7 @@ export default function WithoutImageRecognition({id, typeProps, globalCtx}) {
 
   return (
     <ViroNode visible={Model[0].visible}>
-      <ViroAmbientLight color="#ffffff" intensity={Model[0].visible?200:0}/>
+      <ViroAmbientLight color="#ffffff" intensity={Model[0].visible?200:50}/>
       <Lighting visible={Model[0].visible}/>
       <Viro3DObject 
         {...modelProps}
