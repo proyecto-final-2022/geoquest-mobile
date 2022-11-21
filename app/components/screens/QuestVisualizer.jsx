@@ -157,7 +157,7 @@ export default function QuestVisualizer({route, navigation}) {
       <View style={styles.teamButtonsContainer}> 
         <CustomButton2 
           onPress = {() =>
-            navigation.navigate("Quest Tutorial", {data: {questID: questId, userID: userID,rol: "host"} })
+            navigation.navigate("Quest Tutorial", {data: {questID: questId, mode: "singlePlayer", userID: userID,rol: "host"} })
             // fetch(
             //   Config.appUrl+'teams/' + userID, {
             //   method: 'POST',

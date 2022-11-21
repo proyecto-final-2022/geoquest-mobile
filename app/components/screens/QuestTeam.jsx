@@ -99,23 +99,24 @@ export default MultiplayerWaitRoom = ({route, navigation}) => {
                 type: 'quest_invite'
               })
             })
-            .then(
-              fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
-                method: 'POST',
-                headers: { 
-                  'Content-Type': 'application/json'},
-                body: JSON.stringify({ 
-                  sender_name: senderName
-                 })
-              })
-              .catch((error) => console.error(error))
-            )
-            .then(
-              Storage.getObject('user').then(user => forwardToWaitRoom(id, teamId, user.id)))
-            .catch((error) => console.error(error))
+            //back
+            // .then(
+            //   fetch(Config.appNotificationsUrl + "notifications/quest_invite", {
+            //     method: 'POST',
+            //     headers: { 
+            //       'Content-Type': 'application/json'},
+            //     body: JSON.stringify({ 
+            //       sender_name: senderName
+            //      })
+            //   })
+            //   .catch((error) => console.error(error))
+            // )
           })
-        })
+          forwardToWaitRoom(id, teamId, userID)
+        }
+        )
         .catch((error) => {console.log('error: ' + error)});
+        
       })
       .catch((error) => {console.log('error: ' + error)});
   }
