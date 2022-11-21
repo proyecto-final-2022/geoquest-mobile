@@ -249,7 +249,9 @@ export default function Game({route}) {
         initialParams={{questConfig}}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
-            updateState()
+ //           if (!questState.finished){
+              updateState()
+//            }
 //            dispatch(QuestLocal.actions.setUpdateState(true));
           }
         }
