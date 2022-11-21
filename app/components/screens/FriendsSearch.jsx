@@ -73,7 +73,7 @@ export default FriendsSearch = ({route, navigation}) => {
     return userImages[imageNumber-1];
   }
 
-
+//NOTIF1
   const sendNotification = (friend) => {
     //sendID -> friend.id
     fetch(Config.appUrl + "users/" + friend.id + '/notifications', {
@@ -83,17 +83,6 @@ export default FriendsSearch = ({route, navigation}) => {
         type: 'friend_request'
       })
     })
-    .catch((error) => console.error(error))
-    .then(
-      fetch(Config.appNotificationsUrl + "notifications/friend_request", {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ 
-          sender_name: user.username,
-          sender_id: user.id
-        }) 
-      })
-    )
     .catch((error) => console.error(error))
   }
 

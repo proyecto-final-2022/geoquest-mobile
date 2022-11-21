@@ -66,19 +66,20 @@ export default Notifications = ({route, navigation}) => {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json'}
         })
-      )
-    .then(
-      fetch(Config.appNotificationsUrl + "notifications/quest_accept", {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'},
-        body: JSON.stringify({ 
-          sender_name: user.username,
-          quest_id: questID,
-          team_id: teamID,
-        }) 
-      })
-      )
+    )
+        //NOTIF2 descartada
+    // .then(
+    //   fetch(Config.appNotificationsUrl + "notifications/quest_deny", {
+    //     method: 'POST',
+    //     headers: { 
+    //       'Content-Type': 'application/json'},
+    //     body: JSON.stringify({ 
+    //       sender_name: user.username,
+    //       quest_id: questID,
+    //       team_id: teamID,
+    //     }) 
+    //   })
+    //   )
     .then(
       fetch(url)
       .then((response) => response.json())
@@ -103,21 +104,25 @@ export default Notifications = ({route, navigation}) => {
       fetch(
         Config.appUrl+'users/' + user.id + '/notifications/'+ notificationID, {
         method: 'DELETE',
+        body: JSON.stringify({ 
+          type: 'quest_accept'
+        }),
         headers: { 'Content-Type': 'application/json'}
         })
     )
-    .then(
-      fetch(Config.appNotificationsUrl + "notifications/quest_accept", {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'},
-        body: JSON.stringify({ 
-          sender_name: user.username,
-          quest_id: questID,
-          team_id: teamID,
-        }) 
-      })
-    )
+    //NOTIF 3
+    // .then(
+    //   fetch(Config.appNotificationsUrl + "notifications/quest_accept", {
+    //     method: 'POST',
+    //     headers: { 
+    //       'Content-Type': 'application/json'},
+    //     body: JSON.stringify({ 
+    //       sender_name: user.username,
+    //       quest_id: questID,
+    //       team_id: teamID,
+    //     }) 
+    //   })
+    // )
     .then(
       Storage.getObject('user').then(user => forwardToWaitRoom(questID, teamID, user.id))      
     )
@@ -149,17 +154,17 @@ export default Notifications = ({route, navigation}) => {
           })
         )
       .catch((error) => console.error(error))
-      .then(
-        fetch(Config.appNotificationsUrl + "notifications/friend_accept", {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json'},
-          body: JSON.stringify({ 
-            sender_name: user.username,
-          }) 
-        })
-        )  
-      .catch((error) => console.error(error))
+      //NOTIF4
+      // .then(
+      //   fetch(Config.appNotificationsUrl + "notifications/friend_accept", {
+      //     method: 'POST',
+      //     headers: { 
+      //       'Content-Type': 'application/json'},
+      //     body: JSON.stringify({ 
+      //       sender_name: user.username,
+      //     }) 
+      //   })
+      //   )  
       .then(forwardToFriendList())
   }
 
@@ -171,16 +176,17 @@ export default Notifications = ({route, navigation}) => {
           headers: { 'Content-Type': 'application/json'}
           })
       .catch((error) => console.error(error))  
-      .then(
-        fetch(Config.appNotificationsUrl + "notifications/friend_deny", {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json'},
-          body: JSON.stringify({ 
-            sender_name: user.username,
-          }) 
-        })
-        )  
+      //NOTIF 5 DESCARTADA
+      // .then(
+      //   fetch(Config.appNotificationsUrl + "notifications/friend_deny", {
+      //     method: 'POST',
+      //     headers: { 
+      //       'Content-Type': 'application/json'},
+      //     body: JSON.stringify({ 
+      //       sender_name: user.username,
+      //     }) 
+      //   })
+      //   )  
       .catch((error) => console.error(error))
       .then(forwardToFriendList())
   }
@@ -248,18 +254,19 @@ export default Notifications = ({route, navigation}) => {
             <Ionicons color='firebrick' name ='md-close-circle' size={40} onPress={() => notification.type == "quest_invite" ? Storage.getObject('user').then(user => {
               Alert.alert("Invitacion rechazada")
               HandleCancel(notification.team_id, user.id, notification.id, notification.quest_id)
-              .then(
-                fetch(Config.appNotificationsUrl + "notifications/quest_deny", {
-                  method: 'POST',
-                  headers: { 
-                    'Content-Type': 'application/json'},
-                  body: JSON.stringify({ 
-                    sender_name: user.username,
-                    quest_id: notification.quest_id,
-                    team_id: notification.team_id,
-                  })
-                })
-              )
+              //NOTIF 6
+              // .then(
+              //   fetch(Config.appNotificationsUrl + "notifications/quest_deny", {
+              //     method: 'POST',
+              //     headers: { 
+              //       'Content-Type': 'application/json'},
+              //     body: JSON.stringify({ 
+              //       sender_name: user.username,
+              //       quest_id: notification.quest_id,
+              //       team_id: notification.team_id,
+              //     })
+              //   })
+              // )
             }
             ) : handleCancelFriendRequest(notification.id) }/> 
           </View>

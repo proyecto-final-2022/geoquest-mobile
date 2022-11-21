@@ -55,6 +55,7 @@ const SignInScreen = () => {
         if(user.id !== undefined){ //user is already logged in
           getUser(user.id)
           .then(() => {
+            //here
             navigation.navigate('Quest Navigator');
           })
           .catch(error => {
