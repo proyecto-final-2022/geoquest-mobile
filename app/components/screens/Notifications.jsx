@@ -17,6 +17,7 @@ import userImage_6 from '../../../assets/userImages/userImage_6.png'
 import userImage_7 from '../../../assets/userImages/userImage_7.png'
 import userImage_8 from '../../../assets/userImages/userImage_8.png'
 import userImage_9 from '../../../assets/userImages/userImage_9.png'
+import { useDrawerProgress } from '@react-navigation/drawer';
 
 const {width} = Dimensions.get('screen')
 
@@ -133,19 +134,24 @@ export default Notifications = ({route, navigation}) => {
 
   const handleAcceptFriendRequest = (senderID, notificationID) => {
     Alert.alert("Solicitud aceptada")
-      fetch(Config.appUrl + "users/" + user.id + "/friends/" + senderID  , {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'} 
-        })
-      .catch((error) => console.error(error))
-      .then(
-        fetch(Config.appUrl + "users/" + senderID + "/friends/" + user.id  , {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json'} 
-          })
-      )
+        fetch(Config.appUrl + "users/" + user.id + "/friends/" + senderID  , {
+           method: 'POST',
+           headers: { 
+             'Content-Type': 'application/json'} 
+           })
+      // fetch(Config.appUrl + "users/" + user.id + "/friends/" + senderID  , {
+      //   method: 'POST',
+      //   headers: { 
+      //     'Content-Type': 'application/json'} 
+      //   })
+      // .catch((error) => console.error(error))
+      // .then(
+      //   fetch(Config.appUrl + "users/" + senderID + "/friends/" + user.id  , {
+      //     method: 'POST',
+      //     headers: { 
+      //       'Content-Type': 'application/json'} 
+      //     })
+      // )
       .catch((error) => console.error(error))
       .then(
         fetch(
