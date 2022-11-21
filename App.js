@@ -26,7 +26,7 @@ export default function App() {
     };
 
     const forwardToQuestUpdate = (teamID) => {
-      navigationRef.current?.navigate("Game", {teamID});
+      navigationRef.current?.navigate("Game", {team: {teamID: teamID}});
     };
 
     const forwardToFriendsList = () => {
