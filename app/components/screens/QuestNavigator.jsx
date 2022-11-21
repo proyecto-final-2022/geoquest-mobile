@@ -118,13 +118,18 @@ const QuestNavigator = () => {
         </View>
         <View style={{marginTop: 10, flexDirection: 'row', flex: 1}}>
           <View style={styles.questInfo}>
-            <FontAwesome name ='clock-o' size={18}/>
+            <FontAwesome name ='clock-o' color={'#1A515B'} size={18}/>
             <Text style={styles.questInfoText}>{quest.duration}</Text>
           </View>
           <View style={styles.questInfo}>
-            <Entypo name ='gauge' size={18}/>
+            <Entypo name ='gauge' color={'firebrick'} size={18}/>
             <Text style={styles.questInfoText}>{quest.difficulty}</Text>
           </View>
+          <View style={styles.questInfo}>
+              <Entypo name ='star' color={'goldenrod'} size={18}/>
+              <Text style={styles.questInfoText}>{quest.qualification}</Text>
+            </View>
+          {/* //TODO(fran): qualification */}
         </View>
         <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
         <Empty spacing={20}/>
