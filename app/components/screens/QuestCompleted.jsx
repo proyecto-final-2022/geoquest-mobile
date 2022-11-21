@@ -280,7 +280,7 @@ export default QuestCompleted = ({route, navigation}) => {
                     clientId: qr.client_id,
                     userId: qr.user_id,
                     description: qr.description,
-                    user: qr.used
+                    used: qr.used
                   }) : 'NA'}
                   color='black'
                   size={Dimensions.get('window').width / 1.8}
