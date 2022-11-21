@@ -103,32 +103,33 @@ const QuestNavigator = () => {
     </View>
   }
 
+  const Empty = ({spacing}) => { return(<Text style={{marginTop:spacing}}> </Text>)}
   const Card = ({quest}) => {
     return (
-      <View style={styles.card}>
+      <ScrollView style={styles.card}>
+        <Pressable onPress={() => {
+          var clientID = data[0].ID
+          var clientName = data[0].name
+          navigation.navigate('Client Quests', {clientID, clientName})
+        }}>
         <Image style={styles.cardImage} source={{uri: quest.image_url}} />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: 10,
-            }}>
-            <Text style={{fontSize: 16, fontWeight: 'bold'}}>{quest.name}</Text>
+        <View style={{flexDirection: 'row',justifyContent: 'space-between',marginTop: 10,}}>
+          <Text style={{fontSize: 16, fontWeight: 'bold'}}>{quest.name}</Text>
+        </View>
+        <View style={{marginTop: 10, flexDirection: 'row', flex: 1}}>
+          <View style={styles.questInfo}>
+            <FontAwesome name ='clock-o' size={18}/>
+            <Text style={styles.questInfoText}>{quest.duration}</Text>
           </View>
-          <ScrollView>
-            <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
-          </ScrollView>
-          <View style={{marginTop: 10, flexDirection: 'row', flex: 1}}>
-            <View style={styles.questInfo}>
-              <FontAwesome name ='clock-o' size={18}/>
-              <Text style={styles.questInfoText}>{quest.duration}</Text>
-            </View>
-            <ScrollView style={styles.questInfo}>
-              <Entypo name ='gauge' size={18}/>
-              <Text style={styles.questInfoText}>{quest.difficulty}</Text>
-            </ScrollView>
+          <View style={styles.questInfo}>
+            <Entypo name ='gauge' size={18}/>
+            <Text style={styles.questInfoText}>{quest.difficulty}</Text>
           </View>
-      </View>
+        </View>
+        <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
+        <Empty spacing={20}/>
+      </Pressable>
+      </ScrollView>
     )
   }
 
@@ -178,7 +179,7 @@ const QuestNavigator = () => {
   }
 
   return (
-    <ScrollView style={styles.view}> 
+    <View style={styles.view}> 
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -207,7 +208,7 @@ const QuestNavigator = () => {
         }></FlatList>
       }
 
-    </ScrollView> 
+    </View> 
   )
 }
 
