@@ -195,12 +195,12 @@ const ProfileScreen = ({navigation}) => {
                 logo: finish_icon,
                 earned: userAchivements.includes("FinishedQuest_ac")
             },
-            {
-                name: "Completa una búsqueda en equipo",
-                description: "Termina una búsqueda con un grupo de amigos",
-                logo: team_finish_icon,
-                earned: userAchivements.includes("FinishedTeamQuest_ac")
-            },
+            // {
+            //     name: "Completa una búsqueda en equipo",
+            //     description: "Termina una búsqueda con un grupo de amigos",
+            //     logo: team_finish_icon,
+            //     earned: userAchivements.includes("FinishedTeamQuest_ac")
+            // },
             {
                 name: "Califica una búsqueda",
                 description: "Da una calificación a una búsqueda",
@@ -212,25 +212,25 @@ const ProfileScreen = ({navigation}) => {
                 description: "Utiliza uno de los cupones obtenidos como recompenza",
                 logo: coupon_icon,
                 earned: userAchivements.includes("UsedCoupon_ac")
-            },
-            {
-                name: "Completa 5 búsquedas",
-                description: "Gana 5 búsquedas de principio a fin",
-                logo: many_quests_icon,
-                earned: userAchivements.includes("FinishedFiveQuests_ac")
-            },
-            {
-                name: "Top 3",
-                description: "Califica en el top 3 del podio de una búsqueda",
-                logo: ranking_icon,
-                earned: userAchivements.includes("TopThreeRanking_ac")
-            },
-            {
-                name: "Acelerado",
-                description: "Termina una búsqueda en menos de 15 minutos",
-                logo: speedrun_icon,
-                earned: userAchivements.includes("FiftyMinutes_ac")
             }
+            // {
+            //     name: "Completa 5 búsquedas",
+            //     description: "Gana 5 búsquedas de principio a fin",
+            //     logo: many_quests_icon,
+            //     earned: userAchivements.includes("FinishedFiveQuests_ac")
+            // },
+            // {
+            //     name: "Top 3",
+            //     description: "Califica en el top 3 del podio de una búsqueda",
+            //     logo: ranking_icon,
+            //     earned: userAchivements.includes("TopThreeRanking_ac")
+            // },
+            // {
+            //     name: "Acelerado",
+            //     description: "Termina una búsqueda en menos de 15 minutos",
+            //     logo: speedrun_icon,
+            //     earned: userAchivements.includes("FiftyMinutes_ac")
+            // }
         ])
     }
 
@@ -500,7 +500,7 @@ const ProfileScreen = ({navigation}) => {
 
             {selectedCategoryIndex == 1 && <>
                 <Text style={{paddingTop: 10, paddingRight: 10, alignSelf: 'flex-end', color: '#a52a2a', fontSize: 20, fontWeight: 'bold'}}>
-                    Obtenidos ({achivements.filter((achivement) => achivement.earned).length}/9)
+                    Obtenidos ({achivements.filter((achivement) => achivement.earned).length}/{achivements.length})
                 </Text>
                 <FlatList
                     horizontal= {false}
