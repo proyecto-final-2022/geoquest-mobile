@@ -275,7 +275,13 @@ export default QuestCompleted = ({route, navigation}) => {
             <>
               <View style={{borderWidth: 8, borderColor: 'white'}}>
                 <QRCode
-                  value={qr ? JSON.stringify(qr) : 'NA'}
+                  value={qr ? JSON.stringify({
+                    id: qr.id,
+                    clientId: qr.client_id,
+                    userId: qr.user_id,
+                    description: qr.description,
+                    user: qr.used
+                  }) : 'NA'}
                   color='black'
                   size={Dimensions.get('window').width / 1.8}
                   backgroundColor='white'/>
