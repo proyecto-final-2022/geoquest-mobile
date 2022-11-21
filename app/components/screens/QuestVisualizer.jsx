@@ -61,14 +61,12 @@ export default function QuestVisualizer({route, navigation}) {
         placeholder: "Search",
       }
     });
-  });
 
-  useEffect(() => {
-    Storage.getObject('user').
-    then(user => {
-        setUserID(user.id);
+    Storage.getObject('user')
+    .then(user => {
+      setUserID(user.id);
     })
-}, []);
+  });
 
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {

@@ -1,9 +1,15 @@
+/* eslint-disable react/display-name */
+/* eslint-disable semi */
+/* eslint-disable quotes */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+/* eslint-disable linebreak-style */
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, BackHandler, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import { useIsFocused } from '@react-navigation/native'
 import {Avatar} from 'react-native-paper';
 import {useFocusEffect} from '@react-navigation/native'
-import {FontAwesome, Entypo, Ionicons} from '@expo/vector-icons'
+import {FontAwesome, Entypo, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons'
 import Config from '../../../config.json'
 
 import userImage_1 from '../../../assets/userImages/userImage_1.png'
@@ -24,46 +30,69 @@ export default Ranking = ({route, navigation}) => {
   const {id, name, qualification, description, difficulty, duration, completions, image_url, tags, clientID, clientName} = route.params
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0)
   
-  const url = Config.appUrl + "quests/" + id + "/rankings"
-  const urlTeam = Config.appUrl + "teams/rankings/" + id 
+  //const url = Config.appUrl + "quests/" + id + "/rankings"
+  //const urlTeam = Config.appUrl + "teams/rankings/" + id 
 
-  const [ranking, setRanking] = useState([])
-  const [rankingIndex, setRankingIndex] = useState(0)
+  //const [ranking, setRanking] = useState([])
+  //const [rankingIndex, setRankingIndex] = useState(0)
 
   const [teamRanking, setTeamRanking] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const isFocused = useIsFocused()
+  //const isFocused = useIsFocused()
+
+  //des hardcodear, pero pablo no lo hizo asi que yo tampoco :)
+  const urlTeam = Config.appUrl + "quests/" + route.params.id + "/progression/rankings" 
+
+  // useEffect(() => {
+  //   fetch(url)
+  //   .then((response) => {
+  //     if (response.ok){
+  //       response.json()
+  //       .then((json) => {
+  //         setRanking(json)
+  //       })
+  //       .catch((error) => console.error(error))
+  //       .finally(()=>setLoading(false))
+  //     }
+  //   })
+  //   .catch((error) => console.log(error))
+  // }, [isFocused])
+
+  // useEffect(() => {
+  //   fetch(urlTeam)
+  //   .then((response) => {
+  //     if (response.ok)
+  //       response.json()
+  //       .then((json) => {
+  //         setTeamRanking(json)
+  //       })
+  //       .catch((error) => console.error(error))
+  //       .finally(()=>setLoading(false))
+  //   })
+  //   .catch((error) => console.log(error))
+  // }, [isFocused])
+  
 
   useEffect(() => {
-    fetch(url)
-    .then((response) => {
-      if (response.ok){
-        response.json()
-        .then((json) => {
-          setRanking(json)
-        })
-        .catch((error) => console.error(error))
-        .finally(()=>setLoading(false))
-      }
-    })
-    .catch((error) => console.log(error))
-  }, [isFocused])
-
-  useEffect(() => {
+    //console.log("*****Que onda esto")
     fetch(urlTeam)
     .then((response) => {
-      if (response.ok)
+      if(response.ok){
         response.json()
         .then((json) => {
+          //console.log("********Ranking: ", json)
           setTeamRanking(json)
         })
         .catch((error) => console.error(error))
         .finally(()=>setLoading(false))
+      }else{
+        console.log(response)
+      }
     })
     .catch((error) => console.log(error))
-  }, [isFocused])
-  
+  }, [route])
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: 'Ranking',
@@ -173,8 +202,8 @@ export default Ranking = ({route, navigation}) => {
           }
         </View>
         <View style={styles.rankingItemTime}>
-          <FontAwesome name ='clock-o' color={'#1A515B'} size={32}/>
-          <Text style={{fontSize: 15, fontWeight: 'bold', color:'#a52a2a'}}>{data.hours+"h "+data.minutes+"m\n"+data.seconds+"s"}</Text>
+          <MaterialCommunityIcons name ='star-four-points' color={'goldenrod'} size={32}/>
+          <Text style={{fontSize: 15, fontWeight: 'bold', color:'#a52a2a'}}>{data.points}</Text>
         </View>
       </View>
     )
@@ -182,23 +211,26 @@ export default Ranking = ({route, navigation}) => {
 
   return (
     <View style={styles.view}> 
-      {listCategories()}
-      { 
-        selectedCategoryIndex == 0 ?           
-        <FlatList
-          contentContainerStyle={{paddingHorizontal: 5, paddingVertical: 20}}
-          showsHorizontalScrollIndicator = {false}
-          data={ranking}
-          keyExtractor={(item, index) => index}
-          renderItem={({item, index}) => <Ranking data={item} index={index+1}/>
-        }/> :           
+      {/* {listCategories()}         
+      <FlatList
+        contentContainerStyle={{paddingHorizontal: 5, paddingVertical: 20}}
+        showsHorizontalScrollIndicator = {false}
+        data={ranking}
+        keyExtractor={(item, index) => index}
+        renderItem={({item, index}) => selectedCategoryIndex == 0 ? <Ranking data={item} index={index+1}/> : <TeamRanking data={item} index={index+1}/>
+      }/> */}
+      { loading && <View style={{flex: 1, justifyContent: "center"}}>
+          <ActivityIndicator size="large" style={{justifyContent: "center", paddingTop: 50, transform: [{ scaleX: 2 }, { scaleY: 2 }]}}/>
+        </View>
+      }
+      { !loading && 
         <FlatList
           contentContainerStyle={{paddingHorizontal: 5, paddingVertical: 20}}
           showsHorizontalScrollIndicator = {false}
           data={teamRanking}
           keyExtractor={(item, index) => index}
-          renderItem={({item, index}) => <TeamRanking data={item} index={index+1}/>
-        }/>
+          renderItem={({item, index}) => <TeamRanking key={index} data={item} index={index+1}/>}
+        /> 
       }
     </View>
   )
