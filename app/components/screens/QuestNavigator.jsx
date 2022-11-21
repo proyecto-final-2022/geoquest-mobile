@@ -107,6 +107,11 @@ const QuestNavigator = () => {
   const Card = ({quest}) => {
     return (
       <ScrollView style={styles.card}>
+        <Pressable onPress={() => {
+          var clientID = data[0].ID
+          var clientName = data[0].name
+          navigation.navigate('Client Quests', {clientID, clientName})
+        }}>
         <Image style={styles.cardImage} source={{uri: quest.image_url}} />
         <View style={{flexDirection: 'row',justifyContent: 'space-between',marginTop: 10,}}>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>{quest.name}</Text>
@@ -123,6 +128,7 @@ const QuestNavigator = () => {
         </View>
         <Text style={{fontSize: 14, marginTop: 5}}>{quest.description}</Text>
         <Empty spacing={20}/>
+      </Pressable>
       </ScrollView>
     )
   }
