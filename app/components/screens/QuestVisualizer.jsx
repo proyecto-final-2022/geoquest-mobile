@@ -128,7 +128,7 @@ export default function QuestVisualizer({route, navigation}) {
         <View style={styles.questInfoContainer}>
           <View style={styles.questInfo}>
             <Entypo name ='star' size={25} color={"goldenrod"}/>
-            <Text style={{fontWeight: "bold"}}>{qualification}</Text>
+            <Text style={{fontWeight: "bold"}}>{qualification.toFixed(1)}</Text>
           </View>
           <View style={styles.questInfo}>
             <Entypo name ='gauge' color={"firebrick"} size={25}/>

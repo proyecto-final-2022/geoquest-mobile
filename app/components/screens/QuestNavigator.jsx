@@ -46,7 +46,7 @@ const QuestNavigator = () => {
 
   const quests = [{
     "client_id": 1,
-    "name": "La busqueda del TP perdido",
+    "name": "La búsqueda del TP perdido",
     "qualification": 4.5,
     "description": "Un día te dirigías a Medrano para entregar tu Trabajo Práctico Final de Sistemas y Organizaciones. En la puerta te encontrás con uno de tus compañeros y te ponés a hablar un rato cuando de repente... ¡Oh no! Tu malvado compañero, el Duende, apareció y robó el TP de tus manos y desperdigó las hojas por toda la facultad! Debés apurarte y entregar el trabajo completo a tiempo o sino tendrás que recursar la materia. Por suerte el Duende ha sido generoso y te ha dejado algunas pistas para guiarte en tu aventura.",
     "difficulty": "Media",
@@ -120,7 +120,7 @@ const QuestNavigator = () => {
                 </View>
                 <View style={styles.questInfo}>
                   <Entypo name ='star' color={'goldenrod'} size={18}/>
-                  <Text style={styles.questInfoText}>{quest.qualification}</Text>
+                  <Text style={styles.questInfoText}>{quest.qualification.toFixed(1)}</Text>
                 </View>
                 {/* //TODO(fran): qualification */}
               </View>
