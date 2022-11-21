@@ -202,7 +202,7 @@ const Clue0 = useState({
           anim_on_finish:()=>{
             if (finish_quest)
               //TODO(fran): check whether more pages are really still left to be found and placed in the folder
-              ctx.hint("¡Felicidades! Ya tenés suficientes hojas para entregar tu TP. Si te quedaste con ganás de más, todavía queda una hoja por encontrar para obtener un mejor premio.")
+              ctx.hint("¡Felicidades! Ya tenés suficientes hojas para entregar tu TP. Si te quedaste con ganás de más, existe una hoja adicional por encontrar para obtener un mejor premio.")
             else
               ctx.hint("¡Felicidades! Por haber encontrado la hoja adicional ganarás un mejor premio.")
           }
