@@ -276,7 +276,16 @@ function BoxKeyholeOnClick(){
         setbox(prevState => ({...prevState,animation:BoxAnimation.Open,loop_animation:false,animate:true})) //interactable:false
         //TODO(fran): animate the page inside falling due to gravity
 
-        setpage(prevState => ({...prevState,interactable:true}))//make page inside box interactable
+        ViroAnimations.registerAnimations({
+            page_elevate:{
+                properties:{
+                    positionZ: "+=.5",
+            },
+            easing:"EaseInEaseOut",
+            duration: 1000
+            },
+        })
+        setpage(prevState => ({...prevState,interactable:true, animate:true, loop_animation:false, anim_interruptible:false, animation:"page_elevate"}))//make page inside box interactable
         //TODO(fran): make page interactive only after the box has completely opened
     }}))
     setpage(prevState => ({...prevState,visible:true})) //make page visible
