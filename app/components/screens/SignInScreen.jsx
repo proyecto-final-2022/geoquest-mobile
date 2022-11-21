@@ -123,10 +123,10 @@ const SignInScreen = () => {
             <CustomButton 
               text='Iniciar Sesión' 
               onPress={handleSubmit(onSignInPressed)}/>
-            <CustomButton 
+            {/* <CustomButton 
               text='¿Olvidó su contraseña?' 
               onPress={onForgotPasswordPressed}
-              type="TERTIARY"/>
+              type="TERTIARY"/> */}
             <SocialSignInButtons/>
             <CustomButton 
               text ="¿No tenés una cuenta? Creá una!"
