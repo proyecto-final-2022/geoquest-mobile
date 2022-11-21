@@ -44,7 +44,7 @@ const QuestTutorial = ({route, navigation}) => {
   );
 
   useEffect(() => {
-    if (data.rol == "host") {
+    if (data.mode == "singlePlayer"){
       fetch(
         Config.appUrl+'teams/' + data.userID, {
         method: 'POST',
@@ -62,7 +62,16 @@ const QuestTutorial = ({route, navigation}) => {
             .then(setTeamID(teamID)))
             .catch(error => console.log(error))
     }else{
-      setTeamID(data.teamID)
+      if (data.rol == "host"){
+        fetch(
+          Config.appUrl+'quests/' + data.questID + '/progressions/' + data.teamID, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json'},
+          }).catch(error => console.log(error))
+        setTeamID(data.teamID)
+      }else{
+        setTeamID(data.teamID)
+      }
     }
   }, [data])
 

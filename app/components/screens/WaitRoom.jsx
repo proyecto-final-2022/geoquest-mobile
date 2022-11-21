@@ -26,7 +26,6 @@ export default WaitRoom = ({route, navigation}) => {
 
   const urlTeam = Config.appUrl + "teams/" + teamID 
 
-
   const [playersAccepted, setPlayersAccepted] = useState([])
   const [playersTeam, setPlayersTeam] = useState([])
 
@@ -141,23 +140,28 @@ export default WaitRoom = ({route, navigation}) => {
         {
           rol == "host" ? 
           <CustomButton2 
-            onPress = {() => 
-            fetch(url)
-            .then((response) => response.json())
-            .then((json) => {
-            if (json.accepted == playersTeam.length) {
-              navigation.navigate("Quest Tutorial", {questID: questID, rol:"guest", teamID: teamID})
+            onPress = {() => {
+
+              console.log("*******userID", userID)
+              console.log("*******teamID", teamID)
+              console.log("*******questID", teamID)
+              navigation.navigate("Quest Tutorial", {data: {questID: questID, rol:"host", mode: "multiPlayer", teamID: teamID, userID: userID}})
+            }
+            // fetch(url)
+            // .then((response) => response.json())
+            // .then((json) => {
+            // if (json.accepted == playersTeam.length) {
+
               // fetch(
               //   Config.appUrl+'quests/' + questID + '/progressions/' + teamID, {
               //   method: 'POST',
               //   headers: { 'Content-Type': 'application/json'},
               //   }).then(navigation.navigate("Quest Tutorial", {questID: questID, teamID: teamID}))
-            }else {
-              Alert.alert("No todos los jugadores han aceptado aún!")
-            }
-            }
-            )
-            .catch((error) => console.error(error))
+            // }else {
+            //   Alert.alert("No todos los jugadores han aceptado aún!")
+            // }
+            // }
+            // )
             }
             icon = "arrow-forward-circle"
             bgColor= {(playersAccepted.length == playersTeam.length && playersTeam.length != 0) ? 'darkseagreen' : 'beige'}
@@ -166,17 +170,14 @@ export default WaitRoom = ({route, navigation}) => {
             :   
             <CustomButton2 
             onPress = {() => 
-            fetch(url)
-            .then((response) => response.json())
-            .then((json) => {
-            if (json.accepted == playersTeam.length) {
-              navigation.navigate("Quest Tutorial", {teamID: teamID})
-            }else {
-              Alert.alert("No todos los jugadores han aceptado aún!")
-            }
-            }
-            )
-            .catch((error) => console.error(error))
+            // fetch(url)
+            // .then((response) => response.json())
+            // .then((json) => {
+            // if (json.accepted == playersTeam.length) {
+              navigation.navigate("Quest Tutorial", {data: {questID: questID, userID: userID, mode: "multiPlayer", rol:"guest", teamID: teamID}})
+            // }else {
+            //   Alert.alert("No todos los jugadores han aceptado aún!")
+            // }
             }
             icon = "arrow-forward-circle"
             bgColor= {(playersAccepted.length == playersTeam.length && playersTeam.length != 0) ? 'darkseagreen' : 'beige'}

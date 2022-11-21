@@ -44,12 +44,36 @@ function useQuestSetup(route, team) {
               itemID: undefined,
               name: ""
             }}))
-
+            fetch(
+              Config.appUrl+'coupons/' + exampleQuest.clientId + "/completions/" + userID, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json'},
+              body: JSON.stringify({ 
+                points: questState.points,
+                start_time: questState.start_time})
+              }).then(response => response.json()).catch(error => console.log(error))
+              .then(questResult =>
+                {
+                  navigation.navigate("Quest Completed",
+                  {
+                    clientId: exampleQuest.clientId,
+                    userId: userID,
+                    questId: exampleQuest.id,
+                    questName: exampleQuest.name,
+                    questScore: questState.points,
+                    questDifficulty: exampleQuest.difficulty,
+                    questDuration: questResult.quest_duration,
+                    questTime: exampleQuest.time,
+                    qr: questResult.coupon,
+                    startTime: questState.start_time
+                  })
+                }
+              )
 
           } else {
             Alert.alert("Actualizo estado")
             console.log("*******actualizacion de estado")
-            if (json.started == true) {
+//            if (json.started == true) {
               console.log("*******actualizacion de estado started")
               dispatch(Quest.actions.set(
                 {...questState,
@@ -61,10 +85,10 @@ function useQuestSetup(route, team) {
                  finished: json.finished,
                  start_time: json.start_time}
                 ));
-            } else {
-              console.log("*********actualizacion de estado startn'7")
-              dispatch(Quest.actions.setStartTime(json.start_time))
-            } 
+            // } else {
+            //   console.log("*********actualizacion de estado startn'7")
+            //   dispatch(Quest.actions.setStartTime(json.start_time))
+            // } 
             }   
       }
       
@@ -178,7 +202,7 @@ export default function Game({route}) {
           } else {
             Alert.alert("Actualizo estado")
             console.log("*******actualizacion de estado")
-            if (json.started == true) {
+//            if (json.started == true) {
               console.log("*******actualizacion de estado started")
               dispatch(Quest.actions.set(
                 {...questState,
@@ -190,10 +214,10 @@ export default function Game({route}) {
                  finished: json.finished,
                  start_time: json.start_time}
                 ));
-            } else {
-              console.log("*********actualizacion de estado startn'7")
-              dispatch(Quest.actions.setStartTime(json.start_time))
-            } 
+            // } else {
+            //   console.log("*********actualizacion de estado startn'7")
+            //   dispatch(Quest.actions.setStartTime(json.start_time))
+            // } 
             }   
       }
       
