@@ -72,7 +72,7 @@ function useQuestSetup(route, team) {
 
           } else {
             Alert.alert("Actualizo estado")
-            console.log("*******actualizacion de estado")
+//            console.log("*******actualizacion de estado")
 //            if (json.started == true) {
               console.log("*******actualizacion de estado started")
               dispatch(Quest.actions.set(
@@ -83,7 +83,8 @@ function useQuestSetup(route, team) {
                  logs: json.logs,
                  points: json.points,
                  finished: json.finished,
-                 start_time: json.start_time}
+                 start_time: json.start_time,
+                 can_finish: json.can_finish}
                 ));
             // } else {
             //   console.log("*********actualizacion de estado startn'7")
@@ -197,8 +198,6 @@ export default function Game({route}) {
               itemID: undefined,
               name: ""
             }}))
-
-     
           } else {
             Alert.alert("Actualizo estado")
             console.log("*******actualizacion de estado")
@@ -212,7 +211,8 @@ export default function Game({route}) {
                  logs: json.logs,
                  points: json.points,
                  finished: json.finished,
-                 start_time: json.start_time}
+                 start_time: json.start_time,
+                 can_finish: json.can_finish}
                 ));
             // } else {
             //   console.log("*********actualizacion de estado startn'7")
