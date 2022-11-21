@@ -48,14 +48,6 @@ export default function VisualizeFolder(item, ctx) {
   const Note = useState({
     source:Resources.get("models.note1.model"),
     resources:["resources.note1D","resources.note1N","resources.note1R","resources.note1AO"].map(r => Resources.get(r)),
-
-    // source:require(modelspath+"/Note/modelAnim.vrx"),
-    // resources:[require(modelspath+'/Note/note-atlas_d.png'),
-    //            require(modelspath+'/Note/note-atlas_r.png'),
-    //            require(modelspath+'/Note/note-atlas_n.png'),
-    //            require(modelspath+'/Note/note-atlas_ao.png'),
-    //            ],
-
     position:[-.1,0,.005], //X:left-right, Y:height, Z:depth
     rotation:[0,0,0],
     scale:item.model.scale,
@@ -79,12 +71,6 @@ export default function VisualizeFolder(item, ctx) {
 const Clue0 = useState({
   source:Resources.get("models.clue01.model"),
   resources:["resources.clue01D","resources.clue01R"].map(r => Resources.get(r)),
-
-  // source:require(modelspath+"/ClueCard/0/modelAnim.vrx"),
-  // resources:[require(modelspath+'/ClueCard/0/cluecard-atlas_d.png'),
-  //            require(modelspath+'/ClueCard/0/cluecard-atlas_r.png'),
-  //            ],
-
   position:[-.1,-.04,0], //X:left-right, Y:height, Z:depth
   rotation:item.model.rotation,
   scale:item.model.scale,
@@ -118,12 +104,6 @@ const Clue0 = useState({
   });
 
   const PageData = {
-    // source:require(modelspath+"/Page/modelAnim.vrx"),
-    // resources:[require(modelspath+'/Page/page-folder-atlas_d.png'),
-    //            require(modelspath+'/Page/page-folder-atlas_r.png'),
-    //            require(modelspath+'/Page/page-folder-atlas_n.png'),
-    //            require(modelspath+'/Page/page-folder-atlas_m.png'),
-    //            ],
     position:[1,0,-.014], //X:left-right, Y:height, Z:depth
     rotation:item.model.rotation,
     scale:item.model.scale,
@@ -153,21 +133,9 @@ const Clue0 = useState({
     resources:["resources.page8D","resources.page8N","resources.page8R","resources.page8M"].map(r => Resources.get(r)),
     ...PageData,
   }
-  const PageData2 = {
-    source:Resources.get("models.page9.model"),
-    resources:["resources.page9D","resources.page9N","resources.page9R","resources.page9M"].map(r => Resources.get(r)),
-    ...PageData,
-  }
-  const PageData3 = {
-    source:Resources.get("models.page10.model"),
-    resources:["resources.page10D","resources.page10N","resources.page10R","resources.page10M"].map(r => Resources.get(r)),
-    ...PageData,
-  }
 
   const Page0 = useState(PageData0);
   const Page1 = useState(PageData1);
-  const Page2 = useState(PageData2);
-  const Page3 = useState(PageData3);
 
   function OpenOrCloseFolder(){
     const folder = Folder[0], setfolder = Folder[1];
@@ -196,8 +164,8 @@ const Clue0 = useState({
     
     const page_idx = selected - 8; //pages go from ["8","9","10","11"]
     
-    if (page_idx>=0 && page_idx<4) { //Page equipped
-      const Pages = [Page0,Page1,Page2,Page3];
+    if (page_idx>=0 && page_idx<2) { //Page equipped
+      const Pages = [Page0,Page1];
       const Page = Pages[page_idx];
       const page = Page[0], setpage = Page[1];
 
@@ -379,36 +347,6 @@ const Clue0 = useState({
           visible={Page1[0].visible}
           ignoreEventHandling={!Page1[0].interactable}
           highAccuracyEvents={Page1[0].interactions_accurate_collision_detection}
-          />
-
-      <Viro3DObject
-          source={Page2[0].source}
-          resources={Page2[0].resources}
-          type="VRX"
-          position={Page2[0].position}
-          rotation={Page2[0].rotation}
-          scale={Page2[0].scale}
-          animation={{name: Page2[0].animation, run: Page2[0].animate, loop: Page2[0].loop_animation, interruptible:Page2[0].anim_interruptible, onFinish:Page2[0].anim_on_finish}}
-          onRotate={makeOnRotate(Node)}
-          onClick={Page2[0].onClick}
-          visible={Page2[0].visible}
-          ignoreEventHandling={!Page2[0].interactable}
-          highAccuracyEvents={Page2[0].interactions_accurate_collision_detection}
-          />
-
-      <Viro3DObject
-          source={Page3[0].source}
-          resources={Page3[0].resources}
-          type="VRX"
-          position={Page3[0].position}
-          rotation={Page3[0].rotation}
-          scale={Page3[0].scale}
-          animation={{name: Page3[0].animation, run: Page3[0].animate, loop: Page3[0].loop_animation, interruptible:Page3[0].anim_interruptible, onFinish:Page3[0].anim_on_finish}}
-          onRotate={makeOnRotate(Node)}
-          onClick={Page3[0].onClick}
-          visible={Page3[0].visible}
-          ignoreEventHandling={!Page3[0].interactable}
-          highAccuracyEvents={Page3[0].interactions_accurate_collision_detection}
           />
     </ViroNode>
    </ViroNode>

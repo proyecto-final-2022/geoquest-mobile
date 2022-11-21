@@ -141,36 +141,6 @@
         "rotation": [0,180,0],
         "resources": ["resources.page1D", "resources.page1N", "resources.page1R", "resources.page1M"]
       }
-    },
-    "10": {
-      "title": "Hoja con el índice del TP",
-      "description": "Contiene el índice del TP, y sí, ¿qué más esperabas?",
-      "questItemID": 10,
-      "image": "6",
-      "view": 1,
-      "model": {
-        "source": "models.page2.model",
-        "type": "VRX",
-        "position": [0,0,-3],
-        "scale": [0.3,0.3,0.3],
-        "rotation": [0,180,0],
-        "resources": ["resources.page2D", "resources.page2N", "resources.page2R", "resources.page2M"]
-      }
-    },
-    "11": {
-      "title": "Hoja última del TP",
-      "description": "Contiene los agradecimientos especiales.",
-      "questItemID": 11,
-      "image": "6",
-      "view": 1,
-      "model": {
-        "source": "models.page3.model",
-        "type": "VRX",
-        "position": [0,0,-3],
-        "scale": [0.3,0.3,0.3],
-        "rotation": [0,180,0],
-        "resources": ["resources.page3D", "resources.page3N", "resources.page3R", "resources.page3M"]
-      }
     }
   },
   "combinable": {
@@ -383,99 +353,8 @@
           ]
         ]
       }
-    },
-    {
-      "type": "WithImageRecognition",
-      "typeProps": { 
-        "questItemID": 1,
-        "target": {
-          "source": "images.boquita",
-          "physicalWidth": 0.2,
-          "orientation": "Up"
-        },
-        "model": {
-          "source": "models.page5.model",
-          "type": "VRX",
-          "position": [0,0,0],
-          "scale": [0.05,0.05,0.05],
-          "rotation": [-90,0,0],
-          "resources": ["resources.page5D", "resources.page5N", "resources.page5R", "resources.page5M"]
-        },
-        "interactions": [
-          [
-            {
-              "name": "addPoints",
-              "params": [
-                100000
-              ]
-            },
-            {
-              "name": "showHint",
-              "params": 
-                [
-                  "¡La hoja con el índice de mi TP!"
-                ]
-              } ,
-              {
-              "name": "log",
-              "params": [
-                "Me encontre con la Hoja del índice de mi TP en []"
-              ]
-            },
-            {
-              "name": "grabItem",
-              "params": ["10"]
-            }
-          ]
-        ]
-      }
-    },
-    {
-      "type": "WithImageRecognition",
-      "typeProps": { 
-        "questItemID": 1,
-        "target": {
-          "source": "images.duende",
-          "physicalWidth": 0.2,
-          "orientation": "Up"
-        },
-        "model": {
-          "source": "models.page6.model",
-          "type": "VRX",
-          "position": [0,0,0],
-          "scale": [0.05,0.05,0.05],
-          "rotation": [-90,0,0],
-          "resources": ["resources.page6D", "resources.page6N", "resources.page6R", "resources.page6M"]
-        },
-        "interactions": [
-          [
-            {
-              "name": "addPoints",
-              "params": [
-                100000
-              ]
-            },
-            {
-              "name": "showHint",
-              "params": 
-                [
-                  "¡La Hoja última del TP!"
-                ]
-              } ,
-              {
-              "name": "log",
-              "params": [
-                "Me encontre con la Hoja ultima de mi TP en []"
-              ]
-            },
-            {
-              "name": "grabItem",
-              "params": ["11"]
-            }
-          ]
-        ]
-      }
     }
+    
     ]
     }
   ],

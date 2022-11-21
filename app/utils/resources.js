@@ -1,15 +1,10 @@
 
 export const resources = {
   images: {
-    exampleImage: require("../../res/images/exampleImage.jpg"),
-    duende: require("../../res/images/duende.jpg"),
-    argentina: require("../../res/images/argentina.jpg"),
-    boquita: require("../../res/images/boquita.jpg"),
-    mate: require("../../res/images/mate.jpg"),
     aula: require("../../res/images/aula_621_crop.jpg"),
     cuadro: require("../../res/images/cuadro.jpg"),
-    silla: require("../../res/images/silla.jpg"),
-    cosowifi: require("../../res/images/cosowifi.jpg"),
+    // silla: require("../../res/images/silla.jpg"),
+    // cosowifi: require("../../res/images/cosowifi.jpg"),
     graduados: require("../../res/images/graduados.jpg"),
   },
 
@@ -64,16 +59,6 @@ export const resources = {
     page4R: require("../../res/models/Page/4/page-atlas_r.png"),
     page4M: require("../../res/models/Page/4/page-atlas_m.png"),
 
-    page5D: require("../../res/models/Page/5/page-atlas_d.png"),
-    page5N: require("../../res/models/Page/5/page-atlas_n.png"),
-    page5R: require("../../res/models/Page/5/page-atlas_r.png"),
-    page5M: require("../../res/models/Page/5/page-atlas_m.png"),
-
-    page6D: require("../../res/models/Page/6/page-atlas_d.png"),
-    page6N: require("../../res/models/Page/6/page-atlas_n.png"),
-    page6R: require("../../res/models/Page/6/page-atlas_r.png"),
-    page6M: require("../../res/models/Page/6/page-atlas_m.png"),
-
     page7D: require("../../res/models/Page/7/page-atlas_d.png"),
     page7N: require("../../res/models/Page/7/page-atlas_n.png"),
     page7R: require("../../res/models/Page/7/page-atlas_r.png"),
@@ -84,21 +69,11 @@ export const resources = {
     page8R: require("../../res/models/Page/8/page-atlas_r.png"),
     page8M: require("../../res/models/Page/8/page-atlas_m.png"),
 
-    page9D: require("../../res/models/Page/9/page-atlas_d.png"),
-    page9N: require("../../res/models/Page/9/page-atlas_n.png"),
-    page9R: require("../../res/models/Page/9/page-atlas_r.png"),
-    page9M: require("../../res/models/Page/9/page-atlas_m.png"),
-
-    page10D: require("../../res/models/Page/10/page-atlas_d.png"),
-    page10N: require("../../res/models/Page/10/page-atlas_n.png"),
-    page10R: require("../../res/models/Page/10/page-atlas_r.png"),
-    page10M: require("../../res/models/Page/10/page-atlas_m.png"),
-
     page11D: require("../../res/models/Page/11/page-atlas_d.png"),
     page11N: require("../../res/models/Page/11/page-atlas_n.png"),
     page11R: require("../../res/models/Page/11/page-atlas_r.png"),
     page11M: require("../../res/models/Page/11/page-atlas_m.png"),
-    
+
     note0D: require("../../res/models/Note/0/note-atlas_d.png"),
     note0N: require("../../res/models/Note/0/note-atlas_n.png"),
     note0R: require("../../res/models/Note/0/note-atlas_r.png"),
@@ -146,13 +121,9 @@ export const resources = {
     page2: { model: require("../../res/models/Page/2/model.vrx") },
     page3: { model: require("../../res/models/Page/3/model.vrx") },
     page4: { model: require("../../res/models/Page/4/model.vrx") },
-    page5: { model: require("../../res/models/Page/5/model.vrx") },
-    page6: { model: require("../../res/models/Page/6/model.vrx") },
     page7: { model: require("../../res/models/Page/7/model.vrx") },
     page8: { model: require("../../res/models/Page/8/model.vrx") },
-    page9: { model: require("../../res/models/Page/9/model.vrx") },
-    page10: { model: require("../../res/models/Page/10/model.vrx") },
-    page11: { model: require("../../res/models/Page/11/model.vrx") },
+    page11: { model: require("../../res/models/Page/8/model.vrx") },
 
     box: { model: require("../../res/models/BoxWithKeyhole/model.vrx") },
 

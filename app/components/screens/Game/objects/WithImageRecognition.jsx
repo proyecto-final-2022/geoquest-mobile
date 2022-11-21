@@ -207,26 +207,6 @@ export default function WithImageRecognition({id, typeProps, globalCtx}) {
 }
 
 ViroARTrackingTargets.createTargets({
-  "images.exampleImage": {
-    source: require('../../../../../res/images/exampleImage.jpg'),
-    orientation: "Up",
-    physicalWidth: 0.2 // real world width in meters  
-  },
-  "images.duende": {
-    source: require('../../../../../res/images/duende.jpg'),
-    orientation: "Up",
-    physicalWidth: 0.2 // real world width in meters  
-  },
-  "images.boquita": {
-    source: require('../../../../../res/images/boquita.jpg'),
-    orientation: "Up",
-    physicalWidth: 0.2 // real world width in meters  
-  },
-  "images.argentina": {
-    source: require('../../../../../res/images/argentina.jpg'),
-    orientation: "Up",
-    physicalWidth: 0.2 // real world width in meters  
-  },
   "images.aula": {
     source: require('../../../../../res/images/aula_621_crop.jpg'),
     orientation: "Up",
@@ -242,16 +222,14 @@ ViroARTrackingTargets.createTargets({
     orientation: "Up",
     physicalWidth: 0.2 // real world width in meters  
   },
-  "images.silla": {
-    source: require('../../../../../res/images/silla.jpg'),
-    orientation: "Up",
-    physicalWidth: 0.2 // real world width in meters  
-  },
-  "images.cosowifi": {
-    source: require('../../../../../res/images/cosowifi.jpg'),
-    orientation: "Up",
-    physicalWidth: 0.2 // real world width in meters  
-  }
-
-//aula_621_crop
+  // "images.silla": {
+  //   source: require('../../../../../res/images/silla.jpg'),
+  //   orientation: "Up",
+  //   physicalWidth: 0.2 // real world width in meters  
+  // },
+  // "images.cosowifi": {
+  //   source: require('../../../../../res/images/cosowifi.jpg'),
+  //   orientation: "Up",
+  //   physicalWidth: 0.2 // real world width in meters  
+  // }
 });
