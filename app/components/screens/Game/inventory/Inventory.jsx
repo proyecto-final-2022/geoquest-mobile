@@ -120,9 +120,12 @@ const Inventory = ({props}) => {
   }
 
   const Item = ({item, index}) => {
+    const itemWidth = (0.17 * width)*1.1;
+
     const maxLenghtTitle = Math.max(...item.title.split(" ").map(item => item.length));
-    const calculatedWidth = maxLenghtTitle > 8? Math.ceil(maxLenghtTitle*7.7) : 65;
-    const numberOfLines = -100 - 14*(Math.ceil(item.title.length/(maxLenghtTitle <= 8? 8 : maxLenghtTitle))-1);
+    const calculatedWidth = maxLenghtTitle >= 8? itemWidth*(maxLenghtTitle/8) : itemWidth;
+    const numberOfLines = -100 - 14*(Math.ceil(item.title.length/(maxLenghtTitle < 8? 8 : maxLenghtTitle))-1);
+
 
     return (
       <View style={{
