@@ -364,7 +364,7 @@ export default function Game({route}) {
       <Tab.Screen
         name="Salir"
         component={Exit} 
-        initialParams={{userID: userID, teamID: quest.teamID}}
+        initialParams={{teamID: quest.teamID}}
         options={{
           tabBarIcon: ({color, size}) => (
             <Ionicons name="exit" color={color} size={size} />

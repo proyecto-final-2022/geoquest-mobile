@@ -3,11 +3,19 @@ import { StyleSheet, ScrollView, Text, View, useWindowDimensions, Image} from "r
 import CustomButton2 from "../../commons/CustomButton2";
 import Config from "../../../../config.json";
 import PirateImage from '../../../../assets/Pirate2.png'
+import Storage from "../../../utils/storage/storage"
 import { color } from "react-native-reanimated";
 
 export default function Exit({route, navigation}) {
-  const {userID: userID, teamID: teamID} = route.params;
+  const {teamID: teamID} = route.params;
   const { height, width } = useWindowDimensions();
+  const [userID, setUserID] = useState();
+
+  useEffect(() => {
+    Storage.getObject('user').
+    then(user => setUserID(user.id))
+  }
+   , [route])
 
   return (
     <ScrollView style={styles.view}> 
