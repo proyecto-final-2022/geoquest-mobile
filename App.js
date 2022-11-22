@@ -216,6 +216,7 @@ export default function App() {
     messaging()
     .getToken()
     .then((token) => {
+      console.log("***token: ", token)
       Storage.setObject('firebaseToken', token);
     })
     .catch(error => console.log(error))

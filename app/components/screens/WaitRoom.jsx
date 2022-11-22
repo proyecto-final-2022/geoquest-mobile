@@ -140,7 +140,6 @@ export default WaitRoom = ({route, navigation}) => {
           rol == "host" ? 
           <CustomButton2 
             onPress = {() => {
-
               console.log("*******userID", userID)
               console.log("*******teamID", teamID)
               console.log("*******questID", teamID)

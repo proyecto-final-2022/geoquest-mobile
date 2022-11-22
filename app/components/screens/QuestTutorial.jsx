@@ -67,7 +67,8 @@ const QuestTutorial = ({route, navigation}) => {
             )
             )
             .catch(error => console.log(error))
-    }else{
+    }
+    if (data.mode == "multiPlayer"){
       if (data.rol == "host"){
         fetch(
           Config.appUrl+'quests/' + data.questID + '/progressions/' + data.teamID, {
@@ -81,6 +82,7 @@ const QuestTutorial = ({route, navigation}) => {
         setQuestID(data.questID)
       }
     }
+  
   }, [data])
 
   useEffect(() => {
