@@ -7,7 +7,7 @@ import Storage from "../../../utils/storage/storage"
 import { color } from "react-native-reanimated";
 
 export default function Exit({route, navigation}) {
-  const {teamID: teamID} = route.params;
+  const {teamID: teamID, questID: questID} = route.params;
   const { height, width } = useWindowDimensions();
   const [userID, setUserID] = useState();
 
@@ -35,11 +35,11 @@ export default function Exit({route, navigation}) {
       <View style={styles.teamButtonsContainer}> 
         <CustomButton2 
           onPress = {() => 
-            fetch(Config.appUrl + "teams/" + teamID + "/users/" + userID, {
+            fetch(Config.appUrl + "teams/" + teamID + "/users/" + userID + "/quests/" + questID, {
               method: 'DELETE',
               headers: { 
                 'Content-Type': 'application/json'},
-            }).then(navigation.navigate("Quest Navigator"))            
+            }).then(navigation.navigate("Quest Navigator"))
           }
           icon = "arrow-forward-circle"
           bgColor= 'red'
