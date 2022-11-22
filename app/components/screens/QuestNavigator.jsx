@@ -124,6 +124,7 @@ const QuestNavigator = () => {
                 {/* //TODO(fran): qualification */}
               </View>
             <Text style={{fontSize: 14, marginVertical: 5, textAlign: 'justify', flex: 5}}>{quest.description}</Text>
+            <Empty spacing={20}/>
         </Pressable>
       </ScrollView>
     )
