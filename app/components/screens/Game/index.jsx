@@ -37,7 +37,12 @@ function useQuestSetup(route, quest) {
       {
         console.log("***Progress: ", json)
           if (json.finished == true) {
-            console.log("******finished")
+            console.log("******************Request: ", JSON.stringify({ 
+              points: questState.points,
+              start_time: questState.start_time,
+              quest_id: quest.questID,
+              team_id: quest.teamID
+              }))
             dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
             dispatch(QuestLocal.actions.selectItem(
             {selectedItem: {
@@ -51,8 +56,8 @@ function useQuestSetup(route, quest) {
               body: JSON.stringify({ 
                 points: questState.points,
                 start_time: questState.start_time,
-                quest_id: quest.questID,
-                team_id: quest.teamID
+                quest_id: parseInt(quest.questID),
+                team_id: parseInt(quest.teamID)
                 })
               }).then(response => response.json()).catch(error => console.log(error))
               .then(questResult =>
@@ -286,6 +291,12 @@ export default function Game({route}) {
           tabPress: (e) => {
             // Prevent default action
             e.preventDefault();
+            console.log("*****request: ", JSON.stringify({ 
+              points: questState.points,
+              start_time: questState.start_time,
+              quest_id: quest.questID,
+              team_id: quest.teamID
+            }))
             dispatch(QuestLocal.actions.setVisualizer({itemID: undefined}))
                 dispatch(QuestLocal.actions.selectItem({selectedItem: {
                   itemID: undefined,
@@ -304,8 +315,8 @@ export default function Game({route}) {
               body: JSON.stringify({ 
                 points: questState.points,
                 start_time: questState.start_time,
-                quest_id: quest.questID,
-                team_id: quest.teamID
+                quest_id: parseInt(quest.questID),
+                team_id: parseInt(quest.teamID)
               })
               }).then(response => response.json()).catch(error => console.log(error))
               .then(questResult =>
