@@ -22,7 +22,7 @@ export default function App() {
     };
 
     const forwardToWaitRoom = (questID, teamID, userID) => {
-      navigationRef.current?.navigate("Wait Room", {questID, teamID, userID});
+      navigationRef.current?.navigate("Wait Room", {questID, teamID, userID, rol: "host"});
     };
 
     const forwardToQuestUpdate = (teamID, questID) => {

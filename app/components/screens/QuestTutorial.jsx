@@ -44,6 +44,8 @@ const QuestTutorial = ({route, navigation}) => {
   );
 
   useEffect(() => {
+    console.log("*************DAta: ", data)
+    Alert.alert("***use effect")
     if (data.mode == "singlePlayer"){
       fetch(
         Config.appUrl+'teams/' + data.userID, {
