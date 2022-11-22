@@ -59,7 +59,13 @@ const QuestTutorial = ({route, navigation}) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
             }).catch(error => console.log(error))
-            .then(setTeamID(teamID)))
+            .then(
+              () => {
+                setTeamID(teamID)
+                setQuestID(data.questID)
+              }
+            )
+            )
             .catch(error => console.log(error))
     }else{
       if (data.rol == "host"){
@@ -69,8 +75,10 @@ const QuestTutorial = ({route, navigation}) => {
           headers: { 'Content-Type': 'application/json'},
           }).catch(error => console.log(error))
         setTeamID(data.teamID)
+        setQuestID(data.questID)
       }else{
         setTeamID(data.teamID)
+        setQuestID(data.questID)
       }
     }
   }, [data])
@@ -90,6 +98,7 @@ const QuestTutorial = ({route, navigation}) => {
 
   const redirectToQuest = () => {
     if (teamID != 0){
+      console.log("****Quest id: ", questID)
     fetch(Config.appUrl + "quests/" + questID + "/progressions/" + teamID, {
       method: 'PUT',
       headers: { 
@@ -105,7 +114,7 @@ const QuestTutorial = ({route, navigation}) => {
         start_time: Math.floor(Date.now() / 1000)}) 
     }).catch(error => {
       console.log('Error sending update: '+error);
-    }).then(navigation.navigate('Game', {team: {teamID: teamID}})).catch(error => console.log(error))
+    }).then(navigation.navigate('Game', {quest: {teamID: teamID, questID: questID}})).catch(error => console.log(error))
   }else{
     Alert.alert("Cargando datos de la búsqueda")
   }

@@ -25,8 +25,8 @@ export default function App() {
       navigationRef.current?.navigate("Wait Room", {questID, teamID, userID});
     };
 
-    const forwardToQuestUpdate = (teamID) => {
-      navigationRef.current?.navigate("Game", {team: {teamID: teamID}});
+    const forwardToQuestUpdate = (teamID, questID) => {
+      navigationRef.current?.navigate("Game", {quest: {teamID: teamID, questID: questID}});
     };
 
     const forwardToFriendsList = () => {
@@ -167,7 +167,7 @@ export default function App() {
                 },
                 { text: "OK", onPress: () => { 
                   forwardToQuestUpdate(
-                    remoteMessage.data.teamID, 
+                    remoteMessage.data.teamID, remoteMessage.data.questID
                   )    
                 }}
               ]

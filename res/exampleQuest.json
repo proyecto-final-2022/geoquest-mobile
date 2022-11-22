@@ -146,6 +146,9 @@
   "combinable": {
     "1": {
       "title": "Carpeta con hoja"
+    },
+    "2": {
+      "title": "Final de la busqueda"
     }
   },
   "scenes": [

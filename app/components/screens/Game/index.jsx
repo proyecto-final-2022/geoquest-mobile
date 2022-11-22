@@ -17,7 +17,7 @@ import Storage from "../../../utils/storage/storage"
 import {DEBUG} from "./DEBUG"
 
 
-function useQuestSetup(route, team) {
+function useQuestSetup(route, quest) {
   const questState = useSelector(state => state.quest);
   const questStateLocal = useSelector(state => state.questLocal);
   const navigation = useNavigation()
@@ -26,7 +26,7 @@ function useQuestSetup(route, team) {
   const [userID, setUserID] = useState();
   const [loading, setLoading] = useState(true);
 
-  const url = Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + team.teamID
+  const url = Config.appUrl + "quests/" + quest.questID + "/progressions/" + quest.teamID
 
   const updateState = () => {  
     fetch(url)
@@ -58,7 +58,7 @@ function useQuestSetup(route, team) {
                   {
                     clientId: exampleQuest.clientId,
                     userId: userID,
-                    questId: exampleQuest.id,
+                    questId: quest.questID,
                     questName: exampleQuest.name,
                     questScore: questState.points,
                     questDifficulty: exampleQuest.difficulty,
@@ -71,7 +71,6 @@ function useQuestSetup(route, team) {
               )
 
           } else {
-            Alert.alert("Actualizo estado")
 //            console.log("*******actualizacion de estado")
 //            if (json.started == true) {
               console.log("*******actualizacion de estado started")
@@ -100,7 +99,6 @@ function useQuestSetup(route, team) {
   }
 
   const initQuest = async () => {
-    Alert.alert("Init")
     console.log("*******Init quest: ", questState);
     console.log("*******quest local: ", questStateLocal) 
     // TODO
@@ -135,7 +133,7 @@ function useQuestSetup(route, team) {
     });
     const cleanUp = setUpdateListener();
     return cleanUp;
-  }, [team]);
+  }, [quest]);
 
   // useEffect(() => {
   //   if (questStateLocal.updateState.update == true) {
@@ -147,12 +145,11 @@ function useQuestSetup(route, team) {
     if (questState.sendUpdate.lastFoundItemID != undefined) {
         if (questState.sendUpdate.combinable == true){
           const questRequest = {...questState, item_name: exampleQuest.combinable[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
-          sendUpdate(questRequest, team.teamID)            
+          sendUpdate(questRequest, quest.teamID, quest.questID)            
         } else {
           const questRequest = {...questState, item_name: exampleQuest.items[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
-          sendUpdate(questRequest, team.teamID)
-        }
-
+          sendUpdate(questRequest, quest.teamID, quest.questID)
+        } 
     }
   } 
    , [questState.sendUpdate])
@@ -167,10 +164,10 @@ function useQuestSetup(route, team) {
 const Tab = createBottomTabNavigator();
 
 export default function Game({route}) {
-  if(DEBUG) route = {params:{team:{teamID:112}}};
-  const {team: team} = route.params;
+  if(DEBUG) route = {params:{quest:{ID: 1, teamID:112}}};
+  const {quest: quest} = route.params;
   const navigation = useNavigation();
-  const {loading, questConfig } = useQuestSetup(route, team);
+  const {loading, questConfig } = useQuestSetup(route, quest);
   const questState = useSelector(state => state.quest);
   const dispatch = useDispatch();
   const [userID, setUserID] = useState();
@@ -181,7 +178,7 @@ export default function Game({route}) {
   }
    , [route])
 
-   const url = Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + team.teamID
+   const url = Config.appUrl + "quests/" + quest.questID + "/progressions/" + quest.teamID
    const updateState = () => {  
     fetch(url)
     .then((response) => {
@@ -199,7 +196,6 @@ export default function Game({route}) {
               name: ""
             }}))
           } else {
-            Alert.alert("Actualizo estado")
             console.log("*******actualizacion de estado")
 //            if (json.started == true) {
               console.log("*******actualizacion de estado started")
@@ -294,7 +290,8 @@ export default function Game({route}) {
             dispatch(Quest.actions.set(
               {...questState,
                 finished: true,
-                can_finish: true
+                can_finish: true,
+                sendUpdate: {lastFoundItemID: "2", combinable: true}
             }))
             fetch(
               Config.appUrl+'coupons/' + exampleQuest.clientId + "/completions/" + userID, {
@@ -310,7 +307,7 @@ export default function Game({route}) {
                   {
                     clientId: exampleQuest.clientId,
                     userId: userID,
-                    questId: exampleQuest.id,
+                    questId: quest.questID,
                     questName: exampleQuest.name,
                     questScore: questState.points,
                     questDifficulty: exampleQuest.difficulty,
@@ -348,7 +345,7 @@ export default function Game({route}) {
       <Tab.Screen
         name="Salir"
         component={Exit} 
-        initialParams={{userID: userID, teamID: team.teamID}}
+        initialParams={{userID: userID, teamID: quest.teamID}}
         options={{
           tabBarIcon: ({color, size}) => (
             <Ionicons name="exit" color={color} size={size} />
@@ -359,8 +356,8 @@ export default function Game({route}) {
   );
 }
 
-function sendUpdate(questRequest, teamID) {
-  fetch(Config.appUrl + "quests/" + exampleQuest.id + "/progressions/" + teamID, {
+function sendUpdate(questRequest, teamID, questID) {
+  fetch(Config.appUrl + "quests/" + questID + "/progressions/" + teamID, {
     method: 'PUT',
     headers: { 
       'Content-Type': 'application/json'},

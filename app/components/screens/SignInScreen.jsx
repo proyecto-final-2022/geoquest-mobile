@@ -11,6 +11,7 @@ import { Alert } from 'react-native'
 import Storage from '../../utils/storage/storage';
 import { useFocusEffect } from '@react-navigation/native';
 import {closeSession} from '../../utils/storage/storage';
+import Config from "../../../config.json"
 
 const SignInScreen = () => {
 
@@ -55,8 +56,16 @@ const SignInScreen = () => {
         if(user.id !== undefined){ //user is already logged in
           getUser(user.id)
           .then(() => {
-            //here
-            navigation.navigate('Quest Navigator');
+            fetch(Config.appUrl + "quests/progressions/last")
+            .then(response => {
+              if (!response.ok){
+                navigation.navigate('Quest Navigator');
+              }else{
+                response.json().then( (response) => {
+                  navigation.navigate("Game", {quest: {teamID: response.team_id, questID: response.quest_id}})
+                })
+              }
+            })
           })
           .catch(error => {
             console.log(error);
