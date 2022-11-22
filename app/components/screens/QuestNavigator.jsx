@@ -98,7 +98,7 @@ const QuestNavigator = () => {
   const Empty = ({spacing}) => { return(<Text style={{marginTop:spacing}}> </Text>)}
   const Card = ({quest}) => {
     return (
-      <View style={styles.card} contentContainerStyle={{alignItems: 'center'}}>
+      <ScrollView style={styles.card} contentContainerStyle={{alignItems: 'center'}}>
         <Pressable 
         style={{flex: 1, width: width * 0.75}}
         onPress={() => {
@@ -106,7 +106,6 @@ const QuestNavigator = () => {
           var clientName = data[0].name
           navigation.navigate('Client Quests', {clientID, clientName})
         }}>
-          <ScrollView>
             <Image style={styles.cardImage} source={{uri: quest.image_url}}/>
             <Text style={{fontSize: 16, fontWeight: 'bold', marginTop: 10, flex: 1}}>{quest.name}</Text>
               <View style={{marginTop: 10, flexDirection: 'row', flex: 1}}>
@@ -125,9 +124,8 @@ const QuestNavigator = () => {
                 {/* //TODO(fran): qualification */}
               </View>
             <Text style={{fontSize: 14, marginVertical: 5, textAlign: 'justify', flex: 5}}>{quest.description}</Text>
-          </ScrollView>
         </Pressable>
-      </View>
+      </ScrollView>
     )
   }
 
