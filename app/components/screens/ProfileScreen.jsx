@@ -193,19 +193,19 @@ const ProfileScreen = ({navigation}) => {
         setAchivements([
             {
                 name: "Haz un amigo",
-                description: "Envia una invitación de amistad exitosa o acepta una",
+                description: "Enviá una invitación de amistad exitosa o aceptá una",
                 logo: friend_icon,
                 earned: userAchivements.includes("MadeFriend_ac")
             },
             {
                 name: "Inicia una búsqueda",
-                description: "Arranca cualquier búsqueda",
+                description: "Arrancá cualquier búsqueda",
                 logo: start_icon,
                 earned: userAchivements.includes("StartedQuest_ac")
             },
             {
                 name: "Completa una búsqueda",
-                description: "Termina una búsqueda y obtén tu recompenza",
+                description: "Terminá una búsqueda y obtén tu recompenza",
                 logo: finish_icon,
                 earned: userAchivements.includes("FinishedQuest_ac")
             },
@@ -223,7 +223,7 @@ const ProfileScreen = ({navigation}) => {
             },
             {
                 name: "Usa un cupón",
-                description: "Utiliza uno de los cupones obtenidos como recompenza",
+                description: "Utilizá uno de los cupones obtenidos como recompensa",
                 logo: coupon_icon,
                 earned: userAchivements.includes("UsedCoupon_ac")
             }
