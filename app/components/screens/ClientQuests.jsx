@@ -151,7 +151,7 @@ export default ClientQuests = ({route, navigation}) => {
             </View>
             <View style={styles.questInfo}>
               <Entypo name ='star' color={'goldenrod'} size={25}/>
-              <Text style={styles.questInfoText}>{quest.qualification}</Text>
+              <Text style={styles.questInfoText}>{quest.qualification.toFixed(1)}</Text>
             </View>
           </View>
           <View style={[styles.tagContainer, {flex: 1}]}>

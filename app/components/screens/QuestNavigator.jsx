@@ -46,7 +46,7 @@ const QuestNavigator = () => {
 
   const quests = [{
     "client_id": 1,
-    "name": "La busqueda del TP perdido",
+    "name": "La búsqueda del TP perdido",
     "qualification": 4.5,
     "description": "Un día te dirigías a Medrano para entregar tu Trabajo Práctico Final de Sistemas y Organizaciones. En la puerta te encontrás con uno de tus compañeros y te ponés a hablar un rato cuando de repente... ¡Oh no! Tu malvado compañero, el Duende, apareció y robó el TP de tus manos y desperdigó las hojas por toda la facultad! Debés apurarte y entregar el trabajo completo a tiempo o sino tendrás que recursar la materia. Por suerte el Duende ha sido generoso y te ha dejado algunas pistas para guiarte en tu aventura.",
     "difficulty": "Media",
@@ -98,7 +98,7 @@ const QuestNavigator = () => {
   const Empty = ({spacing}) => { return(<Text style={{marginTop:spacing}}> </Text>)}
   const Card = ({quest}) => {
     return (
-      <ScrollView style={styles.card} contentContainerStyle={{alignItems: 'center'}}>
+      <View style={styles.card} contentContainerStyle={{alignItems: 'center'}}>
         <Pressable 
         style={{flex: 1, width: width * 0.75}}
         onPress={() => {
@@ -106,26 +106,28 @@ const QuestNavigator = () => {
           var clientName = data[0].name
           navigation.navigate('Client Quests', {clientID, clientName})
         }}>
-          <Image style={styles.cardImage} source={{uri: quest.image_url}}/>
-          <Text style={{fontSize: 16, fontWeight: 'bold', marginTop: 10, flex: 1}}>{quest.name}</Text>
-          <View style={{marginTop: 10, flexDirection: 'row', flex: 1}}>
-            <View style={styles.questInfo}>
-              <FontAwesome name ='clock-o' color={'#1A515B'} size={18}/>
-              <Text style={styles.questInfoText}>{quest.duration}</Text>
-            </View>
-            <View style={styles.questInfo}>
-              <Entypo name ='gauge' color={'firebrick'} size={18}/>
-              <Text style={styles.questInfoText}>{quest.difficulty}</Text>
-            </View>
-            <View style={styles.questInfo}>
-              <Entypo name ='star' color={'goldenrod'} size={18}/>
-              <Text style={styles.questInfoText}>{quest.qualification}</Text>
-            </View>
-            {/* //TODO(fran): qualification */}
-          </View>
-          <Text style={{fontSize: 14, marginVertical: 5, textAlign: 'justify', flex: 5}}>{quest.description}</Text>
+          <ScrollView>
+            <Image style={styles.cardImage} source={{uri: quest.image_url}}/>
+            <Text style={{fontSize: 16, fontWeight: 'bold', marginTop: 10, flex: 1}}>{quest.name}</Text>
+              <View style={{marginTop: 10, flexDirection: 'row', flex: 1}}>
+                <View style={styles.questInfo}>
+                  <FontAwesome name ='clock-o' color={'#1A515B'} size={18}/>
+                  <Text style={styles.questInfoText}>{quest.duration}</Text>
+                </View>
+                <View style={styles.questInfo}>
+                  <Entypo name ='gauge' color={'firebrick'} size={18}/>
+                  <Text style={styles.questInfoText}>{quest.difficulty}</Text>
+                </View>
+                <View style={styles.questInfo}>
+                  <Entypo name ='star' color={'goldenrod'} size={18}/>
+                  <Text style={styles.questInfoText}>{quest.qualification.toFixed(1)}</Text>
+                </View>
+                {/* //TODO(fran): qualification */}
+              </View>
+            <Text style={{fontSize: 14, marginVertical: 5, textAlign: 'justify', flex: 5}}>{quest.description}</Text>
+          </ScrollView>
         </Pressable>
-      </ScrollView>
+      </View>
     )
   }
 

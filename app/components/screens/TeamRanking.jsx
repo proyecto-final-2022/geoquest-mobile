@@ -1,3 +1,9 @@
+/* eslint-disable react/display-name */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+/* eslint-disable quotes */
+/* eslint-disable linebreak-style */
+/* eslint-disable semi */
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, BackHandler, ActivityIndicator, Text, View, Dimensions, Image, Pressable, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import { useIsFocused } from '@react-navigation/native'
@@ -31,7 +37,7 @@ export default TeamRanking = ({route, navigation}) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    console.log("*****Que onda esto")
+    //console.log("*****Que onda esto")
     fetch(urlTeam)
     .then((response) => {
       if (response.ok)

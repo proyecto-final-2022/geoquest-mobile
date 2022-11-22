@@ -61,14 +61,12 @@ export default function QuestVisualizer({route, navigation}) {
         placeholder: "Search",
       }
     });
-  });
 
-  useEffect(() => {
-    Storage.getObject('user').
-    then(user => {
-        setUserID(user.id);
+    Storage.getObject('user')
+    .then(user => {
+      setUserID(user.id);
     })
-}, []);
+  });
 
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
@@ -123,14 +121,14 @@ export default function QuestVisualizer({route, navigation}) {
   };
 
   return (
-    <ScrollView style={styles.view}> 
+    <View style={styles.view}> 
       <Image style={styles.image} source={{uri: image_url}} />
 
       <View style={styles.card}>
         <View style={styles.questInfoContainer}>
           <View style={styles.questInfo}>
             <Entypo name ='star' size={25} color={"goldenrod"}/>
-            <Text style={{fontWeight: "bold"}}>{qualification}</Text>
+            <Text style={{fontWeight: "bold"}}>{qualification.toFixed(1)}</Text>
           </View>
           <View style={styles.questInfo}>
             <Entypo name ='gauge' color={"firebrick"} size={25}/>
@@ -141,12 +139,14 @@ export default function QuestVisualizer({route, navigation}) {
             <Text style={{fontWeight: "bold"}}>{duration}</Text>
           </View>
         </View>
-        <ScrollView style={styles.description}>
-          <Text style={{
-//            flex: 3,
-            marginHorizontal: 0,
-            textAlign: 'justify'}}>{description}</Text>
-        </ScrollView>
+        <View style={styles.description}>
+          <ScrollView>
+            <Text style={{
+  //            flex: 3,
+              marginHorizontal: 0,
+              textAlign: 'justify'}}>{description}</Text>
+          </ScrollView>
+        </View>
   
         <View style={styles.tagContainer}>
           {tags.map((tag, index) => <Tag tag={tag} key={index} index={index}/>)}
@@ -243,7 +243,7 @@ export default function QuestVisualizer({route, navigation}) {
         </View>
         <View style={{flex: 1}}/>
       </CustomModal>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -273,10 +273,11 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   description: {
-    marginBottom: 25,
+    marginVertical: 20,
     flex: 2  
   },
   tagContainer:{
+    flex: 1,
     flexDirection: "row",
     justifyContent: "flex-start"
   },
@@ -306,7 +307,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#CA955C"
   },
   teamButtonsContainer: {
-    marginTop: 15,
+    marginVertical: 5,
     flexDirection: "column",
     alignItems: "center"
   },

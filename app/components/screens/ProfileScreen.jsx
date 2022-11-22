@@ -375,7 +375,7 @@ const ProfileScreen = ({navigation}) => {
                     </View>
                 </View>}
                 {detailsSelectorModal && <View style={styles.containerInput}>
-                    <Text style={{alignSelf:'flex-start', paddingLeft: 10}}>Nombre</Text>
+                    <Text>Nombre</Text>
                     <CustomInput 
                         name = "name"
                         placeholder="Nombre"
