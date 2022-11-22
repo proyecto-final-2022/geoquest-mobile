@@ -50,7 +50,10 @@ function useQuestSetup(route, quest) {
               headers: { 'Content-Type': 'application/json'},
               body: JSON.stringify({ 
                 points: questState.points,
-                start_time: questState.start_time})
+                start_time: questState.start_time,
+                quest_id: quest.questID,
+                team_id: quest.teamID
+                })
               }).then(response => response.json()).catch(error => console.log(error))
               .then(questResult =>
                 {
@@ -59,6 +62,7 @@ function useQuestSetup(route, quest) {
                     clientId: exampleQuest.clientId,
                     userId: userID,
                     questId: quest.questID,
+                    teamId: quest.teamID,
                     questName: exampleQuest.name,
                     questScore: questState.points,
                     questDifficulty: exampleQuest.difficulty,
@@ -144,7 +148,7 @@ function useQuestSetup(route, quest) {
   useEffect(() => {
     if (questState.sendUpdate.lastFoundItemID != undefined) {
         if (questState.sendUpdate.combinable == true){
-          const questRequest = {...questState, item_name: exampleQuest.combinable[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
+           const questRequest = {...questState, item_name: exampleQuest.combinable[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
           sendUpdate(questRequest, quest.teamID, quest.questID)            
         } else {
           const questRequest = {...questState, item_name: exampleQuest.items[questState.sendUpdate.lastFoundItemID].title, user_id: userID}
@@ -291,7 +295,7 @@ export default function Game({route}) {
               {...questState,
                 finished: true,
                 can_finish: true,
-                sendUpdate: {lastFoundItemID: "2", combinable: true}
+//                sendUpdate: {lastFoundItemID: "2", combinable: true}
             }))
             fetch(
               Config.appUrl+'coupons/' + exampleQuest.clientId + "/completions/" + userID, {
@@ -299,7 +303,10 @@ export default function Game({route}) {
               headers: { 'Content-Type': 'application/json'},
               body: JSON.stringify({ 
                 points: questState.points,
-                start_time: questState.start_time})
+                start_time: questState.start_time,
+                quest_id: quest.questID,
+                team_id: quest.teamID
+              })
               }).then(response => response.json()).catch(error => console.log(error))
               .then(questResult =>
                 {
@@ -308,6 +315,7 @@ export default function Game({route}) {
                     clientId: exampleQuest.clientId,
                     userId: userID,
                     questId: quest.questID,
+                    teamId: quest.teamID,
                     questName: exampleQuest.name,
                     questScore: questState.points,
                     questDifficulty: exampleQuest.difficulty,

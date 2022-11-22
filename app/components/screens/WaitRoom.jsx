@@ -63,7 +63,6 @@ export default WaitRoom = ({route, navigation}) => {
   }
 
   useEffect(() => {
-    console.log("***************rol: ", rol)    
     fetch(url)
     .then((response) => response.json())
     .then((json) => {setPlayersAccepted(json.users)})

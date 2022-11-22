@@ -98,27 +98,38 @@ const QuestTutorial = ({route, navigation}) => {
 
   const redirectToQuest = () => {
     if (teamID != 0){
-      console.log("****Quest id: ", questID)
-    fetch(Config.appUrl + "quests/" + questID + "/progressions/" + teamID, {
-      method: 'PUT',
-      headers: { 
-        'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        inventory: [],
-        scene: parseFloat(0),
-        objects: {},
-        logs: [],
-        points: parseFloat(0),
-        finished: false,
-        can_finish: false,
-        start_time: Math.floor(Date.now() / 1000)}) 
-    }).catch(error => {
-      console.log('Error sending update: '+error);
-    }).then(navigation.navigate('Game', {quest: {teamID: teamID, questID: questID}})).catch(error => console.log(error))
-  }else{
-    Alert.alert("Cargando datos de la búsqueda")
-  }
+      navigation.navigate('Game', {quest: {teamID: teamID, questID: questID}})
+    }else{
+      Alert.alert("Cargando datos de la búsqueda")
+    }
   };
+
+
+  // const redirectToQuest = () => {
+  //   if (teamID != 0){
+  //     console.log("****Quest id: ", questID)
+  //   fetch(Config.appUrl + "quests/" + questID + "/progressions/" + teamID, {
+  //     method: 'PUT',
+  //     headers: { 
+  //       'Content-Type': 'application/json'},
+  //     body: JSON.stringify({
+  //       inventory: [],
+  //       scene: parseFloat(0),
+  //       objects: {},
+  //       logs: [],
+  //       points: parseFloat(0),
+  //       finished: false,
+  //       can_finish: false,
+  //       start_time: Math.floor(Date.now() / 1000)}) 
+  //   }).catch(error => {
+  //     console.log('Error sending update: '+error);
+  //   }).then(navigation.navigate('Game', {quest: {teamID: teamID, questID: questID}})).catch(error => console.log(error))
+  // }else{
+  //   Alert.alert("Cargando datos de la búsqueda")
+  // }
+  // };
+
+
 
   const RenderItem = ({ item }) => {
     return (

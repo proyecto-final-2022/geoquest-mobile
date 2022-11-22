@@ -23,6 +23,7 @@ export default QuestCompleted = ({route, navigation}) => {
     clientId,
     userId,
     questId,
+    teamId,
     questDuration,
     qr, 
     questName,
