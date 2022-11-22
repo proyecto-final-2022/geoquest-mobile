@@ -221,12 +221,12 @@ const ProfileScreen = ({navigation}) => {
                 logo: rate_icon,
                 earned: userAchivements.includes("RatedQuest_ac")
             },
-            {
-                name: "Usa un cupón",
-                description: "Utilizá uno de los cupones obtenidos como recompensa",
-                logo: coupon_icon,
-                earned: userAchivements.includes("UsedCoupon_ac")
-            }
+            // {
+            //     name: "Usa un cupón",
+            //     description: "Utilizá uno de los cupones obtenidos como recompensa",
+            //     logo: coupon_icon,
+            //     earned: userAchivements.includes("UsedCoupon_ac")
+            // }
             // {
             //     name: "Completa 5 búsquedas",
             //     description: "Gana 5 búsquedas de principio a fin",
