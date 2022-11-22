@@ -1,3 +1,9 @@
+/* eslint-disable no-constant-condition */
+/* eslint-disable max-len */
+/* eslint-disable semi */
+/* eslint-disable linebreak-style */
+/* eslint-disable quotes */
+/* eslint-disable indent */
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, useWindowDimensions, Image, Pressable, FlatList, BackHandler, ActivityIndicator, Alert, ScrollView} from 'react-native';
 import Storage from '../../utils/storage/storage';
@@ -63,6 +69,18 @@ const ProfileScreen = ({navigation}) => {
             }
         })
 
+        retrieveUser();
+    }, []);
+
+    const [userId, setUserId] = useState(1);
+    const [image, setImage] = useState(1);
+    const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [manual, setManual] = useState(false);
+    const [achivements, setAchivements] = useState([]);
+
+    function retrieveUser(){
         Storage.getObject('user')
         .then(user => {
             getUser(user.id)
@@ -78,16 +96,7 @@ const ProfileScreen = ({navigation}) => {
                 navigation.navigate('Quest Navigator')
             })
         })
-    }, []);
-
-    const [userId, setUserId] = useState(1);
-    const [image, setImage] = useState(1);
-    const [name, setName] = useState("");
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [manual, setManual] = useState(false);
-    const [achivements, setAchivements] = useState([]);
-
+    }
     function refreshValues(user){
         setManual(user.manual);
         setUserId(user.id);
@@ -166,7 +175,12 @@ const ProfileScreen = ({navigation}) => {
         return (
         <View style={styles.categoryListContainer}>
             {['Perfil', 'Logros'].map((category, index) => (
-                <Pressable key={index} onPress={ () => {setSelectedCategoryIndex(index)}}>
+                <Pressable key={index} onPress={() => {
+                    setSelectedCategoryIndex(index);
+                    if(index == 1){
+                        retrieveUser();
+                    }
+                }}>
                     <Text style={[styles.categoryListText, (index == selectedCategoryIndex && styles.activeCategoryListText)]}>
                         {category}
                     </Text>        
